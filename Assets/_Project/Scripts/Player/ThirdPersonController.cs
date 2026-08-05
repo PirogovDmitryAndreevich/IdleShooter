@@ -6,29 +6,17 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private PlayerAnimator _animator;
 
-    [Tooltip("Скорость передвижения персонажа. Не зависит от гравитации и прыжков.")]
-    public float velocity = 5f;
-
-    [Tooltip("Чем выше значение, тем выше сможет прыгнуть персонаж.")]
-    public float jumpForce = 18f;
-
-    [Tooltip("Время нахождения в воздухе. Чем выше значение, тем дольше персонаж будет зависать перед падением.")]
-    public float jumpTime = 0.85f;
-
-    [Space]
-
-    [Tooltip("Сила притяжения, тянущая персонажа вниз. Изменение этого значения влияет на движение, прыжки и падение.")]
-    public float gravity = 9.8f;
-
     float jumpElapsedTime = 0;
     bool isJumping = false;
     bool inputJump;
 
     private IInputService _input;
+    private PlayerStaticData _playerData;
 
     void Start()
     {
         _input = AllServices.Single<IInputService>();
+        _playerData = AllServices.Single<IStaticDataService>().ForPlayer();
     }
 
     void Update()
@@ -50,8 +38,8 @@ public class ThirdPersonController : MonoBehaviour
     private void FixedUpdate()
     {
         // Направление движения
-        float directionX = _input.Axis.x * velocity * Time.deltaTime;
-        float directionZ = _input.Axis.y * velocity * Time.deltaTime;
+        float directionX = _input.Axis.x * _playerData.Velocity * Time.deltaTime;
+        float directionZ = _input.Axis.y * _playerData.Velocity * Time.deltaTime;
         float directionY = 0;
 
         // Обработка прыжка
@@ -59,12 +47,13 @@ public class ThirdPersonController : MonoBehaviour
         {
             // Добавляем плавность и инерцию при подъёме.
             // При падении этого делать не нужно, так как гравитация сама обеспечивает плавность.
-            directionY = Mathf.SmoothStep(jumpForce, jumpForce * 0.30f, jumpElapsedTime / jumpTime) * Time.deltaTime;
+            directionY = Mathf.SmoothStep(_playerData.JumpForce, _playerData.JumpForce * 0.30f, jumpElapsedTime /
+                _playerData.JumpTime) * Time.deltaTime;
 
             // Таймер прыжка
             jumpElapsedTime += Time.deltaTime;
 
-            if (jumpElapsedTime >= jumpTime)
+            if (jumpElapsedTime >= _playerData.JumpTime)
             {
                 isJumping = false;
                 jumpElapsedTime = 0;
@@ -72,7 +61,7 @@ public class ThirdPersonController : MonoBehaviour
         }
 
         // Добавляем влияние гравитации по оси Y
-        directionY = directionY - gravity * Time.deltaTime;
+        directionY = directionY - _playerData.Gravity * Time.deltaTime;
 
         // ---------- Поворот персонажа ----------
 

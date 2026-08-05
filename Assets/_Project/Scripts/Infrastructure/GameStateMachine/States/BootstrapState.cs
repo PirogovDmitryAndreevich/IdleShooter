@@ -1,5 +1,3 @@
-using System;
-
 public class BootstrapState : IState
 {
     private const string InitialSceneName = "Initial";
@@ -30,11 +28,21 @@ public class BootstrapState : IState
 
     private void RegisterService()
     {
+        RegisterStaticData();
         RegisterInputService();
+
+        AllServices.RegisterSingle<IAssets>(new AssetProvider());
     }
 
     private void RegisterInputService()
     {
         AllServices.RegisterSingle<IInputService>(new StandaloneInputService());
+    }
+
+    private void RegisterStaticData()
+    {
+        IStaticDataService staticData = new StaticDataService();
+        staticData.Load();
+        AllServices.RegisterSingle(staticData);
     }
 }
