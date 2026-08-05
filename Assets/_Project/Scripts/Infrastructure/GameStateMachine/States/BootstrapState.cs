@@ -6,15 +6,13 @@ public class BootstrapState : IState
 
     private readonly GameStateMachine _gameStateMachine;
     private readonly SceneLoader _sceneLoader;
-    private readonly AllServices _allServices;
     private readonly ICoroutineRunner _coroutineRunner;
 
-    public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices allServices,
+    public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader,
         ICoroutineRunner coroutineRunner)
     {
         _gameStateMachine = gameStateMachine;
         _sceneLoader = sceneLoader;
-        _allServices = allServices;
         _coroutineRunner = coroutineRunner;
 
         RegisterService();
@@ -32,6 +30,11 @@ public class BootstrapState : IState
 
     private void RegisterService()
     {
-        
+        RegisterInputService();
+    }
+
+    private void RegisterInputService()
+    {
+        AllServices.RegisterSingle<IInputService>(new StandaloneInputService());
     }
 }

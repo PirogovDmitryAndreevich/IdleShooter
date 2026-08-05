@@ -6,6 +6,5 @@ public class Game
         StateMachine =
         new GameStateMachine(
             new SceneLoader(coroutineRunner),
-            new AllServices(),
             coroutineRunner);
 }

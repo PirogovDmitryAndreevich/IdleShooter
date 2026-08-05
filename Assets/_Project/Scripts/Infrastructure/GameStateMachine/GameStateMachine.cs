@@ -6,11 +6,11 @@ public class GameStateMachine
     private Dictionary<Type, IExitingState> _states;
     private IExitingState _activeState;
 
-    public GameStateMachine(SceneLoader sceneLoader, AllServices allServices, ICoroutineRunner coroutineRunner)
+    public GameStateMachine(SceneLoader sceneLoader,ICoroutineRunner coroutineRunner)
     {
         _states = new Dictionary<Type, IExitingState>
         {
-            [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, allServices, coroutineRunner),
+            [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, coroutineRunner),
         };
     }
 
