@@ -32,6 +32,8 @@ public class BootstrapState : IState
         RegisterInputService();
 
         AllServices.RegisterSingle<IAssets>(new AssetProvider());
+        AllServices.RegisterSingle<IProgressService>(new ProgressService());
+        AllServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(AllServices.Single<IProgressService>()));
     }
 
     private void RegisterInputService()
