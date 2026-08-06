@@ -11,6 +11,9 @@ public class GameStateMachine
         _states = new Dictionary<Type, IExitingState>
         {
             [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, coroutineRunner),
+            [typeof(LoadProgressState)] = new LoadProgressState(this,
+            AllServices.Single<ISaveLoadService>(),
+            AllServices.Single<IProgressService>()),
         };
     }
 

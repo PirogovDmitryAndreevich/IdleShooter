@@ -23,12 +23,14 @@ public class BootstrapState : IState
 
     private void EnterLoadLevel()
     {
-        //_gameStateMachine.Enter<>();
+        _gameStateMachine.Enter<LoadProgressState>();
     }
 
     private void RegisterService()
     {
         RegisterStaticData();
+        AllServices.RegisterSingle<IProgressService>(new ProgressService());
+        AllServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(AllServices.Single<IProgressService>()));
         RegisterInputService();
 
         AllServices.RegisterSingle<IAssets>(new AssetProvider());
