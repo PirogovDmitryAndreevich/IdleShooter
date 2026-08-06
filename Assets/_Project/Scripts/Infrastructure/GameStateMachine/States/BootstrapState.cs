@@ -3,13 +3,15 @@ public class BootstrapState : IState
     private const string InitialSceneName = "Initial";
 
     private readonly GameStateMachine _gameStateMachine;
+    private readonly AllServices _allServices;
     private readonly SceneLoader _sceneLoader;
     private readonly ICoroutineRunner _coroutineRunner;
 
-    public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader,
+    public BootstrapState(GameStateMachine gameStateMachine, AllServices allServices, SceneLoader sceneLoader,
         ICoroutineRunner coroutineRunner)
     {
         _gameStateMachine = gameStateMachine;
+        _allServices = allServices;
         _sceneLoader = sceneLoader;
         _coroutineRunner = coroutineRunner;
 
@@ -29,24 +31,30 @@ public class BootstrapState : IState
     private void RegisterService()
     {
         RegisterStaticData();
-        AllServices.RegisterSingle<IProgressService>(new ProgressService());
-        AllServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(AllServices.Single<IProgressService>()));
+        _allServices.RegisterSingle<IProgressService>(new ProgressService());
+        _allServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(_allServices.Single<IProgressService>()));
         RegisterInputService();
 
-        AllServices.RegisterSingle<IAssets>(new AssetProvider());
-        AllServices.RegisterSingle<IProgressService>(new ProgressService());
-        AllServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(AllServices.Single<IProgressService>()));
+        _allServices.RegisterSingle<IAssets>(new AssetProvider());
+        _allServices.RegisterSingle<IProgressService>(new ProgressService());
+        _allServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(_allServices.Single<IProgressService>()));
+
+        _allServices.RegisterSingle<IGameFactory>(new GameFactory(
+            _allServices.Single<IAssets>(),
+            _allServices.Single<IInputService>(),
+            _allServices.Single<IStaticDataService>(),
+            _allServices.Single<IProgressService>()));
     }
 
     private void RegisterInputService()
     {
-        AllServices.RegisterSingle<IInputService>(new StandaloneInputService());
+        _allServices.RegisterSingle<IInputService>(new StandaloneInputService());
     }
 
     private void RegisterStaticData()
     {
         IStaticDataService staticData = new StaticDataService();
         staticData.Load();
-        AllServices.RegisterSingle(staticData);
+        _allServices.RegisterSingle(staticData);
     }
 }

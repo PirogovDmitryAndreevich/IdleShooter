@@ -13,12 +13,6 @@ public class ThirdPersonController : MonoBehaviour
     private IInputService _input;
     private PlayerStaticData _playerData;
 
-    void Start()
-    {
-        _input = AllServices.Single<IInputService>();
-        _playerData = AllServices.Single<IStaticDataService>().ForPlayer();
-    }
-
     void Update()
     {
         inputJump = _input.JumpPressed;
@@ -92,6 +86,12 @@ public class ThirdPersonController : MonoBehaviour
 
         Vector3 movement = verticalDirection + horizontalDirection;
         _characterController.Move(movement);
+    }
+
+    public void Construct(IInputService inputService, PlayerModel playerModel)
+    {
+        _input = inputService;
+        _playerData = playerModel.StaticData;
     }
 
     // Завершает прыжок, если персонаж ударился головой о препятствие

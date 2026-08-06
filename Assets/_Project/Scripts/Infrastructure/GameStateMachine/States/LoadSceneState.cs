@@ -1,12 +1,16 @@
+using UnityEngine;
+
 public class LoadSceneState : IPayloadState<string>
 {
     private readonly GameStateMachine _gameStateMachine;
     private readonly SceneLoader _sceneLoader;
+    private readonly IGameFactory _gameFactory;
 
-    public LoadSceneState(GameStateMachine gameStateMachine, SceneLoader sceneLoader)
+    public LoadSceneState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, IGameFactory gameFactory)
     {
         _gameStateMachine = gameStateMachine;
         _sceneLoader = sceneLoader;
+        _gameFactory = gameFactory;
     }
 
     public void Enter(string payload)
@@ -21,6 +25,7 @@ public class LoadSceneState : IPayloadState<string>
 
     private void OnLoaded()
     {
-        
+        var atPlayer = GameObject.FindWithTag("PlayerSpawnPoint").transform.position;
+        _gameFactory.CreatePlayer(atPlayer);
     }
 }

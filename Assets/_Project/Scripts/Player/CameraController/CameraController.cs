@@ -22,12 +22,6 @@ public class CameraController : MonoBehaviour
     float _mouseX;
     float _mouseY;
 
-    void Start()
-    {
-        _transformCamera = Camera.main.transform;
-        _player = GameObject.FindWithTag("Player").transform;
-    }
-
     public void Construct(Transform player, IInputService inputService)
     {
         _player = player;
