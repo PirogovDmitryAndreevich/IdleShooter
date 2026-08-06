@@ -14,7 +14,7 @@ public class LoadProgressState : IState
     public void Enter()
     {
         LoadProgressOrInitNew();
-        //_gameStateMachine.Enter<>();
+        _gameStateMachine.Enter<LoadSceneState, string>("Main");
     }
 
     public void Exit()

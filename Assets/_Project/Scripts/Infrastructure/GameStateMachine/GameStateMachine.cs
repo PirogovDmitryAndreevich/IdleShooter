@@ -14,6 +14,7 @@ public class GameStateMachine
             [typeof(LoadProgressState)] = new LoadProgressState(this,
             AllServices.Single<ISaveLoadService>(),
             AllServices.Single<IProgressService>()),
+            [typeof(LoadSceneState)] = new LoadSceneState(this, sceneLoader)
         };
     }
 
