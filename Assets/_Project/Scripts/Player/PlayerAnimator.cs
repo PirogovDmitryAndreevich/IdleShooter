@@ -8,11 +8,11 @@ public class PlayerAnimator : MonoBehaviour
 
     public void SetRun(bool isRunning)
     {
-        animator.SetBool("run", isRunning);
+        animator.SetBool("Run", isRunning);
     }
 
-    public void SetAir(bool isAir)
+    public void SetJump(bool isJump)
     {
-        animator.SetBool("air", isAir);
+        animator.SetBool("Jump", isJump);
     }
 }

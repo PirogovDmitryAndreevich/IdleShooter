@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
         _transformCamera = Camera.main.transform;
 
         _transformCamera.SetParent(transform);
-        _transformCamera.localPosition = new Vector3(0, 1.5f, -4f);
+        _transformCamera.localPosition = new Vector3(0, 1.5f, -2f);
         _transformCamera.localRotation = Quaternion.Euler(30f, 0, 0);
     }
 

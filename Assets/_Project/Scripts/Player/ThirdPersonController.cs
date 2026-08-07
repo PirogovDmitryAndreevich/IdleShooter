@@ -20,7 +20,7 @@ public class ThirdPersonController : MonoBehaviour
         if (_characterController.isGrounded)        
             _animator.SetRun(_characterController.velocity.magnitude > 0.9f);        
 
-        _animator.SetAir(_characterController.isGrounded == false);
+        _animator.SetJump(_characterController.isGrounded == false);
 
         if (inputJump && _characterController.isGrounded)        
             isJumping = true;        
