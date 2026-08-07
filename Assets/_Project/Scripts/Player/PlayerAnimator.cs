@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour
+public class PlayerAnimator
 {
-    [SerializeField] private Animator animator;
+    private Animator _animator;
+
+    public PlayerAnimator(Animator animator)
+    {
+        _animator = animator;
+    }
 
     public void SetRun(bool isRunning)
     {
-        animator.SetBool("Run", isRunning);
+        _animator.SetBool("Run", isRunning);
     }
 
     public void SetJump(bool isJump)
     {
-        animator.SetBool("Jump", isJump);
+        _animator.SetBool("Jump", isJump);
     }
 }

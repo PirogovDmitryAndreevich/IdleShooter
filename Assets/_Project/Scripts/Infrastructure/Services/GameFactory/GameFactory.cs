@@ -16,14 +16,15 @@ public class GameFactory : IGameFactory
 
     public void CreatePlayer(UnityEngine.Vector3 at)
     {
-        UnityEngine.GameObject player = _assets.Instantiate(AssetsPath.CharacterPath, at);
+        PlayerBehaviour player = _assets.Instantiate(AssetsPath.CharacterPath, at)
+            .GetComponent<PlayerBehaviour>();
 
         PlayerModel model = new PlayerModel(_staticDataService, _progressService);
+        PlayerPresenter presenter = new PlayerPresenter(model, player.View, _inputService);
 
-        ThirdPersonController controller = player.GetComponent<ThirdPersonController>();
-        controller.Construct(_inputService, model);
+        player.Initialize(presenter);
 
-        CreatePlayerCamera(player.transform);
+        CreatePlayerCamera(player.View.CameraTarget);
     }
 
     private void CreatePlayerCamera(UnityEngine.Transform player)
