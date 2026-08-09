@@ -1,4 +1,4 @@
 public interface IShooter
 {
-    void Shoot();
+    void Shoot(float damage);
 }

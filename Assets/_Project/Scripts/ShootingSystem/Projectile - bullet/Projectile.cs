@@ -1,24 +1,16 @@
+using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class Projectile : MonoBehaviour
 {
-    private float _maxLifetime = 5f;
-    private float _damage = 10f;
-    private Rigidbody _rigidbody;
-    private ProjectilePool _pool;
+    [SerializeField] private AnimationCurve _flyCurve;
+    [SerializeField] private TrailRenderer _trail;
+    [SerializeField] private float _flyHeight;
 
-    private float _timeElapsed = 0f;
-
-    private void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody>();
-    }
-
-    private void Update()
-    {
-        CountdownLifetime();
-    }
+    private IPoolService _pool;
+    private Coroutine _animationCoroutine;
+    private float _flyTime = 5f;
+    private float _damage;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -40,29 +32,44 @@ public class Projectile : MonoBehaviour
         if (damageable != null)        
             damageable.TakeDamage(_damage, hitPoint, hitNormal);
 
-        if (_pool != null)
-            _pool.Return(this);
+        Die();
     }
 
-    public void Startup(float damage, float speed, Vector3 direction, ProjectilePool pool, float maxLifetime)
+    public void Construct(IPoolService poolService)
+    {
+        _pool = poolService;
+    }
+
+    public void Shoot(float damage, Vector3 targetPosition)
     {
         _damage = damage;
-        _pool = pool;
-        _maxLifetime = maxLifetime;
-        _timeElapsed = 0f;
 
-        _rigidbody.velocity = Vector3.zero;
-        _rigidbody.AddForce(direction * speed, ForceMode.Impulse);
+        _trail.Clear();
+        _trail.enabled = true;
+
+        _animationCoroutine = StartCoroutine(FlyCoroutine(targetPosition));
     }
 
-    private void CountdownLifetime()
+    private IEnumerator FlyCoroutine(Vector3 b)
     {
-        _timeElapsed += Time.deltaTime;
+        Vector3 a = transform.position;
 
-        if (_timeElapsed >= _maxLifetime)
+        for (float t = 0; t < 1; t += Time.deltaTime / _flyTime)
         {
-            if (_pool != null)
-                _pool.Return(this);
+            transform.position = Vector3.Lerp(a, b, t) + _flyCurve.Evaluate(t) * _flyHeight * Vector3.up;
+            yield return null;
         }
+
+        Die();
+    }
+
+    private void Die()
+    {
+        StopCoroutine(_animationCoroutine);
+
+        _trail.Clear();
+        _trail.enabled = false;
+
+        _pool.Return(this);
     }
 }
