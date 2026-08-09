@@ -8,10 +8,12 @@ public class GameFactory : IGameFactory
     private readonly IProgressService _progressService;
     private readonly IPoolService _poolService;
     private readonly IWeaponDataService _weaponDataService;
+    private readonly IGameSaveDataService _gameSaveDataService;
     private PlayerPresenter _player;
 
     public GameFactory(IAssets assets, IInputService inputService, IStaticDataService staticDataService,
-        IProgressService progressService, IPoolService poolService, IWeaponDataService weaponDataService)
+        IProgressService progressService, IPoolService poolService, IWeaponDataService weaponDataService,
+        IGameSaveDataService gameSaveDataService)
     {
         _assets = assets;
         _inputService = inputService;
@@ -19,6 +21,7 @@ public class GameFactory : IGameFactory
         _progressService = progressService;
         _poolService = poolService;
         _weaponDataService = weaponDataService;
+        _gameSaveDataService = gameSaveDataService;
 
         _poolService.RegisterFactory(() => CreateProjectile());
     }
@@ -31,14 +34,14 @@ public class GameFactory : IGameFactory
             .GetComponent<PlayerBehaviour>();
 
         player.View.Construct(weaponSwitcher);
+        CameraController camera = CreatePlayerCamera(player.View, UnityEngine.Camera.main);
         PlayerModel model = new PlayerModel(_staticDataService, _progressService);
 
-        _player = new PlayerPresenter(model, player.View, _inputService, weaponSwitcher);
+        _player = new PlayerPresenter(model, player.View, _inputService, camera, weaponSwitcher);
 
         player.Initialize(_player);
 
         CreateHud(weaponSwitcher);
-        CreatePlayerCamera(player.View.CameraTarget);
     }
 
     private void CreateHud(WeaponSwitcher weaponSwitcher)
@@ -74,11 +77,9 @@ public class GameFactory : IGameFactory
         _assets.Instantiate(AssetsPath.SelectWeaponButtonPath, parent)
             .GetComponent<SelectWeaponButton>();
 
-    private void CreatePlayerCamera(UnityEngine.Transform player)
+    private CameraController CreatePlayerCamera(PlayerView player, UnityEngine.Camera camera)
     {
-        CameraController camera = _assets.Instantiate(AssetsPath.CameraControllerPath)
-            .GetComponent<CameraController>();
-
-        camera.Construct(player, _inputService);
+         return new CameraController(player, camera, _inputService, _gameSaveDataService,
+            _staticDataService.GetGameData());
     }
 }

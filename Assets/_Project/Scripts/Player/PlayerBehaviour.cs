@@ -8,11 +8,14 @@ public class PlayerBehaviour : MonoBehaviour
 
     public PlayerView View => _playerView;
 
-    void Update() => 
-        _presenter?.Update();
-
     void FixedUpdate() => 
         _presenter?.FixedUpdate();
+
+    void Update() =>
+        _presenter?.Update();
+
+    private void LateUpdate() => 
+        _presenter?.LateUpdate();
 
     void OnDestroy() => 
         _presenter?.Dispose();

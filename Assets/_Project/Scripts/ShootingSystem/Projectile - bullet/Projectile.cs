@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -52,11 +53,17 @@ public class Projectile : MonoBehaviour
 
     private IEnumerator FlyCoroutine(Vector3 b)
     {
-        Vector3 a = transform.position;
+        Vector3 startPosition = transform.position;
+        float distance = Vector3.Distance(startPosition, b);
 
-        for (float t = 0; t < 1; t += Time.deltaTime / _flyTime)
+        float flyTime = distance / _flyTime;
+
+        for (float t = 0; t < 1; t += Time.deltaTime / flyTime)
         {
-            transform.position = Vector3.Lerp(a, b, t) + _flyCurve.Evaluate(t) * _flyHeight * Vector3.up;
+            Vector3 horizontalPosition = Vector3.Lerp(startPosition, b, t);
+            float curveHeight = _flyCurve.Evaluate(t);
+
+            transform.position = horizontalPosition + Vector3.up * curveHeight;
             yield return null;
         }
 

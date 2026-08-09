@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public class PlayerPresenter : IDisposable
 {
@@ -7,46 +6,36 @@ public class PlayerPresenter : IDisposable
     private readonly PlayerView _view;
     private readonly PlayerAnimator _animator;
     private readonly IInputService _input;
+    private readonly CameraController _camera;
     private readonly WeaponSwitcher _weaponSwitcher;
     private readonly IRotationHandler _rotationHandler;
     private readonly ThirdPersonController _controller;
 
-    private Camera _playerCamera;
     private IWeapon _weapon;
     private float _damage = 1f;
 
-    public Camera PlayerCamera => _playerCamera;
-    private bool IsWeaponSelected => _weaponSwitcher.CurrentWeapon != null;
+    private bool IsWeaponSelected =>
+        _weaponSwitcher.CurrentWeapon != null;
 
-    public PlayerPresenter(PlayerModel model, PlayerView view, IInputService inputService, WeaponSwitcher weaponSwitcher)
+    public PlayerPresenter(PlayerModel model, PlayerView view, IInputService inputService,
+        CameraController camera, WeaponSwitcher weaponSwitcher)
     {
         _model = model;
         _view = view;
         _animator = new PlayerAnimator(view.Animator);
         _input = inputService;
+        _camera = camera;
         _weaponSwitcher = weaponSwitcher;
-        _playerCamera = Camera.main;
 
         _controller =
             new ThirdPersonController(
                 _view.Transform,
                 _view.CharacterController,
-                _input, _model.StaticData, _playerCamera);
+                _input, _model.StaticData, _camera.Camera);
 
         _rotationHandler = new SmoothRotationHandler();
 
         _weaponSwitcher.WeaponSwitched += OnWeaponSwitched;
-    }
-
-    public void Update()
-    {
-        _controller.Update();
-
-        _animator.SetRun(_controller.IsRun);
-        _animator.SetJump(_controller.IsJumping);
-
-        if (_input.IsShoot && _weapon != null)
-            _weapon.TryShoot(_damage);
     }
 
     public void FixedUpdate()
@@ -57,7 +46,7 @@ public class PlayerPresenter : IDisposable
         {
             _rotationHandler.RotateTowardsCamera(
                 _view.transform,
-                _playerCamera,
+                _camera.Camera,
                 _model.StaticData.RotationSmoothness);
         }
         else
@@ -67,7 +56,24 @@ public class PlayerPresenter : IDisposable
                 _view.transform,
                 _model.StaticData.RotationSmoothness);
         }
-        
+
+    }
+
+    public void Update()
+    {
+        _controller.Update();
+        _camera.Update();
+
+        _animator.SetRun(_controller.IsRun);
+        _animator.SetJump(_controller.IsJumping);
+
+        if (_input.IsShoot && _weapon != null)
+            _weapon.TryShoot(_damage);
+    }
+
+    public void LateUpdate()
+    {
+        _camera.LateUpdate();
     }
 
     public void Dispose()
