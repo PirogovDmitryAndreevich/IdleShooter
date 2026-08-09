@@ -33,17 +33,19 @@ public class BootstrapState : IState
         RegisterStaticData();
         _allServices.RegisterSingle<IProgressService>(new ProgressService());
         _allServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(_allServices.Single<IProgressService>()));
+        _allServices.RegisterSingle<IPoolService>(new Pool());
+        _allServices.RegisterSingle<IWeaponDataService>(new WeaponDataService(_allServices.Single<IProgressService>()));
+        _allServices.RegisterSingle<IAssets>(new AssetProvider());
         RegisterInputService();
 
-        _allServices.RegisterSingle<IAssets>(new AssetProvider());
-        _allServices.RegisterSingle<IProgressService>(new ProgressService());
-        _allServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(_allServices.Single<IProgressService>()));
 
         _allServices.RegisterSingle<IGameFactory>(new GameFactory(
             _allServices.Single<IAssets>(),
             _allServices.Single<IInputService>(),
             _allServices.Single<IStaticDataService>(),
-            _allServices.Single<IProgressService>()));
+            _allServices.Single<IProgressService>(),
+            _allServices.Single<IPoolService>(),
+            _allServices.Single<IWeaponDataService>()));
     }
 
     private void RegisterInputService()

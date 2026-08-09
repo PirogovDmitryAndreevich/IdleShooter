@@ -98,7 +98,7 @@ public class CameraController : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(-_mouseY, _mouseX, 0);
     }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         if (!Application.isPlaying || _player == null)
@@ -141,4 +141,5 @@ public class CameraController : MonoBehaviour
             Gizmos.DrawLine(hit.point, hit.point + hit.normal);
         }
     }
+#endif
 }

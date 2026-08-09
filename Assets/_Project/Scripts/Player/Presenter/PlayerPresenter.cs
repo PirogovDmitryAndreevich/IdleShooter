@@ -7,18 +7,24 @@ public class PlayerPresenter : IDisposable
     private readonly PlayerView _view;
     private readonly PlayerAnimator _animator;
     private readonly IInputService _input;
+    private readonly WeaponSwitcher _weaponSwitcher;
     private readonly IRotationHandler _rotationHandler;
     private readonly ThirdPersonController _controller;
 
-    private bool _isWeaponSelected = true;
     private Camera _playerCamera;
+    private IWeapon _weapon;
+    private float _damage = 1f;
 
-    public PlayerPresenter(PlayerModel model, PlayerView view, IInputService inputService)
+    public Camera PlayerCamera => _playerCamera;
+    private bool IsWeaponSelected => _weaponSwitcher.CurrentWeapon != null;
+
+    public PlayerPresenter(PlayerModel model, PlayerView view, IInputService inputService, WeaponSwitcher weaponSwitcher)
     {
         _model = model;
         _view = view;
         _animator = new PlayerAnimator(view.Animator);
         _input = inputService;
+        _weaponSwitcher = weaponSwitcher;
         _playerCamera = Camera.main;
 
         _controller =
@@ -28,6 +34,8 @@ public class PlayerPresenter : IDisposable
                 _input, _model.StaticData, _playerCamera);
 
         _rotationHandler = new SmoothRotationHandler();
+
+        _weaponSwitcher.WeaponSwitched += OnWeaponSwitched;
     }
 
     public void Update()
@@ -36,13 +44,16 @@ public class PlayerPresenter : IDisposable
 
         _animator.SetRun(_controller.IsRun);
         _animator.SetJump(_controller.IsJumping);
+
+        if (_input.IsShoot && _weapon != null)
+            _weapon.TryShoot(_damage);
     }
 
     public void FixedUpdate()
     {
         _controller.FixedUpdate();
 
-        if (_isWeaponSelected)
+        if (IsWeaponSelected)
         {
             _rotationHandler.RotateTowardsCamera(
                 _view.transform,
@@ -62,5 +73,10 @@ public class PlayerPresenter : IDisposable
     public void Dispose()
     {
         _controller.Dispose();
+        _weaponSwitcher.Dispose();
+        _weaponSwitcher.WeaponSwitched -= OnWeaponSwitched;
     }
+
+    private void OnWeaponSwitched(IWeapon weapon) => 
+        _weapon = weapon;
 }

@@ -8,23 +8,15 @@ public class PlayerBehaviour : MonoBehaviour
 
     public PlayerView View => _playerView;
 
-    public void Initialize(PlayerPresenter presenter)
-    {
-        _presenter = presenter;
-    }
-
-    void Update()
-    {
+    void Update() => 
         _presenter?.Update();
-    }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() => 
         _presenter?.FixedUpdate();
-    }
 
-    void OnDestroy()
-    {
+    void OnDestroy() => 
         _presenter?.Dispose();
-    }
+
+    public void Initialize(PlayerPresenter presenter) =>
+       _presenter = presenter;
 }

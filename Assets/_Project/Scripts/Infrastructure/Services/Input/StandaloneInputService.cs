@@ -16,16 +16,10 @@ public class StandaloneInputService : InputService
     {
         get
         {
-            if (Input.GetMouseButton(0))
-            {
-                if (EventSystem.current.IsPointerOverGameObject())
-                    return false;
+            if (EventSystem.current.IsPointerOverGameObject())
+                return false;
 
-                ShootPosition = Input.mousePosition;
-                return true;
-            }
-
-            return false;
+            return Input.GetMouseButton(0);
         }
     }
 
