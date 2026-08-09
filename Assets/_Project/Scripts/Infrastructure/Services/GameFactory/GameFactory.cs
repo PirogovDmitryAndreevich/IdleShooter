@@ -35,8 +35,44 @@ public class GameFactory : IGameFactory
 
         _player = new PlayerPresenter(model, player.View, _inputService, weaponSwitcher);
 
+        player.Initialize(_player);
+
+        CreateHud(weaponSwitcher);
         CreatePlayerCamera(player.View.CameraTarget);
     }
+
+    private void CreateHud(WeaponSwitcher weaponSwitcher)
+    {
+        var hud = _assets.Instantiate(AssetsPath.HudPath)
+            .GetComponent<Hud>();
+
+        hud.Construct(weaponSwitcher, this);
+    }
+
+    public WeaponPresenter CreateWeapon(WeaponType type)
+    {
+        WeaponView view = _assets.Instantiate(_staticDataService.GetWeaponView(type));
+        WeaponModel model = new WeaponModel(_staticDataService.GetWeaponData(type));
+
+        WeaponPresenter presenter = new WeaponPresenter(model, view, UnityEngine.Camera.main,
+            _staticDataService.GetGameData(), _poolService);
+
+        return presenter;
+    }
+
+    public Projectile CreateProjectile()
+    {
+        var projectile = _assets.Instantiate(AssetsPath.Projectile)
+            .GetComponent<Projectile>();
+
+        projectile.Construct(_poolService);
+
+        return projectile;
+    }
+
+    public SelectWeaponButton CreateWeaponSelectButton(UnityEngine.Transform parent) => 
+        _assets.Instantiate(AssetsPath.SelectWeaponButtonPath, parent)
+            .GetComponent<SelectWeaponButton>();
 
     private void CreatePlayerCamera(UnityEngine.Transform player)
     {

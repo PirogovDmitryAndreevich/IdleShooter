@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-
-public interface IGameFactory : IService
+﻿public interface IGameFactory : IService
 {
-    void CreatePlayer(Vector3 at);
+    void CreatePlayer(UnityEngine.Vector3 at);
+    public WeaponPresenter CreateWeapon(WeaponType type);
+    SelectWeaponButton CreateWeaponSelectButton(UnityEngine.Transform parent);
 }
