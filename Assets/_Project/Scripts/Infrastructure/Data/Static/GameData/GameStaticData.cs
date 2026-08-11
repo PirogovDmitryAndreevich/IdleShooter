@@ -4,10 +4,6 @@ using UnityEngine;
 public class GameStaticData : ScriptableObject
 {
     [Header("Camera Settings")]
-    [Tooltip("„ем оно выше, тем быстрее перемещаетс€ камера. –екомендуетс€ увеличить это значение дл€ игр, в которых используетс€ джойстик")]
-    public float Sensitivity = 5f;
-    [Tooltip("ѕределы поворота камеры по оси Y. ќсь X - это максимальное значение, которое она может подн€ть, а ось Y - максимальное значение, которое она может опустить")]
-    public Vector2 CameraLimit = new Vector2(-45, 40);
     [Tooltip("ƒистанци€ по оси Z, вычитаетс€ от Target")]
     public float MaxDistance = 5f;
     [Tooltip("—мещение по оси Y")]
@@ -34,6 +30,12 @@ public class GameStaticData : ScriptableObject
     public float MaxFov;
 
     [Header("Camera Rotation Settings")]
+    [Tooltip("„ем оно выше, тем быстрее перемещаетс€ камера. –екомендуетс€ увеличить это значение дл€ игр, в которых используетс€ джойстик")]
+    public float Sensitivity = 5f;
+    [Tooltip("ѕределы поворота камеры по оси Y. ќсь X - это максимальное значение, которое она может подн€ть, а ось Y - максимальное значение, которое она может опустить")]
+    public Vector2 FreeCameraLimit = new Vector2(-45, 40);
+    [Tooltip("ѕределы поворота камеры по оси Y. ќсь X - это максимальное значение, которое она может подн€ть, а ось Y - максимальное значение, которое она может опустить")]
+    public Vector2 AimCameraLimit = new Vector2(-17, 15);
     [Tooltip("ѕоворот при прицеливании")]
     public Vector3 AimRotation = new Vector3(-17f,0,0);
     [Tooltip("—корость поворота при переключении")]

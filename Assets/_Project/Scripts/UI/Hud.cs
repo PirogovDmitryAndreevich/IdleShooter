@@ -1,13 +1,16 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Hud : MonoBehaviour
 {
     [SerializeField] private TMP_Text _weaponName;
     [SerializeField] private Transform _buttonParent;
+    [SerializeField] private Image _aim; 
 
     private WeaponSwitcher _weaponSwitcher;
     private IGameFactory _gameFactory;
+    private bool _isAim;
 
     private void OnDestroy()
     {
@@ -54,5 +57,14 @@ public class Hud : MonoBehaviour
     {
         SelectWeaponButton button = _gameFactory.CreateWeaponSelectButton(_buttonParent);
         button.Construct(this, weapon);
+    }
+
+    public void OnAimState(bool isAim)
+    {
+        if (_isAim == isAim)
+            return;
+
+        _isAim = isAim;
+        _aim.gameObject.SetActive(_isAim);
     }
 }

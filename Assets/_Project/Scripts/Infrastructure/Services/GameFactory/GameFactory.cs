@@ -37,19 +37,21 @@ public class GameFactory : IGameFactory
         CameraController camera = CreatePlayerCamera(player.View, UnityEngine.Camera.main);
         PlayerModel model = new PlayerModel(_staticDataService, _progressService);
 
-        _player = new PlayerPresenter(model, player.View, _inputService, camera, weaponSwitcher);
+        Hud hud = CreateHud(weaponSwitcher);
 
-        player.Initialize(_player);
+        _player = new PlayerPresenter(model, player.View, _inputService, camera, weaponSwitcher, hud);
 
-        CreateHud(weaponSwitcher);
+        player.Initialize(_player);        
     }
 
-    private void CreateHud(WeaponSwitcher weaponSwitcher)
+    private Hud CreateHud(WeaponSwitcher weaponSwitcher)
     {
         var hud = _assets.Instantiate(AssetsPath.HudPath)
             .GetComponent<Hud>();
 
         hud.Construct(weaponSwitcher, this);
+
+        return hud;
     }
 
     public WeaponPresenter CreateWeapon(WeaponType type)

@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9163234a7464953448ae3d04d8ceef62, type: 3}
   m_Name: GameStaticData
   m_EditorClassIdentifier: 
-  Sensitivity: 5
-  CameraLimit: {x: -45, y: 40}
   MaxDistance: 5
   OffsetDistanceY: 2.5
   CameraSwitchSpeed: 100
   SphereRadius: 0.4
   CollisionOffset: 0.15
   CameraCollisionLerpSpeed: 15
-  AimFov: 12
+  AimFov: 14
   CameraFovSpeed: 7
   MinFov: 12
   MaxFov: 60
+  Sensitivity: 5
+  FreeCameraLimit: {x: -45, y: 40}
+  AimCameraLimit: {x: 15, y: 40}
   AimRotation: {x: -25, y: 0, z: 0}
   CameraTransitionRotationSpeed: 70
   CollisionMask:
