@@ -13,6 +13,7 @@ public class PlayerPresenter : IDisposable
 
     private IWeapon _weapon;
     private float _damage = 1f;
+    private bool _isAim;
 
     private bool IsWeaponSelected =>
         _weaponSwitcher.CurrentWeapon != null;
@@ -63,12 +64,15 @@ public class PlayerPresenter : IDisposable
     {
         _controller.Update();
         _camera.Update();
+        _isAim = _weapon != null;
 
         _animator.SetRun(_controller.IsRun);
         _animator.SetJump(_controller.IsJumping);
 
-        if (_input.IsShoot && _weapon != null)
+        if (_input.IsShoot && _isAim)
             _weapon.TryShoot(_damage);
+
+        _camera?.SwitchCamera(_isAim);
     }
 
     public void LateUpdate()

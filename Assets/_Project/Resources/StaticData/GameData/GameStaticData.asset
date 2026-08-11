@@ -14,6 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sensitivity: 5
   CameraLimit: {x: -45, y: 40}
+  MaxDistance: 5
+  OffsetDistanceY: 2.5
+  CameraSwitchSpeed: 100
+  SphereRadius: 0.4
+  CollisionOffset: 0.15
+  CameraCollisionLerpSpeed: 15
+  AimFov: 12
+  CameraFovSpeed: 7
+  MinFov: 12
+  MaxFov: 60
+  AimRotation: {x: -25, y: 0, z: 0}
+  CameraTransitionRotationSpeed: 70
+  CollisionMask:
+    serializedVersion: 2
+    m_Bits: 1
   AimLayerMask:
     serializedVersion: 2
     m_Bits: 1

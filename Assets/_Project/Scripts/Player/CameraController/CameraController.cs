@@ -1,99 +1,136 @@
 ﻿using UnityEngine;
+
+public enum CameraSwitchState
+{
+    Free,
+    ToAim,
+    Aim,
+    ToFree
+}
+
 public class CameraController
 {
-    private readonly IInputService _inputService;
-    private readonly IGameSaveDataService _gameSaveData;
-    private readonly GameStaticData _gameStaticData;
-    private readonly Transform _target;
-    private readonly Transform _transformCamera;
-    private readonly Transform _parent;
+    private readonly Camera _camera;
 
-    float _mouseX;
-    float _mouseY;
+    private readonly CameraMovement _movement;
+    private readonly CameraRotation _rotation;
+    private readonly CameraZoom _zoom;
+    private readonly CameraCollision _collision;
 
-    public Camera Camera { get; private set; }
+    private CameraSwitchState _switchState;
 
-    public CameraController(PlayerView player, Camera camera, IInputService inputService,
-        IGameSaveDataService gameSaveDataService, GameStaticData gameStaticData)
+    public Camera Camera => _camera;
+
+    public CameraController(
+        PlayerView player,
+        Camera camera,
+        IInputService inputService,
+        IGameSaveDataService gameSaveDataService,
+        GameStaticData gameStaticData)
     {
-        _target = player.CameraTarget;
-        _inputService = inputService;
-        _gameSaveData = gameSaveDataService;
-        _gameStaticData = gameStaticData;
-        Camera = camera;
-        _transformCamera = camera.transform;
+        _camera = camera;
 
         GameObject parent = new GameObject("CameraController");
-        _parent = parent.transform;
+        camera.transform.SetParent(parent.transform);
 
-        _transformCamera.SetParent(_parent);
-        _transformCamera.localPosition = new Vector3(0, 1.5f, -2f);
-        _transformCamera.localRotation = Quaternion.Euler(30f, 0, 0);
+        _movement = new CameraMovement(
+            player,
+            gameStaticData,
+            parent.transform);
+
+        _rotation = new CameraRotation(
+            inputService,
+            gameSaveDataService,
+            gameStaticData,
+            _movement.Parent);
+
+        _zoom = new CameraZoom(
+            camera,
+            inputService,
+            gameSaveDataService,
+            gameStaticData);
+
+        _collision = new CameraCollision(
+            camera,
+            gameStaticData,
+            _movement.Parent);
+
+        _switchState = CameraSwitchState.Free;
     }
 
     public void Update()
     {
-        if (_inputService.ZoomInput != 0)
-            ZoomCamera(_inputService.ZoomInput);
+        switch (_switchState)
+        {
+            case CameraSwitchState.Free:
+                _rotation.UpdateFree();
+                _zoom.Update();
+                break;
 
-        if (_inputService.IsCameraMoving)
-            RotateCamera(_inputService.LookInputVector);
+            case CameraSwitchState.Aim:
+                _rotation.UpdateAim();
+                break;
+        }
     }
 
     public void LateUpdate()
     {
-        MoveCamera();
-        UpdateCollision();
-    }
-
-    private void UpdateCollision()
-    {
-        Vector3 origin = _target.position;
-
-        Vector3 desiredPosition = _parent.TransformPoint(0f, 0f, -_gameStaticData.MaxDistance);
-
-        Vector3 direction = desiredPosition - origin;
-        float distance = direction.magnitude;
-
-        direction.Normalize();
-
-        Vector3 finalPosition = desiredPosition;
-
-        if (Physics.SphereCast(
-            origin,
-            _gameStaticData.SphereRadius,
-            direction,
-            out RaycastHit hit,
-            distance,
-            _gameStaticData.CollisionMask,
-            QueryTriggerInteraction.Ignore))
+        if (_switchState == CameraSwitchState.ToAim ||
+        _switchState == CameraSwitchState.ToFree)
         {
-            finalPosition = hit.point - direction * _gameStaticData.CollisionOffset;
+            bool movementFinished = _movement.UpdateTransition();
+            bool rotationFinished = _rotation.UpdateTransition(_switchState);
+
+            if (movementFinished && rotationFinished)
+            {
+                _switchState =
+                    _switchState == CameraSwitchState.ToAim
+                        ? CameraSwitchState.Aim
+                        : CameraSwitchState.Free;
+            }
+        }
+        else
+        {
+            _movement.Update();
         }
 
-        _transformCamera.position = Vector3.Lerp(
-            _transformCamera.position,
-            finalPosition,
-            Time.deltaTime * 15f);
+        _collision.Update();
+        _zoom.UpdateFov();
     }
 
-    private void MoveCamera()
+    public void SwitchCamera(bool isAim)
     {
-        _parent.position = _target.position + new Vector3(0, _gameStaticData.OffsetDistanceY, 0);
+        if (isAim)
+            SwitchToAim();
+        else
+            SwitchToFree();
     }
 
-    private void ZoomCamera(float scroll)
+    private void SwitchToAim()
     {
-        Camera.main.fieldOfView -= scroll * _gameSaveData.Sensitivity * 2;
+        if (_switchState == CameraSwitchState.Aim ||
+            _switchState == CameraSwitchState.ToAim)
+            return;
+
+        _rotation.PrepareAim();
+        _zoom.PrepareAim();
+
+        _movement.SetAim();
+
+        _switchState = CameraSwitchState.ToAim;
     }
 
-    private void RotateCamera(Vector2 axis)
+    private void SwitchToFree()
     {
-        _mouseX += axis.x * _gameSaveData.Sensitivity;
-        _mouseY += axis.y * _gameSaveData.Sensitivity;
+        if (_switchState == CameraSwitchState.Free ||
+            _switchState == CameraSwitchState.ToFree)
+            return;
 
-        _mouseY = Mathf.Clamp(_mouseY, _gameStaticData.CameraLimit.x, _gameStaticData.CameraLimit.y);
+        _rotation.PrepareFree();
+        _zoom.PrepareFree();
 
-        _parent.rotation = Quaternion.Euler(-_mouseY, _mouseX, 0);
+        _movement.SetFree();
+
+        _switchState = CameraSwitchState.ToFree;
     }
 }

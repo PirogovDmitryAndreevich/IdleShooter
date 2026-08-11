@@ -4,12 +4,14 @@ using UnityEngine;
 public class PlayerView : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private Transform _cameraTarget;
+    [SerializeField] private Transform _freeCameraTarget;
+    [SerializeField] private Transform _aimCameraTarget;
     [SerializeField] private Transform _weaponSpawnParent;
     [SerializeField] private CharacterController _characterController;
 
     public Animator Animator => _animator;
-    public Transform CameraTarget => _cameraTarget;
+    public Transform FreeCameraTarget => _freeCameraTarget;
+    public Transform AimCameraTarget => _aimCameraTarget;
     public CharacterController CharacterController => _characterController;
     public Transform Transform => transform;
     public Transform WeaponSpawnParent => _weaponSpawnParent;
