@@ -6,6 +6,8 @@ public class CameraCollision
     private readonly Transform _parent;
     private readonly GameStaticData _gameStaticData;
 
+    private Vector3 _currentPosition;
+
     public CameraCollision(
         Camera camera,
         GameStaticData gameStaticData,
@@ -14,6 +16,8 @@ public class CameraCollision
         _camera = camera.transform;
         _parent = parent;
         _gameStaticData = gameStaticData;
+
+        _currentPosition = _camera.position;
     }
 
     public void Update()
@@ -26,12 +30,14 @@ public class CameraCollision
             -_gameStaticData.MaxDistance);
 
         Vector3 direction = desiredPosition - origin;
-
         float distance = direction.magnitude;
+
+        if (distance <= 0.001f)
+            return;
 
         direction.Normalize();
 
-        Vector3 finalPosition = desiredPosition;
+        Vector3 targetPosition = desiredPosition;
 
         if (Physics.SphereCast(
             origin,
@@ -42,16 +48,17 @@ public class CameraCollision
             _gameStaticData.CollisionMask,
             QueryTriggerInteraction.Ignore))
         {
-            finalPosition =
+            targetPosition =
                 hit.point -
-                direction *
-                _gameStaticData.CollisionOffset;
+                direction * _gameStaticData.CollisionOffset;
         }
 
-        _camera.position = Vector3.Lerp(
-            _camera.position,
-            finalPosition,
+        _currentPosition = Vector3.Lerp(
+            _currentPosition,
+            targetPosition,
             Time.deltaTime *
             _gameStaticData.CameraCollisionLerpSpeed);
+
+        _camera.position = _currentPosition;
     }
 }

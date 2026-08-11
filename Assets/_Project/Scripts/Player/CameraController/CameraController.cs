@@ -16,6 +16,7 @@ public class CameraController
     private readonly CameraRotation _rotation;
     private readonly CameraZoom _zoom;
     private readonly CameraCollision _collision;
+    private readonly CameraShake _shake;
 
     private CameraSwitchState _switchState;
 
@@ -55,6 +56,9 @@ public class CameraController
             gameStaticData,
             _movement.Parent);
 
+        _shake = new CameraShake(
+            camera.transform);
+
         _switchState = CameraSwitchState.Free;
     }
 
@@ -75,27 +79,37 @@ public class CameraController
 
     public void LateUpdate()
     {
-        if (_switchState == CameraSwitchState.ToAim ||
-        _switchState == CameraSwitchState.ToFree)
-        {
-            bool movementFinished = _movement.UpdateTransition();
-            bool rotationFinished = _rotation.UpdateTransition(_switchState);
-
-            if (movementFinished && rotationFinished)
-            {
-                _switchState =
-                    _switchState == CameraSwitchState.ToAim
-                        ? CameraSwitchState.Aim
-                        : CameraSwitchState.Free;
-            }
-        }
-        else
-        {
-            _movement.Update();
-        }
+        UpdateSwitch();
 
         _collision.Update();
         _zoom.UpdateFov();
+    }
+
+    private void UpdateSwitch()
+    {
+        if (_switchState != CameraSwitchState.ToAim &&
+            _switchState != CameraSwitchState.ToFree)
+        {
+            _movement.Update();
+            return;
+        }
+
+        bool movementFinished =
+            _movement.UpdateTransition();
+
+        bool rotationFinished =
+            _rotation.UpdateTransition(_switchState);
+
+        if (!movementFinished ||
+            !rotationFinished)
+        {
+            return;
+        }
+
+        if (_switchState == CameraSwitchState.ToAim)        
+            _switchState = CameraSwitchState.Aim;        
+        else        
+            _switchState = CameraSwitchState.Free;        
     }
 
     public void SwitchCamera(bool isAim)
@@ -105,6 +119,24 @@ public class CameraController
         else
             SwitchToFree();
     }
+
+    public void Shake(
+        float duration,
+        float positionStrength,
+        float rotationStrength,
+        int vibrato = 20,
+        float randomness = 90f)
+    {
+        _shake.Shake(
+            duration,
+            positionStrength,
+            rotationStrength,
+            vibrato,
+            randomness);
+    }
+
+    public void StopShake() => 
+        _shake.Stop();
 
     private void SwitchToAim()
     {

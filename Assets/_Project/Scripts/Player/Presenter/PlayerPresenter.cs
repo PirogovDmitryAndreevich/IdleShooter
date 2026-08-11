@@ -71,8 +71,8 @@ public class PlayerPresenter : IDisposable
         _animator.SetRun(_controller.IsRun);
         _animator.SetJump(_controller.IsJumping);
 
-        if (_input.IsShoot && _isAim)
-            _weapon.TryShoot(_damage);
+        if (_input.IsShoot && _isAim)        
+            Shoot();
 
         if (Input.GetKeyDown(KeyCode.P))
             _camera.Shake(0.1f, 0.01f, 1.5f);
@@ -103,5 +103,11 @@ public class PlayerPresenter : IDisposable
         _isAim = _weapon != null;
         _camera?.SwitchCamera(_isAim);
         _hud.OnAimState(_isAim);
+    }
+
+    private void Shoot()
+    {
+        _weapon.TryShoot(_damage);
+        _camera.Shake(0.1f, 0.06f, 1.5f);
     }
 }

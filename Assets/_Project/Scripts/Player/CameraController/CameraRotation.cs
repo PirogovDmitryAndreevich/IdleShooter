@@ -40,8 +40,8 @@ public class CameraRotation
 
         _mouseY = Mathf.Clamp(
             _mouseY,
-            _gameStaticData.CameraLimit.x,
-            _gameStaticData.CameraLimit.y);
+            _gameStaticData.FreeCameraLimit.x,
+            _gameStaticData.FreeCameraLimit.y);
 
         _freeRotation = Quaternion.Euler(
             -_mouseY,
@@ -60,9 +60,15 @@ public class CameraRotation
 
         // Только горизонтальный поворот.
         _mouseX += input.x * _gameSaveData.Sensitivity;
+        _mouseY += input.y * _gameSaveData.Sensitivity;
+
+        _mouseY = Mathf.Clamp(
+            _mouseY,
+            _gameStaticData.AimCameraLimit.x,
+            _gameStaticData.AimCameraLimit.y);
 
         _parent.rotation = Quaternion.Euler(
-            _gameStaticData.AimRotation.x,
+            -_mouseY,
             _mouseX,
             0f);
     }
