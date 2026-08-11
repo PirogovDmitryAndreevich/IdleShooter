@@ -25,3 +25,5 @@ MonoBehaviour:
     Vibrato: 22
     Randomness: 20
     FadeOut: 1
+  AnimationName: AimStones
+  ShootAnimationName: ThrowSnone

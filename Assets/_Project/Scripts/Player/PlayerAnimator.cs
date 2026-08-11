@@ -18,4 +18,9 @@ public class PlayerAnimator
     {
         _animator.SetBool("Jump", isJump);
     }
+
+    public void SetWeaponAnimation(string animationName, bool isAim)
+    {
+        _animator.SetBool(animationName, isAim);
+    }
 }

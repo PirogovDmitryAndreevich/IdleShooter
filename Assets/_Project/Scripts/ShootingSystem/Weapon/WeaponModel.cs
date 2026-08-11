@@ -7,6 +7,7 @@ public class WeaponModel
     public float FireRate => _staticData.FireRate;
     public float MaxAimDistance => _staticData.MaxAimDistance;
     public ShootShakeSettings Shake => _staticData.Shake;
+    public string AnimationName => _staticData.AnimationName;
 
     public WeaponModel(WeaponStaticData staticData)
     {

@@ -66,22 +66,22 @@ public class PlayerPresenter : IDisposable
     public void Update()
     {
         _controller.Update();
-        _camera.Update();       
+        _camera.Update();
 
         _animator.SetRun(_controller.IsRun);
         _animator.SetJump(_controller.IsJumping);
 
-        if (_input.IsShoot && _isAim)        
+        if (_input.IsShoot && _isAim)
             Shoot();
-/*
-        if (Input.GetKeyDown(KeyCode.P))
-            _camera.Shake(0.1f, 0.01f, 1.5f);
+        /*
+                if (Input.GetKeyDown(KeyCode.P))
+                    _camera.Shake(0.1f, 0.01f, 1.5f);
 
-        if (Input.GetKeyDown(KeyCode.O))
-            _camera.Shake(0.25f, 0.08f, 4f);
+                if (Input.GetKeyDown(KeyCode.O))
+                    _camera.Shake(0.25f, 0.08f, 4f);
 
-        if (Input.GetKeyDown(KeyCode.I))
-            _camera.Shake(0.4f, 0.15f, 6f, 25, 90f);*/
+                if (Input.GetKeyDown(KeyCode.I))
+                    _camera.Shake(0.4f, 0.15f, 6f, 25, 90f);*/
     }
 
     public void LateUpdate()
@@ -98,11 +98,20 @@ public class PlayerPresenter : IDisposable
 
     private void OnWeaponSwitched(IWeapon weapon)
     {
+        if (_weapon != null)
+            _animator.SetWeaponAnimation(_weapon.AnimationName, false);
+
         _weapon = weapon;
 
         _isAim = _weapon != null;
-        _camera?.SwitchCamera(_isAim);
+
+        if (_isAim)
+        {
+            _animator.SetWeaponAnimation(_weapon.AnimationName, _isAim);
+        }
+
         _hud.OnAimState(_isAim);
+        _camera?.SwitchCamera(_isAim);
     }
 
     private void Shoot()

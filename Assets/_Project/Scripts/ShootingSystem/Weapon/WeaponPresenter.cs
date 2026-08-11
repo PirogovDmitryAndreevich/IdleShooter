@@ -17,6 +17,8 @@ public class WeaponPresenter : IWeapon
 
     public ShootShakeSettings Shake => _model.Shake;
 
+    public string AnimationName => _model.AnimationName;
+
     public WeaponPresenter(WeaponModel weaponModel, WeaponView view, Camera camera,
         GameStaticData data, IPoolService poolService)
     {
