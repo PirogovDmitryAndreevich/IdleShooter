@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 769938702181859652}
   - component: {fileID: 5065173656993766871}
   - component: {fileID: 3918646400473209226}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Stone-Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -2,6 +2,7 @@
 {
     WeaponType Type { get;}
     WeaponView View { get;}
+    ShootShakeSettings Shake { get; }
 
-    void TryShoot(float damage);
+    bool TryShoot(float damage);
 }

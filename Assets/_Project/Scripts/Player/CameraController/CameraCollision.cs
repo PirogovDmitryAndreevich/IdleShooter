@@ -2,25 +2,18 @@ using UnityEngine;
 
 public class CameraCollision
 {
-    private readonly Transform _camera;
     private readonly Transform _parent;
     private readonly GameStaticData _gameStaticData;
 
-    private Vector3 _currentPosition;
-
     public CameraCollision(
-        Camera camera,
         GameStaticData gameStaticData,
         Transform parent)
     {
-        _camera = camera.transform;
         _parent = parent;
         _gameStaticData = gameStaticData;
-
-        _currentPosition = _camera.position;
     }
 
-    public void Update()
+    public Vector3 CalculatePosition()
     {
         Vector3 origin = _parent.position;
 
@@ -33,7 +26,7 @@ public class CameraCollision
         float distance = direction.magnitude;
 
         if (distance <= 0.001f)
-            return;
+            return desiredPosition;
 
         direction.Normalize();
 
@@ -48,17 +41,10 @@ public class CameraCollision
             _gameStaticData.CollisionMask,
             QueryTriggerInteraction.Ignore))
         {
-            targetPosition =
-                hit.point -
-                direction * _gameStaticData.CollisionOffset;
+            return hit.point -
+                  direction * _gameStaticData.CollisionOffset;
         }
 
-        _currentPosition = Vector3.Lerp(
-            _currentPosition,
-            targetPosition,
-            Time.deltaTime *
-            _gameStaticData.CameraCollisionLerpSpeed);
-
-        _camera.position = _currentPosition;
+        return desiredPosition;
     }
 }

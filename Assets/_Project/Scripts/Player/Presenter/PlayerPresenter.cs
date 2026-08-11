@@ -73,7 +73,7 @@ public class PlayerPresenter : IDisposable
 
         if (_input.IsShoot && _isAim)        
             Shoot();
-
+/*
         if (Input.GetKeyDown(KeyCode.P))
             _camera.Shake(0.1f, 0.01f, 1.5f);
 
@@ -81,7 +81,7 @@ public class PlayerPresenter : IDisposable
             _camera.Shake(0.25f, 0.08f, 4f);
 
         if (Input.GetKeyDown(KeyCode.I))
-            _camera.Shake(0.4f, 0.15f, 6f, 25, 90f);
+            _camera.Shake(0.4f, 0.15f, 6f, 25, 90f);*/
     }
 
     public void LateUpdate()
@@ -107,7 +107,7 @@ public class PlayerPresenter : IDisposable
 
     private void Shoot()
     {
-        _weapon.TryShoot(_damage);
-        _camera.Shake(0.1f, 0.06f, 1.5f);
+        if (_weapon.TryShoot(_damage))
+            _camera.Shake(_weapon.Shake);
     }
 }

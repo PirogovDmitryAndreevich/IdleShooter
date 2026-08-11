@@ -9,4 +9,5 @@ public class WeaponStaticData : ScriptableObject
     public Projectile Projectile;
     public float FireRate = 0.2f;
     public float MaxAimDistance = 1000;
+    public ShootShakeSettings Shake;
 }

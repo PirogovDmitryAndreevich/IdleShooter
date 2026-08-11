@@ -15,6 +15,8 @@ public class WeaponPresenter : IWeapon
     public WeaponType Type => _model.Type;
     public WeaponView View => _view;
 
+    public ShootShakeSettings Shake => _model.Shake;
+
     public WeaponPresenter(WeaponModel weaponModel, WeaponView view, Camera camera,
         GameStaticData data, IPoolService poolService)
     {
@@ -27,13 +29,15 @@ public class WeaponPresenter : IWeapon
         _shooter = CreateShooter(_model.Shooter);
     }
 
-    public void TryShoot(float damage)
+    public bool TryShoot(float damage)
     {
         if (Time.time < _nextFireTime)
-            return;
+            return false;
 
         _nextFireTime = Time.time + _model.FireRate;
         _shooter.Shoot(damage);
+
+        return true;
     }
 
     public void OnWeaponSelected(IWeapon weapon)

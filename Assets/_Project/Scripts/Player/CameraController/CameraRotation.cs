@@ -58,7 +58,6 @@ public class CameraRotation
 
         Vector2 input = _inputService.LookInputVector;
 
-        // Только горизонтальный поворот.
         _mouseX += input.x * _gameSaveData.Sensitivity;
         _mouseY += input.y * _gameSaveData.Sensitivity;
 

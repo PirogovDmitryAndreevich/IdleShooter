@@ -18,3 +18,10 @@ MonoBehaviour:
     type: 3}
   FireRate: 0.2
   MaxAimDistance: 10
+  Shake:
+    Duration: 0.27
+    PositionStrength: 1.5
+    RotationStrength: 0.2
+    Vibrato: 22
+    Randomness: 20
+    FadeOut: 1

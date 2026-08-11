@@ -3,50 +3,37 @@ using UnityEngine;
 
 public class CameraShake
 {
-    private readonly Transform _camera;
-
-    private readonly Vector3 _defaultLocalPosition;
-    private readonly Quaternion _defaultLocalRotation;
+    private readonly Transform _shake;
 
     private Tween _positionTween;
     private Tween _rotationTween;
 
-    public CameraShake(Transform camera)
+    public CameraShake(Transform shake)
     {
-        _camera = camera;
-
-        _defaultLocalPosition = camera.localPosition;
-        _defaultLocalRotation = Quaternion.Euler(30f, 0f, 0f);
-
-        _camera.localRotation = _defaultLocalRotation;
+        _shake = shake;
     }
 
-    public void Shake(
-        float duration,
-        float positionStrength,
-        float rotationStrength,
-        int vibrato = 20,
-        float randomness = 90f)
+    public void Shake(ShootShakeSettings settings)
     {
         Stop();
 
-        _camera.localPosition = _defaultLocalPosition;
-        _camera.localRotation = _defaultLocalRotation;
+        _shake.localPosition = Vector3.zero;
+        _shake.localRotation = Quaternion.identity;
 
-        _positionTween = _camera.DOShakePosition(
-            duration,
-            positionStrength,
-            vibrato,
-            randomness,
+        _positionTween = _shake.DOShakePosition(
+            settings.Duration,
+            settings.PositionStrength,
+            settings.Vibrato,
+            settings.Randomness,
             false,
-            true).Play();
+            settings.FadeOut).Play();
 
-        _rotationTween = _camera.DOShakeRotation(
-            duration,
-            rotationStrength,
-            vibrato,
-            randomness,
-            true).Play();
+        _rotationTween = _shake.DOShakeRotation(
+            settings.Duration,
+            settings.RotationStrength,
+            settings.Vibrato,
+            settings.Randomness,
+            settings.FadeOut).Play();
     }
 
     public void Stop()
@@ -62,7 +49,7 @@ public class CameraShake
 
     private void Reset()
     {
-        _camera.localPosition = _defaultLocalPosition;
-        _camera.localRotation = _defaultLocalRotation; 
+        _shake.localPosition = Vector3.zero;
+        _shake.localRotation = Quaternion.identity;
     }
 }

@@ -11,7 +11,7 @@ public enum CameraSwitchState
 public class CameraController
 {
     private readonly Camera _camera;
-
+    private readonly GameStaticData _gameStaticData;
     private readonly CameraMovement _movement;
     private readonly CameraRotation _rotation;
     private readonly CameraZoom _zoom;
@@ -29,10 +29,17 @@ public class CameraController
         IGameSaveDataService gameSaveDataService,
         GameStaticData gameStaticData)
     {
+        _gameStaticData = gameStaticData;
         _camera = camera;
 
         GameObject parent = new GameObject("CameraController");
-        camera.transform.SetParent(parent.transform);
+        GameObject shake = new GameObject("CameraShake");
+
+        shake.transform.SetParent(parent.transform);
+        shake.transform.localPosition = Vector3.zero;
+        shake.transform.localRotation = Quaternion.identity;
+
+        camera.transform.SetParent(shake.transform);
 
         _movement = new CameraMovement(
             player,
@@ -52,12 +59,11 @@ public class CameraController
             gameStaticData);
 
         _collision = new CameraCollision(
-            camera,
             gameStaticData,
             _movement.Parent);
 
         _shake = new CameraShake(
-            camera.transform);
+             shake.transform);
 
         _switchState = CameraSwitchState.Free;
     }
@@ -81,8 +87,20 @@ public class CameraController
     {
         UpdateSwitch();
 
-        _collision.Update();
+        UpdateCameraPosition();
         _zoom.UpdateFov();
+    }
+
+    private void UpdateCameraPosition()
+    {
+        Vector3 targetPosition =
+            _collision.CalculatePosition();
+
+        _camera.transform.position = Vector3.Lerp(
+            _camera.transform.position,
+            targetPosition,
+            Time.deltaTime *
+            _gameStaticData.CameraCollisionLerpSpeed);
     }
 
     private void UpdateSwitch()
@@ -120,20 +138,8 @@ public class CameraController
             SwitchToFree();
     }
 
-    public void Shake(
-        float duration,
-        float positionStrength,
-        float rotationStrength,
-        int vibrato = 20,
-        float randomness = 90f)
-    {
-        _shake.Shake(
-            duration,
-            positionStrength,
-            rotationStrength,
-            vibrato,
-            randomness);
-    }
+    public void Shake(ShootShakeSettings settings) => 
+        _shake.Shake(settings);
 
     public void StopShake() => 
         _shake.Stop();
