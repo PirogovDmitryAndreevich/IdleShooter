@@ -22,9 +22,6 @@ public class SwitchWeaponButton : MonoBehaviour
         if ((_playerLayer.value & (1 << other.gameObject.layer)) == 0)
             return;
 
-        if (_weaponSwitcher.CurrentWeapon.Type == _type)
-            return;
-
         _weaponSwitcher.SwitchWeapon(_type);
     }
 
@@ -41,7 +38,6 @@ public class SwitchWeaponButton : MonoBehaviour
         _weaponData = weaponData;
 
         _isOpened = _weaponData.GetWeapon(_type);
-        _isSelected = _isOpened && _weaponSwitcher.CurrentWeapon.Type == _type;
 
         _weaponSwitcher.WeaponSwitched += OnSwitchWeapon;
         _weaponSwitcher.WeaponOpened += OpenedWeapon;

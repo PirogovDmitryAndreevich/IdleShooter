@@ -15,7 +15,7 @@ public class WeaponPresenter : IWeapon
     public WeaponType Type => _model.Type;
     public WeaponView View => _view;
 
-    public ShootShakeSettings Shake => _model.Shake;
+    public ShootShakeSettings ShakeData => _model.Shake;
 
     public string AnimationName => _model.AnimationName;
 

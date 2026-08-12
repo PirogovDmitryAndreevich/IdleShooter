@@ -33,7 +33,7 @@ public class CameraMovement
         _parent.position = Vector3.Lerp(
             _parent.position,
             _target.position,
-            Time.deltaTime * _gameStaticData.CameraSwitchSpeed);
+            Time.deltaTime * _gameStaticData.CameraSettingsData.CameraSwitchSpeed);
 
         return Vector3.Distance(
             _parent.position,

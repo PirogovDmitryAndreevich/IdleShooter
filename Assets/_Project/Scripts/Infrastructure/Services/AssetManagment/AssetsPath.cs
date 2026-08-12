@@ -4,4 +4,5 @@ public static class AssetsPath
     public const string Projectile = "Weapons/Stones/Projectiles/Stone-Projectile";
     public const string SelectWeaponButtonPath = "Hud/SelectWeaponButton";
     public const string HudPath = "Hud/HudDesktop";
+    public const string WeaponSwitcherPath = "WeaponSwitcher/WeaponSwitcher";
 }

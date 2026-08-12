@@ -100,7 +100,7 @@ public class CameraController
             _camera.transform.position,
             targetPosition,
             Time.deltaTime *
-            _gameStaticData.CameraCollisionLerpSpeed);
+            _gameStaticData.CameraSettingsData.CameraCollisionLerpSpeed);
     }
 
     private void UpdateSwitch()

@@ -33,7 +33,8 @@ public class WeaponSwitcher : IDisposable
 
         if (!_weapons.ContainsKey(type))
         {
-            throw new ArgumentException($"[WeaponSwitcher][SelectWeapon] Попытка выбрать не открытое оружие: {type}");
+            UnityEngine.Debug.LogError($"[WeaponSwitcher][SelectWeapon] Попытка выбрать не открытое оружие: {type}");
+            return;
         }
 
         SelectWeapon(type);
@@ -53,8 +54,6 @@ public class WeaponSwitcher : IDisposable
 
         _weapons[type] = weapon;
         WeaponOpened?.Invoke(weapon);
-
-        SwitchWeapon(type);
     }
 
     private void SelectWeapon(WeaponType type)
@@ -68,7 +67,6 @@ public class WeaponSwitcher : IDisposable
         CurrentWeapon = null;
         WeaponSwitched?.Invoke(null);
     }
-
 
     private IWeapon CreateWeapon(WeaponType type) =>
         _gameFactory.CreateWeapon(type);

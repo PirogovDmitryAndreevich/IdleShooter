@@ -71,10 +71,10 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  _meshRenderer: {fileID: 0}
-  _closedMaterial: {fileID: 0}
-  _openedMaterial: {fileID: 0}
-  _selectedMaterial: {fileID: 0}
+  _meshRenderer: {fileID: 8926566768904349244}
+  _closedMaterial: {fileID: 2100000, guid: 33657a469011e1b4ab72119bf818eafa, type: 2}
+  _openedMaterial: {fileID: 2100000, guid: a3a15a262d303504380e98d9657cf807, type: 2}
+  _selectedMaterial: {fileID: 2100000, guid: 601776067fcb444469f695594365d397, type: 2}
 --- !u!1 &6493399476096978871
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 7816913274158166494}
   - component: {fileID: 8926566768904349244}
   m_Layer: 8
-  m_Name: Cylinder
+  m_Name: MeshRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

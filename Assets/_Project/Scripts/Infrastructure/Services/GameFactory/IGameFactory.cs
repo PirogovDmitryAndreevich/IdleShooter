@@ -2,5 +2,5 @@
 {
     void CreatePlayer(UnityEngine.Vector3 at);
     public WeaponPresenter CreateWeapon(WeaponType type);
-    SelectWeaponButton CreateWeaponSelectButton(UnityEngine.Transform parent);
+    void CreateWeaponSwitcher(WeaponType type, UnityEngine.Vector3 position);
 }

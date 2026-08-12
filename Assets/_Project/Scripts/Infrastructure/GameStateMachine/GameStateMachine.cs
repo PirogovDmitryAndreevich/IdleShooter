@@ -17,7 +17,8 @@ public class GameStateMachine
             [typeof(LoadSceneState)] = new LoadSceneState(this,
             sceneLoader,
             allServices.Single<IGameFactory>(),
-            allServices.Single<IWeaponDataService>())
+            allServices.Single<IWeaponDataService>(),
+            allServices.Single<IStaticDataService>())
         };
     }
 

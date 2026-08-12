@@ -1,5 +1,3 @@
-using System;
-
 public class GameFactory : IGameFactory
 {
     private readonly IAssets _assets;
@@ -9,7 +7,9 @@ public class GameFactory : IGameFactory
     private readonly IPoolService _poolService;
     private readonly IWeaponDataService _weaponDataService;
     private readonly IGameSaveDataService _gameSaveDataService;
+
     private PlayerPresenter _player;
+    WeaponSwitcher _weaponSwitcher;
 
     public GameFactory(IAssets assets, IInputService inputService, IStaticDataService staticDataService,
         IProgressService progressService, IPoolService poolService, IWeaponDataService weaponDataService,
@@ -28,28 +28,37 @@ public class GameFactory : IGameFactory
 
     public void CreatePlayer(UnityEngine.Vector3 at)
     {
-        WeaponSwitcher weaponSwitcher = new WeaponSwitcher(this, _weaponDataService);
+        _weaponSwitcher = new WeaponSwitcher(this, _weaponDataService);
 
         PlayerBehaviour player = _assets.Instantiate(AssetsPath.CharacterPath, at)
             .GetComponent<PlayerBehaviour>();
 
-        player.View.Construct(weaponSwitcher);
+        player.View.Construct();
         CameraController camera = CreatePlayerCamera(player.View, UnityEngine.Camera.main);
         PlayerModel model = new PlayerModel(_staticDataService, _progressService);
 
-        Hud hud = CreateHud(weaponSwitcher);
 
-        _player = new PlayerPresenter(model, player.View, _inputService, camera, weaponSwitcher, hud);
+        _player = new PlayerPresenter(model, player.View, _inputService, camera, _weaponSwitcher);
 
-        player.Initialize(_player);        
+        Hud hud = CreateHud(_player);
+
+        player.Initialize(_player);
     }
 
-    private Hud CreateHud(WeaponSwitcher weaponSwitcher)
+    public void CreateWeaponSwitcher(WeaponType type, UnityEngine.Vector3 position)
+    {
+        SwitchWeaponButton switcher = _assets.Instantiate(AssetsPath.WeaponSwitcherPath, at: position)
+            .GetComponent<SwitchWeaponButton>();
+
+        switcher.Construct(_weaponSwitcher, _weaponDataService, type);
+    }
+
+    private Hud CreateHud(PlayerPresenter playerPresenter)
     {
         var hud = _assets.Instantiate(AssetsPath.HudPath)
             .GetComponent<Hud>();
 
-        hud.Construct(weaponSwitcher, this);
+        hud.Construct(playerPresenter);
 
         return hud;
     }
@@ -75,13 +84,9 @@ public class GameFactory : IGameFactory
         return projectile;
     }
 
-    public SelectWeaponButton CreateWeaponSelectButton(UnityEngine.Transform parent) => 
-        _assets.Instantiate(AssetsPath.SelectWeaponButtonPath, parent)
-            .GetComponent<SelectWeaponButton>();
-
     private CameraController CreatePlayerCamera(PlayerView player, UnityEngine.Camera camera)
     {
-         return new CameraController(player, camera, _inputService, _gameSaveDataService,
-            _staticDataService.GetGameData());
+        return new CameraController(player, camera, _inputService, _gameSaveDataService,
+           _staticDataService.GetGameData());
     }
 }

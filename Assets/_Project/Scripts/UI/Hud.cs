@@ -4,67 +4,55 @@ using UnityEngine.UI;
 
 public class Hud : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _weaponName;
-    [SerializeField] private Transform _buttonParent;
+    [SerializeField] private AimSwitcher _aimSwitcher;
     [SerializeField] private Image _aim; 
 
-    private WeaponSwitcher _weaponSwitcher;
-    private IGameFactory _gameFactory;
-    private bool _isAim;
+    private PlayerPresenter _playerPresenter;
 
     private void OnDestroy()
     {
-        _weaponSwitcher.WeaponSwitched -= OnWeaponSelected;
-        _weaponSwitcher.WeaponOpened -= OnOpenedNewWeapon;
+        _aimSwitcher.AimClicked -= OnAimClicked;
+        _playerPresenter.AimChanged -= OnAimChanged;
+        _playerPresenter.WeaponAvailabilityChanged -= OnWeaponAvailabilityChanged;
     }
 
-    public void Construct(WeaponSwitcher weaponSwitcher, IGameFactory gameFactory)
+    public void Construct(PlayerPresenter playerPresenter)
     {
-        _weaponSwitcher = weaponSwitcher;
-        _gameFactory = gameFactory;
+        _playerPresenter = playerPresenter;
 
-        _weaponSwitcher.WeaponSwitched += OnWeaponSelected;
-        _weaponSwitcher.WeaponOpened += OnOpenedNewWeapon;
+        _aim.gameObject.SetActive(false);
 
-        OnWeaponSelected(null);
+        _aimSwitcher.AimClicked += OnAimClicked;
+        _playerPresenter.AimChanged += OnAimChanged;
+        _playerPresenter.WeaponAvailabilityChanged += OnWeaponAvailabilityChanged;
+
+        SetAimSwitcherVisible(false);
     }
 
-    public void SwitchWeapon(WeaponType type)
+    public void SetAimSwitcherVisible(bool visible)
     {
-        IWeapon currentWeapon = _weaponSwitcher.CurrentWeapon;
+        _aimSwitcher.gameObject.SetActive(visible);
 
-        if (currentWeapon != null && currentWeapon.Type == type)
+        if (!visible)
         {
-            _weaponSwitcher.SwitchWeapon(WeaponType.Deselect);
-            return;
+            _aim.gameObject.SetActive(false);
         }
-
-        _weaponSwitcher.SwitchWeapon(type);
     }
 
-    public void OnWeaponSelected(IWeapon type)
+    private void OnAimClicked()
     {
-        if (type == null)
-        {
-            _weaponName.text = WeaponType.Deselect.ToString();
-            return;
-        }
-
-        _weaponName.text = _weaponSwitcher.CurrentWeapon.Type.ToString();
+        _playerPresenter.SwitchAim(
+            !_playerPresenter.IsAiming);
     }
 
-    public void OnOpenedNewWeapon(IWeapon weapon)
+    private void OnAimChanged(bool isAim)
     {
-        SelectWeaponButton button = _gameFactory.CreateWeaponSelectButton(_buttonParent);
-        button.Construct(this, weapon);
+        _aimSwitcher.SetAimState(isAim);
+        _aim.gameObject.SetActive(isAim);
     }
 
-    public void OnAimState(bool isAim)
+    private void OnWeaponAvailabilityChanged(bool hasWeapon)
     {
-        if (_isAim == isAim)
-            return;
-
-        _isAim = isAim;
-        _aim.gameObject.SetActive(_isAim);
+        SetAimSwitcherVisible(hasWeapon);
     }
 }

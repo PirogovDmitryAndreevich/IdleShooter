@@ -37,8 +37,8 @@ public class CameraZoom
 
         _targetFov = Mathf.Clamp(
             _targetFov,
-            _gameStaticData.MinFov,
-            _gameStaticData.MaxFov);
+            _gameStaticData.CameraSettingsData.MinFov,
+            _gameStaticData.CameraSettingsData.MaxFov);
     }
 
     public void UpdateFov()
@@ -47,14 +47,14 @@ public class CameraZoom
             _camera.fieldOfView,
             _targetFov,
             Time.deltaTime *
-            _gameStaticData.CameraFovSpeed);
+            _gameStaticData.CameraSettingsData.CameraFovSpeed);
     }
 
     public void PrepareAim()
     {
         _freeFov = _camera.fieldOfView;
 
-        _targetFov = _gameStaticData.AimFov;
+        _targetFov = _gameStaticData.CameraSettingsData.AimFov;
     }
 
     public void PrepareFree()

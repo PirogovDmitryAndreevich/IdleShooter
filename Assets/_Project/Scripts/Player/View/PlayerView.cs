@@ -17,56 +17,46 @@ public class PlayerView : MonoBehaviour
     public Transform WeaponSpawnParent => _weaponSpawnParent;
 
     private Dictionary<WeaponType, WeaponView> _weapons;
-    private WeaponSwitcher _switcher;
     private WeaponView _currentWeapon;
 
-    private void OnDestroy()
-    {
-        _switcher.WeaponSwitched -= OnWeaponSwitched;
-        _switcher.WeaponOpened -= OnWeaponOpened;
-    }
-
-    public void Construct(WeaponSwitcher weaponSwitcher)
+    public void Construct()
     {
         _weapons = new();
-        _switcher = weaponSwitcher;
-
-        _switcher.WeaponSwitched += OnWeaponSwitched;
-        _switcher.WeaponOpened += OnWeaponOpened;
     }
 
-    public void OnWeaponSwitched(IWeapon weapon)
-    {
-        if (weapon == null)
-        {
-            if (_currentWeapon != null)
-            {
-                _currentWeapon.gameObject.SetActive(false);
-                _currentWeapon = null;
-            }
-
-            return;
-        }
-
-        if (!_weapons.ContainsKey(weapon.Type))
-            return;
-
-        _currentWeapon = _weapons[weapon.Type];
-        _currentWeapon.gameObject.SetActive(true);
-    }
-
-    public void OnWeaponOpened(IWeapon weapon)
+    public void OpenWeapon(IWeapon weapon)
     {
         if (_weapons.ContainsKey(weapon.Type))
             return;
 
-        WeaponView newWeapon = weapon.View;
+        WeaponView weaponView = weapon.View;
 
-        _weapons[weapon.Type] = newWeapon;
-        newWeapon.transform.position = _weaponSpawnParent.position;
-        newWeapon.transform.SetParent(_weaponSpawnParent);
+        _weapons.Add(weapon.Type, weaponView);
 
-        newWeapon.gameObject.SetActive(false);
+        weaponView.transform.SetParent(_weaponSpawnParent);
+        weaponView.transform.localPosition = Vector3.zero;
+        weaponView.transform.localRotation = Quaternion.identity;
+
+        weaponView.gameObject.SetActive(false);
     }
 
+    public void SwitchWeapon(IWeapon weapon)
+    {
+        if (_currentWeapon != null)
+        {
+            _currentWeapon.gameObject.SetActive(false);
+            _currentWeapon = null;
+        }
+
+        if (weapon == null)
+            return;
+
+        if (!_weapons.TryGetValue(
+                weapon.Type,
+                out WeaponView weaponView))
+            return;
+
+        _currentWeapon = weaponView;
+        _currentWeapon.gameObject.SetActive(true);
+    }
 }

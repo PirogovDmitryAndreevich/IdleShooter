@@ -19,8 +19,8 @@ public class CameraCollision
 
         Vector3 desiredPosition = _parent.TransformPoint(
             0f,
-            _gameStaticData.OffsetDistanceY,
-            -_gameStaticData.MaxDistance);
+            _gameStaticData.CameraSettingsData.OffsetDistanceY,
+            -_gameStaticData.CameraSettingsData.MaxDistance);
 
         Vector3 direction = desiredPosition - origin;
         float distance = direction.magnitude;
@@ -34,15 +34,15 @@ public class CameraCollision
 
         if (Physics.SphereCast(
             origin,
-            _gameStaticData.SphereRadius,
+            _gameStaticData.CameraSettingsData.SphereRadius,
             direction,
             out RaycastHit hit,
             distance,
-            _gameStaticData.CollisionMask,
+            _gameStaticData.CameraSettingsData.CollisionMask,
             QueryTriggerInteraction.Ignore))
         {
             return hit.point -
-                  direction * _gameStaticData.CollisionOffset;
+                  direction * _gameStaticData.CameraSettingsData.CollisionOffset;
         }
 
         return desiredPosition;

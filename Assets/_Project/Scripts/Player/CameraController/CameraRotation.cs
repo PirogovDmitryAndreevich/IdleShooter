@@ -40,8 +40,8 @@ public class CameraRotation
 
         _mouseY = Mathf.Clamp(
             _mouseY,
-            _gameStaticData.FreeCameraLimit.x,
-            _gameStaticData.FreeCameraLimit.y);
+            _gameStaticData.CameraSettingsData.FreeCameraLimit.x,
+            _gameStaticData.CameraSettingsData.FreeCameraLimit.y);
 
         _freeRotation = Quaternion.Euler(
             -_mouseY,
@@ -63,8 +63,8 @@ public class CameraRotation
 
         _mouseY = Mathf.Clamp(
             _mouseY,
-            _gameStaticData.AimCameraLimit.x,
-            _gameStaticData.AimCameraLimit.y);
+            _gameStaticData.CameraSettingsData.AimCameraLimit.x,
+            _gameStaticData.CameraSettingsData.AimCameraLimit.y);
 
         _parent.rotation = Quaternion.Euler(
             -_mouseY,
@@ -78,7 +78,7 @@ public class CameraRotation
         _freeRotation = _parent.rotation;
 
         _targetRotation = Quaternion.Euler(
-            _gameStaticData.AimRotation);
+            _gameStaticData.CameraSettingsData.AimRotation);
     }
 
     public void PrepareFree()
@@ -91,7 +91,7 @@ public class CameraRotation
         _parent.rotation = Quaternion.RotateTowards(
             _parent.rotation,
             _targetRotation,
-            _gameStaticData.CameraTransitionRotationSpeed *
+            _gameStaticData.CameraSettingsData.CameraTransitionRotationSpeed *
             Time.deltaTime);
 
         if (Quaternion.Angle(

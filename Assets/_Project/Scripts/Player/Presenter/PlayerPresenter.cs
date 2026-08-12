@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public class PlayerPresenter : IDisposable
 {
@@ -9,7 +8,6 @@ public class PlayerPresenter : IDisposable
     private readonly IInputService _input;
     private readonly CameraController _camera;
     private readonly WeaponSwitcher _weaponSwitcher;
-    private readonly Hud _hud;
     private readonly IRotationHandler _rotationHandler;
     private readonly ThirdPersonController _controller;
 
@@ -17,11 +15,19 @@ public class PlayerPresenter : IDisposable
     private float _damage = 1f;
     private bool _isAim;
 
-    private bool IsWeaponSelected =>
-        _weaponSwitcher.CurrentWeapon != null;
+    private bool HasWeapon => _weapon != null;
+    private bool CanShoot => HasWeapon && _isAim;
+    public bool IsAiming => _isAim;
 
-    public PlayerPresenter(PlayerModel model, PlayerView view, IInputService inputService,
-        CameraController camera, WeaponSwitcher weaponSwitcher, Hud hud)
+    public event Action<bool> AimChanged;
+    public event Action<bool> WeaponAvailabilityChanged;
+
+    public PlayerPresenter(
+        PlayerModel model,
+        PlayerView view,
+        IInputService inputService,
+        CameraController camera,
+        WeaponSwitcher weaponSwitcher)
     {
         _model = model;
         _view = view;
@@ -29,24 +35,25 @@ public class PlayerPresenter : IDisposable
         _input = inputService;
         _camera = camera;
         _weaponSwitcher = weaponSwitcher;
-        _hud = hud;
 
-        _controller =
-            new ThirdPersonController(
-                _view.Transform,
-                _view.CharacterController,
-                _input, _model.StaticData, _camera.Camera);
+        _controller = new ThirdPersonController(
+            _view.Transform,
+            _view.CharacterController,
+            _input,
+            _model.StaticData,
+            _camera.Camera);
 
         _rotationHandler = new SmoothRotationHandler();
 
         _weaponSwitcher.WeaponSwitched += OnWeaponSwitched;
+        _weaponSwitcher.WeaponOpened += OnWeaponOpened;
     }
 
     public void FixedUpdate()
     {
         _controller.FixedUpdate();
 
-        if (IsWeaponSelected)
+        if (_isAim)
         {
             _rotationHandler.RotateTowardsCamera(
                 _view.transform,
@@ -60,7 +67,6 @@ public class PlayerPresenter : IDisposable
                 _view.transform,
                 _model.StaticData.RotationSmoothness);
         }
-
     }
 
     public void Update()
@@ -71,17 +77,8 @@ public class PlayerPresenter : IDisposable
         _animator.SetRun(_controller.IsRun);
         _animator.SetJump(_controller.IsJumping);
 
-        if (_input.IsShoot && _isAim)
+        if (CanShoot && _input.IsShoot)
             Shoot();
-        /*
-                if (Input.GetKeyDown(KeyCode.P))
-                    _camera.Shake(0.1f, 0.01f, 1.5f);
-
-                if (Input.GetKeyDown(KeyCode.O))
-                    _camera.Shake(0.25f, 0.08f, 4f);
-
-                if (Input.GetKeyDown(KeyCode.I))
-                    _camera.Shake(0.4f, 0.15f, 6f, 25, 90f);*/
     }
 
     public void LateUpdate()
@@ -89,34 +86,78 @@ public class PlayerPresenter : IDisposable
         _camera.LateUpdate();
     }
 
-    public void Dispose()
+    public void SwitchAim(bool isAim)
     {
-        _controller.Dispose();
-        _weaponSwitcher.Dispose();
-        _weaponSwitcher.WeaponSwitched -= OnWeaponSwitched;
+        if (isAim && !HasWeapon)
+            return;
+
+        if (_isAim == isAim)
+            return;
+
+        _isAim = isAim;
+
+        if (HasWeapon)
+        {
+            _animator.SetWeaponAnimation(
+                _weapon.AnimationName,
+                _isAim);
+        }
+
+        _camera.SwitchCamera(_isAim);
+
+        AimChanged?.Invoke(_isAim);
     }
 
     private void OnWeaponSwitched(IWeapon weapon)
     {
         if (_weapon != null)
-            _animator.SetWeaponAnimation(_weapon.AnimationName, false);
+        {
+            _animator.SetWeaponAnimation(
+                _weapon.AnimationName,
+                false);
+        }
 
         _weapon = weapon;
+        _view.SwitchWeapon(_weapon);
 
-        _isAim = _weapon != null;
+        if (_weapon == null)
+        {
+            SwitchAim(false);
+
+            WeaponAvailabilityChanged?.Invoke(false);
+            return;
+        }
+
+        WeaponAvailabilityChanged?.Invoke(true);
 
         if (_isAim)
         {
-            _animator.SetWeaponAnimation(_weapon.AnimationName, _isAim);
+            _animator.SetWeaponAnimation(
+                _weapon.AnimationName,
+                true);
         }
+    }
 
-        _hud.OnAimState(_isAim);
-        _camera?.SwitchCamera(_isAim);
+    private void OnWeaponOpened(IWeapon weapon)
+    {
+        _view.OpenWeapon(weapon);
     }
 
     private void Shoot()
     {
+        if (!CanShoot)
+            return;
+
         if (_weapon.TryShoot(_damage))
-            _camera.Shake(_weapon.Shake);
+            _camera.Shake(_weapon.ShakeData);
+    }
+
+    public void Dispose()
+    {
+        _weaponSwitcher.WeaponSwitched -= OnWeaponSwitched;
+        _weaponSwitcher.WeaponOpened -= OnWeaponOpened;
+
+        _controller.Dispose();
+        _weaponSwitcher.Dispose();
     }
 }
