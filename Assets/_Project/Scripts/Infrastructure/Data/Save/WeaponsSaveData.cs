@@ -11,6 +11,7 @@ public class WeaponsSaveData
         OpenedWeapons = new List<WeaponType>()
         {
             WeaponType.Stones,
+            WeaponType.Slingshot,
         };
     }
 }
