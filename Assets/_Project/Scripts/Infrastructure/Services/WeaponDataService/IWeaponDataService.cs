@@ -6,4 +6,5 @@ public interface IWeaponDataService : IService
 
     void AddNewWeapon(WeaponType type);
     void ForInitialize();
+    bool GetWeapon(WeaponType type);
 }

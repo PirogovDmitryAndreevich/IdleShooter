@@ -26,4 +26,7 @@ public class WeaponDataService : IWeaponDataService
         foreach (WeaponType weapon in _progress.Data.Weapons.OpenedWeapons)
             WeaponOpened?.Invoke(weapon);
     }
+
+    public bool GetWeapon(WeaponType type) =>
+        _progress.Data.Weapons.OpenedWeapons.Contains(type);
 }
