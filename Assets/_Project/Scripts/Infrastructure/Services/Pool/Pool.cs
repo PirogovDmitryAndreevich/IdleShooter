@@ -44,9 +44,34 @@ public class Pool : IPoolService
         return CreateNew<TPoolObject>();
     }
 
+    public Component Get(Type type)
+    {
+        if (_pools.TryGetValue(type, out var pool) && pool.Count > 0)
+        {
+            Component obj = pool.Dequeue();
+            obj.gameObject.SetActive(true);
+
+            return obj;
+        }
+
+        return CreateNew(type);
+    }
+
     public void Return<TPoolObject>(TPoolObject obj) where TPoolObject : Component
     {
         Type type = typeof(TPoolObject);
+
+        if (!_pools.ContainsKey(type))
+            _pools[type] = new Queue<Component>();
+
+        obj.gameObject.SetActive(false);
+
+        _pools[type].Enqueue(obj);
+    }
+
+    public void Return(Component obj)
+    {
+        Type type = obj.GetType();
 
         if (!_pools.ContainsKey(type))
             _pools[type] = new Queue<Component>();
@@ -71,6 +96,18 @@ public class Pool : IPoolService
             throw new Exception($"No factory for {type}");
 
         TPoolObject obj = (TPoolObject)factory();
+
+        obj.transform.SetParent(_poolParents[type]);
+
+        return obj;
+    }
+
+    private Component CreateNew(Type type)
+    {
+        if (!_factories.TryGetValue(type, out var factory))
+            throw new Exception($"No factory for {type}");
+
+        Component obj = factory();
 
         obj.transform.SetParent(_poolParents[type]);
 

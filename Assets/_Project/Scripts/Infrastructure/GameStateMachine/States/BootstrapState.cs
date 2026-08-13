@@ -37,6 +37,7 @@ public class BootstrapState : IState
         _allServices.RegisterSingle<IWeaponDataService>(new WeaponDataService(_allServices.Single<IProgressService>()));
         _allServices.RegisterSingle<IAssets>(new AssetProvider());
         _allServices.RegisterSingle<IGameSaveDataService>(new GameSaveDataService(_allServices.Single<IProgressService>()));
+        _allServices.RegisterSingle<IProjectilePool>(new ProjectilePool());
         RegisterInputService();
 
 
@@ -47,7 +48,8 @@ public class BootstrapState : IState
             _allServices.Single<IProgressService>(),
             _allServices.Single<IPoolService>(),
             _allServices.Single<IWeaponDataService>(),
-            _allServices.Single<IGameSaveDataService>()));
+            _allServices.Single<IGameSaveDataService>(),
+            _allServices.Single<IProjectilePool>()));
     }
 
     private void RegisterInputService()

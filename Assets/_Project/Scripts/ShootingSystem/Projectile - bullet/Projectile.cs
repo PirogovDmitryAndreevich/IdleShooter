@@ -1,16 +1,12 @@
-using System.Collections;
-using TMPro;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public abstract class Projectile : MonoBehaviour
 {
-    [SerializeField] private AnimationCurve _flyCurve;
+    [Header("Projectile Settings")]
     [SerializeField] private TrailRenderer _trail;
-    [SerializeField] private float _flyHeight;
 
-    private IPoolService _pool;
-    private Coroutine _animationCoroutine;
-    private float _flyTime = 5f;
+    private IProjectilePool _pool;
+    private ProjectileType _type;
     private float _damage;
 
     private void OnCollisionEnter(Collision collision)
@@ -36,9 +32,10 @@ public class Projectile : MonoBehaviour
         Die();
     }
 
-    public void Construct(IPoolService poolService)
+    public void Construct(IProjectilePool poolService, ProjectileType type)
     {
         _pool = poolService;
+        _type = type;
     }
 
     public void Shoot(float damage, Vector3 targetPosition)
@@ -48,35 +45,16 @@ public class Projectile : MonoBehaviour
         _trail.Clear();
         _trail.enabled = true;
 
-        _animationCoroutine = StartCoroutine(FlyCoroutine(targetPosition));
+        StartFly(targetPosition);
     }
 
-    private IEnumerator FlyCoroutine(Vector3 b)
-    {
-        Vector3 startPosition = transform.position;
-        float distance = Vector3.Distance(startPosition, b);
+    protected abstract void StartFly(Vector3 targetPosition);    
 
-        float flyTime = distance / _flyTime;
-
-        for (float t = 0; t < 1; t += Time.deltaTime / flyTime)
-        {
-            Vector3 horizontalPosition = Vector3.Lerp(startPosition, b, t);
-            float curveHeight = _flyCurve.Evaluate(t);
-
-            transform.position = horizontalPosition + Vector3.up * curveHeight;
-            yield return null;
-        }
-
-        Die();
-    }
-
-    private void Die()
-    {
-        StopCoroutine(_animationCoroutine);
-
+    protected virtual void Die()
+    {  
         _trail.Clear();
         _trail.enabled = false;
 
-        _pool.Return(this);
+        _pool.Return(_type, this);
     }
 }

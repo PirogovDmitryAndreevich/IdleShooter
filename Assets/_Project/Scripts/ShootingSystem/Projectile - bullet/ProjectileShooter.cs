@@ -6,9 +6,9 @@ public class ProjectileShooter : IShooter
     private readonly WeaponModel _model;
     private readonly LayerMask _aimMask;
     private readonly Camera _playerCamera;
-    private readonly IPoolService _projectilePool;
+    private readonly IProjectilePool _projectilePool;
 
-    public ProjectileShooter(LayerMask aimMask, Camera camera, WeaponModel model, WeaponView view, IPoolService pool)
+    public ProjectileShooter(LayerMask aimMask, Camera camera, WeaponModel model, WeaponView view, IProjectilePool pool)
     {
         _model = model;
         _weaponView = view;
@@ -26,7 +26,8 @@ public class ProjectileShooter : IShooter
         Vector3 aimPoint = GetAimPointFromCamera();
         Vector3 direction = (aimPoint - _weaponView.ShootPoint.position).normalized;
 
-        Projectile projectile = _projectilePool.Get<Projectile>();
+        Projectile projectile = _projectilePool.Get(_model.ProjectileType);
+
         projectile.transform.position = _weaponView.ShootPoint.position;
         projectile.transform.rotation = Quaternion.LookRotation(direction);
 

@@ -7,13 +7,13 @@ public class GameFactory : IGameFactory
     private readonly IPoolService _poolService;
     private readonly IWeaponDataService _weaponDataService;
     private readonly IGameSaveDataService _gameSaveDataService;
-
+    private readonly IProjectilePool _projectilePool;
     private PlayerPresenter _player;
     WeaponSwitcher _weaponSwitcher;
 
     public GameFactory(IAssets assets, IInputService inputService, IStaticDataService staticDataService,
         IProgressService progressService, IPoolService poolService, IWeaponDataService weaponDataService,
-        IGameSaveDataService gameSaveDataService)
+        IGameSaveDataService gameSaveDataService, IProjectilePool projectilePool)
     {
         _assets = assets;
         _inputService = inputService;
@@ -22,8 +22,9 @@ public class GameFactory : IGameFactory
         _poolService = poolService;
         _weaponDataService = weaponDataService;
         _gameSaveDataService = gameSaveDataService;
+        _projectilePool = projectilePool;
 
-        _poolService.RegisterFactory(() => CreateProjectile());
+        _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
     }
 
     public void CreatePlayer(UnityEngine.Vector3 at)
@@ -69,19 +70,19 @@ public class GameFactory : IGameFactory
         WeaponModel model = new WeaponModel(_staticDataService.GetWeaponData(type));
 
         WeaponPresenter presenter = new WeaponPresenter(model, view, UnityEngine.Camera.main,
-            _staticDataService.GetGameData(), _poolService);
+            _staticDataService.GetGameData(), _projectilePool);
 
         return presenter;
     }
 
-    public Projectile CreateProjectile()
+    public Stone CreateStoneProjectile()
     {
-        var projectile = _assets.Instantiate(AssetsPath.Projectile)
-            .GetComponent<Projectile>();
+        Stone stone = _assets.Instantiate(AssetsPath.StoneProjectilePath)
+            .GetComponent<Stone>();
 
-        projectile.Construct(_poolService);
+        stone.Construct(_projectilePool, ProjectileType.Stone);
 
-        return projectile;
+        return stone;
     }
 
     private CameraController CreatePlayerCamera(PlayerView player, UnityEngine.Camera camera)

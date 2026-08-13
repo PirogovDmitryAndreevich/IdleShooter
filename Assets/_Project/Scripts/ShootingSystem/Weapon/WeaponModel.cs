@@ -8,6 +8,7 @@ public class WeaponModel
     public float MaxAimDistance => _staticData.MaxAimDistance;
     public ShootShakeSettings Shake => _staticData.Shake;
     public string AnimationName => _staticData.AnimationName;
+    public ProjectileType ProjectileType => _staticData.ProjectileType;
 
     public WeaponModel(WeaponStaticData staticData)
     {

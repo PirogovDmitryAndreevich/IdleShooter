@@ -148,8 +148,8 @@ public class PlayerPresenter : IDisposable
         if (!CanShoot)
             return;
 
-        if (_weapon.TryShoot(_damage))
-            _camera.Shake(_weapon.ShakeData);
+        if (_weapon.TryShoot(_damage))        
+            _camera.Shake(_weapon.ShakeData);        
     }
 
     public void Dispose()

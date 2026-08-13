@@ -6,21 +6,19 @@ public class WeaponPresenter : IWeapon
     private readonly WeaponView _view;
     private readonly IShooter _shooter;
 
-    private LayerMask _aimMask;
-    private Camera _camera;
-    private IPoolService _pool;
+    private readonly LayerMask _aimMask;
+    private readonly Camera _camera;
+    private readonly IProjectilePool _pool;
 
     private float _nextFireTime = 0f;
 
     public WeaponType Type => _model.Type;
     public WeaponView View => _view;
-
     public ShootShakeSettings ShakeData => _model.Shake;
-
     public string AnimationName => _model.AnimationName;
 
     public WeaponPresenter(WeaponModel weaponModel, WeaponView view, Camera camera,
-        GameStaticData data, IPoolService poolService)
+        GameStaticData data, IProjectilePool poolService)
     {
         _model = weaponModel;
         _view = view;
@@ -50,8 +48,7 @@ public class WeaponPresenter : IWeapon
 
     private IShooter CreateShooter(ShooterType type)
     {
-        switch (type
-)
+        switch (type)
         {
             case ShooterType.Projectile:
                 return new ProjectileShooter(_aimMask, _camera, _model, _view, _pool);
