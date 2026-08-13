@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 2
   ShooterType: 0
-  Projectile: {fileID: 5065173656993766871, guid: 4e6e6c9dda6c83948addef644bca4762,
-    type: 3}
+  ProjectileType: 0
   FireRate: 0.2
   MaxAimDistance: 100
   Shake:
@@ -26,4 +25,3 @@ MonoBehaviour:
     Randomness: 90
     FadeOut: 1
   AnimationName: IsOneHand
-  ShootAnimationName: '-'

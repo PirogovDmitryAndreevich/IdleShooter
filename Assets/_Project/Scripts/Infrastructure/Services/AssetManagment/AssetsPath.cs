@@ -5,4 +5,5 @@ public static class AssetsPath
     public const string SelectWeaponButtonPath = "Hud/SelectWeaponButton";
     public const string HudPath = "Hud/HudDesktop";
     public const string WeaponSwitcherPath = "WeaponSwitcher/WeaponSwitcher";
+    public const string MinigunProjectilePath = "Weapons/Minigun/MinigunProjectile";
 }

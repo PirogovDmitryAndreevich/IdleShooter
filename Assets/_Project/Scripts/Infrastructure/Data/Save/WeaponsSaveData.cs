@@ -12,6 +12,7 @@ public class WeaponsSaveData
         {
             WeaponType.Stones,
             WeaponType.Slingshot,
+            WeaponType.Minigun,
         };
     }
 }

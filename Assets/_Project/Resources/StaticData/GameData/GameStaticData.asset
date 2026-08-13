@@ -35,6 +35,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   WeaponSwitcherData:
+  - WeaponType: 10
+    Position: {x: 10, y: 0, z: 4.73}
   - WeaponType: 2
     Position: {x: 10, y: 0, z: 10}
   - WeaponType: 1

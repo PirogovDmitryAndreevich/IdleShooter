@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   ShooterType: 0
-  Projectile: {fileID: 5065173656993766871, guid: 4e6e6c9dda6c83948addef644bca4762,
-    type: 3}
+  ProjectileType: 0
   FireRate: 0.2
   MaxAimDistance: 10
   Shake:
@@ -26,4 +25,3 @@ MonoBehaviour:
     Randomness: 20
     FadeOut: 1
   AnimationName: AimStones
-  ShootAnimationName: ThrowSnone

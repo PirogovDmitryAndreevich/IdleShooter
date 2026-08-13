@@ -25,6 +25,7 @@ public class GameFactory : IGameFactory
         _projectilePool = projectilePool;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
+        _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
     }
 
     public void CreatePlayer(UnityEngine.Vector3 at)
@@ -83,6 +84,16 @@ public class GameFactory : IGameFactory
         stone.Construct(_projectilePool, ProjectileType.Stone);
 
         return stone;
+    }
+
+    public MinigunProjectile CreateMinigunProjectile()
+    {
+        MinigunProjectile projectile = _assets.Instantiate(AssetsPath.MinigunProjectilePath)
+            .GetComponent<MinigunProjectile>();
+
+        projectile.Construct(_projectilePool, ProjectileType.Minigun);
+
+        return projectile;
     }
 
     private CameraController CreatePlayerCamera(PlayerView player, UnityEngine.Camera camera)
