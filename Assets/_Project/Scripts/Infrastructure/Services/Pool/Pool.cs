@@ -24,9 +24,7 @@ public class Pool : IPoolService
         if (_factories.ContainsKey(type))
             return;
 
-        _factories[type] = () => factory();
-
-        CreatePoolParent(type);
+        _factories[type] = () => factory();        
     }
 
     public TPoolObject Get<TPoolObject>() where TPoolObject : Component
@@ -96,6 +94,9 @@ public class Pool : IPoolService
             throw new Exception($"No factory for {type}");
 
         TPoolObject obj = (TPoolObject)factory();
+
+        if (!_poolParents.ContainsKey(type))
+            CreatePoolParent(type);
 
         obj.transform.SetParent(_poolParents[type]);
 

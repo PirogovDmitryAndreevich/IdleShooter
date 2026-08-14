@@ -7,13 +7,16 @@ public class ProjectileShooter : IShooter
     private readonly LayerMask _aimMask;
     private readonly Camera _playerCamera;
     private readonly IProjectilePool _projectilePool;
+    private readonly IPoolService _poolService;
 
-    public ProjectileShooter(LayerMask aimMask, Camera camera, WeaponModel model, WeaponView view, IProjectilePool pool)
+    public ProjectileShooter(LayerMask aimMask, Camera camera, WeaponModel model,
+        WeaponView view, IProjectilePool projectilePool, IPoolService poolService)
     {
         _model = model;
         _weaponView = view;
         _playerCamera = camera; 
-        _projectilePool = pool;
+        _projectilePool = projectilePool;
+        _poolService = poolService;
 
         _aimMask = aimMask;
 
@@ -28,17 +31,21 @@ public class ProjectileShooter : IShooter
 
         Projectile projectile = _projectilePool.Get(_model.ProjectileType);
 
+        MuzzleEffect muzzleEffect = _poolService.Get<MuzzleEffect>();
+
+        muzzleEffect.Play(_weaponView.ShootPoint, _weaponView.ShootPoint.forward);
+
         projectile.transform.position = _weaponView.ShootPoint.position;
         projectile.transform.rotation = Quaternion.LookRotation(direction);
 
-        projectile.Shoot(damage, aimPoint);
+        projectile.Shoot(damage, _weaponView.ShootPoint.position, aimPoint);
     }    
 
     private Vector3 GetAimPointFromCamera()
     {
         Ray ray = _playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
-        if(Physics.Raycast(ray, out RaycastHit hit, _model.MaxAimDistance, _aimMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, _model.MaxAimDistance, _aimMask))
         {
             return hit.point;
         }

@@ -89,6 +89,7 @@ public class CameraController
 
         UpdateCameraPosition();
         _zoom.UpdateFov();
+        _shake.LateUpdate(Time.deltaTime);
     }
 
     private void UpdateCameraPosition()
@@ -140,9 +141,6 @@ public class CameraController
 
     public void Shake(ShootShakeSettings settings) => 
         _shake.Shake(settings);
-
-    public void StopShake() => 
-        _shake.Stop();
 
     private void SwitchToAim()
     {

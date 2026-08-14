@@ -16,12 +16,12 @@ MonoBehaviour:
   ShooterType: 0
   ProjectileType: 1
   FireRate: 0.2
-  MaxAimDistance: 500
+  MaxAimDistance: 100
   Shake:
-    Duration: 0.15
-    PositionStrength: 0.1
-    RotationStrength: 2
-    Vibrato: 20
+    Duration: 0.2
+    PositionStrength: 0.3
+    RotationStrength: 0.2
+    Vibrato: 10
     Randomness: 90
     FadeOut: 1
   AnimationName: IsMinigun

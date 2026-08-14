@@ -2,15 +2,19 @@ using UnityEngine;
 
 public class RaycastShooter : IShooter
 {
-    private WeaponModel _model;
-    private Camera _playerCamera;
-    private LayerMask _hitMask;
+    private readonly WeaponModel _model;
+    private readonly WeaponView _view;
+    private readonly IPoolService _pool;
+    private readonly Camera _playerCamera;
+    private readonly LayerMask _hitMask;
 
-    public RaycastShooter(Camera playerCamera, LayerMask hitMask, WeaponModel model)
+    public RaycastShooter(Camera playerCamera, LayerMask hitMask, WeaponModel model, WeaponView view, IPoolService pool)
     {
         _playerCamera = playerCamera;
         _hitMask = hitMask;
         _model = model;
+        _view = view;
+        _pool = pool;
 
         if (_playerCamera == null)
             _playerCamera = Camera.main;
@@ -22,6 +26,9 @@ public class RaycastShooter : IShooter
 
         if (Physics.Raycast(ray, out RaycastHit hit, _model.MaxAimDistance, _hitMask))
         {
+            HotTrail hotTrail = _pool.Get<HotTrail>();
+            hotTrail.StartFly(_view.ShootPoint.position, hit);
+
             BaseDamageable damageable = hit.collider.GetComponent<BaseDamageable>();
 
             if (damageable == null)

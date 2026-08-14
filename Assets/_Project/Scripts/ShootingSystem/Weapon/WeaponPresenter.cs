@@ -8,7 +8,8 @@ public class WeaponPresenter : IWeapon
 
     private readonly LayerMask _aimMask;
     private readonly Camera _camera;
-    private readonly IProjectilePool _pool;
+    private readonly IProjectilePool _projectilePool;
+    private readonly IPoolService _pool;
 
     private float _nextFireTime = 0f;
 
@@ -18,13 +19,14 @@ public class WeaponPresenter : IWeapon
     public string AnimationName => _model.AnimationName;
 
     public WeaponPresenter(WeaponModel weaponModel, WeaponView view, Camera camera,
-        GameStaticData data, IProjectilePool poolService)
+        GameStaticData data, IProjectilePool poolService, IPoolService pool)
     {
         _model = weaponModel;
         _view = view;
         _camera = camera;
         _aimMask = data.AimLayerMask;
-        _pool = poolService;
+        _projectilePool = poolService;
+        _pool = pool;
 
         _shooter = CreateShooter(_model.Shooter);
     }
@@ -51,9 +53,9 @@ public class WeaponPresenter : IWeapon
         switch (type)
         {
             case ShooterType.Projectile:
-                return new ProjectileShooter(_aimMask, _camera, _model, _view, _pool);
+                return new ProjectileShooter(_aimMask, _camera, _model, _view, _projectilePool, _pool);
             case ShooterType.Raycast:
-                return new RaycastShooter(_camera, _aimMask, _model);
+                return new RaycastShooter(_camera, _aimMask, _model, _view, _pool);
             default:
                 throw new System.ArgumentException($"Unknown weapon type: {type}");
         }

@@ -26,6 +26,10 @@ public class GameFactory : IGameFactory
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
+
+        _poolService.RegisterFactory(() => CreateBulletHole());
+        _poolService.RegisterFactory(() => CreateHotTrail());
+        _poolService.RegisterFactory(() => CreateMuzzleEffect());
     }
 
     public void CreatePlayer(UnityEngine.Vector3 at)
@@ -71,7 +75,7 @@ public class GameFactory : IGameFactory
         WeaponModel model = new WeaponModel(_staticDataService.GetWeaponData(type));
 
         WeaponPresenter presenter = new WeaponPresenter(model, view, UnityEngine.Camera.main,
-            _staticDataService.GetGameData(), _projectilePool);
+            _staticDataService.GetGameData(), _projectilePool, _poolService);
 
         return presenter;
     }
@@ -81,7 +85,7 @@ public class GameFactory : IGameFactory
         Stone stone = _assets.Instantiate(AssetsPath.StoneProjectilePath)
             .GetComponent<Stone>();
 
-        stone.Construct(_projectilePool, ProjectileType.Stone);
+        stone.Construct(_projectilePool, ProjectileType.Stone, _poolService);
 
         return stone;
     }
@@ -91,7 +95,7 @@ public class GameFactory : IGameFactory
         MinigunProjectile projectile = _assets.Instantiate(AssetsPath.MinigunProjectilePath)
             .GetComponent<MinigunProjectile>();
 
-        projectile.Construct(_projectilePool, ProjectileType.Minigun);
+        projectile.Construct(_projectilePool, ProjectileType.Minigun, _poolService);
 
         return projectile;
     }
@@ -100,5 +104,35 @@ public class GameFactory : IGameFactory
     {
         return new CameraController(player, camera, _inputService, _gameSaveDataService,
            _staticDataService.GetGameData());
+    }
+
+    private BulletHole CreateBulletHole()
+    {
+        BulletHole hole = _assets.Instantiate(AssetsPath.BulletHolePath)
+            .GetComponent<BulletHole>();
+
+        hole.Construct(_poolService);
+
+        return hole;
+    }
+
+    private HotTrail CreateHotTrail()
+    {
+        HotTrail trail = _assets.Instantiate(AssetsPath.HotTrail)
+            .GetComponent<HotTrail>();
+
+        trail.Construct(_poolService);
+
+        return trail;
+    }
+
+    private MuzzleEffect CreateMuzzleEffect()
+    {
+        MuzzleEffect muzzle = _assets.Instantiate(AssetsPath.MuzzleFlashPath)
+            .GetComponent<MuzzleEffect>();
+
+        muzzle.Construct(_poolService);
+
+        return muzzle;
     }
 }

@@ -6,39 +6,48 @@ public class Stone : Projectile
     [Header("Stone Settings")]
     [SerializeField] protected AnimationCurve FlyCurve;
     [SerializeField] protected float FlyHeight;
-
-    private float _flyTime = 5f;
+    [SerializeField] private float _flySpeed = 5f;
 
     protected Coroutine _animationCoroutine;
 
-    protected override void StartFly(Vector3 targetPosition)
+    protected override void StartFly(Vector3 startPosition, Vector3 targetPosition)
     {
-        _animationCoroutine = StartCoroutine(FlyCoroutine(targetPosition));
+        _animationCoroutine = StartCoroutine(FlyCoroutine(startPosition, targetPosition));
     }
 
-    private IEnumerator FlyCoroutine(Vector3 b)
+    private IEnumerator FlyCoroutine(Vector3 startPosition, Vector3 targetPosition)
     {
-        Vector3 startPosition = transform.position;
-        float distance = Vector3.Distance(startPosition, b);
+        transform.position = startPosition;
 
-        float flyTime = distance / _flyTime;
+        float distance = Vector3.Distance(startPosition, targetPosition);
+        float duration = distance / _flySpeed;
 
-        for (float t = 0; t < 1; t += Time.deltaTime / flyTime)
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
         {
-            Vector3 horizontalPosition = Vector3.Lerp(startPosition, b, t);
-            float curveHeight = FlyCurve.Evaluate(t);
+            elapsedTime += Time.deltaTime;
 
-            transform.position = horizontalPosition + Vector3.up * curveHeight;
+            float t = Mathf.Clamp01(elapsedTime / duration);
+
+            Vector3 horizontalPosition = Vector3.Lerp(startPosition, targetPosition, t);
+
+            float verticalPosition =
+                FlyCurve.Evaluate(t) * FlyHeight;
+
+            transform.position = horizontalPosition + Vector3.up * verticalPosition;
             yield return null;
         }
 
-        Die();
+        FinishFlight();
     }
 
-    protected override void Die()
+    protected override void StopFly()
     {
-        StopCoroutine(_animationCoroutine);
+        if (_animationCoroutine == null)
+            return;
 
-        base.Die();
+        StopCoroutine(_animationCoroutine);
+        _animationCoroutine = null;
     }
 }

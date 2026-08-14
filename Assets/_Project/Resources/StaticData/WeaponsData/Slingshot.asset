@@ -15,12 +15,12 @@ MonoBehaviour:
   Type: 2
   ShooterType: 0
   ProjectileType: 0
-  FireRate: 0.2
-  MaxAimDistance: 100
+  FireRate: 0.7
+  MaxAimDistance: 50
   Shake:
-    Duration: 0.15
-    PositionStrength: 0.1
-    RotationStrength: 2
+    Duration: 0.3
+    PositionStrength: 0.3
+    RotationStrength: 0.05
     Vibrato: 20
     Randomness: 90
     FadeOut: 1
