@@ -15,11 +15,11 @@ MonoBehaviour:
   CameraSettingsData:
     MaxDistance: 5
     OffsetDistanceY: 2.5
-    CameraSwitchSpeed: 100
+    CameraSwitchSpeed: 7
     SphereRadius: 0.4
     CollisionOffset: 0.15
     CameraCollisionLerpSpeed: 15
-    AimFov: 14
+    AimFov: 20
     CameraFovSpeed: 7
     MinFov: 12
     MaxFov: 60
@@ -27,7 +27,7 @@ MonoBehaviour:
     FreeCameraLimit: {x: -45, y: 40}
     AimCameraLimit: {x: 15, y: 40}
     AimRotation: {x: -25, y: 0, z: 0}
-    CameraTransitionRotationSpeed: 70
+    CameraTransitionRotationSpeed: 100
     CollisionMask:
       serializedVersion: 2
       m_Bits: 1
@@ -35,9 +35,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   WeaponSwitcherData:
-  - WeaponType: 10
+  - WeaponType: 8
+    Position: {x: 7.23, y: 0, z: -3.3}
+  - WeaponType: 7
     Position: {x: 10, y: 0, z: 4.73}
   - WeaponType: 2
     Position: {x: 10, y: 0, z: 10}
+  - WeaponType: 6
+    Position: {x: 7.23, y: 0, z: -0.23}
+  - WeaponType: 3
+    Position: {x: 10, y: 0, z: 7.36}
+  - WeaponType: 5
+    Position: {x: 7.23, y: 0, z: 2.46}
+  - WeaponType: 4
+    Position: {x: 10, y: 0, z: 2.46}
   - WeaponType: 1
     Position: {x: 10, y: 0, z: 0}

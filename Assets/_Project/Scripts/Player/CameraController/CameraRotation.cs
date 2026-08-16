@@ -81,13 +81,14 @@ public class CameraRotation
             _gameStaticData.CameraSettingsData.AimRotation);
     }
 
-    public void PrepareFree()
-    {
-        _targetRotation = _freeRotation;
-    }
-
     public bool UpdateTransition(CameraSwitchState state)
     {
+        if (state == CameraSwitchState.ToFree)
+        {
+            SyncFreeRotation();
+            return true;
+        }
+
         _parent.rotation = Quaternion.RotateTowards(
             _parent.rotation,
             _targetRotation,
@@ -103,10 +104,7 @@ public class CameraRotation
 
         _parent.rotation = _targetRotation;
 
-        if (state == CameraSwitchState.ToAim)
-            SyncAimRotation();
-        else
-            SyncFreeRotation();
+        SyncAimRotation();
 
         return true;
     }

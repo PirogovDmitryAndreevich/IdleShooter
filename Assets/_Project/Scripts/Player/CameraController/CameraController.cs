@@ -162,7 +162,6 @@ public class CameraController
             _switchState == CameraSwitchState.ToFree)
             return;
 
-        _rotation.PrepareFree();
         _zoom.PrepareFree();
 
         _movement.SetFree();
