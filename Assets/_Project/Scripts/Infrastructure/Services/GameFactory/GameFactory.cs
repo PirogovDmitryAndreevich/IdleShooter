@@ -28,8 +28,7 @@ public class GameFactory : IGameFactory
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
 
         _poolService.RegisterFactory(() => CreateBulletHole());
-        _poolService.RegisterFactory(() => CreateHotTrail());
-        _poolService.RegisterFactory(() => CreateMuzzleEffect());
+        _poolService.RegisterFactory(() => CreateHitEffect());
     }
 
     public void CreatePlayer(UnityEngine.Vector3 at)
@@ -81,11 +80,12 @@ public class GameFactory : IGameFactory
     }
 
     public Stone CreateStoneProjectile()
+    public StoneProjectile CreateStoneProjectile()
     {
-        Stone stone = _assets.Instantiate(AssetsPath.StoneProjectilePath)
-            .GetComponent<Stone>();
+        StoneProjectile stone = _assets.Instantiate(AssetsPath.StoneProjectilePath)
+            .GetComponent<StoneProjectile>();
 
-        stone.Construct(_projectilePool, ProjectileType.Stone, _poolService);
+        stone.Construct(_projectilePool);
 
         return stone;
     }
@@ -95,7 +95,7 @@ public class GameFactory : IGameFactory
         MinigunProjectile projectile = _assets.Instantiate(AssetsPath.MinigunProjectilePath)
             .GetComponent<MinigunProjectile>();
 
-        projectile.Construct(_projectilePool, ProjectileType.Minigun, _poolService);
+        projectile.Construct(_projectilePool, _poolService);
 
         return projectile;
     }
@@ -116,20 +116,17 @@ public class GameFactory : IGameFactory
         return hole;
     }
 
-    private HotTrail CreateHotTrail()
+    private BulletHitEffect CreateHitEffect()
     {
-        HotTrail trail = _assets.Instantiate(AssetsPath.HotTrail)
-            .GetComponent<HotTrail>();
+        BulletHitEffect effect = _assets.Instantiate(AssetsPath.BulletHitEffectPath)
+            .GetComponent<BulletHitEffect>();
 
-        trail.Construct(_poolService);
+        effect.Construct(_poolService);
 
-        return trail;
+        return effect;
     }
 
-    private MuzzleEffect CreateMuzzleEffect()
     {
-        MuzzleEffect muzzle = _assets.Instantiate(AssetsPath.MuzzleFlashPath)
-            .GetComponent<MuzzleEffect>();
 
         muzzle.Construct(_poolService);
 

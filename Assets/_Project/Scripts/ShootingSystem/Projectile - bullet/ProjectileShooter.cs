@@ -31,10 +31,6 @@ public class ProjectileShooter : IShooter
 
         Projectile projectile = _projectilePool.Get(_model.ProjectileType);
 
-        MuzzleEffect muzzleEffect = _poolService.Get<MuzzleEffect>();
-
-        muzzleEffect.Play(_weaponView.ShootPoint, _weaponView.ShootPoint.forward);
-
         projectile.transform.position = _weaponView.ShootPoint.position;
         projectile.transform.rotation = Quaternion.LookRotation(direction);
 

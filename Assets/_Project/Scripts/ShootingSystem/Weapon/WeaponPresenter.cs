@@ -37,6 +37,8 @@ public class WeaponPresenter : IWeapon
             return false;
 
         _nextFireTime = Time.time + _model.FireRate;
+        
+        _view.Shoot();
         _shooter.Shoot(damage);
 
         return true;

@@ -1,14 +1,15 @@
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 [RequireComponent(typeof(ParticleSystem))]
-public class HitParticles : MonoBehaviour
+public class BulletHitEffect : MonoBehaviour
 {
     [SerializeField] ParticleSystem _particles;
 
-    private Projectile _projectile;
+    private IPoolService _pool;
 
-    public void Construct(Projectile projectile) => 
-        _projectile = projectile;
+    public void Construct(IPoolService pool) =>
+        _pool = pool;
 
     public void Play(Vector3 position, Vector3 normal)
     {
@@ -20,6 +21,6 @@ public class HitParticles : MonoBehaviour
 
     private void OnParticleSystemStopped()
     {
-        _projectile.ReturnToPool();
+        _pool.Return(this);
     }
 }

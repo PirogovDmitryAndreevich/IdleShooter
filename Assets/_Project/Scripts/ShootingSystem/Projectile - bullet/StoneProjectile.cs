@@ -1,17 +1,29 @@
 using System.Collections;
 using UnityEngine;
 
-public class Stone : Projectile
+public class StoneProjectile : Projectile
 {
     [Header("Stone Settings")]
+    [SerializeField] private TrailRenderer _trail;
     [SerializeField] protected AnimationCurve FlyCurve;
     [SerializeField] protected float FlyHeight;
     [SerializeField] private float _flySpeed = 5f;
 
     protected Coroutine _animationCoroutine;
+    private IProjectilePool _projectilePool;
 
-    protected override void StartFly(Vector3 startPosition, Vector3 targetPosition)
+    public void Construct(IProjectilePool projectilePool)
     {
+        _projectilePool = projectilePool;
+    }
+
+    protected override void OnShoot(Vector3 startPosition, Vector3 targetPosition)
+    {
+        transform.position = startPosition;
+
+        _trail.Clear();
+        _trail.enabled = true;
+
         _animationCoroutine = StartCoroutine(FlyCoroutine(startPosition, targetPosition));
     }
 
@@ -39,15 +51,25 @@ public class Stone : Projectile
             yield return null;
         }
 
-        FinishFlight();
+        StopFly();
     }
 
-    protected override void StopFly()
+    protected override void Hit(Vector3 hitPoint, Vector3 hitNormal)
     {
-        if (_animationCoroutine == null)
-            return;
+        StopFly();
+    }
 
-        StopCoroutine(_animationCoroutine);
-        _animationCoroutine = null;
+    private void StopFly()
+    {
+        _trail.Clear();
+        _trail.enabled = false;
+
+        if (_animationCoroutine != null)
+        {
+            StopCoroutine(_animationCoroutine);
+            _animationCoroutine = null;
+        }
+
+        _projectilePool.Return(ProjectileType.Stone, this);
     }
 }
