@@ -17,6 +17,7 @@ public class WeaponsSaveData
             WeaponType.Uzi,
             WeaponType.AK,
             WeaponType.Machine_gun,
+            WeaponType.RPG,
         };
     }
 }

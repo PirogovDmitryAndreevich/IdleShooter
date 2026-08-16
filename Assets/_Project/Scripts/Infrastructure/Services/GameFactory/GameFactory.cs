@@ -26,9 +26,12 @@ public class GameFactory : IGameFactory
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
+        _projectilePool.Register(ProjectileType.Rocket, () => CreateRocketProjectile());
 
         _poolService.RegisterFactory(() => CreateBulletHole());
         _poolService.RegisterFactory(() => CreateHitEffect());
+        _poolService.RegisterFactory(() => CreateRPGMuzzle());
+        _poolService.RegisterFactory(() => CreateRocketExplosion());
     }
 
     public void CreatePlayer(UnityEngine.Vector3 at)
@@ -79,7 +82,6 @@ public class GameFactory : IGameFactory
         return presenter;
     }
 
-    public Stone CreateStoneProjectile()
     public StoneProjectile CreateStoneProjectile()
     {
         StoneProjectile stone = _assets.Instantiate(AssetsPath.StoneProjectilePath)
@@ -126,7 +128,30 @@ public class GameFactory : IGameFactory
         return effect;
     }
 
+    private RocketProjectile CreateRocketProjectile()
     {
+        RocketProjectile projectile = _assets.Instantiate(AssetsPath.RocketProjectilePath)
+            .GetComponent<RocketProjectile>();
+
+        projectile.Construct(_projectilePool, _poolService);
+
+        return projectile;
+    }
+
+    private RocketExplosion CreateRocketExplosion()
+    {
+        RocketExplosion explosion = _assets.Instantiate(AssetsPath.RocketExplosionPath)
+            .GetComponent<RocketExplosion>();
+
+        explosion.Construct(_poolService);
+
+        return explosion;
+    }
+
+    private RPGMuzzleEffect CreateRPGMuzzle()
+    {
+        RPGMuzzleEffect muzzle = _assets.Instantiate(AssetsPath.RPGMuzzlePath)
+            .GetComponent <RPGMuzzleEffect>();
 
         muzzle.Construct(_poolService);
 

@@ -11,4 +11,5 @@ public enum WeaponType
     AK = 5,
     Machine_gun = 6,
     Minigun = 7,
+    RPG = 8,
 }

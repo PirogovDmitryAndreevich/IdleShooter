@@ -10,4 +10,7 @@ public static class AssetsPath
     public const string HotTrail = "Weapons/HotTrail/HotTrail";
     public const string MuzzleFlashPath = "Weapons/MuzzleFlash/MuzzleFlash01";
     public const string BulletHitEffectPath = "Weapons/BulletHitEffect/Basic Hit 8  (NEW)";
+    public const string RPGMuzzlePath = "Weapons/RPG/MuzzleFlash/RocketMuzzle";
+    public const string RocketProjectilePath = "Weapons/RPG/Projectile/Rocket Projectile";
+    public const string RocketExplosionPath = "Weapons/RPG/HitEffect/RocketExplosion";
 }
