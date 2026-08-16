@@ -3,12 +3,33 @@ using UnityEngine;
 
 public class MinigunProjectile : Projectile
 {
+    [Header("Minigun Projectile Settings")]
     [SerializeField] private float _flySpeed = 5f;
+    [SerializeField] private TrailRenderer _trail;
 
     private Coroutine _animationCoroutine;
+    private IProjectilePool _projectilePool;
+    private IPoolService _poolService;
 
-    protected override void StartFly(Vector3 startPosition ,Vector3 targetPosition)
+    public void Construct(IProjectilePool projectilePool, IPoolService poolService)
     {
+        _projectilePool = projectilePool;
+        _poolService = poolService;
+    }
+
+    protected override void OnShoot(Vector3 startPosition, Vector3 targetPosition)
+    {
+        transform.position = startPosition;
+
+        _trail.Clear();
+        _trail.enabled = true;
+
+        if (_animationCoroutine != null)
+        {
+            StopCoroutine(_animationCoroutine);
+            _animationCoroutine = null;
+        }
+
         _animationCoroutine = StartCoroutine(FlyCoroutine(startPosition, targetPosition));
     }
 
@@ -31,15 +52,31 @@ public class MinigunProjectile : Projectile
             yield return null;
         }
 
-        FinishFlight();
+        StopFly();
     }
 
-    protected override void StopFly()
+    protected override void Hit(Vector3 hitPoint, Vector3 hitNormal)
     {
-        if (_animationCoroutine == null)
-            return;
+        BulletHole bulletHole = _poolService.Get<BulletHole>();
+        BulletHitEffect effect = _poolService.Get<BulletHitEffect>();
 
-        StopCoroutine(_animationCoroutine);
-        _animationCoroutine = null;
+        bulletHole.Show(hitPoint, hitNormal);
+        effect.Play(hitPoint, hitNormal);
+
+        StopFly();
+    }
+
+    private void StopFly()
+    {
+        _trail.Clear();
+        _trail.enabled = false;
+
+        if (_animationCoroutine != null)
+        {
+            StopCoroutine(_animationCoroutine);
+            _animationCoroutine = null;
+        }
+
+        _projectilePool.Return(ProjectileType.Minigun, this);
     }
 }

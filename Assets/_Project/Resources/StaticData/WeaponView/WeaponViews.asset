@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: WeaponViews
   m_EditorClassIdentifier: 
   WeaponViews:
-  - {fileID: 2178077876002939221, guid: 0f9aab14d8da7d44f879f94d424c002a, type: 3}
-  - {fileID: 7708661562148588917, guid: 8db0713dba7da6e498b25b0588c08df8, type: 3}
-  - {fileID: 4156594247099171288, guid: b19c80681090d0f4c99b11786f4ec18f, type: 3}
+  - {fileID: 4175118696775788827, guid: 6d7b888d99128c44bb6e6475b30afd9d, type: 3}
+  - {fileID: 2650529694469340313, guid: ad3dd46d50c40894a9035b695195ee33, type: 3}
+  - {fileID: 3309711270017031555, guid: a226fc6fba7897340ba8f39c44e3a76f, type: 3}
+  - {fileID: 2477696251895299532, guid: b19c80681090d0f4c99b11786f4ec18f, type: 3}
+  - {fileID: 4254475636446836097, guid: 8db0713dba7da6e498b25b0588c08df8, type: 3}
+  - {fileID: 2295345619286802859, guid: 0f9aab14d8da7d44f879f94d424c002a, type: 3}
+  - {fileID: 2517693711880930707, guid: 03ac4774ad51a4d4784ac07a091e29e4, type: 3}
+  - {fileID: 7121630407733939254, guid: a21323249802746489ce1ec91543e376, type: 3}

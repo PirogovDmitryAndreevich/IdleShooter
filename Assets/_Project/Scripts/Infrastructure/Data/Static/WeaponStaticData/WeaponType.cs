@@ -6,5 +6,9 @@ public enum WeaponType
     Deselect = 0,
     Stones = 1,
     Slingshot = 2,
-    Minigun = 10,
+    Gun = 3,
+    Uzi = 4,
+    AK = 5,
+    Machine_gun = 6,
+    Minigun = 7,
 }

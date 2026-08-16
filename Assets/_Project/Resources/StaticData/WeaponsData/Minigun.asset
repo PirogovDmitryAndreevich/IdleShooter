@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e1423145175d6b43bfbbaa3d878e69e, type: 3}
   m_Name: Minigun
   m_EditorClassIdentifier: 
-  Type: 10
+  Type: 7
   ShooterType: 0
   ProjectileType: 1
-  FireRate: 0.2
+  FireRate: 0.01
   MaxAimDistance: 100
   Shake:
-    Duration: 0.2
-    PositionStrength: 0.3
-    RotationStrength: 0.2
-    Vibrato: 10
+    Duration: 1
+    PositionStrength: 0.1
+    RotationStrength: 0.15
+    Vibrato: 2
     Randomness: 90
     FadeOut: 1
   AnimationName: IsMinigun

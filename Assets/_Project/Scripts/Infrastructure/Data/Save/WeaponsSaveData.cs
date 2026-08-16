@@ -13,6 +13,10 @@ public class WeaponsSaveData
             WeaponType.Stones,
             WeaponType.Slingshot,
             WeaponType.Minigun,
+            WeaponType.Gun,
+            WeaponType.Uzi,
+            WeaponType.AK,
+            WeaponType.Machine_gun,
         };
     }
 }
