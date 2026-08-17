@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BulletHole : MonoBehaviour
 {
-    private static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
+    private readonly int BaseColor = Shader.PropertyToID("_BaseColor");
 
     [SerializeField] private MeshRenderer _renderer;
     [SerializeField] private float _lifeTime = 3f;

@@ -58,7 +58,9 @@ public class GameFactory : IGameFactory
         SwitchWeaponButton switcher = _assets.Instantiate(AssetsPath.WeaponSwitcherPath, at: position)
             .GetComponent<SwitchWeaponButton>();
 
-        switcher.Construct(_weaponSwitcher, _weaponDataService, type);
+        WeaponStaticData weaponData = _staticDataService.GetWeaponData(type);
+
+        switcher.Construct(_weaponSwitcher, _weaponDataService, type, weaponData);
     }
 
     private Hud CreateHud(PlayerPresenter playerPresenter)

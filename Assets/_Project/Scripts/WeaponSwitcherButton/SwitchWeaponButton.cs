@@ -1,8 +1,12 @@
+using TMPro;
 using UnityEngine;
 
 public class SwitchWeaponButton : MonoBehaviour
 {
     [SerializeField] private LayerMask _playerLayer;
+    [SerializeField] private TMP_Text _name;
+    [SerializeField] private TMP_Text _description;
+    [Header("Mesh Settings")]
     [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] private Material _closedMaterial;
     [SerializeField] private Material _openedMaterial;
@@ -10,7 +14,8 @@ public class SwitchWeaponButton : MonoBehaviour
 
     private WeaponType _type;
     private WeaponSwitcher _weaponSwitcher;
-    private IWeaponDataService _weaponData;
+    private IWeaponDataService _weaponsDataService;
+    private WeaponStaticData _weaponData;
     private bool _isOpened;
     private bool _isSelected;
 
@@ -31,13 +36,16 @@ public class SwitchWeaponButton : MonoBehaviour
         _weaponSwitcher.WeaponOpened -= OpenedWeapon;
     }
 
-    public void Construct(WeaponSwitcher weaponSwitcher, IWeaponDataService weaponData, WeaponType type)
+    public void Construct(WeaponSwitcher weaponSwitcher, IWeaponDataService weaponsDataService, WeaponType type, WeaponStaticData weaponData)
     {
         _type = type;
         _weaponSwitcher = weaponSwitcher;
+        _weaponsDataService = weaponsDataService;
         _weaponData = weaponData;
 
-        _isOpened = _weaponData.GetWeapon(_type);
+        _name.text = type.ToString();
+
+        _isOpened = _weaponsDataService.GetWeapon(_type);
 
         _weaponSwitcher.WeaponSwitched += OnSwitchWeapon;
         _weaponSwitcher.WeaponOpened += OpenedWeapon;
