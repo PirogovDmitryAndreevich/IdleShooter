@@ -22,14 +22,14 @@ public abstract class Projectile : MonoBehaviour
         Vector3 hitPoint = contact.point;
         Vector3 hitNormal = contact.normal;
 
-        BaseDamageable damageable = collision.collider.GetComponent<BaseDamageable>();
+        IDamageable damageable = collision.collider.GetComponent<IDamageable>();
 
         if (damageable == null)
         {
-            damageable = collision.collider.GetComponentInParent<BaseDamageable>();
+            damageable = collision.collider.GetComponentInParent<IDamageable>();
 
             if (damageable == null)
-                damageable = collision.collider.GetComponentInChildren<BaseDamageable>();
+                damageable = collision.collider.GetComponentInChildren<IDamageable>();
         }
 
         if (damageable != null)

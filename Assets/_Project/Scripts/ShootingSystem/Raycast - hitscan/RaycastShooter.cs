@@ -29,14 +29,14 @@ public class RaycastShooter : IShooter
             HotTrail hotTrail = _pool.Get<HotTrail>();
             hotTrail.StartFly(_view.ShootPoint.position, hit);
 
-            BaseDamageable damageable = hit.collider.GetComponent<BaseDamageable>();
+            IDamageable damageable = hit.collider.GetComponent<IDamageable>();
 
             if (damageable == null)
             {
-                damageable = hit.collider.GetComponentInParent<BaseDamageable>();
+                damageable = hit.collider.GetComponentInParent<IDamageable>();
 
                 if (damageable == null)
-                    damageable = hit.collider.GetComponentInChildren<BaseDamageable>();
+                    damageable = hit.collider.GetComponentInChildren<IDamageable>();
             }
 
             if (damageable != null)
