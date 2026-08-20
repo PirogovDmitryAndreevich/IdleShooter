@@ -14,4 +14,5 @@ public static class AssetsPath
     public const string RocketProjectilePath = "Weapons/RPG/Projectile/Rocket Projectile";
     public const string RocketExplosionPath = "Weapons/RPG/HitEffect/RocketExplosion";
     public const string TransitionPath = "Levels/Transition/Transition";
+    public const string SpinningCylinderPath = "Obstacles/SpinningCylinder";
 }

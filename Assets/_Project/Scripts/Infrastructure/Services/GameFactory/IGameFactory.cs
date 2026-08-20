@@ -4,4 +4,5 @@
     Lobby CreateLobby();
     public WeaponPresenter CreateWeapon(WeaponType type);
     void CreateWeaponSwitcher(WeaponType type, UnityEngine.Vector3 position);
+    SpinningCylinder CreateSpinningCylinder(UnityEngine.Vector3 position);
 }

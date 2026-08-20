@@ -75,6 +75,15 @@ public class GameFactory : IGameFactory
         switcher.Construct(_weaponSwitcher, _weaponDataService, type, weaponData);
     }
 
+
+    public SpinningCylinder CreateSpinningCylinder(UnityEngine.Vector3 position)
+    {
+        SpinningCylinder cylinder = _assets.Instantiate(AssetsPath.SpinningCylinderPath, at: position)
+            .GetComponent<SpinningCylinder>();
+
+        return cylinder;
+    }
+
     private Hud CreateHud(PlayerPresenter playerPresenter)
     {
         var hud = _assets.Instantiate(AssetsPath.HudPath)
