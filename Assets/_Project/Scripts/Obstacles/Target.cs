@@ -44,6 +44,6 @@ public class Target : MonoBehaviour, IDamageable
         if (_isViewDebug)
             Debug.Log($"{gameObject.name} уничтожен/погиб");
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
