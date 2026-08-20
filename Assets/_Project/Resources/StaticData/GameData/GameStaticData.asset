@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9163234a7464953448ae3d04d8ceef62, type: 3}
   m_Name: GameStaticData
   m_EditorClassIdentifier: 
+  LobbySpawnPosition: {x: -17, y: 0, z: 7}
   CameraSettingsData:
     MaxDistance: 5
     OffsetDistanceY: 2.5
@@ -34,20 +35,8 @@ MonoBehaviour:
   AimLayerMask:
     serializedVersion: 2
     m_Bits: 1
-  WeaponSwitcherData:
-  - WeaponType: 8
-    Position: {x: 7.23, y: 0, z: -3.3}
-  - WeaponType: 7
-    Position: {x: 10, y: 0, z: 4.73}
-  - WeaponType: 2
-    Position: {x: 10, y: 0, z: 10}
-  - WeaponType: 6
-    Position: {x: 7.23, y: 0, z: -0.23}
-  - WeaponType: 3
-    Position: {x: 10, y: 0, z: 7.36}
-  - WeaponType: 5
-    Position: {x: 7.23, y: 0, z: 2.46}
-  - WeaponType: 4
-    Position: {x: 10, y: 0, z: 2.46}
-  - WeaponType: 1
-    Position: {x: 10, y: 0, z: 0}
+  LevelViews:
+  - {fileID: 4054803739814084820, guid: ce043ecd5e2108d4ea1350a5090c62f5, type: 3}
+  - {fileID: 2108223686594225440, guid: e2d9c90e9aa16f9458e249b20b675899, type: 3}
+  - {fileID: 2634710652558448042, guid: 3c510582e92230d49a2f0bd203711c55, type: 3}
+  LevelsData: []

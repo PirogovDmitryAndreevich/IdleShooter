@@ -55,6 +55,16 @@ public class GameFactory : IGameFactory
         player.Initialize(_player);
     }
 
+    public Transition CreateTransition(Transform at)
+    {
+        var transition = _assets.Instantiate(AssetsPath.TransitionPath, at: at.position)
+            .GetComponent<Transition>();
+
+        transition.transform.rotation = at.rotation;
+
+        return transition;
+    }
+
     public Lobby CreateLobby()
     {
         GameStaticData gameData = _staticDataService.GetGameData();
@@ -75,6 +85,13 @@ public class GameFactory : IGameFactory
         switcher.Construct(_weaponSwitcher, _weaponDataService, type, weaponData);
     }
 
+    public Target CreateTarget(UnityEngine.Vector3 position)
+    {
+        Target target = _assets.Instantiate(AssetsPath.TargetPath, at: position)
+            .GetComponent<Target>();
+
+        return target;
+    }
 
     public SpinningCylinder CreateSpinningCylinder(UnityEngine.Vector3 position)
     {
