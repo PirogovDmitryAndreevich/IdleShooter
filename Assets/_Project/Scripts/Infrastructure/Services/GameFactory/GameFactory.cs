@@ -84,6 +84,14 @@ public class GameFactory : IGameFactory
         return cylinder;
     }
 
+    public Gear CreateGear(UnityEngine.Vector3 position)
+    {
+        Gear gear = _assets.Instantiate(AssetsPath.GearPath, at: position)
+            .GetComponent<Gear>();
+
+        return gear;
+    }
+
     private Hud CreateHud(PlayerPresenter playerPresenter)
     {
         var hud = _assets.Instantiate(AssetsPath.HudPath)
