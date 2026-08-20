@@ -100,6 +100,14 @@ public class GameFactory : IGameFactory
         return gear;
     }
 
+    public SpikeCylinder CreateSpikeCylinder(UnityEngine.Vector3 position)
+    {
+        SpikeCylinder gear = _assets.Instantiate(AssetsPath.SpikeCylinderPath, at: position)
+            .GetComponent<SpikeCylinder>();
+
+        return gear;
+    }
+
     private Hud CreateHud(PlayerPresenter playerPresenter)
     {
         var hud = _assets.Instantiate(AssetsPath.HudPath)

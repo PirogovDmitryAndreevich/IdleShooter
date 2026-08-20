@@ -6,5 +6,6 @@
     void CreateWeaponSwitcher(WeaponType type, UnityEngine.Vector3 position);
     SpinningCylinder CreateSpinningCylinder(UnityEngine.Vector3 position);
     Gear CreateGear(UnityEngine.Vector3 position);
+    SpikeCylinder CreateSpikeCylinder(UnityEngine.Vector3 position);
     GearBase CreateGearBase(UnityEngine.Vector3 position);
 }
