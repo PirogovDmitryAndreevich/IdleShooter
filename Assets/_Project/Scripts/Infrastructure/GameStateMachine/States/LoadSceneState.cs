@@ -38,7 +38,16 @@ public class LoadSceneState : IPayloadState<string>
         Transition transition1 = InitTransition(lobby, lobby.LevelType);
 
         LevelView_1 level_1 = InitLevel1(transition1);
+
+        Transition transition2 = InitTransition(level_1, level_1.LevelType);
+
+        LevelView_2 levelView_2 = InitLevel2(transition2);
+
+        Transition transition3 = InitTransition(levelView_2, levelView_2.LevelType);
+
         _weaponDataService.ForInitialize();
+    }
+
     private Lobby InitLobby()
     {
         Lobby lobby = _gameFactory.CreateLobby();
@@ -69,6 +78,26 @@ public class LoadSceneState : IPayloadState<string>
         return level;
     }
 
+    private LevelView_2 InitLevel2(Transition transition1)
+    {
+        LevelView_2 level = CreateLevel<LevelView_2>(transition1, LevelType.Level_2);
+
+        foreach (var targetPoint in level.TargetsSpawnPoints)
+            _gameFactory.CreateTarget(targetPoint.transform.position);            
+
+        foreach (var cylinderPoint in level.SpinningCylinderSpawnPoint)
+            _gameFactory.CreateSpinningCylinder(cylinderPoint.transform.position);
+
+        Gear gear = _gameFactory.CreateGear(level.GearSpawnPoint.transform.position);
+
+        GearBase gearBase = _gameFactory.CreateGearBase(level.GearBaseSpawnPoint.transform.position);
+
+        SpikeCylinder spinningCylinder = _gameFactory
+            .CreateSpikeCylinder
+            (level.SpikeCylinderSpawnPoint.transform.position);
+
+        return level;
+    }
 
     private T CreateLevel<T>(Transition transition, LevelType type) where T : LevelView => 
         _gameFactory.CreateLevel<T>(transition.ExitPoint, type);
