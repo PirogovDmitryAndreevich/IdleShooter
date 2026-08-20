@@ -92,6 +92,14 @@ public class GameFactory : IGameFactory
         return gear;
     }
 
+    public GearBase CreateGearBase(UnityEngine.Vector3 position)
+    {
+        GearBase gear = _assets.Instantiate(AssetsPath.GearBasePath, at: position)
+            .GetComponent<GearBase>();
+
+        return gear;
+    }
+
     private Hud CreateHud(PlayerPresenter playerPresenter)
     {
         var hud = _assets.Instantiate(AssetsPath.HudPath)
