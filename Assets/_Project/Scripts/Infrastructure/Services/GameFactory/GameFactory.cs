@@ -75,6 +75,18 @@ public class GameFactory : IGameFactory
 
         return lobby;
     }
+
+    public T CreateLevel<T>(Transform spawnPoint, LevelType type) where T : LevelView
+    {
+        T level = _assets.Instantiate(
+            _staticDataService.GetLevelView<T>(type),
+            at: spawnPoint.position);
+
+        level.transform.rotation = spawnPoint.rotation;
+
+        return level;
+    }
+
     public void CreateWeaponSwitcher(WeaponType type, UnityEngine.Vector3 position)
     {
         SwitchWeaponButton switcher = _assets.Instantiate(AssetsPath.WeaponSwitcherPath, at: position)

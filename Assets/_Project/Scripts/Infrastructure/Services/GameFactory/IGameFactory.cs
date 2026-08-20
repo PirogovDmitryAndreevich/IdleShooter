@@ -4,6 +4,7 @@ public interface IGameFactory : IService
 {
     void CreatePlayer(UnityEngine.Vector3 at);
     Transition CreateTransition(Transform at);
+    T CreateLevel<T>(Transform spawnPoint, LevelType type) where T : LevelView;
     Lobby CreateLobby();
     public WeaponPresenter CreateWeapon(WeaponType type);
     void CreateWeaponSwitcher(WeaponType type, UnityEngine.Vector3 position);

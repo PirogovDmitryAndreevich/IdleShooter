@@ -37,6 +37,7 @@ public class LoadSceneState : IPayloadState<string>
 
         Transition transition1 = InitTransition(lobby, lobby.LevelType);
 
+        LevelView_1 level_1 = InitLevel1(transition1);
         _weaponDataService.ForInitialize();
     private Lobby InitLobby()
     {
@@ -57,4 +58,18 @@ public class LoadSceneState : IPayloadState<string>
 
         return transition;
     }
+
+    private LevelView_1 InitLevel1(Transition transition)
+    {
+        LevelView_1 level = CreateLevel<LevelView_1>(transition, LevelType.Level_1);
+
+        foreach (var targetPoint in level.TargetsSpawnPoints)
+            _gameFactory.CreateTarget(targetPoint.transform.position);
+
+        return level;
+    }
+
+
+    private T CreateLevel<T>(Transition transition, LevelType type) where T : LevelView => 
+        _gameFactory.CreateLevel<T>(transition.ExitPoint, type);
 }
