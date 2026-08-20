@@ -13,10 +13,8 @@ public class GameStaticDataEditor : Editor
 
         if (GUILayout.Button("Build"))
         {
-            gameData.WeaponSwitcherData =
-                 FindObjectsOfType<WeaponSwitcherSpawnPoint>()
-                 .Select(x => new WeaponSwitcherData(x.WeaponType, x.transform.position))
-                 .ToArray();
+            gameData.LobbySpawnPosition = FindObjectOfType<LobbySpawnPoint>()
+                .transform.position;
         }
 
         EditorUtility.SetDirty(target);

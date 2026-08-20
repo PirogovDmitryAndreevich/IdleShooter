@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class LoadSceneState : IPayloadState<string>
@@ -32,12 +33,19 @@ public class LoadSceneState : IPayloadState<string>
     {
         GameStaticData gameData = _staticData.GetGameData();
 
-        var atPlayer = GameObject.FindWithTag("PlayerSpawnPoint").transform.position;
-        _gameFactory.CreatePlayer(atPlayer);
+        Lobby lobby = InitLobby();
+
 
         _weaponDataService.ForInitialize();
+    private Lobby InitLobby()
+    {
+        Lobby lobby = _gameFactory.CreateLobby();
 
-        foreach (var switcher in gameData.WeaponSwitcherData)
-            _gameFactory.CreateWeaponSwitcher(switcher.WeaponType, switcher.Position);
+        _gameFactory.CreatePlayer(lobby.PlayerSpawnPoint.transform.position);
+
+        foreach (WeaponSwitcherSpawnPoint switcher in lobby.WeaponSwitcherSpawnPoint)
+            _gameFactory.CreateWeaponSwitcher(switcher.WeaponType, switcher.transform.position);
+
+        return lobby;
     }
 }

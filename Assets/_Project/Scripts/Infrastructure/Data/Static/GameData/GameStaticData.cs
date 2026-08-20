@@ -3,6 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="GameStaticData", menuName = "StaticData/GameData")]
 public class GameStaticData : ScriptableObject
 {
+    public Vector3 LobbySpawnPosition;
+
     public CameraSettingsData CameraSettingsData;
 
     [Space]
@@ -11,5 +13,7 @@ public class GameStaticData : ScriptableObject
     public LayerMask AimLayerMask;
 
     [Space]
-    public WeaponSwitcherData[] WeaponSwitcherData;
+    [Header("Levels")]
+    public LevelView[] LevelViews;
+    public LevelsStaticData[] LevelsData;
 }

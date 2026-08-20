@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class GameFactory : IGameFactory
 {
     private readonly IAssets _assets;
@@ -53,6 +55,16 @@ public class GameFactory : IGameFactory
         player.Initialize(_player);
     }
 
+    public Lobby CreateLobby()
+    {
+        GameStaticData gameData = _staticDataService.GetGameData();
+
+        Lobby lobby = _assets.Instantiate(
+            _staticDataService.GetLevelView<Lobby>(LevelType.Lobby),
+            at: gameData.LobbySpawnPosition);
+
+        return lobby;
+    }
     public void CreateWeaponSwitcher(WeaponType type, UnityEngine.Vector3 position)
     {
         SwitchWeaponButton switcher = _assets.Instantiate(AssetsPath.WeaponSwitcherPath, at: position)

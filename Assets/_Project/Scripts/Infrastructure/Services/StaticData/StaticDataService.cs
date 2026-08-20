@@ -8,11 +8,15 @@ public class StaticDataService : IStaticDataService
     private const string WeaponViewsPath = "StaticData/WeaponView/WeaponViews";
     private const string WeaponsDataPath = "StaticData/WeaponsData";
     private const string GameDataPath = "StaticData/GameData/GameStaticData";
+    private const string EnemiesDataPath = "StaticData/Enemies";
 
     private PlayerStaticData _playerStaticData;
     private GameStaticData _gameStaticData;
     private Dictionary<WeaponType, WeaponView> WeaponViews = new();
     private Dictionary<WeaponType, WeaponStaticData> WeaponsData = new();
+    private Dictionary<EnemyType, EnemyStaticData> Enemies = new();
+    private Dictionary<LevelType, LevelsStaticData> LevelsData = new();
+    private Dictionary<LevelType, LevelView> LevelsView = new();
 
     public void Load()
     {
@@ -26,6 +30,15 @@ public class StaticDataService : IStaticDataService
 
         WeaponsData = Resources.LoadAll<WeaponStaticData>(WeaponsDataPath)
             .ToDictionary(x => x.Type, x => x);
+
+        Enemies = Resources.LoadAll<EnemyStaticData>(EnemiesDataPath)
+            .ToDictionary(x => x.Type, x => x);
+
+        LevelsData = _gameStaticData.LevelsData
+            .ToDictionary(x => x.Type, x => x);
+
+        LevelsView = _gameStaticData.LevelViews
+            .ToDictionary(x => x.LevelType, x => x);
     }
 
     public PlayerStaticData ForPlayer() =>
@@ -38,9 +51,24 @@ public class StaticDataService : IStaticDataService
 
     public WeaponStaticData GetWeaponData(WeaponType type) =>
         WeaponsData.TryGetValue(type, out WeaponStaticData data)
-        ? data 
+        ? data
         : null;
 
-    public GameStaticData GetGameData() => 
+    public GameStaticData GetGameData() =>
         _gameStaticData;
+
+    public EnemyStaticData ForEnemy(EnemyType type) =>
+        Enemies.TryGetValue(type, out EnemyStaticData data)
+        ? data
+        : null;
+
+    public LevelsStaticData ForLevel(LevelType type) =>
+        LevelsData.TryGetValue(type, out LevelsStaticData data)
+        ? data
+        : null;
+
+    public T GetLevelView<T>(LevelType type) where T : LevelView =>
+        LevelsView.TryGetValue(type, out LevelView levelView)
+        ? levelView as T
+        : null;
 }
