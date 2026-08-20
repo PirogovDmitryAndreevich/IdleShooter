@@ -35,6 +35,7 @@ public class LoadSceneState : IPayloadState<string>
 
         Lobby lobby = InitLobby();
 
+        Transition transition1 = InitTransition(lobby, lobby.LevelType);
 
         _weaponDataService.ForInitialize();
     private Lobby InitLobby()
@@ -47,5 +48,13 @@ public class LoadSceneState : IPayloadState<string>
             _gameFactory.CreateWeaponSwitcher(switcher.WeaponType, switcher.transform.position);
 
         return lobby;
+    }
+
+    private Transition InitTransition(LevelView levelView, LevelType type)
+    {
+        Transition transition =
+            _gameFactory.CreateTransition(levelView.ExitPoint);
+
+        return transition;
     }
 }
