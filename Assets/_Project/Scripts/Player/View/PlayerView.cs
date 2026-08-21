@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,12 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private Transform _weaponSpawnParent;
     [SerializeField] private CharacterController _characterController;
 
+    private WeaponView _currentWeapon;
+
+    public event Action PlayerDied;
+
+    private Dictionary<WeaponType, WeaponView> _weapons;
+
     public Animator Animator => _animator;
     public Transform FreeCameraTarget => _freeCameraTarget;
     public Transform AimCameraTarget => _aimCameraTarget;
@@ -16,8 +23,6 @@ public class PlayerView : MonoBehaviour
     public Transform Transform => transform;
     public Transform WeaponSpawnParent => _weaponSpawnParent;
 
-    private Dictionary<WeaponType, WeaponView> _weapons;
-    private WeaponView _currentWeapon;
 
     public void Construct()
     {
@@ -58,5 +63,10 @@ public class PlayerView : MonoBehaviour
 
         _currentWeapon = weaponView;
         _currentWeapon.gameObject.SetActive(true);
+    }
+
+    public void Died()
+    {
+        PlayerDied?.Invoke();
     }
 }
