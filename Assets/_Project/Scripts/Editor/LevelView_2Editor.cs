@@ -32,5 +32,4 @@ public class LevelView_2Editor : Editor
             EditorUtility.SetDirty(target);
         }
     }
-
 }

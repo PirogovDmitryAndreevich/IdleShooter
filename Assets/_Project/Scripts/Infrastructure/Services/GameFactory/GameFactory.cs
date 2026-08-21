@@ -55,12 +55,14 @@ public class GameFactory : IGameFactory
         player.Initialize(_player);
     }
 
-    public Transition CreateTransition(Transform at)
+    public Transition CreateTransition(Transform at, Transform parent)
     {
         var transition = _assets.Instantiate(AssetsPath.TransitionPath, at: at.position)
             .GetComponent<Transition>();
 
         transition.transform.rotation = at.rotation;
+
+        transition.transform.SetParent(parent);
 
         return transition;
     }
@@ -87,7 +89,7 @@ public class GameFactory : IGameFactory
         return level;
     }
 
-    public void CreateWeaponSwitcher(WeaponType type, UnityEngine.Vector3 position)
+    public SwitchWeaponButton CreateWeaponSwitcher(WeaponType type, Vector3 position, Transform parent)
     {
         SwitchWeaponButton switcher = _assets.Instantiate(AssetsPath.WeaponSwitcherPath, at: position)
             .GetComponent<SwitchWeaponButton>();
@@ -95,46 +97,125 @@ public class GameFactory : IGameFactory
         WeaponStaticData weaponData = _staticDataService.GetWeaponData(type);
 
         switcher.Construct(_weaponSwitcher, _weaponDataService, type, weaponData);
+
+        switcher.transform.SetParent(parent);
+
+        return switcher;
     }
 
-    public Target CreateTarget(UnityEngine.Vector3 position)
+    public TargetPresenter CreateTarget(Transform point, Transform parent, LevelPresenter level, ObstacleType target)
     {
-        Target target = _assets.Instantiate(AssetsPath.TargetPath, at: position)
-            .GetComponent<Target>();
+        TargetView view = _assets.Instantiate(AssetsPath.TargetPath, at: point.position)
+            .GetComponent<TargetView>();
 
-        return target;
+        Transform transform = view.transform;
+
+        transform.localScale = point.localScale;
+        transform.localRotation = point.rotation;
+
+        transform.SetParent(parent);
+
+        TargetModel model =
+            new TargetModel(_staticDataService.ForObstacle(target));
+
+        TargetPresenter presenter = new TargetPresenter(model, view);
+
+        level.Disposables.Add(presenter);
+        level.ResetObjects.Add(presenter);
+
+        return presenter;
     }
 
-    public SpinningCylinder CreateSpinningCylinder(UnityEngine.Vector3 position)
+    public SpinningCylinderPresenter CreateSpinningCylinder(Transform point, Transform parent,
+        LevelPresenter level, ObstacleType spinningCylinder)
     {
-        SpinningCylinder cylinder = _assets.Instantiate(AssetsPath.SpinningCylinderPath, at: position)
-            .GetComponent<SpinningCylinder>();
+        SpinningCylinderView view = _assets.Instantiate(AssetsPath.SpinningCylinderPath, at: point.position)
+            .GetComponent<SpinningCylinderView>();
 
-        return cylinder;
+        Transform transform = view.transform;
+
+        transform.localScale = point.localScale;
+        transform.localRotation = point.rotation;
+
+        transform.SetParent(parent);
+
+        SpinningCylinderModel model =
+            new SpinningCylinderModel(
+                _staticDataService.ForObstacle(spinningCylinder));
+
+        SpinningCylinderPresenter presenter = new SpinningCylinderPresenter(model, view);
+
+        level.Disposables.Add(presenter);
+        level.ResetObjects.Add(presenter);
+
+        return presenter;
     }
 
-    public Gear CreateGear(UnityEngine.Vector3 position)
+    public GearPresenter CreateGear(Transform point, Transform parent,
+        LevelPresenter level, ObstacleType gear)
     {
-        Gear gear = _assets.Instantiate(AssetsPath.GearPath, at: position)
-            .GetComponent<Gear>();
+        GearView view = _assets.Instantiate(AssetsPath.GearPath, at: point.position)
+            .GetComponent<GearView>();
 
-        return gear;
+        Transform transform = view.transform;
+
+        transform.localScale = point.localScale;
+        transform.localRotation = point.rotation;
+
+        transform.SetParent(parent);
+
+        GearModel model = new GearModel(_staticDataService.ForObstacle(gear));
+
+        GearPresenter presenter = new GearPresenter(model, view);
+
+        level.Disposables.Add(presenter);
+        level.ResetObjects.Add(presenter);
+
+        return presenter;
     }
 
-    public GearBase CreateGearBase(UnityEngine.Vector3 position)
+    public GearBasePresenter CreateGearBase(Transform point, Transform parent,
+        LevelPresenter level, ObstacleType gearBase)
     {
-        GearBase gear = _assets.Instantiate(AssetsPath.GearBasePath, at: position)
-            .GetComponent<GearBase>();
+        GearBaseView view = _assets.Instantiate(AssetsPath.GearBasePath, at: point.position)
+            .GetComponent<GearBaseView>();
 
-        return gear;
+        Transform transform = view.transform;
+
+        transform.localScale = point.localScale;
+        transform.localRotation = point.rotation;
+
+        transform.SetParent(parent);
+
+        GearBaseModel model = new GearBaseModel(_staticDataService.ForObstacle(gearBase));
+        GearBasePresenter presenter = new GearBasePresenter(model, view);
+
+        level.Disposables.Add(presenter);
+        level.ResetObjects.Add(presenter);
+
+        return presenter;
     }
 
-    public SpikeCylinder CreateSpikeCylinder(UnityEngine.Vector3 position)
+    public SpikeCylinderPresenter CreateSpikeCylinder(Transform point, Transform parent,
+        LevelPresenter level, ObstacleType spikeCylinder)
     {
-        SpikeCylinder gear = _assets.Instantiate(AssetsPath.SpikeCylinderPath, at: position)
-            .GetComponent<SpikeCylinder>();
+        SpikeCylinderView view = _assets.Instantiate(AssetsPath.SpikeCylinderPath, at: point.position)
+            .GetComponent<SpikeCylinderView>();
 
-        return gear;
+        Transform transform = view.transform;
+
+        transform.localScale = point.localScale;
+        transform.localRotation = point.rotation;
+
+        transform.SetParent(parent);
+
+        SpikeCylinderModel model = new SpikeCylinderModel(_staticDataService.ForObstacle(spikeCylinder));
+        SpikeCylinderPresenter presenter = new SpikeCylinderPresenter(model, view);
+
+        level.Disposables.Add(presenter);
+        level.ResetObjects.Add(presenter);
+
+        return presenter;
     }
 
     private Hud CreateHud(PlayerPresenter playerPresenter)

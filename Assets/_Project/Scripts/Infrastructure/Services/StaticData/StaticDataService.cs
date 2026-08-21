@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class StaticDataService : IStaticDataService
 {
-    private const string PlayerStaticDataPath = "StaticData/PlayerStaticData";
-    private const string WeaponViewsPath = "StaticData/WeaponView/WeaponViews";
-    private const string WeaponsDataPath = "StaticData/WeaponsData";
+    private const string PlayerStaticDataPath = "StaticData/PlayerStaticData";     
     private const string GameDataPath = "StaticData/GameData/GameStaticData";
     private const string EnemiesDataPath = "StaticData/Enemies";
 
@@ -17,21 +15,25 @@ public class StaticDataService : IStaticDataService
     private Dictionary<EnemyType, EnemyStaticData> Enemies = new();
     private Dictionary<LevelType, LevelsStaticData> LevelsData = new();
     private Dictionary<LevelType, LevelView> LevelsView = new();
+    private Dictionary<ObstacleType, ObstacleStaticData> Obstacles = new();
 
     public void Load()
     {
-        _playerStaticData = Resources.Load<PlayerStaticData>(PlayerStaticDataPath);
-
         _gameStaticData = Resources.Load<GameStaticData>(GameDataPath);
 
-        WeaponViews = Resources.Load<WeaponViewsData>(WeaponViewsPath)
+        _playerStaticData = Resources.Load<PlayerStaticData>(PlayerStaticDataPath);
+
+        WeaponViews = _gameStaticData.WeaponsView
             .WeaponViews
             .ToDictionary(x => x.Type, x => x);
 
-        WeaponsData = Resources.LoadAll<WeaponStaticData>(WeaponsDataPath)
+        WeaponsData = _gameStaticData.WeaponsStaticData
             .ToDictionary(x => x.Type, x => x);
 
         Enemies = Resources.LoadAll<EnemyStaticData>(EnemiesDataPath)
+            .ToDictionary(x => x.Type, x => x);
+
+        Obstacles = _gameStaticData.Obstacles
             .ToDictionary(x => x.Type, x => x);
 
         LevelsData = _gameStaticData.LevelsData
@@ -64,6 +66,11 @@ public class StaticDataService : IStaticDataService
 
     public LevelsStaticData ForLevel(LevelType type) =>
         LevelsData.TryGetValue(type, out LevelsStaticData data)
+        ? data
+        : null;
+
+    public ObstacleStaticData ForObstacle(ObstacleType type) =>
+        Obstacles.TryGetValue(type, out ObstacleStaticData data)
         ? data
         : null;
 

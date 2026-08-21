@@ -22452,7 +22452,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2069598127
 Transform:
   m_ObjectHideFlags: 0
@@ -23000,7 +23000,7 @@ PrefabInstance:
     - target: {fileID: 577177725703118981, guid: 3c510582e92230d49a2f0bd203711c55,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 912
+      value: 933
       objectReference: {fileID: 0}
     - target: {fileID: 1517024379949840294, guid: 3c510582e92230d49a2f0bd203711c55,
         type: 3}
@@ -23025,7 +23025,7 @@ PrefabInstance:
     - target: {fileID: 1758510607493130341, guid: 3c510582e92230d49a2f0bd203711c55,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 910
+      value: 931
       objectReference: {fileID: 0}
     - target: {fileID: 2745158688763524298, guid: 3c510582e92230d49a2f0bd203711c55,
         type: 3}
@@ -23035,7 +23035,7 @@ PrefabInstance:
     - target: {fileID: 2745158688763524298, guid: 3c510582e92230d49a2f0bd203711c55,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 910
+      value: 931
       objectReference: {fileID: 0}
     - target: {fileID: 2752228498923702127, guid: 3c510582e92230d49a2f0bd203711c55,
         type: 3}
@@ -23055,7 +23055,7 @@ PrefabInstance:
     - target: {fileID: 3039382500714098645, guid: 3c510582e92230d49a2f0bd203711c55,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 1681
+      value: 1702
       objectReference: {fileID: 0}
     - target: {fileID: 4055441626848296711, guid: 3c510582e92230d49a2f0bd203711c55,
         type: 3}
@@ -23160,7 +23160,7 @@ PrefabInstance:
     - target: {fileID: 6862750436261371719, guid: 3c510582e92230d49a2f0bd203711c55,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 1054
+      value: 1075
       objectReference: {fileID: 0}
     - target: {fileID: 7599552244442290393, guid: 3c510582e92230d49a2f0bd203711c55,
         type: 3}
@@ -23170,7 +23170,7 @@ PrefabInstance:
     - target: {fileID: 7599552244442290393, guid: 3c510582e92230d49a2f0bd203711c55,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 1170
+      value: 1191
       objectReference: {fileID: 0}
     - target: {fileID: 8005279613615741983, guid: 3c510582e92230d49a2f0bd203711c55,
         type: 3}
@@ -23190,7 +23190,7 @@ PrefabInstance:
     - target: {fileID: 8536548621936429065, guid: 3c510582e92230d49a2f0bd203711c55,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 1126
+      value: 1147
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

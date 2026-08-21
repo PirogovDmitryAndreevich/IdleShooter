@@ -1,6 +1,3 @@
-using System;
-using UnityEngine;
-
 public class LoadSceneState : IPayloadState<string>
 {
     private readonly GameStateMachine _gameStateMachine;
@@ -26,13 +23,11 @@ public class LoadSceneState : IPayloadState<string>
 
     public void Exit()
     {
-        
+
     }
 
     private void OnLoaded()
     {
-        GameStaticData gameData = _staticData.GetGameData();
-
         Lobby lobby = InitLobby();
 
         Transition transition1 = InitTransition(lobby, lobby.LevelType);
@@ -54,51 +49,61 @@ public class LoadSceneState : IPayloadState<string>
 
         _gameFactory.CreatePlayer(lobby.PlayerSpawnPoint.transform.position);
 
-        foreach (WeaponSwitcherSpawnPoint switcher in lobby.WeaponSwitcherSpawnPoint)
-            _gameFactory.CreateWeaponSwitcher(switcher.WeaponType, switcher.transform.position);
+        foreach (WeaponSwitcherSpawnPoint spawnPoint in lobby.WeaponSwitcherSpawnPoint)
+            _gameFactory.CreateWeaponSwitcher(
+                spawnPoint.WeaponType,
+                spawnPoint.transform.position,
+                lobby.transform);
 
         return lobby;
     }
 
-    private Transition InitTransition(LevelView levelView, LevelType type)
-    {
-        Transition transition =
-            _gameFactory.CreateTransition(levelView.ExitPoint);
-
-        return transition;
-    }
+    private Transition InitTransition(LevelView levelView, LevelType type) =>
+        _gameFactory.CreateTransition(levelView.ExitPoint, levelView.transform);
 
     private LevelView_1 InitLevel1(Transition transition)
     {
-        LevelView_1 level = CreateLevel<LevelView_1>(transition, LevelType.Level_1);
+        LevelView_1 levelView = CreateLevel<LevelView_1>(transition, LevelType.Level_1);
 
-        foreach (var targetPoint in level.TargetsSpawnPoints)
-            _gameFactory.CreateTarget(targetPoint.transform.position);
+        LevelPresenter level = new LevelPresenter(levelView);
 
-        return level;
+        foreach (TargetSpawnPoint targetPoint in levelView.TargetsSpawnPoints)
+            _gameFactory.CreateTarget(targetPoint.transform, levelView.transform, level, ObstacleType.Target);
+
+        return levelView;
     }
 
     private LevelView_2 InitLevel2(Transition transition1)
     {
-        LevelView_2 level = CreateLevel<LevelView_2>(transition1, LevelType.Level_2);
+        LevelView_2 levelView = CreateLevel<LevelView_2>(transition1, LevelType.Level_2);
 
-        foreach (var targetPoint in level.TargetsSpawnPoints)
-            _gameFactory.CreateTarget(targetPoint.transform.position);            
+        LevelPresenter level = new LevelPresenter(levelView);
 
-        foreach (var cylinderPoint in level.SpinningCylinderSpawnPoint)
-            _gameFactory.CreateSpinningCylinder(cylinderPoint.transform.position);
+        foreach (TargetSpawnPoint targetPoint in levelView.TargetsSpawnPoints)
+            _gameFactory.CreateTarget(targetPoint.transform, levelView.transform,
+                level, ObstacleType.TargetLevel2);
 
-        Gear gear = _gameFactory.CreateGear(level.GearSpawnPoint.transform.position);
+        foreach (SpinningCylinderSpawnPoint cylinderPoint in levelView.SpinningCylinderSpawnPoint)
+            _gameFactory.CreateSpinningCylinder(
+                cylinderPoint.transform,
+                levelView.transform,
+                level, ObstacleType.SpinningCylinder);
 
-        GearBase gearBase = _gameFactory.CreateGearBase(level.GearBaseSpawnPoint.transform.position);
+        _gameFactory.CreateGear(
+            levelView.GearSpawnPoint.transform,
+            levelView.transform,
+            level,
+            ObstacleType.Gear);
 
-        SpikeCylinder spinningCylinder = _gameFactory
-            .CreateSpikeCylinder
-            (level.SpikeCylinderSpawnPoint.transform.position);
+        _gameFactory.CreateGearBase(levelView.GearBaseSpawnPoint.transform,
+            levelView.transform, level, ObstacleType.GearBase);
 
-        return level;
+        _gameFactory.CreateSpikeCylinder(levelView.SpikeCylinderSpawnPoint.transform,
+            levelView.transform, level, ObstacleType.SpikeCylinder);
+
+        return levelView;
     }
 
-    private T CreateLevel<T>(Transition transition, LevelType type) where T : LevelView => 
+    private T CreateLevel<T>(Transition transition, LevelType type) where T : LevelView =>
         _gameFactory.CreateLevel<T>(transition.ExitPoint, type);
 }

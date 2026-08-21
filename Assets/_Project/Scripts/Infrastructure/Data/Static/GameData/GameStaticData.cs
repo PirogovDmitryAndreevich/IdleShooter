@@ -16,4 +16,13 @@ public class GameStaticData : ScriptableObject
     [Header("Levels")]
     public LevelView[] LevelViews;
     public LevelsStaticData[] LevelsData;
+
+    [Space]
+    [Header("Obstacles")]
+    public ObstacleStaticData[] Obstacles;
+
+    [Space]
+    [Header("Weapons")]
+    public WeaponViewsData WeaponsView;
+    public WeaponStaticData[] WeaponsStaticData;
 }

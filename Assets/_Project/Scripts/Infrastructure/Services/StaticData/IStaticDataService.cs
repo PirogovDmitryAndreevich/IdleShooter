@@ -8,5 +8,6 @@
     GameStaticData GetGameData();
     EnemyStaticData ForEnemy(EnemyType type);
     LevelsStaticData ForLevel(LevelType type);
+    ObstacleStaticData ForObstacle(ObstacleType type);
     T GetLevelView<T>(LevelType type) where T : LevelView;
 }
