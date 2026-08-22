@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerView : MonoBehaviour
+public class PlayerView : MonoBehaviour, IPlayer
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private Transform _freeCameraTarget;
@@ -68,5 +68,10 @@ public class PlayerView : MonoBehaviour
     public void Died()
     {
         PlayerDied?.Invoke();
+    }
+
+    public void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    {
+        
     }
 }

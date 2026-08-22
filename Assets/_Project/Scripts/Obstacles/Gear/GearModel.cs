@@ -15,4 +15,7 @@ public class GearModel
 
     public float Damage =>
         _data.Damage;
+
+    public float MoveSpeed =>
+        _data.MoveSpeed;
 }

@@ -218,6 +218,16 @@ public class GameFactory : IGameFactory
         return presenter;
     }
 
+    public FlyPlatform CreateFlyPlatform(UnityEngine.Vector3 startPosition, UnityEngine.Vector3 endPosition)
+    {
+        FlyPlatform platform = _assets.Instantiate(AssetsPath.FlyPlatformPath, startPosition)
+            .GetComponent<FlyPlatform>();
+
+        platform.Construct(endPosition);
+
+        return platform;
+    }
+
     private Hud CreateHud(PlayerPresenter playerPresenter)
     {
         var hud = _assets.Instantiate(AssetsPath.HudPath)

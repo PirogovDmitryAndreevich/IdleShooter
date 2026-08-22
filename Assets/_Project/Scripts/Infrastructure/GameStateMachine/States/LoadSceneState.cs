@@ -89,17 +89,26 @@ public class LoadSceneState : IPayloadState<string>
                 levelView.transform,
                 level, ObstacleType.SpinningCylinder);
 
-        _gameFactory.CreateGear(
+        FlyPlatform platform = _gameFactory.CreateFlyPlatform(
+            levelView.FlyPlatformSpawnPoint.transform.position,
+            levelView.FlyPlatformSpawnPoint.EndPoint.position);
+
+        GearPresenter gear = _gameFactory.CreateGear(
             levelView.GearSpawnPoint.transform,
             levelView.transform,
             level,
             ObstacleType.Gear);
 
+        gear.SetTriggerToMoving(platform);
+
         _gameFactory.CreateGearBase(levelView.GearBaseSpawnPoint.transform,
             levelView.transform, level, ObstacleType.GearBase);
 
-        _gameFactory.CreateSpikeCylinder(levelView.SpikeCylinderSpawnPoint.transform,
-            levelView.transform, level, ObstacleType.SpikeCylinder);
+        foreach (SpikeCylinderSpawnPoint spikeCylinderSpawnPoint in levelView.SpikeCylinderSpawnPoints)
+            _gameFactory.CreateSpikeCylinder(spikeCylinderSpawnPoint.transform,
+                levelView.transform, level, ObstacleType.SpikeCylinder);
+
+        
 
         return levelView;
     }

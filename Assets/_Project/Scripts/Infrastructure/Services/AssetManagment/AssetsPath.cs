@@ -19,4 +19,5 @@ public static class AssetsPath
     public const string GearPath = "Obstacles/Gear";
     public const string GearBasePath = "Obstacles/GearBase";
     public const string SpikeCylinderPath = "Obstacles/SpikeCylinder";
+    public const string FlyPlatformPath = "FlyPlatform/FlyPlatform";
 }

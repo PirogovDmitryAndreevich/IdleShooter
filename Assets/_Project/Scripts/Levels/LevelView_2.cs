@@ -4,7 +4,8 @@ public class LevelView_2 : LevelView
 
     public TargetSpawnPoint[] TargetsSpawnPoints;
     public SpinningCylinderSpawnPoint[] SpinningCylinderSpawnPoint;
+    public SpikeCylinderSpawnPoint[] SpikeCylinderSpawnPoints;
+    public FlyPlatformSpawnPoint FlyPlatformSpawnPoint;
     public GearSpawnPoint GearSpawnPoint;
     public GearBaseSpawnPoint GearBaseSpawnPoint;
-    public SpikeCylinderSpawnPoint SpikeCylinderSpawnPoint;
 }

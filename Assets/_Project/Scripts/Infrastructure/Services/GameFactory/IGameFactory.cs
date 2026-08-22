@@ -13,4 +13,5 @@ public interface IGameFactory : IService
     GearPresenter CreateGear(Transform point, Transform parent, LevelPresenter level, ObstacleType gear);
     SpikeCylinderPresenter CreateSpikeCylinder(Transform point, Transform parent, LevelPresenter level, ObstacleType spikeCylinder);
     GearBasePresenter CreateGearBase(Transform point, Transform parent, LevelPresenter level, ObstacleType gearBase);
+    FlyPlatform CreateFlyPlatform(UnityEngine.Vector3 startPosition, UnityEngine.Vector3 endPosition);
 }
