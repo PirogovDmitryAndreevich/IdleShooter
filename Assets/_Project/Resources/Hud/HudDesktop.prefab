@@ -257,7 +257,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db91d67af538ca24d8ce0680916a7f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponName: {fileID: 3096979161988459433}
   _aimSwitcher: {fileID: 3824821140340492396}
   _aim: {fileID: 1509148588820218956}
 --- !u!223 &875985406295320867
@@ -359,7 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

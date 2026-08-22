@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03edf3d6155410c4b96b64b0b270c9ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slider: {fileID: 0}
+  _slider: {fileID: 422856988502605388}
   _valueText: {fileID: 2403060002753764633}
 --- !u!114 &2330352246864693585
 MonoBehaviour:
