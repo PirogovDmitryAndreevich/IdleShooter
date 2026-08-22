@@ -34,9 +34,26 @@ MonoBehaviour:
       m_Bits: 1
   AimLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 513
   LevelViews:
   - {fileID: 4054803739814084820, guid: ce043ecd5e2108d4ea1350a5090c62f5, type: 3}
   - {fileID: 2108223686594225440, guid: e2d9c90e9aa16f9458e249b20b675899, type: 3}
   - {fileID: 2634710652558448042, guid: 3c510582e92230d49a2f0bd203711c55, type: 3}
   LevelsData: []
+  Obstacles:
+  - {fileID: 11400000, guid: 6ef1317a4df606342b225353320fb28f, type: 2}
+  - {fileID: 11400000, guid: 9c3b5acf68df4004ba1d61a456579e2f, type: 2}
+  - {fileID: 11400000, guid: 33dd638b602c80c42be4a164d23c378d, type: 2}
+  - {fileID: 11400000, guid: 1e25093281c03c54d9f2c597d17d0278, type: 2}
+  - {fileID: 11400000, guid: 59f5a8388040d5d4fbe8c2762c4c698b, type: 2}
+  - {fileID: 11400000, guid: 93b264ba529773a4098466958d58d294, type: 2}
+  WeaponsView: {fileID: 11400000, guid: 08b8c76bccb418543b20c43b6ccd7262, type: 2}
+  WeaponsStaticData:
+  - {fileID: 11400000, guid: 0767804ff87e43a499d01a1e693be512, type: 2}
+  - {fileID: 11400000, guid: fb6fa2ddc94f3474da63c63f46004d13, type: 2}
+  - {fileID: 11400000, guid: 764724b166de2af44abca16420d2d407, type: 2}
+  - {fileID: 11400000, guid: e65758121e7f0264cb63be63340ca9f6, type: 2}
+  - {fileID: 11400000, guid: fa14339884508bc43850015a69f6a114, type: 2}
+  - {fileID: 11400000, guid: 3cc532343a7bb73418e74128c6096dd5, type: 2}
+  - {fileID: 11400000, guid: 40976d1ac1527654894db675f7d708a2, type: 2}
+  - {fileID: 11400000, guid: 1c069e724ec286548b053e7d82a0b6f3, type: 2}

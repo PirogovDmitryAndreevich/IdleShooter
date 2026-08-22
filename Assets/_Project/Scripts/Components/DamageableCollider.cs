@@ -11,6 +11,6 @@ public class DamageableCollider : MonoBehaviour, IDamageable
     public void TakeDamage(float damage) =>
         TakeDamage(damage, transform.position, Vector3.up);
 
-    public void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal) =>
+    public void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal) => 
         DamageReceived?.Invoke(damage, hitPoint, hitNormal);
 }

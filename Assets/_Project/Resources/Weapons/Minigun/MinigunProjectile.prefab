@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8807559049810738259}
   - component: {fileID: 4949903909501691563}
   - component: {fileID: 1155084695027787943}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 689143120207674670}
   - component: {fileID: 1912774361771755344}
   - component: {fileID: 7677562655334978819}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MinigunProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,7 +295,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 3
+  m_CollisionDetection: 2
 --- !u!1001 &1436954858102661106
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -304,10 +304,55 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 689143120207674670}
     m_Modifications:
+    - target: {fileID: 180295403125695846, guid: 36a3ddd9e9258474aa29a08939eeda45,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394210606169844977, guid: 36a3ddd9e9258474aa29a08939eeda45,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3948143710394397095, guid: 36a3ddd9e9258474aa29a08939eeda45,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4859152983685940444, guid: 36a3ddd9e9258474aa29a08939eeda45,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5409236362596372100, guid: 36a3ddd9e9258474aa29a08939eeda45,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5453498363690797125, guid: 36a3ddd9e9258474aa29a08939eeda45,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6526307202332453270, guid: 36a3ddd9e9258474aa29a08939eeda45,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608379190813318917, guid: 36a3ddd9e9258474aa29a08939eeda45,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6982263153641847612, guid: 36a3ddd9e9258474aa29a08939eeda45,
         type: 3}
       propertyPath: m_Name
       value: Basic Hit 8  (NEW)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6982263153641847612, guid: 36a3ddd9e9258474aa29a08939eeda45,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8449360362269452637, guid: 36a3ddd9e9258474aa29a08939eeda45,
         type: 3}

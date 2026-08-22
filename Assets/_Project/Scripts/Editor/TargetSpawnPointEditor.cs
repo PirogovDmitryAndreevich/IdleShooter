@@ -11,3 +11,4 @@ public class TargetSpawnPointEditor : Editor
         Gizmos.DrawSphere(spawnPoint.transform.position, 0.5f);
     }
 }
+

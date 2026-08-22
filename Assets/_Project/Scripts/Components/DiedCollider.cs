@@ -10,14 +10,14 @@ public class DiedCollider : MonoBehaviour
         Vector3 hitPoint = contact.point;
         Vector3 hitNormal = contact.normal;
 
-        IPlayerDamageable player = collision.collider.GetComponent<IPlayerDamageable>();
+        IPlayer player = collision.collider.GetComponent<IPlayer>();
 
         if (player == null)
         {
-            player = collision.collider.GetComponentInChildren<IPlayerDamageable>();
+            player = collision.collider.GetComponentInChildren<IPlayer>();
 
             if (player == null)
-                player = collision.collider.GetComponentInParent<IPlayerDamageable>();
+                player = collision.collider.GetComponentInParent<IPlayer>();
         }
 
         if (player != null)

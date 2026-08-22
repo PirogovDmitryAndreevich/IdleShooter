@@ -16,25 +16,32 @@ public class Health
         _currentHealth = _maxHealth;
     }
 
-    public int MaxHealth =>
-        _maxHealth;
+    public int MaxHealth => _maxHealth;
+    public float CurrentHealth => _currentHealth;
 
-    public float CurrentHealth
+    public void TakeDamage(float damage)
     {
-        get => _currentHealth;
-        set
-        {
-            _currentHealth = Mathf.Clamp(_currentHealth + value, 0f, _maxHealth);
-            HealthChanged?.Invoke();
-        }
+        _currentHealth = Mathf.Clamp(
+            _currentHealth - damage,
+            0f,
+            _maxHealth);
+
+        HealthChanged?.Invoke();
     }
 
-    public void TakeDamage(float damage) =>
-        CurrentHealth -= damage;
+    public void Heal(float heal)
+    {
+        _currentHealth = Mathf.Clamp(
+            _currentHealth + heal,
+            0f,
+            _maxHealth);
 
-    public void Heal(float heal) =>
-        CurrentHealth += heal;
+        HealthChanged?.Invoke();
+    }
 
-    public void Reset() =>
-        CurrentHealth = _maxHealth;
+    public void Reset()
+    {
+        _currentHealth = _maxHealth;
+        HealthChanged?.Invoke();
+    }
 }

@@ -23,11 +23,14 @@ public class LevelView_2Editor : Editor
             levelView.GearSpawnPoint =
                 levelView.GetComponentInChildren<GearSpawnPoint>(false);
 
-            levelView.SpikeCylinderSpawnPoint =
-                levelView.GetComponentInChildren<SpikeCylinderSpawnPoint>(false);
+            levelView.SpikeCylinderSpawnPoints =
+                levelView.GetComponentsInChildren<SpikeCylinderSpawnPoint>(false);
 
             levelView.GearBaseSpawnPoint =
                 levelView.GetComponentInChildren<GearBaseSpawnPoint>(false);
+
+            levelView.FlyPlatformSpawnPoint =
+                levelView.GetComponentInChildren<FlyPlatformSpawnPoint>(false);
 
             EditorUtility.SetDirty(target);
         }

@@ -26,6 +26,6 @@ public class LevelPresenter : IDisposable
     public void Dispose()
     {
         foreach (IDisposable disposable in Disposables)
-            disposable.Dispose();
+            disposable?.Dispose();
     }
 }

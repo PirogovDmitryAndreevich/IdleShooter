@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0b9a7682d31a74b802d3000da3e590, type: 3}
   m_Name: SpinningCylinder
   m_EditorClassIdentifier: 
-  Type: 0
-  HealthPoints: 10
-  Damage: 0
+  Type: 2
+  HealthPoints: 25
+  Damage: 10

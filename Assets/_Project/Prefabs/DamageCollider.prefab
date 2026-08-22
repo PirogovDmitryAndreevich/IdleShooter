@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5264477544676677624}
   - component: {fileID: 5305480443938627396}
   - component: {fileID: 7004221535628192910}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DamageCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

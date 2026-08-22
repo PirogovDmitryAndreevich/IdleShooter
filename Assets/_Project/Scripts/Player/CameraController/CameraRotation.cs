@@ -74,11 +74,8 @@ public class CameraRotation
 
     public void PrepareAim()
     {
-        // «апоминаем текущее свободное вращение.
         _freeRotation = _parent.rotation;
-
-        _targetRotation = Quaternion.Euler(
-            _gameStaticData.CameraSettingsData.AimRotation);
+        _targetRotation = _parent.rotation;
     }
 
     public bool UpdateTransition(CameraSwitchState state)

@@ -9,8 +9,8 @@ public abstract class LevelView : MonoBehaviour
     public abstract LevelType LevelType { get; }
     public Transform ExitPoint => _exitPoint;
 
-    public void OnDestroy() =>
-        _presenter.Dispose();
+    private void OnDestroy() =>
+        _presenter?.Dispose();
 
     public void Construct(LevelPresenter presenter) => 
         _presenter = presenter;
