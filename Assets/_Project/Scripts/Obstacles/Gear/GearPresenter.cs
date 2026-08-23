@@ -5,9 +5,9 @@ public class GearPresenter : IDisposable, IResetObject
 {
     private readonly GearModel _model;
     private readonly GearView _view;
+    private readonly ImpactPunchScale _impactView;
 
     private FlyPlatform _flyPlatform;
-    private Vector3 _endPosition;
     private bool _isDied;
 
     public bool IsNeedReset => throw new NotImplementedException();
@@ -21,6 +21,8 @@ public class GearPresenter : IDisposable, IResetObject
 
         _view.DamageableCollider.DamageReceived += TakeDamage;
         _view.DamageCollider.Construct(_model.Damage);
+
+        _impactView = new ImpactPunchScale(_view.transform);
     }
 
     public void Dispose()
@@ -54,6 +56,8 @@ public class GearPresenter : IDisposable, IResetObject
             return;
 
         _model.Health.TakeDamage(damage);
+
+        _impactView.Play();
 
         if (_model.Health.CurrentHealth <= 0)
             Died();

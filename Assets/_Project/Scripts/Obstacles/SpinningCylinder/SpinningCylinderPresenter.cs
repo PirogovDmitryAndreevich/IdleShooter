@@ -5,6 +5,7 @@ public class SpinningCylinderPresenter : IDisposable, IResetObject
 {
     private readonly SpinningCylinderModel _model;
     private readonly SpinningCylinderView _view;
+    private readonly ImpactPunchScale _impactView;
 
     public bool IsNeedReset => throw new NotImplementedException();
 
@@ -17,6 +18,8 @@ public class SpinningCylinderPresenter : IDisposable, IResetObject
 
         _view.DamageableCollider.DamageReceived += TakeDamage;
         _view.DamageCollider.Construct(_model.Damage);
+
+        _impactView = new ImpactPunchScale(_view.transform);
     }
 
     public void Dispose()
@@ -27,6 +30,8 @@ public class SpinningCylinderPresenter : IDisposable, IResetObject
     private void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         _model.Health.TakeDamage(damage);
+
+        _impactView.Play();
 
         if (_model.Health.CurrentHealth <= 0)
             Died();
