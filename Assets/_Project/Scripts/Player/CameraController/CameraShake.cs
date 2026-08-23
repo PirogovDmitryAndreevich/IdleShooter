@@ -36,22 +36,22 @@ public class CameraShake
     public void Shake(ShootShakeSettings settings)
     {
         _positionTween = _shake.DOShakePosition(
-            settings.Duration,
-            settings.PositionStrength,
-            settings.Vibrato,
-            settings.Randomness,
+            settings.PositionShakeSettings.Duration,
+            settings.PositionShakeSettings.Strength,
+            settings.PositionShakeSettings.Vibrato,
+            settings.PositionShakeSettings.Randomness,
             false,
-            settings.FadeOut)
+            settings.PositionShakeSettings.FadeOut)
             .SetEase(Ease.InOutBounce)
             .SetLink(_shake.gameObject)
             .Play();
 
         _rotationTween = _shake.DOShakeRotation(
-            settings.Duration,
-            settings.RotationStrength,
-            settings.Vibrato,
-            settings.Randomness,
-            settings.FadeOut)
+            settings.RotationShakeSettings.Duration,
+            settings.RotationShakeSettings.Strength,
+            settings.RotationShakeSettings.Vibrato,
+            settings.RotationShakeSettings.Randomness,
+            settings.RotationShakeSettings.FadeOut)
             .SetEase(Ease.InOutBounce)
             .SetLink(_shake.gameObject)
             .Play();

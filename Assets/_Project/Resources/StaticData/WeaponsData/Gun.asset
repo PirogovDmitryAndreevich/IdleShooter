@@ -18,10 +18,16 @@ MonoBehaviour:
   FireRate: 0.7
   MaxAimDistance: 100
   Shake:
-    Duration: 1
-    PositionStrength: 0.1
-    RotationStrength: 0.1
-    Vibrato: 5
-    Randomness: 90
-    FadeOut: 1
+    PositionShakeSettings:
+      Duration: 0.15
+      Strength: {x: 0, y: 0, z: 0}
+      Vibrato: 10
+      Randomness: 0
+      FadeOut: 1
+    RotationShakeSettings:
+      Duration: 0.15
+      Strength: {x: 1, y: 0, z: 0}
+      Vibrato: 10
+      Randomness: 0
+      FadeOut: 1
   AnimationName: IsOneHand

@@ -15,13 +15,19 @@ MonoBehaviour:
   Type: 5
   ShooterType: 0
   ProjectileType: 1
-  FireRate: 0.2
+  FireRate: 0.3
   MaxAimDistance: 1000
   Shake:
-    Duration: 0.15
-    PositionStrength: 0.1
-    RotationStrength: 2
-    Vibrato: 20
-    Randomness: 90
-    FadeOut: 1
+    PositionShakeSettings:
+      Duration: 0.15
+      Strength: {x: 0.05, y: 0.05, z: 0}
+      Vibrato: 10
+      Randomness: 0
+      FadeOut: 1
+    RotationShakeSettings:
+      Duration: 0.15
+      Strength: {x: 0.5, y: 0.5, z: 0}
+      Vibrato: 20
+      Randomness: 0
+      FadeOut: 1
   AnimationName: IsAk

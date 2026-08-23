@@ -19759,7 +19759,7 @@ GameObject:
   - component: {fileID: 447969145919814906}
   - component: {fileID: 326237923105789054}
   - component: {fileID: 358969365963637336}
-  - component: {fileID: 3183918284310522784}
+  - component: {fileID: 4517032235364171899}
   m_Layer: 0
   m_Name: RocketMuzzle
   m_TagString: Untagged
@@ -19775,7 +19775,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 450044020708499364}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -19786,7 +19786,7 @@ Transform:
   - {fileID: 448288856343651553}
   - {fileID: 447969146492987115}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!198 &326237923105789054
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -19797,7 +19797,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 3
   simulationSpeed: 1
-  stopAction: 3
+  stopAction: 2
   cullingMode: 1
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -23643,7 +23643,7 @@ ParticleSystem:
       properties: 0
       emitProbability: 1
   LightsModule:
-    enabled: 0
+    enabled: 1
     ratio: 1
     light: {fileID: 108753114143921534, guid: a91676991de102c4c8d1928a86ad4e5e, type: 3}
     randomDistribution: 1
@@ -24654,7 +24654,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &3183918284310522784
+--- !u!114 &4517032235364171899
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24697,7 +24697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4263658433411274, guid: b3c4dea4e11db384fb9b4d2fc188d380, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1
+      value: -2.760901
       objectReference: {fileID: 0}
     - target: {fileID: 4263658433411274, guid: b3c4dea4e11db384fb9b4d2fc188d380, type: 3}
       propertyPath: m_LocalPosition.y

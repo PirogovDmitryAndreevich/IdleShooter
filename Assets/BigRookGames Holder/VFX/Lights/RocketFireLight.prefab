@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4600397608914020}
   - component: {fileID: 108753114143921534}
-  - component: {fileID: -8000899294172406556}
+  - component: {fileID: -6117156066179755981}
   m_Layer: 0
   m_Name: RocketFireLight
   m_TagString: Untagged
@@ -95,7 +95,7 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &-8000899294172406556
+--- !u!114 &-6117156066179755981
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
