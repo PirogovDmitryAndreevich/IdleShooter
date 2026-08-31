@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class RotateToTarget
 {
-    private readonly SoldierModel _model;
+    private readonly EnemyModel _model;
     private readonly SoldierView _view;
 
     private Transform _characterTransform;
 
-    public RotateToTarget(SoldierModel model, SoldierView view)
+    public RotateToTarget(EnemyModel model, SoldierView view)
     {
         _model = model;
         _view = view;

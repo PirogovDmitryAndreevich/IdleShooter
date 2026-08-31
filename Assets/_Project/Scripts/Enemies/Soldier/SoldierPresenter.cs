@@ -9,7 +9,7 @@ public class SoldierPresenter : IDisposable, IResetObject
 
     public bool IsNeedReset { get; private set; }
 
-    public SoldierPresenter(SoldierModel model, SoldierView view,
+    public SoldierPresenter(EnemyModel model, SoldierView view,
         PlayerTriggerObserver triggerObserver, SoldierStateMachine stateMachine)
     {
         _view = view;

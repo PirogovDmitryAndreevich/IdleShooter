@@ -236,16 +236,6 @@ public class GameFactory : IGameFactory
         return platform;
     }
 
-    private Hud CreateHud(PlayerPresenter playerPresenter)
-    {
-        var hud = _assets.Instantiate(AssetsPath.HudPath)
-            .GetComponent<Hud>();
-
-        hud.Construct(playerPresenter);
-
-        return hud;
-    }
-
     public WeaponPresenter CreateWeapon(WeaponType type)
     {
         WeaponView view = _assets.Instantiate(_staticDataService.GetWeaponView(type));
@@ -287,7 +277,7 @@ public class GameFactory : IGameFactory
 
         view.transform.localRotation = at.localRotation;
 
-        SoldierModel model = new SoldierModel(_staticDataService.ForEnemy(EnemyType.Soldier));
+        EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(EnemyType.Soldier));
         EnemyShooter shooter = new EnemyShooter(model, view.Weapon, _projectilePool);
 
         SoldierStateMachine stateMachine =
@@ -310,6 +300,16 @@ public class GameFactory : IGameFactory
         warp.Construct(type);
 
         return warp;
+    }    
+
+    private Hud CreateHud(PlayerPresenter playerPresenter)
+    {
+        var hud = _assets.Instantiate(AssetsPath.HudPath)
+            .GetComponent<Hud>();
+
+        hud.Construct(playerPresenter);
+
+        return hud;
     }
 
     private CameraController CreatePlayerCamera(PlayerView player, UnityEngine.Camera camera)

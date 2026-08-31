@@ -14,7 +14,7 @@ public class SoldierStateMachine : IDisposable
 
     private readonly SoldierView _view;
     private readonly EnemyShooter _weapon;
-    private readonly SoldierModel _model;
+    private readonly EnemyModel _model;
     private readonly Transform _spawnPoint;
     private readonly Transform _attackPoint;
 
@@ -30,7 +30,7 @@ public class SoldierStateMachine : IDisposable
     public SoldierStateMachine(
         SoldierView view,
         EnemyShooter weapon,
-        SoldierModel model,
+        EnemyModel model,
         Transform spawnPoint,
         Transform attackPoint,
         ICoroutineRunner coroutineRunner)

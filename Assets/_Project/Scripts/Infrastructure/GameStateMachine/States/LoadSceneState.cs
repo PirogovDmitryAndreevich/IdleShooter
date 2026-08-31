@@ -163,6 +163,15 @@ public class LoadSceneState : IPayloadState<string>
         return levelView;
     }
 
+    private LevelView_4 InitLevel4(Transition transition)
+    {
+        LevelView_4 levelView = CreateLevel<LevelView_4>(transition, LevelType.Level_4);
+
+        LevelPresenter level = new LevelPresenter(levelView);
+
+        return levelView;
+    }
+
     private T CreateLevel<T>(Transition transition, LevelType type) where T : LevelView =>
         _gameFactory.CreateLevel<T>(transition.ExitPoint, type);
 }

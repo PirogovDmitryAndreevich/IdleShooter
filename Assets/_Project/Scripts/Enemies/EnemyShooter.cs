@@ -4,11 +4,11 @@ public class EnemyShooter
 {
     private const float EyeHeight = 0.7f;
 
-    private readonly SoldierModel _model;
+    private readonly EnemyModel _model;
     private readonly WeaponView _view;
     private readonly IProjectilePool _projectilePool;
 
-    public EnemyShooter(SoldierModel model, WeaponView view, IProjectilePool projectilePool)
+    public EnemyShooter(EnemyModel model, WeaponView view, IProjectilePool projectilePool)
     {
         _model = model;
         _view = view;

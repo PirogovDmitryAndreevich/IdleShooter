@@ -6,7 +6,7 @@ public class SoldierAttackState : ISoldierState
 {
     private readonly SoldierView _view;
     private readonly EnemyShooter _weapon;
-    private readonly SoldierModel _model;
+    private readonly EnemyModel _model;
     private readonly RotateToTarget _rotateCharacter;
     private readonly ICoroutineRunner _coroutineRunner;
     private readonly Func<Transform> _getTarget;
@@ -17,7 +17,7 @@ public class SoldierAttackState : ISoldierState
     public SoldierAttackState(
         SoldierView view,
         EnemyShooter weapon,
-        SoldierModel model,
+        EnemyModel model,
         RotateToTarget rotateCharacter,
         ICoroutineRunner coroutineRunner,
         Func<Transform> getTarget)

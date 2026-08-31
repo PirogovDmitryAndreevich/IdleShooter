@@ -5,6 +5,7 @@ public class EnemyStaticData : ScriptableObject
 {
     public EnemyType Type;
     public float Damage;
+    public int HealthPoints;
     public float AttackDistance;
     public ProjectileType ProjectileType;
     public float RotateSpeed = 3f;
