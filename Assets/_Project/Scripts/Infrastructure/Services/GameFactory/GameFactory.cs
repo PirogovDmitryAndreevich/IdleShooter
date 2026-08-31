@@ -10,12 +10,13 @@ public class GameFactory : IGameFactory
     private readonly IWeaponDataService _weaponDataService;
     private readonly IGameSaveDataService _gameSaveDataService;
     private readonly IProjectilePool _projectilePool;
+    private readonly ICoroutineRunner _coroutineRunner;
     private PlayerPresenter _player;
     WeaponSwitcher _weaponSwitcher;
 
     public GameFactory(IAssets assets, IInputService inputService, IStaticDataService staticDataService,
         IProgressService progressService, IPoolService poolService, IWeaponDataService weaponDataService,
-        IGameSaveDataService gameSaveDataService, IProjectilePool projectilePool)
+        IGameSaveDataService gameSaveDataService, IProjectilePool projectilePool, ICoroutineRunner coroutineRunner)
     {
         _assets = assets;
         _inputService = inputService;
@@ -25,6 +26,7 @@ public class GameFactory : IGameFactory
         _weaponDataService = weaponDataService;
         _gameSaveDataService = gameSaveDataService;
         _projectilePool = projectilePool;
+        _coroutineRunner = coroutineRunner;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
@@ -36,7 +38,7 @@ public class GameFactory : IGameFactory
         _poolService.RegisterFactory(() => CreateRocketExplosion());
     }
 
-    public void CreatePlayer(UnityEngine.Vector3 at)
+    public PlayerPresenter CreatePlayer(UnityEngine.Vector3 at)
     {
         _weaponSwitcher = new WeaponSwitcher(this, _weaponDataService);
 
@@ -53,12 +55,16 @@ public class GameFactory : IGameFactory
         Hud hud = CreateHud(_player);
 
         player.Initialize(_player);
+
+        return _player;
     }
 
-    public Transition CreateTransition(Transform at, Transform parent)
+    public Transition CreateTransition(Transform at, Transform parent, LevelType type)
     {
-        var transition = _assets.Instantiate(AssetsPath.TransitionPath, at: at.position)
+        Transition transition = _assets.Instantiate(AssetsPath.TransitionPath, at: at.position)
             .GetComponent<Transition>();
+
+        transition.Construct(type);
 
         transition.transform.rotation = at.rotation;
 
@@ -218,12 +224,14 @@ public class GameFactory : IGameFactory
         return presenter;
     }
 
-    public FlyPlatform CreateFlyPlatform(UnityEngine.Vector3 startPosition, UnityEngine.Vector3 endPosition)
+    public FlyPlatform CreateFlyPlatform(Vector3 startPosition, Vector3 endPosition, Transform parent)
     {
         FlyPlatform platform = _assets.Instantiate(AssetsPath.FlyPlatformPath, startPosition)
             .GetComponent<FlyPlatform>();
 
         platform.Construct(endPosition);
+
+        platform.transform.SetParent(parent);
 
         return platform;
     }
@@ -267,6 +275,41 @@ public class GameFactory : IGameFactory
         projectile.Construct(_projectilePool, _poolService);
 
         return projectile;
+    }
+
+    public SoldierPresenter CreateSoldierEnemy(Transform at, Transform attackPoint,
+        PlayerTriggerObserver playerTriggerObserver, LevelPresenter level, Transform parent)
+    {
+        SoldierView view = _assets.Instantiate(AssetsPath.SoldierEnemyPath, at.position)
+            .GetComponent<SoldierView>();
+
+        view.transform.SetParent(parent);
+
+        view.transform.localRotation = at.localRotation;
+
+        SoldierModel model = new SoldierModel(_staticDataService.ForEnemy(EnemyType.Soldier));
+        EnemyShooter shooter = new EnemyShooter(model, view.Weapon, _projectilePool);
+
+        SoldierStateMachine stateMachine =
+            new SoldierStateMachine(view, shooter, model, at, attackPoint, _coroutineRunner);
+
+        SoldierPresenter presenter =
+            new SoldierPresenter(model, view, playerTriggerObserver, stateMachine);
+
+        level.Disposables.Add(presenter);
+        level.ResetObjects.Add(presenter);
+
+        return presenter;
+    }
+
+    public Warp CreateWarp(LevelType type, Vector3 at, Transform parent)
+    {
+        Warp warp = _assets.Instantiate(AssetsPath.WarpPath, at)
+            .GetComponent<Warp>();
+
+        warp.Construct(type);
+
+        return warp;
     }
 
     private CameraController CreatePlayerCamera(PlayerView player, UnityEngine.Camera camera)
@@ -318,7 +361,7 @@ public class GameFactory : IGameFactory
     private RPGMuzzleEffect CreateRPGMuzzle()
     {
         RPGMuzzleEffect muzzle = _assets.Instantiate(AssetsPath.RPGMuzzlePath)
-            .GetComponent <RPGMuzzleEffect>();
+            .GetComponent<RPGMuzzleEffect>();
 
         muzzle.Construct(_poolService);
 

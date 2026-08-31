@@ -5,8 +5,7 @@ public class PlayerDamageableCollider : MonoBehaviour
 
 }
 
-public interface IPlayer
+public interface IPlayer : IDamageable
 {
     void Died();
-    public void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal);
 }

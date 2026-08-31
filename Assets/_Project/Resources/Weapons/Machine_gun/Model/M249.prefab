@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4271122294997020}
   - component: {fileID: 33969966666000196}
   - component: {fileID: 23973502960805256}
+  - component: {fileID: 7655344856770345578}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -83,6 +84,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7655344856770345578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035616698534036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b16892716c3af54d9aad75944a3176e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1261748888023320
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +107,7 @@ GameObject:
   - component: {fileID: 4251306428143386}
   - component: {fileID: 33990794486070434}
   - component: {fileID: 23025737108156134}
+  - component: {fileID: 4724243436761663852}
   m_Layer: 0
   m_Name: M249
   m_TagString: Untagged
@@ -170,6 +184,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4724243436761663852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261748888023320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b16892716c3af54d9aad75944a3176e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1564110021164438
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,6 +207,7 @@ GameObject:
   - component: {fileID: 4211039482249024}
   - component: {fileID: 33543448834326324}
   - component: {fileID: 23601845274669596}
+  - component: {fileID: 2788171526942643112}
   m_Layer: 0
   m_Name: Magazin
   m_TagString: Untagged
@@ -253,6 +280,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2788171526942643112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564110021164438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b16892716c3af54d9aad75944a3176e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1871450637170646
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +303,7 @@ GameObject:
   - component: {fileID: 4220910401126438}
   - component: {fileID: 33784703545727648}
   - component: {fileID: 23948615344437080}
+  - component: {fileID: 378244698438106795}
   m_Layer: 0
   m_Name: Bolt
   m_TagString: Untagged
@@ -336,6 +376,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &378244698438106795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1871450637170646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b16892716c3af54d9aad75944a3176e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1942557438936618
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,6 +399,7 @@ GameObject:
   - component: {fileID: 4427154760744368}
   - component: {fileID: 33324123896295442}
   - component: {fileID: 23104848348981342}
+  - component: {fileID: 5178748178635113713}
   m_Layer: 0
   m_Name: Slide
   m_TagString: Untagged
@@ -419,3 +472,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5178748178635113713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942557438936618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b16892716c3af54d9aad75944a3176e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

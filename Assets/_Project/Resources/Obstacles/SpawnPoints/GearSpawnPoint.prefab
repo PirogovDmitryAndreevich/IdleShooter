@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4159117380613631575}
-  - component: {fileID: 5127349200139034450}
+  - component: {fileID: 4925482993279027215}
   m_Layer: 0
   m_Name: GearSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4159117380613631575
 Transform:
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5127349200139034450
+--- !u!114 &4925482993279027215
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1236130301772351542}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd1734efa0b6a6748957db1d03ed54c5, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c23689b00cae2e4d8cd15fc131459bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Color: {r: 1, g: 0, b: 0, a: 1}

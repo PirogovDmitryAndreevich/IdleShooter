@@ -9,10 +9,13 @@ public class PlayerView : MonoBehaviour, IPlayer
     [SerializeField] private Transform _aimCameraTarget;
     [SerializeField] private Transform _weaponSpawnParent;
     [SerializeField] private CharacterController _characterController;
+    [SerializeField] private HitFlash _hitEffect;
+    [SerializeField] private DamageableCollider _damageableCollider;
 
     private WeaponView _currentWeapon;
 
     public event Action PlayerDied;
+    public event Action<float, Vector3, Vector3> Damage;
 
     private Dictionary<WeaponType, WeaponView> _weapons;
 
@@ -22,11 +25,15 @@ public class PlayerView : MonoBehaviour, IPlayer
     public CharacterController CharacterController => _characterController;
     public Transform Transform => transform;
     public Transform WeaponSpawnParent => _weaponSpawnParent;
+    public HitFlash HitEffect => _hitEffect;
 
+    private void OnDestroy() => 
+        _damageableCollider.DamageReceived -= TakeDamage;
 
     public void Construct()
     {
         _weapons = new();
+        _damageableCollider.DamageReceived += TakeDamage;
     }
 
     public void OpenWeapon(IWeapon weapon)
@@ -72,6 +79,11 @@ public class PlayerView : MonoBehaviour, IPlayer
 
     public void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
-        
+        Damage?.Invoke(damage, hitPoint, hitNormal);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        TakeDamage(damage, transform.position, Vector3.up);
     }
 }

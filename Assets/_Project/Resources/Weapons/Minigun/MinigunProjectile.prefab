@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8807559049810738259}
   - component: {fileID: 4949903909501691563}
   - component: {fileID: 1155084695027787943}
+  - component: {fileID: 2114071259697220578}
   m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
@@ -219,6 +220,18 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &2114071259697220578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2332730429189140429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b16892716c3af54d9aad75944a3176e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3140846136626970028
 GameObject:
   m_ObjectHideFlags: 0

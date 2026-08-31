@@ -1,34 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public class GearView : MonoBehaviour
+public class GearView : Obstacle
 {
-    [SerializeField] private HealthBar _healthBar;
-    [SerializeField] private DamageableCollider _damageableCollider;
     [SerializeField] private DamageCollider _damageCollider;
 
     private Coroutine _moving;
 
-    public HealthBar HealthBar =>
-        _healthBar;
-    public DamageableCollider DamageableCollider =>
-        _damageableCollider;
     public DamageCollider DamageCollider =>
         _damageCollider;
-
-    public void OnDied()
-    {
-        StopMoving();
-
-        gameObject.SetActive(false);
-    }
-
-    public void OnReset()
-    {
-        StopMoving();
-
-        gameObject.SetActive(true);
-    }
 
     public void StartMoving(Vector3 endPosition, float speed)
     {

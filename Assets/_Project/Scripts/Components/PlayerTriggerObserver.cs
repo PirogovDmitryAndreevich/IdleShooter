@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerTriggerObserver : MonoBehaviour
 {
     public event Action TriggerEnter;
+    public event Action<Transform> TargetEnter;
     public event Action<CharacterController> PlayerEntered;
     public event Action PlayerExited;
 
@@ -24,10 +25,11 @@ public class PlayerTriggerObserver : MonoBehaviour
         {
             TriggerEnter?.Invoke();
 
-            if (other.TryGetComponent(out CharacterController cc))
-            {
-                PlayerEntered?.Invoke(cc);
-            }
+            if (other.TryGetComponent(out CharacterController cc))            
+                PlayerEntered?.Invoke(cc);        
+            
+            if(other.TryGetComponent(out Transform transform))
+                TargetEnter?.Invoke(transform);
         }
     }
 

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
 public class FlyPlatform : MonoBehaviour
 {
     [SerializeField] private float _flySpeed;

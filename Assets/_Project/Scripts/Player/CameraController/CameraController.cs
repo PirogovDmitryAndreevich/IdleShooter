@@ -92,6 +92,15 @@ public class CameraController
         _shake.LateUpdate(Time.deltaTime);
     }
 
+    public void SyncWithPlayer(Quaternion rotation)
+    {
+        _movement.Snap();
+        _rotation.Snap(rotation);
+
+        _camera.transform.position =
+        _collision.CalculatePosition();
+    }
+
     private void UpdateCameraPosition()
     {
         Vector3 targetPosition =

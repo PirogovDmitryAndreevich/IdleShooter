@@ -49,7 +49,8 @@ public class BootstrapState : IState
             _allServices.Single<IPoolService>(),
             _allServices.Single<IWeaponDataService>(),
             _allServices.Single<IGameSaveDataService>(),
-            _allServices.Single<IProjectilePool>()));
+            _allServices.Single<IProjectilePool>(),
+            _coroutineRunner));
     }
 
     private void RegisterInputService()

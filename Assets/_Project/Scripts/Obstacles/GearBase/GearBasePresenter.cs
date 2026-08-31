@@ -32,6 +32,7 @@ public class GearBasePresenter : IDisposable, IResetObject
         _model.Health.TakeDamage(damage);
 
         _impactView.Play();
+        _view.HitFlash.Flash();
 
         if (_model.Health.CurrentHealth <= 0)
             Died();

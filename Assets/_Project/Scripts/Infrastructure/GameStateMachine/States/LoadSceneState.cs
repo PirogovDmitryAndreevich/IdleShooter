@@ -1,3 +1,6 @@
+using Assets._Project.Scripts.SpawnPoints.Obstacles;
+using System.Collections.Generic;
+
 public class LoadSceneState : IPayloadState<string>
 {
     private readonly GameStateMachine _gameStateMachine;
@@ -28,26 +31,34 @@ public class LoadSceneState : IPayloadState<string>
 
     private void OnLoaded()
     {
-        Lobby lobby = InitLobby();
+        WarpStarter warpStarter = new WarpStarter();
 
-        Transition transition1 = InitTransition(lobby, lobby.LevelType);
+        Lobby lobby = InitLobby(warpStarter);
+
+        Transition transition1 = InitTransition(lobby, LevelType.Level_1, warpStarter);
 
         LevelView_1 level_1 = InitLevel1(transition1);
 
-        Transition transition2 = InitTransition(level_1, level_1.LevelType);
+        Transition transition2 = InitTransition(level_1, LevelType.Level_2, warpStarter);
 
         LevelView_2 levelView_2 = InitLevel2(transition2);
 
-        Transition transition3 = InitTransition(levelView_2, levelView_2.LevelType);
+        Transition transition3 = InitTransition(levelView_2, LevelType.Level_3, warpStarter);
+
+        LevelView_3 levelView_3 = InitLevel3(transition3);
+
+        Transition transition4 = InitTransition(levelView_3, LevelType.Level_4, warpStarter);
 
         _weaponDataService.ForInitialize();
     }
 
-    private Lobby InitLobby()
+    private Lobby InitLobby(WarpStarter warpStarter)
     {
         Lobby lobby = _gameFactory.CreateLobby();
 
-        _gameFactory.CreatePlayer(lobby.PlayerSpawnPoint.transform.position);
+        LevelPresenter presenter = new LevelPresenter(lobby);
+
+        PlayerPresenter player = _gameFactory.CreatePlayer(lobby.PlayerSpawnPoint.transform.position);
 
         foreach (WeaponSwitcherSpawnPoint spawnPoint in lobby.WeaponSwitcherSpawnPoint)
             _gameFactory.CreateWeaponSwitcher(
@@ -55,11 +66,34 @@ public class LoadSceneState : IPayloadState<string>
                 spawnPoint.transform.position,
                 lobby.transform);
 
+        List<Warp> warps = new();
+
+        foreach (WarpSpawnPoint warpSpawnPoint in lobby.WarpSpawnPoint)
+        {
+            Warp warp;
+
+            warp = _gameFactory.CreateWarp(warpSpawnPoint.Type,
+                warpSpawnPoint.transform.position,
+                lobby.transform);
+
+            warps.Add(warp);
+        }
+
+        warpStarter.Initialize(warps, player);
+
+        presenter.Disposables.Add(warpStarter);
+
         return lobby;
     }
 
-    private Transition InitTransition(LevelView levelView, LevelType type) =>
-        _gameFactory.CreateTransition(levelView.ExitPoint, levelView.transform);
+    private Transition InitTransition(LevelView levelView, LevelType type, WarpStarter warpStarter)
+    {
+        var transition = _gameFactory.CreateTransition(levelView.ExitPoint, levelView.transform, type);
+
+        warpStarter.RegisterTransition(transition);
+
+        return transition;
+    }
 
     private LevelView_1 InitLevel1(Transition transition)
     {
@@ -91,7 +125,8 @@ public class LoadSceneState : IPayloadState<string>
 
         FlyPlatform platform = _gameFactory.CreateFlyPlatform(
             levelView.FlyPlatformSpawnPoint.transform.position,
-            levelView.FlyPlatformSpawnPoint.EndPoint.position);
+            levelView.FlyPlatformSpawnPoint.EndPoint.position,
+            levelView.transform);
 
         GearPresenter gear = _gameFactory.CreateGear(
             levelView.GearSpawnPoint.transform,
@@ -108,7 +143,22 @@ public class LoadSceneState : IPayloadState<string>
             _gameFactory.CreateSpikeCylinder(spikeCylinderSpawnPoint.transform,
                 levelView.transform, level, ObstacleType.SpikeCylinder);
 
-        
+        return levelView;
+    }
+
+    private LevelView_3 InitLevel3(Transition transition)
+    {
+        LevelView_3 levelView = CreateLevel<LevelView_3>(transition, LevelType.Level_3);
+
+        LevelPresenter level = new LevelPresenter(levelView);
+
+        foreach (var soldierSpawnPoint in levelView.SoldierSpawnPoints)
+            _gameFactory.CreateSoldierEnemy(
+                soldierSpawnPoint.transform,
+                soldierSpawnPoint.AttackPoint.transform,
+                levelView.PlayerTriggerObserver,
+                level,
+                levelView.transform);
 
         return levelView;
     }

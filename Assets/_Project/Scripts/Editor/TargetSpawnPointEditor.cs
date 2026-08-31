@@ -1,3 +1,4 @@
+using Assets._Project.Scripts.SpawnPoints.Obstacles;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,4 +12,3 @@ public class TargetSpawnPointEditor : Editor
         Gizmos.DrawSphere(spawnPoint.transform.position, 0.5f);
     }
 }
-

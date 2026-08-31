@@ -22,6 +22,10 @@ public class GameStaticData : ScriptableObject
     public ObstacleStaticData[] Obstacles;
 
     [Space]
+    [Header("Enemies")]
+    public EnemyStaticData[] EnemiesStaticData;
+
+    [Space]
     [Header("Weapons")]
     public WeaponViewsData WeaponsView;
     public WeaponStaticData[] WeaponsStaticData;

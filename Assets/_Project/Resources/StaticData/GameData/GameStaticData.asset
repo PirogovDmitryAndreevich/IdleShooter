@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9163234a7464953448ae3d04d8ceef62, type: 3}
   m_Name: GameStaticData
   m_EditorClassIdentifier: 
-  LobbySpawnPosition: {x: -17, y: 0, z: 7}
+  LobbySpawnPosition: {x: -6, y: 0, z: 10.949997}
   CameraSettingsData:
     MaxDistance: 5
     OffsetDistanceY: 2.5
@@ -36,9 +36,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 513
   LevelViews:
-  - {fileID: 4054803739814084820, guid: ce043ecd5e2108d4ea1350a5090c62f5, type: 3}
+  - {fileID: 7973607129331795865, guid: 5701f3d27548eed48a2588c506c3ed74, type: 3}
   - {fileID: 2108223686594225440, guid: e2d9c90e9aa16f9458e249b20b675899, type: 3}
   - {fileID: 2634710652558448042, guid: 3c510582e92230d49a2f0bd203711c55, type: 3}
+  - {fileID: 3124759299611094118, guid: 76ab7deb1ad16d34db928bc850a5aa5b, type: 3}
   LevelsData: []
   Obstacles:
   - {fileID: 11400000, guid: 6ef1317a4df606342b225353320fb28f, type: 2}
@@ -47,6 +48,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1e25093281c03c54d9f2c597d17d0278, type: 2}
   - {fileID: 11400000, guid: 59f5a8388040d5d4fbe8c2762c4c698b, type: 2}
   - {fileID: 11400000, guid: 93b264ba529773a4098466958d58d294, type: 2}
+  EnemiesStaticData:
+  - {fileID: 11400000, guid: 7e214fa5d2670ef4081ac7b17ce9d4c2, type: 2}
   WeaponsView: {fileID: 11400000, guid: 08b8c76bccb418543b20c43b6ccd7262, type: 2}
   WeaponsStaticData:
   - {fileID: 11400000, guid: 0767804ff87e43a499d01a1e693be512, type: 2}

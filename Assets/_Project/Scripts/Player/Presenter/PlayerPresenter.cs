@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class PlayerPresenter : IDisposable
 {
@@ -47,6 +48,19 @@ public class PlayerPresenter : IDisposable
 
         _weaponSwitcher.WeaponSwitched += OnWeaponSwitched;
         _weaponSwitcher.WeaponOpened += OnWeaponOpened;
+
+        _view.Damage += TakeDamage;
+    }
+
+    public void Dispose()
+    {
+        _weaponSwitcher.WeaponSwitched -= OnWeaponSwitched;
+        _weaponSwitcher.WeaponOpened -= OnWeaponOpened;
+
+        _view.Damage -= TakeDamage;
+
+        _controller.Dispose();
+        _weaponSwitcher.Dispose();
     }
 
     public void FixedUpdate()
@@ -108,6 +122,23 @@ public class PlayerPresenter : IDisposable
         AimChanged?.Invoke(_isAim);
     }
 
+    public void Teleport(Transform target)
+    {
+        if (target == null)
+            return;
+
+        SwitchAim(false);
+
+        _controller.Teleport(target);
+
+        _camera.SyncWithPlayer(target.rotation);
+    }
+
+    private void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    {
+        _view.HitEffect.Flash();
+    }
+
     private void OnWeaponSwitched(IWeapon weapon)
     {
         if (_weapon != null)
@@ -150,14 +181,5 @@ public class PlayerPresenter : IDisposable
 
         if (_weapon.TryShoot(_damage))        
             _camera.Shake(_weapon.ShakeData);        
-    }
-
-    public void Dispose()
-    {
-        _weaponSwitcher.WeaponSwitched -= OnWeaponSwitched;
-        _weaponSwitcher.WeaponOpened -= OnWeaponOpened;
-
-        _controller.Dispose();
-        _weaponSwitcher.Dispose();
-    }
+    }    
 }

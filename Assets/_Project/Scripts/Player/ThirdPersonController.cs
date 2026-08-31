@@ -63,6 +63,24 @@ public class ThirdPersonController : IDisposable
         _characterController.Move(movement);
     }
 
+    public void Teleport(Transform target)
+    {
+        if (target == null)
+            return;
+
+        _jumpHandler.ForceEndJump();
+
+        _characterController.enabled = false;
+
+        _viewTransform.SetPositionAndRotation(
+            target.position,
+            target.rotation);
+
+        _characterController.enabled = true;
+
+        Physics.SyncTransforms();
+    }
+
     public void Dispose()
     {
         _jumpHandler.OnJumpStarted -= OnJumpStartedInternal;

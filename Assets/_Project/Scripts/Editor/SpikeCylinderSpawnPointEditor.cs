@@ -1,3 +1,4 @@
+using Assets._Project.Scripts.SpawnPoints.Obstacles;
 using UnityEditor;
 using UnityEngine;
 

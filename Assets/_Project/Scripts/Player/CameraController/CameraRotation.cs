@@ -106,6 +106,19 @@ public class CameraRotation
         return true;
     }
 
+    public void Snap(Quaternion rotation)
+    {
+        _parent.rotation = rotation;
+
+        Vector3 euler = rotation.eulerAngles;
+
+        _mouseX = NormalizeAngle(euler.y);
+        _mouseY = NormalizeAngle(-euler.x);
+
+        _freeRotation = rotation;
+        _targetRotation = rotation;
+    }
+
     private void SyncAimRotation()
     {
         Vector3 euler = _parent.eulerAngles;

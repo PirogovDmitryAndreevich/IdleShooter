@@ -40,6 +40,11 @@ public class CameraMovement
             _target.position) < 0.01f;
     }
 
+    public void Snap()
+    {
+        _parent.position = _target.position;
+    }
+
     public void SetAim()
     {
         _target = _playerView.AimCameraTarget;

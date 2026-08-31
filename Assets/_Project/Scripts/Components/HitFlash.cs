@@ -1,182 +1,58 @@
-using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class HitFlash : MonoBehaviour
 {
-    private static readonly int BaseColor =
-        Shader.PropertyToID("_BaseColor");
+    private static readonly int HitEffectId =
+        Shader.PropertyToID("_HitEffect");
 
-    [SerializeField] private Color _whiteColor = Color.white;
-    [SerializeField] private Color _redColor = new Color(1f, 0.15f, 0.15f);
+    [SerializeField] private Renderer[] _renderers;
+    [SerializeField] private float _duration = 0.12f;
 
-    [SerializeField] private float _whiteDuration = 0.025f;
-    [SerializeField] private float _redDuration = 0.05f;
-    [SerializeField] private float _restoreDuration = 0.08f;
-
-    private Renderer[] _renderers;
     private MaterialPropertyBlock _propertyBlock;
 
-    private Color[][] _originalColors;
-
-    private Coroutine _flashCoroutine;
+    private Tween _tween;
+    private float _value;
 
     private void Awake()
     {
-        _renderers = GetComponentsInChildren<Renderer>(true);
-
         _propertyBlock = new MaterialPropertyBlock();
 
-        _originalColors = new Color[_renderers.Length][];
+        SetHitEffect(0f);
 
-        for (int rendererIndex = 0; rendererIndex < _renderers.Length; rendererIndex++)
-        {
-            Material[] materials = _renderers[rendererIndex].sharedMaterials;
+        _value = 1f;
 
-            _originalColors[rendererIndex] = new Color[materials.Length];
-
-            for (int materialIndex = 0; materialIndex < materials.Length; materialIndex++)
+        _tween = DOTween.To(
+            () => _value,
+            value =>
             {
-                Material material = materials[materialIndex];
-
-                _originalColors[rendererIndex][materialIndex] =
-                    material.HasProperty(BaseColor)
-                        ? material.GetColor(BaseColor)
-                        : Color.white;
-            }
-        }
+                _value = value; SetHitEffect(value);
+            },
+            0f,
+            _duration)
+            .SetAutoKill(false)
+            .SetEase(Ease.OutQuad);
     }
+
+    private void OnDestroy() =>
+        _tween?.Kill();
 
     public void Flash()
     {
-        if (_flashCoroutine != null)
-            StopCoroutine(_flashCoroutine);
+        _value = 1f;
 
-        _flashCoroutine = StartCoroutine(FlashRoutine());
+        SetHitEffect(_value);
+
+        _tween.Restart();
     }
 
-    private IEnumerator FlashRoutine()
+    private void SetHitEffect(float value)
     {
-        // 1. Белая вспышка
-        SetColor(_whiteColor);
-
-        yield return new WaitForSeconds(_whiteDuration);
-
-        // 2. Красная вспышка
-        SetColor(_redColor);
-
-        yield return new WaitForSeconds(_redDuration);
-
-        // 3. Возвращение к исходному цвету
-        float elapsed = 0f;
-
-        while (elapsed < _restoreDuration)
+        foreach (Renderer renderer in _renderers)
         {
-            elapsed += Time.deltaTime;
-
-            float progress = elapsed / _restoreDuration;
-
-            progress = Mathf.SmoothStep(0f, 1f, progress);
-
-            SetLerpColor(_redColor, progress);
-
-            yield return null;
+            renderer.GetPropertyBlock(_propertyBlock);
+            _propertyBlock.SetFloat(HitEffectId, value);
+            renderer.SetPropertyBlock(_propertyBlock);
         }
-
-        RestoreColors();
-
-        _flashCoroutine = null;
-    }
-
-    private void SetColor(Color color)
-    {
-        for (int rendererIndex = 0; rendererIndex < _renderers.Length; rendererIndex++)
-        {
-            Renderer renderer = _renderers[rendererIndex];
-            Material[] materials = renderer.sharedMaterials;
-
-            for (int materialIndex = 0; materialIndex < materials.Length; materialIndex++)
-            {
-                if (!materials[materialIndex].HasProperty(BaseColor))
-                    continue;
-
-                renderer.GetPropertyBlock(
-                    _propertyBlock,
-                    materialIndex);
-
-                _propertyBlock.SetColor(
-                    BaseColor,
-                    color);
-
-                renderer.SetPropertyBlock(
-                    _propertyBlock,
-                    materialIndex);
-            }
-        }
-    }
-
-    private void SetLerpColor(Color from, float progress)
-    {
-        for (int rendererIndex = 0; rendererIndex < _renderers.Length; rendererIndex++)
-        {
-            Renderer renderer = _renderers[rendererIndex];
-            Material[] materials = renderer.sharedMaterials;
-
-            for (int materialIndex = 0; materialIndex < materials.Length; materialIndex++)
-            {
-                if (!materials[materialIndex].HasProperty(BaseColor))
-                    continue;
-
-                Color originalColor =
-                    _originalColors[rendererIndex][materialIndex];
-
-                Color color = Color.Lerp(
-                    from,
-                    originalColor,
-                    progress);
-
-                renderer.GetPropertyBlock(
-                    _propertyBlock,
-                    materialIndex);
-
-                _propertyBlock.SetColor(
-                    BaseColor,
-                    color);
-
-                renderer.SetPropertyBlock(
-                    _propertyBlock,
-                    materialIndex);
-            }
-        }
-    }
-
-    private void RestoreColors()
-    {
-        for (int rendererIndex = 0; rendererIndex < _renderers.Length; rendererIndex++)
-        {
-            Renderer renderer = _renderers[rendererIndex];
-
-            for (int materialIndex = 0;
-                 materialIndex < _originalColors[rendererIndex].Length;
-                 materialIndex++)
-            {
-                renderer.GetPropertyBlock(
-                    _propertyBlock,
-                    materialIndex);
-
-                _propertyBlock.SetColor(
-                    BaseColor,
-                    _originalColors[rendererIndex][materialIndex]);
-
-                renderer.SetPropertyBlock(
-                    _propertyBlock,
-                    materialIndex);
-            }
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (_flashCoroutine != null)
-            StopCoroutine(_flashCoroutine);
     }
 }

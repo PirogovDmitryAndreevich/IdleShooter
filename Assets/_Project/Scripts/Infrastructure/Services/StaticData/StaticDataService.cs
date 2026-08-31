@@ -6,7 +6,6 @@ public class StaticDataService : IStaticDataService
 {
     private const string PlayerStaticDataPath = "StaticData/PlayerStaticData";     
     private const string GameDataPath = "StaticData/GameData/GameStaticData";
-    private const string EnemiesDataPath = "StaticData/Enemies";
 
     private PlayerStaticData _playerStaticData;
     private GameStaticData _gameStaticData;
@@ -30,7 +29,7 @@ public class StaticDataService : IStaticDataService
         WeaponsData = _gameStaticData.WeaponsStaticData
             .ToDictionary(x => x.Type, x => x);
 
-        Enemies = Resources.LoadAll<EnemyStaticData>(EnemiesDataPath)
+        Enemies = _gameStaticData.EnemiesStaticData
             .ToDictionary(x => x.Type, x => x);
 
         Obstacles = _gameStaticData.Obstacles

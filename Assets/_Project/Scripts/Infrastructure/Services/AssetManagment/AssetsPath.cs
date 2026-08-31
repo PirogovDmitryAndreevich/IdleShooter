@@ -20,4 +20,6 @@ public static class AssetsPath
     public const string GearBasePath = "Obstacles/GearBase";
     public const string SpikeCylinderPath = "Obstacles/SpikeCylinder";
     public const string FlyPlatformPath = "FlyPlatform/FlyPlatform";
+    public const string SoldierEnemyPath = "Enemies/Soldier/EnemySoldier";
+    public const string WarpPath = "Warps/Warper";
 }
