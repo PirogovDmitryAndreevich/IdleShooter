@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,23 +20,6 @@ public class GameStaticDataEditor : Editor
         {
             gameData.LobbySpawnPosition = FindObjectOfType<LobbySpawnPoint>()
                 .transform.position;
-
-            gameData.SpawnPoints.Enemies.EnemiesSpawnPointData = FindObjectsOfType<EnemySpawnPoint>()
-                .Select(x => x.Type switch
-                {
-                    EnemyType.Soldier =>
-                        new SoldierSpawnPointData(
-                            x.Type,
-                            x.transform.position,
-                            new SoldierAttackPointData(((SoldierSpawnPoint)x).AttackPoint.transform.position)),
-
-                    _ =>
-                        new EnemySpawnPointData(
-                            x.Type,
-                            x.transform.position)
-                })
-                .ToArray();                
-
             gameData.LevelViews = Resources.LoadAll<LevelView>(LevelsViewPath);
 
             gameData.Obstacles = Resources.LoadAll<ObstacleStaticData>(ObstaclesDataPath);

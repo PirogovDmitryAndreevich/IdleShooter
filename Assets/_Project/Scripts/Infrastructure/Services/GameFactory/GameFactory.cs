@@ -267,28 +267,27 @@ public class GameFactory : IGameFactory
         return projectile;
     }
 
-    public SoldierPresenter CreateSoldierEnemy(Vector3 at, Vector3 attackPoint)
+    public SoldierPresenter CreateSoldierEnemy(Transform at, Transform attackPoint,
+        PlayerTriggerObserver playerTriggerObserver, LevelPresenter level, Transform parent)
     {
-        SoldierView view = _assets.Instantiate(AssetsPath.SoldierEnemyPath, at)
+        SoldierView view = _assets.Instantiate(AssetsPath.SoldierEnemyPath, at.position)
             .GetComponent<SoldierView>();
+
+        view.transform.SetParent(parent);
+
+        view.transform.localRotation = at.localRotation;
 
         EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(EnemyType.Soldier));
         EnemyShooter shooter = new EnemyShooter(model, view.Weapon, _projectilePool);
 
-        GameObject idleObject = new GameObject("IdlePoint");
-        idleObject.transform.position = at;
-
-        GameObject attackObject = new GameObject("StartPoint");
-        attackObject.transform.position = attackPoint;
-
         SoldierStateMachine stateMachine =
-            new SoldierStateMachine(view, shooter, model, idleObject.transform, attackObject.transform, _coroutineRunner);
+            new SoldierStateMachine(view, shooter, model, at, attackPoint, _coroutineRunner);
 
         SoldierPresenter presenter =
-            new SoldierPresenter(model, view, stateMachine);
+            new SoldierPresenter(model, view, playerTriggerObserver, stateMachine);
 
-        /*level.Disposables.Add(presenter);
-        level.ResetObjects.Add(presenter);*/
+        level.Disposables.Add(presenter);
+        level.ResetObjects.Add(presenter);
 
         return presenter;
     }

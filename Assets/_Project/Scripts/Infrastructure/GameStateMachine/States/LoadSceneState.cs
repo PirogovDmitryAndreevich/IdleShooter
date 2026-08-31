@@ -9,8 +9,6 @@ public class LoadSceneState : IPayloadState<string>
     private readonly IWeaponDataService _weaponDataService;
     private readonly IStaticDataService _staticData;
 
-    private GameStaticData _gameStaticData;
-
     public LoadSceneState(GameStateMachine gameStateMachine, SceneLoader sceneLoader,
         IGameFactory gameFactory, IWeaponDataService weaponDataService, IStaticDataService staticData)
     {
@@ -23,7 +21,6 @@ public class LoadSceneState : IPayloadState<string>
 
     public void Enter(string payload)
     {
-        _gameStaticData = _staticData.GetGameData();
         _sceneLoader.Load(payload, OnLoaded);
     }
 
@@ -36,18 +33,23 @@ public class LoadSceneState : IPayloadState<string>
     {
         WarpStarter warpStarter = new WarpStarter();
 
-        foreach (EnemySpawnPointData enemy in _gameStaticData.SpawnPoints.Enemies.EnemiesSpawnPointData)
-        {
-            switch (enemy.Type
-)
-            {
-                case EnemyType.Soldier:
-                    _gameFactory.CreateSoldierEnemy(enemy.Position, ((SoldierSpawnPointData)enemy).AttackPointData.Position);
-                    break;
-            }
+        Lobby lobby = InitLobby(warpStarter);
 
-            _weaponDataService.ForInitialize();
-        }
+        Transition transition1 = InitTransition(lobby, LevelType.Level_1, warpStarter);
+
+        LevelView_1 level_1 = InitLevel1(transition1);
+
+        Transition transition2 = InitTransition(level_1, LevelType.Level_2, warpStarter);
+
+        LevelView_2 levelView_2 = InitLevel2(transition2);
+
+        Transition transition3 = InitTransition(levelView_2, LevelType.Level_3, warpStarter);
+
+        LevelView_3 levelView_3 = InitLevel3(transition3);
+
+        Transition transition4 = InitTransition(levelView_3, LevelType.Level_4, warpStarter);
+
+        _weaponDataService.ForInitialize();
     }
 
     private Lobby InitLobby(WarpStarter warpStarter)
@@ -150,13 +152,13 @@ public class LoadSceneState : IPayloadState<string>
 
         LevelPresenter level = new LevelPresenter(levelView);
 
-        /*foreach (var soldierSpawnPoint in levelView.SoldierSpawnPoints)
+        foreach (var soldierSpawnPoint in levelView.SoldierSpawnPoints)
             _gameFactory.CreateSoldierEnemy(
                 soldierSpawnPoint.transform,
                 soldierSpawnPoint.AttackPoint.transform,
                 levelView.PlayerTriggerObserver,
                 level,
-                levelView.transform);*/
+                levelView.transform);
 
         return levelView;
     }

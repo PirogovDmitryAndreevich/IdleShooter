@@ -4,31 +4,31 @@ using UnityEngine;
 public class SoldierPresenter : IDisposable, IResetObject
 {
     private readonly SoldierView _view;
-    //private readonly PlayerTriggerObserver _triggerObserver;
+    private readonly PlayerTriggerObserver _triggerObserver;
     private readonly SoldierStateMachine _stateMachine;
 
     public bool IsNeedReset { get; private set; }
 
     public SoldierPresenter(EnemyModel model, SoldierView view,
-         SoldierStateMachine stateMachine)
+        PlayerTriggerObserver triggerObserver, SoldierStateMachine stateMachine)
     {
         _view = view;
-        //_triggerObserver = triggerObserver;
+        _triggerObserver = triggerObserver;
 
         _stateMachine = stateMachine;
 
         _view.DamageableCollider.DamageReceived += TakeDamage;
 
-        /*_triggerObserver.TargetEnter += SetTarget;
-        _triggerObserver.PlayerExited += RemoveTarget;*/
+        _triggerObserver.TargetEnter += SetTarget;
+        _triggerObserver.PlayerExited += RemoveTarget;
     }
 
     public void Dispose()
     {
         _view.DamageableCollider.DamageReceived -= TakeDamage;
 
-       /* _triggerObserver.TargetEnter -= SetTarget;
-        _triggerObserver.PlayerExited -= RemoveTarget;*/
+        _triggerObserver.TargetEnter -= SetTarget;
+        _triggerObserver.PlayerExited -= RemoveTarget;
 
         _stateMachine.Dispose();
     }
