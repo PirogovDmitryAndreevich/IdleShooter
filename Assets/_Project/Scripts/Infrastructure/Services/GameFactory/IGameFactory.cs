@@ -15,7 +15,6 @@ public interface IGameFactory : IService
     SpikeCylinderPresenter CreateSpikeCylinder(Transform point, Transform parent, LevelPresenter level, ObstacleType spikeCylinder);
     GearBasePresenter CreateGearBase(Transform point, Transform parent, LevelPresenter level, ObstacleType gearBase);
     FlyPlatform CreateFlyPlatform(Vector3 startPosition, Vector3 endPosition, Transform parent);
-    SoldierPresenter CreateSoldierEnemy(Transform at, Transform attackPoint, PlayerTriggerObserver playerTriggerObserver,
-        LevelPresenter level, Transform parent);
+    SoldierPresenter CreateSoldierEnemy(Vector3 at, Vector3 attackPoint);
     Warp CreateWarp(LevelType type, Vector3 at, Transform parent);
 }

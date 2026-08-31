@@ -1,6 +1,3 @@
-using UnityEngine;
-
-public class DemonSpawnPoint : MonoBehaviour
+public class DemonSpawnPoint : EnemySpawnPoint
 {
-    public Color Color;
 }

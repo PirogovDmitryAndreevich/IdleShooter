@@ -1,7 +1,4 @@
-using UnityEngine;
-
-public class SoldierSpawnPoint : MonoBehaviour
+public class SoldierSpawnPoint : EnemySpawnPoint
 {
-    public Color Color;
     public SoldierAttackPoint AttackPoint;
 }
