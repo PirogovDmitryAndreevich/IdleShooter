@@ -13,6 +13,7 @@ public class EnemyModel
     public float AttackDistance => _data.AttackDistance;
     public float RotateSpeed => _data.RotateSpeed;
     public float MoveSpeed => _data.MoveSpeed;
+    public float StopMoveDistance => _data.StopMoveDistance;
     public float FireRate => _data.FireRate;
     public ProjectileType ProjectileType =>
         _data.ProjectileType;

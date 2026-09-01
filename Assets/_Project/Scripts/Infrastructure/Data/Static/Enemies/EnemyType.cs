@@ -4,5 +4,5 @@ using System;
 public enum EnemyType
 {
     Soldier,
-
+    Demon,
 }

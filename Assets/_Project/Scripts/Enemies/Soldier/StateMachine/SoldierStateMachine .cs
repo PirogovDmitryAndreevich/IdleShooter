@@ -18,8 +18,6 @@ public class SoldierStateMachine : IDisposable
     private readonly Transform _spawnPoint;
     private readonly Transform _attackPoint;
 
-    private readonly SoldierMoveState _moveState;
-
     private readonly Dictionary<SoldierState, ISoldierState> _states;
 
     private ISoldierState _currentState;

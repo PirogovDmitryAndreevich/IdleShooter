@@ -292,6 +292,29 @@ public class GameFactory : IGameFactory
         return presenter;
     }
 
+    public DemonPresenter CreateDemonBoss(Transform at, PlayerTriggerObserver playerTriggerObserver,
+        LevelPresenter level, Transform parent)
+    {
+        DemonView view = _assets.Instantiate(AssetsPath.DemonBossPath, at.position)
+            .GetComponent<DemonView>();
+
+        view.transform.SetParent(parent);
+
+        EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(EnemyType.Demon));
+
+        view.NavMeshAgent.speed = model.MoveSpeed;
+        view.NavMeshAgent.angularSpeed = model.RotateSpeed;
+
+        DemonPresenter presenter = new DemonPresenter(model, view, at, playerTriggerObserver);
+
+        view.DemonBehaviour.SetPresenter(presenter);
+
+        level.Disposables.Add(presenter);
+        level.ResetObjects.Add(presenter);
+
+        return presenter;
+    }
+
     public Warp CreateWarp(LevelType type, Vector3 at, Transform parent)
     {
         Warp warp = _assets.Instantiate(AssetsPath.WarpPath, at)

@@ -1,31 +1,25 @@
-using System;
 using UnityEngine;
 
-public class SoldierPresenter : IDisposable, IResetObject
+public class SoldierPresenter : EnemyPresenter
 {
-    private readonly SoldierView _view;
     private readonly PlayerTriggerObserver _triggerObserver;
     private readonly SoldierStateMachine _stateMachine;
 
-    public bool IsNeedReset { get; private set; }
-
     public SoldierPresenter(EnemyModel model, SoldierView view,
         PlayerTriggerObserver triggerObserver, SoldierStateMachine stateMachine)
+        : base(view)
     {
-        _view = view;
         _triggerObserver = triggerObserver;
 
         _stateMachine = stateMachine;
-
-        _view.DamageableCollider.DamageReceived += TakeDamage;
 
         _triggerObserver.TargetEnter += SetTarget;
         _triggerObserver.PlayerExited += RemoveTarget;
     }
 
-    public void Dispose()
+    public override void Dispose()
     {
-        _view.DamageableCollider.DamageReceived -= TakeDamage;
+        base.Dispose();
 
         _triggerObserver.TargetEnter -= SetTarget;
         _triggerObserver.PlayerExited -= RemoveTarget;
@@ -33,14 +27,11 @@ public class SoldierPresenter : IDisposable, IResetObject
         _stateMachine.Dispose();
     }
 
-    public void ResetObject()
+    public override void ResetObject()
     {
-        _stateMachine.Reset();
-    }
+        base.ResetObject();
 
-    private void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
-    {
-        _view.HitEffect.Flash();
+        _stateMachine.Reset();
     }
 
     private void SetTarget(Transform target)

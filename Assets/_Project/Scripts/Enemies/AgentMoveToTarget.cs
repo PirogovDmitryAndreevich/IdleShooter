@@ -20,6 +20,13 @@ public class AgentMoveToTarget
         }
     }
 
+    public void Move(Vector3 position)
+    {
+        _agent.isStopped = false;
+        _agent.updateRotation = true;
+        _agent.destination = position;
+    }
+
     public void StopMove()
     {
         _agent.isStopped = true;

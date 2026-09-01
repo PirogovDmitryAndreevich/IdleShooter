@@ -27,5 +27,8 @@ public class LobbyEditor : Editor
 
         levelView.WeaponSwitcherSpawnPoint =
             levelView.GetComponentsInChildren<WeaponSwitcherSpawnPoint>(false);
+
+        levelView.WarpSpawnPoint =
+            levelView.GetComponentsInChildren<WarpSpawnPoint>(false);
     }
 }

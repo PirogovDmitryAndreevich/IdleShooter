@@ -49,6 +49,10 @@ public class LoadSceneState : IPayloadState<string>
 
         Transition transition4 = InitTransition(levelView_3, LevelType.Level_4, warpStarter);
 
+        LevelView_4 levelView_4 = InitLevel4(transition4);
+
+        Transition transition_5 = InitTransition(levelView_4, LevelType.Level_5, warpStarter);
+
         _weaponDataService.ForInitialize();
     }
 
@@ -168,6 +172,12 @@ public class LoadSceneState : IPayloadState<string>
         LevelView_4 levelView = CreateLevel<LevelView_4>(transition, LevelType.Level_4);
 
         LevelPresenter level = new LevelPresenter(levelView);
+
+        _gameFactory.CreateDemonBoss(
+            levelView.DemonSpawnPoint.transform,
+            levelView.PlayerTriggerObserver,
+            level,
+            levelView.transform);
 
         return levelView;
     }

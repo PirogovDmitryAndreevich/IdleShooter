@@ -1,83 +1,45 @@
-using System;
 using UnityEngine;
 
-public class DemonView : MonoBehaviour
+public class DemonView : EnemyView
 {
-    [SerializeField] private Animator _animator;
     [SerializeField] private AnimationEvent _attackEvent;
-    [SerializeField] private PlayerTriggerObserver _playerTriggerObserver;
+    [SerializeField] private MeleeDamageCollider _damageCollider;
+    [SerializeField] private DemonBehaviour _demonBehaviour;
 
     public AnimationEvent AttackEvent =>
         _attackEvent;
+    public DemonBehaviour DemonBehaviour =>
+        _demonBehaviour;
+    public MeleeDamageCollider DamageCollider =>
+        _damageCollider;
 
     public void WaitState()
     {
-        _animator.SetBool("isWak", false);
+        _animator.SetBool("IsWalk", false);
+        _damageCollider.enabled = false;
     }
 
     public void Attack()
     {
+        _animator.SetBool("IsWalk", false);
         _animator.SetTrigger("Attack");
-        _playerTriggerObserver.enabled = true;
     }
 
     public void Move()
     {
-        _animator.SetBool("isWak", true);
+        _animator.SetBool("IsWalk", true);
+        _damageCollider.enabled = false;
     }
 
-    public void OnAttackEnded()
-    {
-        _playerTriggerObserver.enabled = false;
-    }
-}
+    public void StopMove() =>
+        _animator.SetBool("IsWalk", false);
 
-public class DemonPresenter
-{
-    private readonly EnemyModel _model;
-    private readonly DemonView _view;
+    public void OnDealDamage() =>
+        _damageCollider.enabled = true;
 
-    private bool _isAttack;
-    private float _cooldownAttack;
+    public void OnAttackEnded() =>
+        _damageCollider.enabled = false;
 
-    public DemonPresenter(EnemyModel model, DemonView view)
-    {
-        _model = model;
-        _view = view;
-
-        WaitState();
-    }
-
-    private void WaitState()
-    {
-        _view.WaitState();
-    }
-
-    private void MoveState()
-    {
-        _view.Move();
-    }
-
-    private void AttackState()
-    {
-        
-    }
-
-    private void StartAttack()
-    {
-        if (_isAttack)
-            return;
-
-        _isAttack = true;
-        _view.Attack();
-    }
-
-    private void OnEndedAttackEvent() =>
-        EndedAttack();
-
-    private void EndedAttack()
-    {
-        _isAttack = false;
-        _cooldownAttack = Time.time + _model.FireRate;
-    }
+    public void OnTakeDame() =>
+        HitEffect.Flash();
 }
