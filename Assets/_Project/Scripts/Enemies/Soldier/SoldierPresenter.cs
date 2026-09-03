@@ -7,7 +7,7 @@ public class SoldierPresenter : EnemyPresenter
 
     public SoldierPresenter(EnemyModel model, SoldierView view,
         PlayerTriggerObserver triggerObserver, SoldierStateMachine stateMachine)
-        : base(view)
+        : base(view, model)
     {
         _triggerObserver = triggerObserver;
 

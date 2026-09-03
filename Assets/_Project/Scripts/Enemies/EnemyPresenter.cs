@@ -4,11 +4,17 @@ using UnityEngine;
 public class EnemyPresenter : IDisposable, IResetObject
 {
     private readonly EnemyView _view;
+    private readonly EnemyModel _model;
+    private readonly Health health;
 
-    public EnemyPresenter(EnemyView view)
+    public EnemyPresenter(EnemyView view, EnemyModel model)
     {
         _view = view;
+        _model = model;
 
+        health = new Health(_model.HealthPoint);
+
+        _view.HealthBar.Construct(health);
         _view.DamageableCollider.DamageReceived += TakeDamage;
     }
 

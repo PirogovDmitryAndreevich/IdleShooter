@@ -12,7 +12,7 @@ public class DemonPresenter : EnemyPresenter
         EnemyModel model,
         DemonView view,
         Transform spawnPoint,
-        PlayerTriggerObserver playerTriggerObserver) : base(view)
+        PlayerTriggerObserver playerTriggerObserver) : base(view, model)
     {
         _view = view;
         _spawnPoint = spawnPoint;

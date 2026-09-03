@@ -7,6 +7,7 @@ public class EnemyView : MonoBehaviour
     [SerializeField] private NavMeshAgent _navMeshAgent;
     [SerializeField] private HitFlash _hitEffect;
     [SerializeField] private DamageableCollider _damageableCollider;
+    [SerializeField] private HealthBar _healthBar;
 
     public HitFlash HitEffect => _hitEffect;
 
@@ -15,4 +16,7 @@ public class EnemyView : MonoBehaviour
 
     public DamageableCollider DamageableCollider =>
         _damageableCollider;
+
+    public HealthBar HealthBar =>
+        _healthBar;
 }
