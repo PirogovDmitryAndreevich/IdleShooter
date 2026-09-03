@@ -1,0 +1,224 @@
+using Assets._Project.Scripts.SpawnPoints.Obstacles;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class LevelLoader : ILevelLoader
+{
+    private readonly IGameFactory _gameFactory;
+    private readonly ICoroutineRunner _coroutineRunner;
+
+    public LevelLoader(IGameFactory gameFactory, ICoroutineRunner coroutineRunner)
+    {
+        _gameFactory = gameFactory;
+        _coroutineRunner = coroutineRunner;
+    }
+
+    public LevelLoadOperation InitLevel(LevelType type, Transform position)
+    {
+        LevelLoadOperation operation =
+            new LevelLoadOperation();
+
+        _coroutineRunner.StartCoroutine(
+            LoadLevel(type, position, operation));
+
+        return operation;
+    }
+
+    private IEnumerator LoadLevel(
+        LevelType type,
+        Transform position,
+        LevelLoadOperation operation)
+    {
+        switch (type)
+        {
+            case LevelType.Lobby:
+                yield return InitLobby(position, operation);
+                break;
+
+            case LevelType.Level_1:
+                yield return InitLevel1(position, operation);
+                break;
+
+            case LevelType.Level_2:
+                yield return InitLevel2(position, operation);
+                break;
+
+            case LevelType.Level_3:
+                yield return InitLevel3(position, operation);
+                break;
+
+            case LevelType.Level_4:
+                yield return InitLevel4(position, operation);
+                break;
+
+            default:
+                Debug.LogError(
+                    $"LevelLoader: unsupported level type {type}");
+
+                yield break;
+        }
+    }
+
+    private IEnumerator InitLobby(Transform position, LevelLoadOperation operation)
+    {
+        WarpStarter warpStarter = new WarpStarter();
+
+        Lobby lobby = _gameFactory.CreateLobby();
+
+        LevelPresenter presenter = new LevelPresenter(lobby, null);
+
+        PlayerPresenter player = _gameFactory.CreatePlayer(lobby.PlayerSpawnPoint.transform.position);
+
+        foreach (WeaponSwitcherSpawnPoint spawnPoint in lobby.WeaponSwitcherSpawnPoint)
+        {
+            _gameFactory.CreateWeaponSwitcher(
+                spawnPoint.WeaponType,
+                spawnPoint.transform.position,
+                lobby.transform);
+        }
+
+        List<Warp> warps = new();
+
+        foreach (WarpSpawnPoint warpSpawnPoint in lobby.WarpSpawnPoint)
+        {
+            Warp warp;
+
+            warp = _gameFactory.CreateWarp(warpSpawnPoint.Type,
+                warpSpawnPoint.transform.position,
+                lobby.transform);
+
+            warps.Add(warp);
+        }
+
+        warpStarter.Initialize(warps, player);
+
+        presenter.Disposables.Add(warpStarter);
+
+        operation.Complete(presenter);
+
+        yield break;
+    }
+
+    private IEnumerator InitLevel1(Transform position, LevelLoadOperation operation)
+    {
+        LevelView_1 levelView = CreateLevelView<LevelView_1>(position, LevelType.Level_1);
+
+        LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+
+        foreach (TargetSpawnPoint targetPoint in levelView.TargetsSpawnPoints)
+        {
+            _gameFactory.CreateTarget(targetPoint.transform, levelView.transform, level, ObstacleType.Target);
+
+            yield return null;
+        }
+
+        operation.Complete(level);
+    }
+
+    private IEnumerator InitLevel2(Transform position, LevelLoadOperation operation)
+    {
+        LevelView_2 levelView = CreateLevelView<LevelView_2>(position, LevelType.Level_2);
+
+        LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+
+        foreach (TargetSpawnPoint targetPoint in levelView.TargetsSpawnPoints)
+        {
+            _gameFactory.CreateTarget(targetPoint.transform, levelView.transform,
+                level, ObstacleType.TargetLevel2);
+
+            yield return null;
+        }
+
+        foreach (SpinningCylinderSpawnPoint cylinderPoint in levelView.SpinningCylinderSpawnPoint)
+        {
+            _gameFactory.CreateSpinningCylinder(
+                cylinderPoint.transform,
+                levelView.transform,
+                level, ObstacleType.SpinningCylinder);
+
+            yield return null;
+        }
+
+        FlyPlatform platform = _gameFactory.CreateFlyPlatform(
+            levelView.FlyPlatformSpawnPoint.transform.position,
+            levelView.FlyPlatformSpawnPoint.EndPoint.position,
+            levelView.transform);
+
+        GearPresenter gear = _gameFactory.CreateGear(
+            levelView.GearSpawnPoint.transform,
+            levelView.transform,
+            level,
+            ObstacleType.Gear);
+
+        gear.SetTriggerToMoving(platform);
+
+        _gameFactory.CreateGearBase(levelView.GearBaseSpawnPoint.transform,
+            levelView.transform, level, ObstacleType.GearBase);
+
+        foreach (SpikeCylinderSpawnPoint spikeCylinderSpawnPoint in levelView.SpikeCylinderSpawnPoints)
+        {
+            _gameFactory.CreateSpikeCylinder(spikeCylinderSpawnPoint.transform,
+                levelView.transform, level, ObstacleType.SpikeCylinder);
+
+            yield return null;
+        }
+
+        operation.Complete(level);
+    }
+
+    private IEnumerator InitLevel3(Transform position, LevelLoadOperation operation)
+    {
+        LevelView_3 levelView = CreateLevelView<LevelView_3>(position, LevelType.Level_3);
+
+        LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+
+        foreach (var soldierSpawnPoint in levelView.SoldierSpawnPoints)
+        {
+            _gameFactory.CreateSoldierEnemy(
+                soldierSpawnPoint.transform,
+                soldierSpawnPoint.AttackPoint.transform,
+                levelView.PlayerTriggerObserver,
+                level,
+                levelView.transform);
+
+            yield return null;
+        }
+
+        operation.Complete(level);
+    }
+
+    private IEnumerator InitLevel4(Transform position, LevelLoadOperation operation)
+    {
+        LevelView_4 levelView = CreateLevelView<LevelView_4>(position, LevelType.Level_4);
+
+        LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+
+        _gameFactory.CreateDemonEnemy(
+            levelView.DemonSpawnPoint.transform,
+            levelView.PlayerTriggerObserver,
+            level,
+            levelView.transform);
+
+        operation.Complete(level);
+
+        yield break;
+    }
+
+    private T CreateLevelView<T>(Transform position, LevelType type) where T : LevelView
+    {
+        Transition transition = InitTransition(position, type);
+
+        T levelView = _gameFactory.CreateLevel<T>(transition.ExitPoint, type);
+
+        transition.transform.SetParent(levelView.transform);
+
+        levelView.Construct(transition);
+
+        return levelView;
+    }
+
+    private Transition InitTransition(Transform position, LevelType type) =>
+        _gameFactory.CreateTransition(position, type);
+}

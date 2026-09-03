@@ -3,7 +3,7 @@
 public interface IGameFactory : IService
 {
     PlayerPresenter CreatePlayer(Vector3 at);
-    Transition CreateTransition(Transform at, Transform parent, LevelType type);
+    Transition CreateTransition(Transform at, LevelType type);
     T CreateLevel<T>(Transform spawnPoint, LevelType type) where T : LevelView;
     Lobby CreateLobby();
     WeaponPresenter CreateWeapon(WeaponType type);
@@ -17,7 +17,7 @@ public interface IGameFactory : IService
     FlyPlatform CreateFlyPlatform(Vector3 startPosition, Vector3 endPosition, Transform parent);
     SoldierPresenter CreateSoldierEnemy(Transform at, Transform attackPoint, PlayerTriggerObserver playerTriggerObserver,
         LevelPresenter level, Transform parent);
-    DemonPresenter CreateDemonBoss(Transform at, PlayerTriggerObserver playerTriggerObserver,
+    DemonPresenter CreateDemonEnemy(Transform at, PlayerTriggerObserver playerTriggerObserver,
         LevelPresenter level, Transform parent);
     Warp CreateWarp(LevelType type, Vector3 at, Transform parent);
 }

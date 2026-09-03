@@ -26,11 +26,13 @@ public class WarpStarter : IDisposable
     {
         foreach (var warp in _warps)
             warp.WarpToLevel -= OnWarp;
+
+        _spawnPoints.Clear();
     }
 
     public void RegisterTransition(Transition transition)
     {
-        _spawnPoints.Add(transition.Type, transition);
+        _spawnPoints[transition.Type] = transition;
     }
 
     private void OnWarp(LevelType type)

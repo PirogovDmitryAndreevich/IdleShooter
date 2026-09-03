@@ -51,6 +51,14 @@ public class BootstrapState : IState
             _allServices.Single<IGameSaveDataService>(),
             _allServices.Single<IProjectilePool>(),
             _coroutineRunner));
+
+        _allServices.RegisterSingle<ILevelLoader>(new LevelLoader(
+            _allServices.Single<IGameFactory>(),
+            _coroutineRunner));
+
+        _allServices.RegisterSingle<ILevelController>(new LevelController(
+            _allServices.Single<ILevelLoader>(),
+            _coroutineRunner));
     }
 
     private void RegisterInputService()

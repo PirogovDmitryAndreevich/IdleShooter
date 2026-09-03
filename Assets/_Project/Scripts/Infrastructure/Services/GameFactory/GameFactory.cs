@@ -59,7 +59,7 @@ public class GameFactory : IGameFactory
         return _player;
     }
 
-    public Transition CreateTransition(Transform at, Transform parent, LevelType type)
+    public Transition CreateTransition(Transform at, LevelType type)
     {
         Transition transition = _assets.Instantiate(AssetsPath.TransitionPath, at: at.position)
             .GetComponent<Transition>();
@@ -67,8 +67,6 @@ public class GameFactory : IGameFactory
         transition.Construct(type);
 
         transition.transform.rotation = at.rotation;
-
-        transition.transform.SetParent(parent);
 
         return transition;
     }
@@ -292,7 +290,7 @@ public class GameFactory : IGameFactory
         return presenter;
     }
 
-    public DemonPresenter CreateDemonBoss(Transform at, PlayerTriggerObserver playerTriggerObserver,
+    public DemonPresenter CreateDemonEnemy(Transform at, PlayerTriggerObserver playerTriggerObserver,
         LevelPresenter level, Transform parent)
     {
         DemonView view = _assets.Instantiate(AssetsPath.DemonBossPath, at.position)

@@ -4,14 +4,13 @@ public abstract class LevelView : MonoBehaviour
 {
     [SerializeField] private Transform _exitPoint;
 
-    private LevelPresenter _presenter;
-
     public abstract LevelType LevelType { get; }
     public Transform ExitPoint => _exitPoint;
+    public Transition Transition { get; private set; }
 
-    private void OnDestroy() =>
-        _presenter?.Dispose();
+    public void Construct(Transition transition) =>        
+        Transition = transition;
 
-    public void Construct(LevelPresenter presenter) => 
-        _presenter = presenter;
+    public void SetActive(bool isActive) => 
+        gameObject.SetActive(isActive);
 }
