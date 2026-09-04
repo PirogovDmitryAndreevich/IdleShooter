@@ -1,4 +1,4 @@
 ﻿public interface ILevelController : IService
 {
-    void Initialize();
+    void SwitchLevel(LevelType type);
 }

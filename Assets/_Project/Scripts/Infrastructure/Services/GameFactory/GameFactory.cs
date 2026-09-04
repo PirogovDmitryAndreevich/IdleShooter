@@ -10,13 +10,15 @@ public class GameFactory : IGameFactory
     private readonly IWeaponDataService _weaponDataService;
     private readonly IGameSaveDataService _gameSaveDataService;
     private readonly IProjectilePool _projectilePool;
+    private readonly IWarpService _warpService;
     private readonly ICoroutineRunner _coroutineRunner;
     private PlayerPresenter _player;
     WeaponSwitcher _weaponSwitcher;
 
     public GameFactory(IAssets assets, IInputService inputService, IStaticDataService staticDataService,
         IProgressService progressService, IPoolService poolService, IWeaponDataService weaponDataService,
-        IGameSaveDataService gameSaveDataService, IProjectilePool projectilePool, ICoroutineRunner coroutineRunner)
+        IGameSaveDataService gameSaveDataService, IProjectilePool projectilePool, IWarpService warpService,
+        ICoroutineRunner coroutineRunner)
     {
         _assets = assets;
         _inputService = inputService;
@@ -26,6 +28,7 @@ public class GameFactory : IGameFactory
         _weaponDataService = weaponDataService;
         _gameSaveDataService = gameSaveDataService;
         _projectilePool = projectilePool;
+        _warpService = warpService;
         _coroutineRunner = coroutineRunner;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
@@ -56,6 +59,8 @@ public class GameFactory : IGameFactory
 
         player.Initialize(_player);
 
+        _warpService.RegisterPlayer(_player);
+
         return _player;
     }
 
@@ -68,6 +73,8 @@ public class GameFactory : IGameFactory
 
         transition.transform.rotation = at.rotation;
 
+        _warpService.RegisterSpawnPoint(type, transition.PlayerSpawnPoint);
+
         return transition;
     }
 
@@ -78,6 +85,8 @@ public class GameFactory : IGameFactory
         Lobby lobby = _assets.Instantiate(
             _staticDataService.GetLevelView<Lobby>(LevelType.Lobby),
             at: gameData.LobbySpawnPosition);
+
+        _warpService.RegisterSpawnPoint(LevelType.Lobby, lobby.PlayerSpawnPoint.transform);
 
         return lobby;
     }
@@ -320,8 +329,10 @@ public class GameFactory : IGameFactory
 
         warp.Construct(type);
 
+        _warpService.RegisterWarp(warp);
+
         return warp;
-    }    
+    }
 
     private Hud CreateHud(PlayerPresenter playerPresenter)
     {

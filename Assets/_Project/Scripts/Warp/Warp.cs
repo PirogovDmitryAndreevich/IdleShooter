@@ -11,6 +11,9 @@ public class Warp : MonoBehaviour
 
     public LevelType LevelType { get; private set; }
 
+    private void OnDestroy() => 
+        _triggerObserver.TriggerEnter -= Warping;
+
     public void Construct(LevelType type)
     {
         LevelType = type;

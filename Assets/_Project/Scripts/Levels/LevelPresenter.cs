@@ -17,6 +17,9 @@ public class LevelPresenter : IDisposable
     public Transform ExitPoint =>
         _levelView.ExitPoint;
 
+    public Transition Transition =>
+        _transition;
+
     public LevelPresenter(LevelView levelView, Transition transition)
     {
         ResetObjects = new List<IResetObject>();

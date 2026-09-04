@@ -1,18 +1,23 @@
 public class LevelWindow
 {
-    private readonly LevelRegistry _registry;
+    private readonly LevelRegister _register;
+    private readonly LevelSequence _sequence;
 
-    public LevelWindow(LevelRegistry registry)
+    public LevelWindow(LevelRegister register, LevelSequence sequence)
     {
-        _registry = registry;
+        _register = register;
+        _sequence = sequence;
     }
 
     public void Update(LevelType current)
     {
-        LevelType? previous = GetPreviousLevel(current);
-        LevelType? next = GetNextLevel(current);
+        LevelType? previous =
+            _sequence.GetPrevious(current);
 
-        foreach (LevelPresenter level in _registry.All)
+        LevelType? next =
+            _sequence.GetNext(current);
+
+        foreach (LevelPresenter level in _register.All)
         {
             bool shouldBeActive =
                 level.LevelType == current ||
@@ -21,31 +26,5 @@ public class LevelWindow
 
             level.SetActive(shouldBeActive);
         }
-    }
-
-    public LevelType? GetNextLevel(LevelType type)
-    {
-        return type switch
-        {
-            LevelType.Lobby => LevelType.Level_1,
-            LevelType.Level_1 => LevelType.Level_2,
-            LevelType.Level_2 => LevelType.Level_3,
-            LevelType.Level_3 => LevelType.Level_4,
-
-            _ => null
-        };
-    }
-
-    public LevelType? GetPreviousLevel(LevelType type)
-    {
-        return type switch
-        {
-            LevelType.Level_1 => LevelType.Lobby,
-            LevelType.Level_2 => LevelType.Level_1,
-            LevelType.Level_3 => LevelType.Level_2,
-            LevelType.Level_4 => LevelType.Level_3,
-
-            _ => null
-        };
     }
 }

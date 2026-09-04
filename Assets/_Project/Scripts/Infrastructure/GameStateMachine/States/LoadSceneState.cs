@@ -1,12 +1,9 @@
-using System.Collections.Generic;
-
 public class LoadSceneState : IPayloadState<string>
 {
     private readonly GameStateMachine _gameStateMachine;
     private readonly SceneLoader _sceneLoader;
     private readonly IWeaponDataService _weaponDataService;
     private readonly ILevelController _levelController;
-    private Dictionary<LevelType, LevelPresenter> _levels;
 
     public LoadSceneState(GameStateMachine gameStateMachine, SceneLoader sceneLoader,
         IWeaponDataService weaponDataService, ILevelController levelController)
@@ -15,8 +12,6 @@ public class LoadSceneState : IPayloadState<string>
         _sceneLoader = sceneLoader;
         _weaponDataService = weaponDataService;
         _levelController = levelController;
-
-        _levels = new Dictionary<LevelType, LevelPresenter>();
     }
 
     public void Enter(string payload)
@@ -31,7 +26,7 @@ public class LoadSceneState : IPayloadState<string>
 
     private void OnLoaded()
     {
-        _levelController.Initialize();
+        _levelController.SwitchLevel(LevelType.Lobby);
 
         _weaponDataService.ForInitialize();
     }

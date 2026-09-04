@@ -63,7 +63,7 @@ public class LevelLoader : ILevelLoader
 
     private IEnumerator InitLobby(Transform position, LevelLoadOperation operation)
     {
-        WarpStarter warpStarter = new WarpStarter();
+        WarpService warpStarter = new WarpService();
 
         Lobby lobby = _gameFactory.CreateLobby();
 
@@ -79,20 +79,13 @@ public class LevelLoader : ILevelLoader
                 lobby.transform);
         }
 
-        List<Warp> warps = new();
 
         foreach (WarpSpawnPoint warpSpawnPoint in lobby.WarpSpawnPoint)
         {
-            Warp warp;
-
-            warp = _gameFactory.CreateWarp(warpSpawnPoint.Type,
+           _gameFactory.CreateWarp(warpSpawnPoint.Type,
                 warpSpawnPoint.transform.position,
                 lobby.transform);
-
-            warps.Add(warp);
         }
-
-        warpStarter.Initialize(warps, player);
 
         presenter.Disposables.Add(warpStarter);
 
