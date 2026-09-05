@@ -11,6 +11,7 @@ public class GameFactory : IGameFactory
     private readonly IGameSaveDataService _gameSaveDataService;
     private readonly IProjectilePool _projectilePool;
     private readonly IWarpService _warpService;
+    private readonly ITransitionDataService _transitionDataService;
     private readonly ICoroutineRunner _coroutineRunner;
     private PlayerPresenter _player;
     WeaponSwitcher _weaponSwitcher;
@@ -18,7 +19,7 @@ public class GameFactory : IGameFactory
     public GameFactory(IAssets assets, IInputService inputService, IStaticDataService staticDataService,
         IProgressService progressService, IPoolService poolService, IWeaponDataService weaponDataService,
         IGameSaveDataService gameSaveDataService, IProjectilePool projectilePool, IWarpService warpService,
-        ICoroutineRunner coroutineRunner)
+ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
     {
         _assets = assets;
         _inputService = inputService;
@@ -29,6 +30,7 @@ public class GameFactory : IGameFactory
         _gameSaveDataService = gameSaveDataService;
         _projectilePool = projectilePool;
         _warpService = warpService;
+        _transitionDataService = transitionDataService;
         _coroutineRunner = coroutineRunner;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
@@ -39,6 +41,7 @@ public class GameFactory : IGameFactory
         _poolService.RegisterFactory(() => CreateHitEffect());
         _poolService.RegisterFactory(() => CreateRPGMuzzle());
         _poolService.RegisterFactory(() => CreateRocketExplosion());
+        _poolService.RegisterFactory(() => CreateSphereObstacle());
     }
 
     public PlayerPresenter CreatePlayer(UnityEngine.Vector3 at)
@@ -60,6 +63,7 @@ public class GameFactory : IGameFactory
         player.Initialize(_player);
 
         _warpService.RegisterPlayer(_player);
+        _transitionDataService.SetPlayer(_player);
 
         return _player;
     }
@@ -331,7 +335,27 @@ public class GameFactory : IGameFactory
 
         _warpService.RegisterWarp(warp);
 
+        warp.transform.SetParent(parent);
+
         return warp;
+    }
+
+    public SphereObstacle CreateSphereObstacle()
+    {
+        SphereObstacle sphere = _assets.Instantiate(AssetsPath.SphereObstaclePath)
+            .GetComponent<SphereObstacle>();
+
+        return sphere;
+    }
+
+    public SphereSpawner CreateSphereSpawner(Transform at, SphereSpawnPoint[] spawnPoints)
+    {
+        SphereSpawner spawner = _assets.Instantiate(AssetsPath.SphereSpawnerPath, at)
+            .GetComponent<SphereSpawner>();
+
+        spawner.Construct(_poolService, spawnPoints);
+
+        return spawner;
     }
 
     private Hud CreateHud(PlayerPresenter playerPresenter)

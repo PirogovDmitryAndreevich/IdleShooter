@@ -1,3 +1,5 @@
+using System;
+
 public class LoadProgressState : IState
 {
     private readonly GameStateMachine _gameStateMachine;

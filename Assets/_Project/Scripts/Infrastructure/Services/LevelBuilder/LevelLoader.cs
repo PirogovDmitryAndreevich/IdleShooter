@@ -1,7 +1,5 @@
 using Assets._Project.Scripts.SpawnPoints.Obstacles;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelLoader : ILevelLoader
@@ -51,6 +49,10 @@ public class LevelLoader : ILevelLoader
 
             case LevelType.Level_4:
                 yield return InitLevel4(position, operation);
+                break;
+
+            case LevelType.Level_5:
+                yield return InitLevel5(position, operation);
                 break;
 
             default:
@@ -198,6 +200,22 @@ public class LevelLoader : ILevelLoader
 
         yield break;
     }
+
+    private IEnumerator InitLevel5(Transform position, LevelLoadOperation operation)
+    {
+        LevelView_5 levelView = CreateLevelView<LevelView_5>(position, LevelType.Level_5);
+
+        _gameFactory.CreateSphereSpawner(
+            levelView.transform,
+            levelView.SphereSpawnPoints);
+
+        LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+
+        operation.Complete(level);
+
+        yield break;
+    }
+
 
     private T CreateLevelView<T>(Transform position, LevelType type) where T : LevelView
     {

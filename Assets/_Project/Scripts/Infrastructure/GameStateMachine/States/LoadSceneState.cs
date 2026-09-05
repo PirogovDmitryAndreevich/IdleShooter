@@ -17,6 +17,7 @@ public class LoadSceneState : IPayloadState<string>
     public void Enter(string payload)
     {
         _sceneLoader.Load(payload, OnLoaded);
+        _gameStateMachine.Enter<GameLoopState>();
     }
 
     public void Exit()

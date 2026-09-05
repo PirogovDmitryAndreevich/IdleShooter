@@ -24,24 +24,14 @@ public class WarpService : IDisposable, IWarpService
     public void RegisterSpawnPoint(LevelType type, Transform spawnPoint)
     {
         _spawnPoints[type] = spawnPoint;
-
-        Debug.Log(
-        $"Register spawn point: {type} -> {spawnPoint.name}");
     }
 
     public void TeleportingTo(LevelType type)
     {
-        Debug.Log($"TeleportTo: {type}");
-
         if (!_spawnPoints.TryGetValue(
                 type,
-                out Transform spawnPoint))
-        {
-            Debug.LogError(
-            $"Spawn point for level {type} is not registered.");
-
-            return;
-        }
+                out Transform spawnPoint)) 
+            return;        
 
         _player.Teleport(spawnPoint);
     }

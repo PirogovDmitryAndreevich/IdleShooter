@@ -22,6 +22,7 @@ public class PlayerPresenter : IDisposable
 
     public event Action<bool> AimChanged;
     public event Action<bool> WeaponAvailabilityChanged;
+    public event Action PlayerDied;
 
     public PlayerPresenter(
         PlayerModel model,
@@ -50,6 +51,7 @@ public class PlayerPresenter : IDisposable
         _weaponSwitcher.WeaponOpened += OnWeaponOpened;
 
         _view.Damage += TakeDamage;
+        _view.PlayerDied += OnPlayerDied;
     }
 
     public void Dispose()
@@ -58,6 +60,7 @@ public class PlayerPresenter : IDisposable
         _weaponSwitcher.WeaponOpened -= OnWeaponOpened;
 
         _view.Damage -= TakeDamage;
+        _view.PlayerDied -= OnPlayerDied;
 
         _controller.Dispose();
         _weaponSwitcher.Dispose();
@@ -181,5 +184,8 @@ public class PlayerPresenter : IDisposable
 
         if (_weapon.TryShoot(_damage))        
             _camera.Shake(_weapon.ShakeData);        
-    }    
+    }
+
+    private void OnPlayerDied() => 
+        PlayerDied?.Invoke();
 }

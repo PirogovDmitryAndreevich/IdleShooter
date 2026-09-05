@@ -23,4 +23,6 @@ public static class AssetsPath
     public const string SoldierEnemyPath = "Enemies/Soldier/EnemySoldier";
     public const string WarpPath = "Warps/Warper";
     public const string DemonBossPath = "Enemies/Demon/Demon";
+    public const string SphereObstaclePath = "Obstacles/SphereObstacle";
+    public const string SphereSpawnerPath = "SphereSpawner/SphereSpawner";
 }

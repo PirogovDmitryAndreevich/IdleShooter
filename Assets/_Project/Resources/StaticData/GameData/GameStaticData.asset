@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LobbySpawnPosition: {x: -6, y: 0, z: 10.949997}
   CameraSettingsData:
-    MaxDistance: 5
-    OffsetDistanceY: 2.5
+    MaxDistance: 2.5
+    OffsetDistanceY: 1.5
     CameraSwitchSpeed: 7
-    SphereRadius: 0.4
+    SphereRadius: 0.8
     CollisionOffset: 0.15
     CameraCollisionLerpSpeed: 15
     AimFov: 20
@@ -26,7 +26,7 @@ MonoBehaviour:
     MaxFov: 60
     Sensitivity: 5
     FreeCameraLimit: {x: -45, y: 40}
-    AimCameraLimit: {x: 15, y: 40}
+    AimCameraLimit: {x: 15, y: 60}
     AimRotation: {x: -25, y: 0, z: 0}
     CameraTransitionRotationSpeed: 100
     CollisionMask:
@@ -40,6 +40,7 @@ MonoBehaviour:
   - {fileID: 3747227179678284615, guid: 31ddbeee1ab00fd4d9799342bea96ca4, type: 3}
   - {fileID: 2108223686594225440, guid: e2d9c90e9aa16f9458e249b20b675899, type: 3}
   - {fileID: 2634710652558448042, guid: 3c510582e92230d49a2f0bd203711c55, type: 3}
+  - {fileID: 1760690833189419678, guid: 786d20746d2a03d4eaf0f2ce01266c75, type: 3}
   - {fileID: 3124759299611094118, guid: 76ab7deb1ad16d34db928bc850a5aa5b, type: 3}
   LevelsData: []
   Obstacles:

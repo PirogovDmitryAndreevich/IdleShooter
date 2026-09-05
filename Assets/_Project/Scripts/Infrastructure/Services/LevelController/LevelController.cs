@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 
-public class LevelController :
-    IDisposable,
-    ILevelController
+public class LevelController : ILevelController
 {
     private readonly LevelRegister _register;
     private readonly LevelWindow _window;
