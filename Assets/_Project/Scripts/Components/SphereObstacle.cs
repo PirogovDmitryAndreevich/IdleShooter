@@ -2,8 +2,10 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class SphereObstacle : MonoBehaviour, IDamageable
+public class SphereObstacle : MonoBehaviour
 {
+    [SerializeField] private DamageableCollider _damageable;
+
     [Header("Rigidbody")]
     [SerializeField] private Rigidbody _rigidbody;
 
@@ -14,10 +16,33 @@ public class SphereObstacle : MonoBehaviour, IDamageable
 
     public event Action<SphereObstacle> ReachedFinish;
 
+    private void OnDestroy()
+    {
+        _damageable.DamageReceived -= TakeDamage;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        IPlayer player = collision.collider.GetComponent<IPlayer>();
+
+        if (player == null)
+        {
+            player = collision.collider.GetComponentInChildren<IPlayer>();
+
+            if (player == null)
+                player = collision.collider.GetComponentInParent<IPlayer>();
+        }
+
+        if (player != null)
+            player.Died();
+    }
+
     public void Construct(float knockbackMultiplier, float maxKnockbackForce)
     {
         _knockbackMultiplier = knockbackMultiplier;
         _maxKnockbackForce = maxKnockbackForce;
+
+        _damageable.DamageReceived += TakeDamage;
     }
 
     public void ResetPhysics()
@@ -26,11 +51,6 @@ public class SphereObstacle : MonoBehaviour, IDamageable
 
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
-    }
-
-    public void TakeDamage(float damage)
-    {
-
     }
 
     public void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)

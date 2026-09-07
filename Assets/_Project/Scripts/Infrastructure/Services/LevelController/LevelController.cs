@@ -76,8 +76,6 @@ public class LevelController : ILevelController
 
             if (_shouldTeleport)
             {
-                UnityEngine.Debug.Log($"WARP TELEPORT: {target}");
-
                 _warpService.TeleportingTo(target);
 
                 _shouldTeleport = false;
