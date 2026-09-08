@@ -20,6 +20,8 @@ public class MeleeDamageCollider : MonoBehaviour
 
         Vector3 hitNormal = -direction;
 
+        PhysicsDebug.DrawDebug(hitPoint, 0.5f, 1f);
+
         player.TakeDamage(_damage, hitPoint, hitNormal);
     }
 

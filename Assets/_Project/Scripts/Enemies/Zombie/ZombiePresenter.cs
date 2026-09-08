@@ -74,7 +74,7 @@ public class ZombiePresenter : EnemyPresenter, IAttackWithAnimationEvent,
     public void OnAttackStateEnter() =>
         _view.Attack();
 
-    public void OnDealDamage() =>
+    public void OnDealDamage() => 
         _view.OnDealDamage();
 
     public void OnAttackEnded() =>
