@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 
 abstract class CharacterStateMachine
 {
     protected CharacterState CurrentState;
-    protected Dictionary<Type, CharacterState> States;
+    protected Dictionary<StatesType, CharacterState> States;
 
     public void Update()
     {
@@ -16,12 +15,12 @@ abstract class CharacterStateMachine
         CurrentState.TryTransit();
     }
 
-    public void ChangeState<TState>() where TState : CharacterState
+    public void ChangeState(StatesType type)
     {
-        if (CurrentState != null && CurrentState.GetType() == typeof(TState))
+        if (CurrentState != null && CurrentState.Type == type)
             return;
 
-        if (States.TryGetValue(typeof(TState), out CharacterState newState))
+        if (States.TryGetValue(type, out CharacterState newState))
         {
             CurrentState?.Exit();
             CurrentState = newState;

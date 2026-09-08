@@ -25,4 +25,5 @@ public static class AssetsPath
     public const string DemonBossPath = "Enemies/Demon/Demon";
     public const string SphereObstaclePath = "Obstacles/SphereObstacle";
     public const string SphereSpawnerPath = "SphereSpawner/SphereSpawner";
+    public const string ZombiePath = "Enemies/Zombie/Zombie";
 }

@@ -22,8 +22,7 @@ public class LevelRegister : IDisposable
         _sequence = sequence;
     }
 
-    public IEnumerator EnsureWindow(
-        LevelType current)
+    public IEnumerator EnsureWindow(LevelType current)
     {
         LevelType? previous =
             _sequence.GetPrevious(current);
@@ -47,38 +46,27 @@ public class LevelRegister : IDisposable
         }
     }
 
-    private IEnumerator EnsureLevel(
-        LevelType type)
+    private IEnumerator EnsureLevel(LevelType type)
     {
         if (_levels.ContainsKey(type))
             yield break;
 
-        LevelType? previous =
-            _sequence.GetPrevious(type);
+        LevelType? previous = _sequence.GetPrevious(type);
 
         if (previous.HasValue)
-        {
-            yield return EnsureLevel(
-                previous.Value);
-        }
+            yield return EnsureLevel(previous.Value);
 
         LevelPresenter previousPresenter = null;
 
         if (previous.HasValue)
-        {
-            previousPresenter =
-                _levels[previous.Value];
-        }
+            previousPresenter = _levels[previous.Value];
 
         LevelLoadOperation operation =
-            _levelLoader.InitLevel(
-                type,
-                previousPresenter?.ExitPoint);
+            _levelLoader.InitLevel(type, previousPresenter?.ExitPoint);
 
         yield return operation;
 
-        Register(
-            operation.Presenter);
+        Register(operation.Presenter);
     }
 
     public bool Contains(LevelType type) =>

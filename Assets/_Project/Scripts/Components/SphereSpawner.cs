@@ -36,10 +36,12 @@ public class SphereSpawner : MonoBehaviour
 
     private IEnumerator SpawnSphereCoroutine()
     {
+        WaitForSeconds instruction = new WaitForSeconds(_spawnInterval);
+
         while (true)
         {
             SpawnSpheres();
-            yield return new WaitForSeconds(_spawnInterval);
+            yield return instruction;
         }
     }
 

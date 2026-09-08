@@ -13,7 +13,7 @@ public class DemonView : EnemyView
     public MeleeDamageCollider DamageCollider =>
         _damageCollider;
 
-    public void WaitState()
+    public void Idle()
     {
         _animator.SetBool("IsWalk", false);
         _damageCollider.enabled = false;

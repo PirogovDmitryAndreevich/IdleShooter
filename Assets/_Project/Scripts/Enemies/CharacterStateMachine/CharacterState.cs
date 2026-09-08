@@ -4,6 +4,8 @@ abstract class CharacterState
 
     protected CharacterState(CharacterStateMachine stateMachine) { }
 
+    public abstract StatesType Type { get; }
+
     public virtual void Enter() { }
 
     public virtual void Exit() { }

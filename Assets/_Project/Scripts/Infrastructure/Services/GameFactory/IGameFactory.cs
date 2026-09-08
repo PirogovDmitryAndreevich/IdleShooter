@@ -22,4 +22,6 @@ public interface IGameFactory : IService
     Warp CreateWarp(LevelType type, Vector3 at, Transform parent);
     SphereObstacle CreateSphereObstacle();
     SphereSpawner CreateSphereSpawner(Transform at, SphereSpawnPoint[] spawnPoints);
+    ZombiePresenter CreateZombieEnemy(Transform spawnPoint, PlayerTriggerObserver playerTriggerObserver,
+        LevelPresenter level, Transform parent);
 }

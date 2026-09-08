@@ -54,7 +54,9 @@ public class LevelLoader : ILevelLoader
             case LevelType.Level_5:
                 yield return InitLevel5(position, operation);
                 break;
-
+            case LevelType.Level_6:
+                yield return InitLevel6(position, operation);
+                break;
             default:
                 Debug.LogError(
                     $"LevelLoader: unsupported level type {type}");
@@ -214,6 +216,26 @@ public class LevelLoader : ILevelLoader
         operation.Complete(level);
 
         yield break;
+    }
+
+    private IEnumerator InitLevel6(Transform position, LevelLoadOperation operation)
+    {
+        LevelView_6 levelView = CreateLevelView<LevelView_6>(position, LevelType.Level_6);
+
+        LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+
+        for (int i = 0; i < levelView.ZombiesSpawnPoints.Length; i++)
+        {
+            _gameFactory.CreateZombieEnemy(
+                levelView.ZombiesSpawnPoints[i].transform,
+                levelView.PlayerTriggerObserver,
+                level,
+                levelView.transform);
+
+            yield return null;
+        }
+
+        operation.Complete(level);
     }
 
 

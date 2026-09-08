@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class MeleeDamageCollider : MonoBehaviour
 {
+    [SerializeField] private Collider _collider;
+
     private float _damage;
 
     private void OnTriggerEnter(Collider other)
@@ -23,6 +25,9 @@ public class MeleeDamageCollider : MonoBehaviour
 
     public void Construct(float damage) => 
         _damage = damage;
+
+    public void Enable(bool isEnable) => 
+        _collider.enabled = isEnable;
 
     private IPlayer GetPlayer(Collider collider)
     {

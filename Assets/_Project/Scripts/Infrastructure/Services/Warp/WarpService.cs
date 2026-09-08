@@ -30,8 +30,8 @@ public class WarpService : IDisposable, IWarpService
     {
         if (!_spawnPoints.TryGetValue(
                 type,
-                out Transform spawnPoint)) 
-            return;        
+                out Transform spawnPoint))        
+            return; 
 
         _player.Teleport(spawnPoint);
     }

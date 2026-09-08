@@ -9,13 +9,13 @@ class DemonStateMachine : CharacterStateMachine
     {
         _demon = demon;
 
-        States = new Dictionary<Type, CharacterState>()
+        States = new Dictionary<StatesType, CharacterState>()
         {
-            [typeof(DemonIdleState)] = new DemonIdleState(this, _demon),
-            [typeof(DemonMoveState)] = new DemonMoveState(this, _demon, model),
-            [typeof(DemonAttackState)] = new DemonAttackState(this, _demon, animationEvent)
+            [StatesType.Idle] = new IdleState(this, _demon),
+            [StatesType.Move] = new MoveState(this, _demon, model),
+            [StatesType.Attack] = new AttackWithAnimationEventState(this, _demon, animationEvent)
         };
 
-        ChangeState<DemonIdleState>();
+        ChangeState(StatesType.Idle);
     }
 }

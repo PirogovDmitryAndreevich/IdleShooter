@@ -358,6 +358,29 @@ ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
         return spawner;
     }
 
+    public ZombiePresenter CreateZombieEnemy(Transform spawnPoint, PlayerTriggerObserver playerTriggerObserver,
+        LevelPresenter level, Transform parent)
+    {
+        ZombieView view = _assets.Instantiate(AssetsPath.ZombiePath, spawnPoint.position)
+            .GetComponent<ZombieView>();
+
+        view.transform.SetParent(parent);
+
+        EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(EnemyType.Zombie));
+
+        view.NavMeshAgent.speed = model.MoveSpeed;
+        view.NavMeshAgent.angularSpeed = model.RotateSpeed;
+
+        ZombiePresenter presenter = new ZombiePresenter(view, model, spawnPoint, playerTriggerObserver);
+
+        view.ZombieBehaviour.SetPresenter(presenter);
+
+        level.Disposables.Add(presenter);
+        level.ResetObjects.Add(presenter);
+
+        return presenter;
+    }
+
     private Hud CreateHud(PlayerPresenter playerPresenter)
     {
         var hud = _assets.Instantiate(AssetsPath.HudPath)

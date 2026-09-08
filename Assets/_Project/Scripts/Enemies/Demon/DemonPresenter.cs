@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DemonPresenter : EnemyPresenter
+public class DemonPresenter : EnemyPresenter, IIdleState, IAttackWithAnimationEvent, IMoveState
 {
     private readonly DemonView _view;
     private readonly PlayerTriggerObserver _playerTriggerObserver;
@@ -47,45 +47,41 @@ public class DemonPresenter : EnemyPresenter
         _playerTriggerObserver.PlayerExited -= OnPlayerExited;
     }
 
-    public void WaitState()
+    // IdleState
+    public void OnIdleStateEnter()
     {
         if (_view.NavMeshAgent.isOnNavMesh)
             _view.NavMeshAgent.ResetPath();
 
-        _view.WaitState();
+        _view.Idle();
     }
 
-    public void MoveState()
-    {
+    // MoveState
+    public void OnMoveStateEnter() =>
         _view.Move();
-    }
 
-    public void Moving()
-    {
+    public void MovingUpdate() =>
         _agentMoveToTarget.Move(Target.position);
-    }
 
-    public void StopMove()
+    public void OnMoveStateExit()
     {
         _view.StopMove();
         _agentMoveToTarget.StopMove();
     }
 
-    public void AttackState()
-    {
+
+    // AttackState
+    public void OnAttackStateEnter() =>
         _view.Attack();
-    }
 
-    public void OnDealDamage()
-    {
-       _view.OnDealDamage();
-    }
+    public void OnDealDamage() => 
+        _view.OnDealDamage();
 
-    public void OnAttackEnded()
-    {
+    public void OnAttackEnded() => 
         _view.OnAttackEnded();
-    }
 
+
+    // Helpers
     private void OnPlayerEnter(Transform transform)
     {
         Target = transform;
