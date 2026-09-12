@@ -24,4 +24,6 @@ public interface IGameFactory : IService
     SphereSpawner CreateSphereSpawner(Transform at, SphereSpawnPoint[] spawnPoints);
     ZombiePresenter CreateZombieEnemy(Transform spawnPoint, PlayerTriggerObserver playerTriggerObserver,
         LevelPresenter level, Transform parent);
+    GhostPresenter CreateGhostEnemy(Transform spawnPoint, PlayerTriggerObserver playerTriggerObserver,
+        LevelPresenter level, Transform parent);
 }

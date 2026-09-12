@@ -1325,7 +1325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85aaa4b58e84f1d46b5c7a76f8f5cafa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 3653339080651927227}
+  _animator: {fileID: 134168510988364221}
   _navMeshAgent: {fileID: 6674600315545517207}
   _hitEffect: {fileID: 2928098754463851038}
   _damageableCollider: {fileID: 3172080411565985887}
@@ -1425,6 +1425,7 @@ GameObject:
   - component: {fileID: 9181426364460830580}
   - component: {fileID: 3653339080651927227}
   - component: {fileID: 6589314518961284329}
+  - component: {fileID: 134168510988364221}
   m_Layer: 13
   m_Name: Demon
   m_TagString: Untagged
@@ -1481,6 +1482,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db0d9bf02e80ae14f9c34dc239662a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &134168510988364221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8280283159258935966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9de6487ad440e45b2ec5c467c93280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 3653339080651927227}
 --- !u!1 &8313034077098188713
 GameObject:
   m_ObjectHideFlags: 0

@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f954f2260d0614bb1e848c96f33557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 7303862290913183407}
+  _animator: {fileID: 6694704480610374995}
   _navMeshAgent: {fileID: 1234259832291569809}
   _hitEffect: {fileID: 1099936589838378122}
   _damageableCollider: {fileID: 3260338127134228221}
@@ -2390,7 +2390,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1024676259393293668, guid: 1dbdb6bc09bb98f41826d5eee15af888,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6694704480610374995}
   m_SourcePrefab: {fileID: 100100000, guid: 1dbdb6bc09bb98f41826d5eee15af888, type: 3}
 --- !u!137 &1780921030807969601 stripped
 SkinnedMeshRenderer:
@@ -2404,7 +2408,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 3949399412587105035}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 4104877636693378671}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db0d9bf02e80ae14f9c34dc239662a59, type: 3}
@@ -2416,6 +2420,25 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3949399412587105035}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4104877636693378671 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1024676259393293668, guid: 1dbdb6bc09bb98f41826d5eee15af888,
+    type: 3}
+  m_PrefabInstance: {fileID: 3949399412587105035}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6694704480610374995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4104877636693378671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9de6487ad440e45b2ec5c467c93280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 7303862290913183407}
 --- !u!95 &7303862290913183407 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6022330682546867620, guid: 1dbdb6bc09bb98f41826d5eee15af888,

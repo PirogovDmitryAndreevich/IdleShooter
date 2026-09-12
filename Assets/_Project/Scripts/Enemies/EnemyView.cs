@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class EnemyView : MonoBehaviour
 {
-    [SerializeField] protected Animator _animator;
+    [SerializeField] protected EnemiesAnimator _animator;
     [SerializeField] private NavMeshAgent _navMeshAgent;
     [SerializeField] private HitFlash _hitEffect;
     [SerializeField] private DamageableCollider _damageableCollider;

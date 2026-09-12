@@ -381,6 +381,29 @@ ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
         return presenter;
     }
 
+    public GhostPresenter CreateGhostEnemy(Transform spawnPoint, PlayerTriggerObserver playerTriggerObserver,
+        LevelPresenter level, Transform parent)
+    {
+        GhostView view = _assets.Instantiate(AssetsPath.GhostPath, spawnPoint.position)
+            .GetComponent<GhostView>();
+
+        view.transform.SetParent(parent);
+
+        EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(EnemyType.Ghost));
+
+        view.NavMeshAgent.speed = model.MoveSpeed;
+        view.NavMeshAgent.angularSpeed = model.RotateSpeed;
+
+        GhostPresenter presenter = new GhostPresenter(view, model, spawnPoint, playerTriggerObserver);
+
+        view.GhostBehaviour.SetPresenter(presenter);
+
+        level.Disposables.Add(presenter);
+        level.ResetObjects.Add(presenter);
+
+        return presenter;
+    }
+
     private Hud CreateHud(PlayerPresenter playerPresenter)
     {
         var hud = _assets.Instantiate(AssetsPath.HudPath)

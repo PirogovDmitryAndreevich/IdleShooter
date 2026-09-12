@@ -7,8 +7,8 @@ public class SoldierView : EnemyView
     public WeaponView Weapon => _weaponView;
 
     public void SetMoveAnimation(bool isMoving) => 
-        _animator.SetBool("IsMoving", isMoving);
+        _animator.SetMoveAnimation(isMoving);
 
     public void SetAttackAnimation(bool isAttack) =>
-        _animator.SetBool("IsAttack", isAttack);
+        _animator.SetMoveAnimation(isAttack);
 }

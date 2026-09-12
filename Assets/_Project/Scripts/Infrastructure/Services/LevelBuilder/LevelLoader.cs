@@ -57,6 +57,9 @@ public class LevelLoader : ILevelLoader
             case LevelType.Level_6:
                 yield return InitLevel6(position, operation);
                 break;
+            case LevelType.Level_7:
+                yield return InitLevel7(position, operation);
+                break;
             default:
                 Debug.LogError(
                     $"LevelLoader: unsupported level type {type}");
@@ -236,6 +239,23 @@ public class LevelLoader : ILevelLoader
         }
 
         operation.Complete(level);
+    }
+
+    private IEnumerator InitLevel7(Transform position, LevelLoadOperation operation)
+    {
+        LevelView_7 levelView = CreateLevelView<LevelView_7>(position, LevelType.Level_7);
+
+        LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+
+        _gameFactory.CreateGhostEnemy(
+            levelView.GhostSpawnPoint.transform,
+            levelView.PlayerTriggerObserver,
+            level,
+            levelView.transform);
+
+        operation.Complete(level);
+
+        yield break;
     }
 
 

@@ -4,9 +4,9 @@ class ZombieStateMachine : CharacterStateMachine
 {
     private readonly ZombiePresenter _zombie;
 
-    public ZombieStateMachine(ZombiePresenter zimbie, EnemyModel model, AnimationEvent animationEvent)
+    public ZombieStateMachine(ZombiePresenter zombie, EnemyModel model, AnimationEvent animationEvent)
     {
-        _zombie = zimbie;
+        _zombie = zombie;
 
         States = new Dictionary<StatesType, CharacterState>()
         {

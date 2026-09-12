@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1452839417088389898}
   - component: {fileID: 3079245971446636473}
   - component: {fileID: 1996549200157115226}
+  - component: {fileID: 7129212245918730775}
   m_Layer: 9
   m_Name: EnemySoldier
   m_TagString: Untagged
@@ -72,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd6392997f5f0646aaaa520238676e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 6199664334594250297}
+  _animator: {fileID: 7129212245918730775}
   _navMeshAgent: {fileID: 3079245971446636473}
   _hitEffect: {fileID: 1996549200157115226}
   _damageableCollider: {fileID: 8591726471078416129}
@@ -125,6 +126,19 @@ MonoBehaviour:
   - {fileID: 8001548324078029044}
   - {fileID: 8001693032504382118}
   _duration: 0.12
+--- !u!114 &7129212245918730775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2493127585079171591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9de6487ad440e45b2ec5c467c93280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 6199664334594250297}
 --- !u!1 &4395274986342796500
 GameObject:
   m_ObjectHideFlags: 0

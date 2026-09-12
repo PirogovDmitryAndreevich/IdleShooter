@@ -6,4 +6,5 @@ public enum EnemyType
     Soldier,
     Demon,
     Zombie,
+    Ghost,
 }

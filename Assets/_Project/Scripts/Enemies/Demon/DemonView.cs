@@ -15,24 +15,24 @@ public class DemonView : EnemyView
 
     public void Idle()
     {
-        _animator.SetBool("IsWalk", false);
+        _animator.Idle();
         _damageCollider.enabled = false;
     }
 
     public void Attack()
     {
-        _animator.SetBool("IsWalk", false);
-        _animator.SetTrigger("Attack");
+        _animator.StopMove();
+        _animator.Attack();
     }
 
     public void Move()
     {
-        _animator.SetBool("IsWalk", true);
+        _animator.Move();
         _damageCollider.enabled = false;
     }
 
     public void StopMove() =>
-        _animator.SetBool("IsWalk", false);
+        _animator.StopMove();
 
     public void OnDealDamage() =>
         _damageCollider.enabled = true;
