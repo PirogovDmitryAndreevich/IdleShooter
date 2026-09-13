@@ -15,24 +15,24 @@ public class GhostView : EnemyView
 
     public void Idle()
     {
-        _animator.Idle();
+        Animator.Idle();
         _damageCollider.enabled = false;
     }
 
     public void Attack()
     {
-        _animator.StopMove();
-        _animator.Attack();
+        Animator.StopMove();
+        Animator.Attack();
     }
 
     public void Move()
     {
-        _animator.Move();
+        Animator.Move();
         _damageCollider.enabled = false;
     }
 
     public void StopMove() =>
-        _animator.StopMove();
+        Animator.StopMove();
 
     public void OnDealDamage() =>
         _damageCollider.enabled = true;

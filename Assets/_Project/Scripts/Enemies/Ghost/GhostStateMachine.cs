@@ -11,7 +11,7 @@ class GhostStateMachine : CharacterStateMachine
         States = new Dictionary<StatesType, CharacterState>()
         {
             [StatesType.Attack] = new AttackWithAnimationEventState(this, _ghost, animationEvent),
-            [StatesType.Idle] = new IdleState(this, _ghost),
+            [StatesType.Idle] = new IdleState(this,model, _ghost, _ghost),
             [StatesType.Move] = new MoveState(this, _ghost, model)
         };
 

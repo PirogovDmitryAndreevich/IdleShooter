@@ -291,11 +291,10 @@ ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
         EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(EnemyType.Soldier));
         EnemyShooter shooter = new EnemyShooter(model, view.Weapon, _projectilePool);
 
-        SoldierStateMachine stateMachine =
-            new SoldierStateMachine(view, shooter, model, at, attackPoint, _coroutineRunner);
-
         SoldierPresenter presenter =
-            new SoldierPresenter(model, view, playerTriggerObserver, stateMachine);
+            new SoldierPresenter(model, view, at, attackPoint, shooter, playerTriggerObserver);
+
+        view.Behavior.SetPresenter(presenter);
 
         level.Disposables.Add(presenter);
         level.ResetObjects.Add(presenter);

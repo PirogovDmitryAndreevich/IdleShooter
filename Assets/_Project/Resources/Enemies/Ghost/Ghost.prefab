@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14fbea4bea2447b43a1061789b75c982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 6921404943716613153}
+  Animator: {fileID: 6921404943716613153}
   _navMeshAgent: {fileID: 1308476475579399324}
   _hitEffect: {fileID: 6243454147200359522}
   _damageableCollider: {fileID: 1455708780195216039}
@@ -70,7 +70,6 @@ MonoBehaviour:
   _attackEvent: {fileID: 8585540676318943051}
   _damageCollider: {fileID: 8011627699221104676}
   _behaviour: {fileID: 2974003716636567179}
-  _rotationReset: {fileID: 2005008972405533273}
 --- !u!195 &1308476475579399324
 NavMeshAgent:
   m_ObjectHideFlags: 0

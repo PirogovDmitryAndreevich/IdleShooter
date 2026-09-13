@@ -1325,7 +1325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85aaa4b58e84f1d46b5c7a76f8f5cafa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 134168510988364221}
+  Animator: {fileID: 134168510988364221}
   _navMeshAgent: {fileID: 6674600315545517207}
   _hitEffect: {fileID: 2928098754463851038}
   _damageableCollider: {fileID: 3172080411565985887}

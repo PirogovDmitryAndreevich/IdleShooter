@@ -14,8 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   Damage: 10
-  AttackDistance: 35
+  HealthPoints: 0
+  AttackDistance: 0.3
+  ShootRange: 35
   ProjectileType: 1
   RotateSpeed: 3
   MoveSpeed: 5
+  StopMoveDistance: 0.3
   FireRate: 0.7

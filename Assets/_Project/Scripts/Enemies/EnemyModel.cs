@@ -11,6 +11,7 @@ public class EnemyModel
     public float Damage => _data.Damage;
     public int HealthPoint => _data.HealthPoints;
     public float AttackDistance => _data.AttackDistance;
+    public float ShootRange => _data.ShootRange;
     public float RotateSpeed => _data.RotateSpeed;
     public float MoveSpeed => _data.MoveSpeed;
     public float StopMoveDistance => _data.StopMoveDistance;

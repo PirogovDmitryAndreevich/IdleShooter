@@ -11,4 +11,5 @@ public enum LevelType
     Level_5 = 5,
     Level_6 = 6,
     Level_7 = 7,
+    Level_8 = 8,
 }

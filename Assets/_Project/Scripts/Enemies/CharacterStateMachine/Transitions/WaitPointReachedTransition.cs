@@ -1,9 +1,9 @@
-class WayPointReachedTransition : CharacterTransition
+class WaitPointReachedTransition : CharacterTransition
 {
     private readonly IMoveState _moveState;
     private readonly EnemyModel _model;
 
-    public WayPointReachedTransition(CharacterStateMachine stateMachine, IMoveState moveState, EnemyModel model )
+    public WaitPointReachedTransition(CharacterStateMachine stateMachine, IMoveState moveState, EnemyModel model )
         : base(stateMachine)
     {
         _moveState = moveState;
@@ -12,7 +12,7 @@ class WayPointReachedTransition : CharacterTransition
 
     public override bool IsNeedTransit()
     {
-        float sqrDistance = (_moveState.Transform.position - _moveState.Target.position).sqrMagnitude;       
+        float sqrDistance = (_moveState.Transform.position - _moveState.MoveTarget.position).sqrMagnitude;       
 
         return !_moveState.IsPlayerInCollider && sqrDistance <= _model.StopMoveDistance * _model.StopMoveDistance;
     }
@@ -20,6 +20,6 @@ class WayPointReachedTransition : CharacterTransition
     public override void Transit()
     {
         base.Transit();
-        StateMachine.ChangeState(StatesType.Attack);
+        StateMachine.ChangeState(StatesType.Idle);
     }
 }

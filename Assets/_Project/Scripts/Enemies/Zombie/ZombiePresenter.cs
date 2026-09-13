@@ -26,7 +26,7 @@ public class ZombiePresenter : EnemyPresenter, IAttackWithAnimationEvent,
         _playerTriggerObserver.PlayerExited += OnPlayerExited;
     }
 
-    public Transform Target { get; private set; }
+    public Transform MoveTarget { get; private set; }
     public bool IsPlayerInCollider { get; private set; }
 
     public Transform Transform => _view.transform;
@@ -61,7 +61,7 @@ public class ZombiePresenter : EnemyPresenter, IAttackWithAnimationEvent,
         _view.Move();
 
     public void MovingUpdate() =>
-        _agentMoveToTarget.Move(Target.position);
+        _agentMoveToTarget.Move(MoveTarget.position);
 
     public void OnMoveStateExit()
     {
@@ -83,13 +83,13 @@ public class ZombiePresenter : EnemyPresenter, IAttackWithAnimationEvent,
     // Helpers
     private void OnPlayerEnter(Transform transform)
     {
-        Target = transform;
+        MoveTarget = transform;
         IsPlayerInCollider = true;
     }
 
     private void OnPlayerExited()
     {
-        Target = _spawnPoint;
+        MoveTarget = _spawnPoint;
         IsPlayerInCollider = false;
     }
 }

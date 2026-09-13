@@ -11,7 +11,7 @@ class DemonStateMachine : CharacterStateMachine
 
         States = new Dictionary<StatesType, CharacterState>()
         {
-            [StatesType.Idle] = new IdleState(this, _demon),
+            [StatesType.Idle] = new IdleState(this, model, _demon, _demon),
             [StatesType.Move] = new MoveState(this, _demon, model),
             [StatesType.Attack] = new AttackWithAnimationEventState(this, _demon, animationEvent)
         };

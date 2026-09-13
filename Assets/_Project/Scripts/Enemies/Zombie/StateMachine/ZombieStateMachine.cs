@@ -11,7 +11,7 @@ class ZombieStateMachine : CharacterStateMachine
         States = new Dictionary<StatesType, CharacterState>()
         {
             [StatesType.Attack] = new AttackWithAnimationEventState(this, _zombie, animationEvent),
-            [StatesType.Idle] = new IdleState(this, _zombie),
+            [StatesType.Idle] = new IdleState(this, model, _zombie, _zombie),
             [StatesType.Move] = new MoveState(this, _zombie, model)
         };
 

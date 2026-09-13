@@ -1,6 +1,4 @@
-public interface IIdleState
+public interface IIdleState : IPlayerInColliderReaction
 {
-    bool IsPlayerInCollider { get; }
-
     void OnIdleStateEnter();
 }

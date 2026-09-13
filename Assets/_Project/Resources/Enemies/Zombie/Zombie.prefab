@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f954f2260d0614bb1e848c96f33557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 6694704480610374995}
+  Animator: {fileID: 6694704480610374995}
   _navMeshAgent: {fileID: 1234259832291569809}
   _hitEffect: {fileID: 1099936589838378122}
   _damageableCollider: {fileID: 3260338127134228221}

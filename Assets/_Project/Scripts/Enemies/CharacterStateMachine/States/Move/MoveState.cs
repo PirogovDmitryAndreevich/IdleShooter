@@ -9,7 +9,7 @@ class MoveState : CharacterState
         Transitions = new CharacterTransition[]
         {
             new TargetReachedTransition(stateMachine, _moveState, model),
-            new WayPointReachedTransition(stateMachine, _moveState, model)
+            new WaitPointReachedTransition(stateMachine, _moveState, model)
         };
     }
 
@@ -20,7 +20,7 @@ class MoveState : CharacterState
 
     public override void Update()
     {
-        if (_moveState.Target == null)
+        if (_moveState.MoveTarget == null)
             return;
 
         _moveState.MovingUpdate();

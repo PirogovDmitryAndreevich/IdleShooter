@@ -8,6 +8,8 @@ public class EnemyShooter
     private readonly WeaponView _view;
     private readonly IProjectilePool _projectilePool;
 
+    private float _nextFireTime = 0f;
+
     public EnemyShooter(EnemyModel model, WeaponView view, IProjectilePool projectilePool)
     {
         _model = model;
@@ -15,7 +17,18 @@ public class EnemyShooter
         _projectilePool = projectilePool;
     }
 
-    public void Shoot(Transform target)
+    public bool TryShoot(Transform target)
+    {
+        if (Time.time < _nextFireTime)
+            return false;
+
+        _nextFireTime = Time.time + _model.FireRate;
+
+        Shoot(target);
+        return true;
+    }
+
+    private void Shoot(Transform target)
     {
         if (target == null)
             return;

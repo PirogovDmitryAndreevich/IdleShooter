@@ -1,9 +1,9 @@
-class WaitPlayerTransition : CharacterTransition
+class ShootingToPlayerTransition : CharacterTransition
 {
     private readonly IIdleState _idleState;
 
-    public WaitPlayerTransition(CharacterStateMachine stateMachine, IIdleState idleState)
-        : base(stateMachine) => 
+    public ShootingToPlayerTransition(CharacterStateMachine stateMachine, IIdleState idleState) 
+        : base(stateMachine) =>
         _idleState = idleState;
 
     public override bool IsNeedTransit() =>
@@ -12,6 +12,6 @@ class WaitPlayerTransition : CharacterTransition
     public override void Transit()
     {
         base.Transit();
-        StateMachine.ChangeState(StatesType.Move);
+        StateMachine.ChangeState(StatesType.Attack);
     }
 }

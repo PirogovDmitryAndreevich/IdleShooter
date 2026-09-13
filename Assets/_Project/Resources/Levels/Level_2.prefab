@@ -11386,6 +11386,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DiedCollider
       objectReference: {fileID: 0}
+    - target: {fileID: 6181465258230578467, guid: f642f797befe81046a1443b5f052a36c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 7618466027761506483, guid: f642f797befe81046a1443b5f052a36c,
         type: 3}
       propertyPath: m_Size.x

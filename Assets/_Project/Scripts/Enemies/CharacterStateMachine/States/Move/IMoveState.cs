@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public interface IMoveState
+public interface IMoveState : IPlayerInColliderReaction
 {
-    Transform Target { get; }
+    Transform MoveTarget { get; }
     Transform Transform { get; }
-    bool IsPlayerInCollider { get; }
 
     void OnMoveStateEnter();
 

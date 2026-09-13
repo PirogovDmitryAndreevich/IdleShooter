@@ -16,6 +16,12 @@ public class EnemiesAnimator : MonoBehaviour
     public void StopMove() =>
         _animator.SetBool("IsWalk", false);
 
+    public void Shooting() =>
+        _animator.SetBool("IsShooting", true);
+
+    public void StopShooting() =>
+        _animator.SetBool("IsShooting", false);
+
     public void SetMoveAnimation(bool isMoving) =>
         _animator.SetBool("IsMoving", isMoving);
 

@@ -3,16 +3,12 @@ using UnityEngine;
 public class RotateToTarget
 {
     private readonly EnemyModel _model;
-    private readonly SoldierView _view;
+    private readonly Transform _characterTransform;
 
-    private Transform _characterTransform;
-
-    public RotateToTarget(EnemyModel model, SoldierView view)
+    public RotateToTarget(EnemyModel model, Transform transform)
     {
         _model = model;
-        _view = view;
-
-        _characterTransform = _view.transform;
+        _characterTransform = transform;
     }
 
     public void UpdateRotation(Transform target)
@@ -21,7 +17,8 @@ public class RotateToTarget
             return;
         
         Vector3 direction = target.position - _characterTransform.position;
-        
+        direction.y = 0f;
+
         if (direction.sqrMagnitude < 0.001f)
             return;
         

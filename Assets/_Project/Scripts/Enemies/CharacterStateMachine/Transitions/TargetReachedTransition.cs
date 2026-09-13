@@ -12,7 +12,7 @@ class TargetReachedTransition : CharacterTransition
 
     public override bool IsNeedTransit()
     {
-        float sqrDistance = (_moveState.Transform.position - _moveState.Target.position).sqrMagnitude;
+        float sqrDistance = (_moveState.Transform.position - _moveState.MoveTarget.position).sqrMagnitude;
 
         return _moveState.IsPlayerInCollider && sqrDistance <= _model.AttackDistance * _model.AttackDistance;
     }
