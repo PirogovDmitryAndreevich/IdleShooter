@@ -27,4 +27,6 @@ public static class AssetsPath
     public const string SphereSpawnerPath = "SphereSpawner/SphereSpawner";
     public const string ZombiePath = "Enemies/Zombie/Zombie";
     public const string GhostPath = "Enemies/Ghost/Ghost";
+    public const string CannonPath = "Enemies/Cannon/Cannon";
+    public const string CannonProjectilePath = "Weapons/Cannon/Projectile/CannonProjectile";
 }

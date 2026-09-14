@@ -1,12 +1,16 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SoldierView : EnemyView
 {
     [SerializeField] private WeaponView _weaponView;
     [SerializeField] private SoldierBehaviour _behavior;
+    [SerializeField] private NavMeshAgent _navMeshAgent;
 
     public WeaponView Weapon => _weaponView;
-    public SoldierBehaviour Behavior => _behavior;
+    public SoldierBehaviour Behaviour => _behavior;
+    public NavMeshAgent NavMeshAgent =>
+        _navMeshAgent;
 
     public void Idle() =>
         Animator.Idle();

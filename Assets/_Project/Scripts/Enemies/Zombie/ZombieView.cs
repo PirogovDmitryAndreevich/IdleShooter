@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ZombieView : EnemyView
 {
     [SerializeField] private AnimationEvent _attackEvent;
     [SerializeField] private MeleeDamageCollider _damageCollider;
     [SerializeField] private ZombieBehaviour _zombieBehaviour;
+    [SerializeField] private NavMeshAgent _navMeshAgent;
 
     public AnimationEvent AttackEvent =>
         _attackEvent;
@@ -12,6 +14,8 @@ public class ZombieView : EnemyView
         _zombieBehaviour;
     public MeleeDamageCollider DamageCollider =>
         _damageCollider;
+    public NavMeshAgent NavMeshAgent =>
+        _navMeshAgent;
 
     public void Idle()
     {

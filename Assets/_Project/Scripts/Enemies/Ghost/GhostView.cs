@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GhostView : EnemyView
 {
     [SerializeField] private AnimationEvent _attackEvent;
     [SerializeField] private MeleeDamageCollider _damageCollider;
     [SerializeField] private GhostBehavior _behaviour;
+    [SerializeField] private NavMeshAgent _navMeshAgent;
 
     public AnimationEvent AttackEvent =>
         _attackEvent;
@@ -12,6 +14,8 @@ public class GhostView : EnemyView
         _behaviour;
     public MeleeDamageCollider DamageCollider =>
         _damageCollider;
+    public NavMeshAgent NavMeshAgent =>
+        _navMeshAgent;
 
     public void Idle()
     {

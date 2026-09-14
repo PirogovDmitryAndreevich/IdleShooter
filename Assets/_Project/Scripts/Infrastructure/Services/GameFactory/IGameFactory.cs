@@ -17,6 +17,8 @@ public interface IGameFactory : IService
     FlyPlatform CreateFlyPlatform(Vector3 startPosition, Vector3 endPosition, Transform parent);
     SoldierPresenter CreateSoldierEnemy(Transform at, Transform attackPoint, PlayerTriggerObserver playerTriggerObserver,
         LevelPresenter level, Transform parent);
+    CannonPresenter CreateCannon(Transform at, PlayerTriggerObserver playerTriggerObserver,
+        LevelPresenter level, Transform parent);
     DemonPresenter CreateDemonEnemy(Transform at, PlayerTriggerObserver playerTriggerObserver,
         LevelPresenter level, Transform parent);
     Warp CreateWarp(LevelType type, Vector3 at, Transform parent);

@@ -7,4 +7,5 @@ public enum EnemyType
     Demon,
     Zombie,
     Ghost,
+    Cannon,
 }

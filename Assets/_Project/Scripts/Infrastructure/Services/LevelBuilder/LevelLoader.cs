@@ -34,23 +34,18 @@ public class LevelLoader : ILevelLoader
             case LevelType.Lobby:
                 yield return InitLobby(position, operation);
                 break;
-
             case LevelType.Level_1:
                 yield return InitLevel1(position, operation);
                 break;
-
             case LevelType.Level_2:
                 yield return InitLevel2(position, operation);
                 break;
-
             case LevelType.Level_3:
                 yield return InitLevel3(position, operation);
                 break;
-
             case LevelType.Level_4:
                 yield return InitLevel4(position, operation);
                 break;
-
             case LevelType.Level_5:
                 yield return InitLevel5(position, operation);
                 break;
@@ -59,6 +54,9 @@ public class LevelLoader : ILevelLoader
                 break;
             case LevelType.Level_7:
                 yield return InitLevel7(position, operation);
+                break;
+            case LevelType.Level_8:
+                yield return InitLevel8(position, operation);
                 break;
             default:
                 Debug.LogError(
@@ -258,6 +256,27 @@ public class LevelLoader : ILevelLoader
         yield break;
     }
 
+    private IEnumerator InitLevel8(Transform position, LevelLoadOperation operation)
+    {
+        LevelView_8 levelView = CreateLevelView<LevelView_8>(position, LevelType.Level_8);
+
+        LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+
+        for (int i = 0; i < levelView.CannonSpawnPoints.Length; i++)
+        {
+            _gameFactory.CreateCannon(
+                levelView.CannonSpawnPoints[i].transform,
+                levelView.PlayerTriggerObserver,
+                level,
+                levelView.transform);
+
+            yield return null;
+        }
+
+        operation.Complete(level);
+
+        yield break;
+    }
 
     private T CreateLevelView<T>(Transform position, LevelType type) where T : LevelView
     {

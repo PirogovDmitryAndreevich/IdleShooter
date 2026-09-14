@@ -6,4 +6,5 @@ public enum ProjectileType
     Stone,
     Minigun,
     Rocket,
+    Cannon,
 }

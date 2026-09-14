@@ -36,6 +36,7 @@ ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
         _projectilePool.Register(ProjectileType.Rocket, () => CreateRocketProjectile());
+        _projectilePool.Register(ProjectileType.Cannon, () => CreateCannonProjectile());
 
         _poolService.RegisterFactory(() => CreateBulletHole());
         _poolService.RegisterFactory(() => CreateHitEffect());
@@ -294,7 +295,30 @@ ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
         SoldierPresenter presenter =
             new SoldierPresenter(model, view, at, attackPoint, shooter, playerTriggerObserver);
 
-        view.Behavior.SetPresenter(presenter);
+        view.Behaviour.SetPresenter(presenter);
+
+        level.Disposables.Add(presenter);
+        level.ResetObjects.Add(presenter);
+
+        return presenter;
+    }
+
+    public CannonPresenter CreateCannon(Transform at, PlayerTriggerObserver playerTriggerObserver,
+        LevelPresenter level, Transform parent)
+    {
+        CannonView view = _assets.Instantiate(AssetsPath.CannonPath, at.position)
+            .GetComponent<CannonView>();
+
+        view.transform.SetParent(parent);
+
+        view.transform.localRotation = at.localRotation;
+
+        EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(EnemyType.Cannon));
+        EnemyShooter shooter = new EnemyShooter(model, view.Weapon, _projectilePool);
+
+        CannonPresenter presenter = new CannonPresenter(view, model, shooter, playerTriggerObserver);
+
+        view.Behaviour.SetPresenter(presenter);
 
         level.Disposables.Add(presenter);
         level.ResetObjects.Add(presenter);
@@ -443,6 +467,16 @@ ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
     {
         RocketProjectile projectile = _assets.Instantiate(AssetsPath.RocketProjectilePath)
             .GetComponent<RocketProjectile>();
+
+        projectile.Construct(_projectilePool, _poolService);
+
+        return projectile;
+    }
+
+    private CannonProjectile CreateCannonProjectile()
+    {
+        CannonProjectile projectile = _assets.Instantiate(AssetsPath.CannonProjectilePath)
+            .GetComponent<CannonProjectile>();
 
         projectile.Construct(_projectilePool, _poolService);
 

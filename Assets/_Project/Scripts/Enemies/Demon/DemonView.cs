@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DemonView : EnemyView
 {
     [SerializeField] private AnimationEvent _attackEvent;
     [SerializeField] private MeleeDamageCollider _damageCollider;
     [SerializeField] private DemonBehaviour _demonBehaviour;
+    [SerializeField] private NavMeshAgent _navMeshAgent;
 
     public AnimationEvent AttackEvent =>
         _attackEvent;
@@ -12,6 +14,8 @@ public class DemonView : EnemyView
         _demonBehaviour;
     public MeleeDamageCollider DamageCollider =>
         _damageCollider;
+    public NavMeshAgent NavMeshAgent =>
+        _navMeshAgent;
 
     public void Idle()
     {

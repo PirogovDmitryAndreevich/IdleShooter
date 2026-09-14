@@ -43,6 +43,7 @@ MonoBehaviour:
   - {fileID: 1760690833189419678, guid: 786d20746d2a03d4eaf0f2ce01266c75, type: 3}
   - {fileID: 6819998497440159483, guid: b0b043a76ff419d4d8d4da10cf4ebf66, type: 3}
   - {fileID: 6999784740120122499, guid: ec7417aa819f90b46bad09003017353d, type: 3}
+  - {fileID: 3648302694217235265, guid: 32e668eb3707a6f4f82e3c85e0b8341f, type: 3}
   - {fileID: 3124759299611094118, guid: 76ab7deb1ad16d34db928bc850a5aa5b, type: 3}
   LevelsData: []
   Obstacles:
@@ -53,6 +54,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 59f5a8388040d5d4fbe8c2762c4c698b, type: 2}
   - {fileID: 11400000, guid: 93b264ba529773a4098466958d58d294, type: 2}
   EnemiesStaticData:
+  - {fileID: 11400000, guid: 1b6a765a9d49aee4a9f837d6ac3753f3, type: 2}
   - {fileID: 11400000, guid: 97416ecbbe848974eae5f7520bc73277, type: 2}
   - {fileID: 11400000, guid: bda422351f5652b498a58c64d46adfb7, type: 2}
   - {fileID: 11400000, guid: 7e214fa5d2670ef4081ac7b17ce9d4c2, type: 2}
@@ -60,6 +62,7 @@ MonoBehaviour:
   WeaponsView: {fileID: 11400000, guid: 08b8c76bccb418543b20c43b6ccd7262, type: 2}
   WeaponsStaticData:
   - {fileID: 11400000, guid: 0767804ff87e43a499d01a1e693be512, type: 2}
+  - {fileID: 11400000, guid: 98addc1eec5ed904182837b8f23f88eb, type: 2}
   - {fileID: 11400000, guid: fb6fa2ddc94f3474da63c63f46004d13, type: 2}
   - {fileID: 11400000, guid: 764724b166de2af44abca16420d2d407, type: 2}
   - {fileID: 11400000, guid: e65758121e7f0264cb63be63340ca9f6, type: 2}

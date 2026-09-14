@@ -39,11 +39,8 @@ public class RocketProjectile : Projectile
         _animationCoroutine = StartCoroutine(FlyCoroutine(startPosition, targetPosition));
     }
 
-    protected override void Hit(Vector3 hitPoint, Vector3 hitNormal)
-    {
-        Explosion(hitPoint, hitNormal);
-        StopFly();
-    }
+    protected override void Hit(Vector3 hitPoint, Vector3 hitNormal) => 
+        StopFly(hitPoint, hitNormal);
 
     private IEnumerator FlyCoroutine(Vector3 startPosition, Vector3 targetPosition)
     {
@@ -64,14 +61,14 @@ public class RocketProjectile : Projectile
             yield return null;
         }
 
-        StopFly();
+        StopFly(transform.position, transform.position.normalized);
     }
 
-    private void StopFly()
+    private void StopFly(Vector3 hitPoint, Vector3 hitNormal)
     {
         _flayingParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
-        Explosion(transform.position, transform.position.normalized);
+        Explosion(hitPoint, hitNormal);
 
         if (_animationCoroutine != null)
         {
