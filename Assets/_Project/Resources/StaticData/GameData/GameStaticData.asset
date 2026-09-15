@@ -44,13 +44,17 @@ MonoBehaviour:
   - {fileID: 6819998497440159483, guid: b0b043a76ff419d4d8d4da10cf4ebf66, type: 3}
   - {fileID: 6999784740120122499, guid: ec7417aa819f90b46bad09003017353d, type: 3}
   - {fileID: 3648302694217235265, guid: 32e668eb3707a6f4f82e3c85e0b8341f, type: 3}
+  - {fileID: 8248851089113960167, guid: dec3b755c85da8d4daa1a1411c8ceccd, type: 3}
   - {fileID: 3124759299611094118, guid: 76ab7deb1ad16d34db928bc850a5aa5b, type: 3}
   LevelsData: []
   Obstacles:
   - {fileID: 11400000, guid: 6ef1317a4df606342b225353320fb28f, type: 2}
+  - {fileID: 11400000, guid: d1f19145b9b950846bf86ecd27a0f086, type: 2}
   - {fileID: 11400000, guid: 9c3b5acf68df4004ba1d61a456579e2f, type: 2}
+  - {fileID: 11400000, guid: 9851572614692e143bb796b12722ddac, type: 2}
   - {fileID: 11400000, guid: 33dd638b602c80c42be4a164d23c378d, type: 2}
   - {fileID: 11400000, guid: 1e25093281c03c54d9f2c597d17d0278, type: 2}
+  - {fileID: 11400000, guid: ff20199ecfb3ec940990aa45ebfe06c0, type: 2}
   - {fileID: 11400000, guid: 59f5a8388040d5d4fbe8c2762c4c698b, type: 2}
   - {fileID: 11400000, guid: 93b264ba529773a4098466958d58d294, type: 2}
   EnemiesStaticData:

@@ -8,5 +8,8 @@ public enum ObstacleType
     SpinningCylinder,
     Gear,
     GearBase,
-    SpikeCylinder
+    SpikeCylinder,
+    SpinningCylinder9,
+    GearBase9,
+    Gear9,
 }

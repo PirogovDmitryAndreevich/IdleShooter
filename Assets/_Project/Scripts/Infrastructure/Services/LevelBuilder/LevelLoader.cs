@@ -58,6 +58,9 @@ public class LevelLoader : ILevelLoader
             case LevelType.Level_8:
                 yield return InitLevel8(position, operation);
                 break;
+            case LevelType.Level_9:
+                yield return InitLevel9(position, operation);
+                break;
             default:
                 Debug.LogError(
                     $"LevelLoader: unsupported level type {type}");
@@ -271,6 +274,63 @@ public class LevelLoader : ILevelLoader
                 levelView.transform);
 
             yield return null;
+        }
+
+        operation.Complete(level);
+
+        yield break;
+    }
+
+    private IEnumerator InitLevel9(Transform position, LevelLoadOperation operation)
+    {
+        LevelView_9 levelView = CreateLevelView<LevelView_9>(position, LevelType.Level_9);
+
+        LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+
+        Transform levelTransform = levelView.transform;
+
+        for (int i = 0; i < levelView.FlyPlatformSpawnPoints.Length; i++)
+        {
+            FlyPlatformSpawnPoint PlatformSpawnPoint = levelView.FlyPlatformSpawnPoints[i];
+
+            var platform = _gameFactory.CreateFlyPlatform(
+                PlatformSpawnPoint.transform.position,
+                PlatformSpawnPoint.EndPoint.transform.position,
+                levelTransform);
+
+            GearSpawnPoint gearSpawnPoint = levelView.GearSpawnPoints[i];
+
+            var gear = _gameFactory.CreateGear(
+                gearSpawnPoint.transform,
+                levelTransform,
+                level,
+                ObstacleType.Gear9);
+
+            gear.SetTriggerToMoving(platform);
+
+            yield return null;
+        }
+
+        for (int i = 0; i < levelView.SpinningCylinderSpawnPoints.Length; i++)
+        {
+            _gameFactory.CreateSpinningCylinder(
+                levelView.SpinningCylinderSpawnPoints[i].transform,
+                levelTransform,
+                level,
+                ObstacleType.SpinningCylinder9);
+
+            yield return null;
+        }
+
+        for (int i = 0; i < levelView.GearBaseSpawnPoints.Length; i++)
+        {
+            GearBaseSpawnPoint point = levelView.GearBaseSpawnPoints[i];
+
+            _gameFactory.CreateGearBase(
+                point.transform,
+                levelTransform,
+                level,
+                ObstacleType.GearBase9);
         }
 
         operation.Complete(level);

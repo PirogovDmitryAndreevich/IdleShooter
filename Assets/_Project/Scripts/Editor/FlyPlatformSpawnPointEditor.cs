@@ -21,6 +21,26 @@ public class FlyPlatformSpawnPointEditor : Editor
                     + Vector3.up * spawnPoint.Size.y / 2f
                     + Vector3.left * spawnPoint.Size.x / 2f;
 
-        Gizmos.DrawCube(endCenter, spawnPoint.Size);
+        Gizmos.DrawCube(endCenter, spawnPoint.Size);        
+    }
+}
+
+[CustomEditor(typeof(EndPosition))]
+public class EndPositionEditor : Editor
+{
+    [DrawGizmo(GizmoType.Active | GizmoType.Pickable | GizmoType.NonSelected)]
+    public static void RenderCustomGizmo(EndPosition endPoint, GizmoType gizmo)
+    {
+        Gizmos.color = endPoint.Color;
+
+        Vector3 center = endPoint.transform.position
+                 + Vector3.up * endPoint.Size.y / 2f
+                 + Vector3.left * endPoint.Size.x / 2f;
+
+        Gizmos.DrawCube(center, endPoint.Size);
+
+        Gizmos.color = Color.green;
+
+        Gizmos.DrawLine(endPoint.transform.position, endPoint.Platform.transform.position);
     }
 }
