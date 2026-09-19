@@ -12,4 +12,5 @@ public enum ObstacleType
     SpinningCylinder9,
     GearBase9,
     Gear9,
+    Gear10,
 }

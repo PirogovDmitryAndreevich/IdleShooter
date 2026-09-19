@@ -16,7 +16,7 @@ public interface IGameFactory : IService
     GearBasePresenter CreateGearBase(Transform point, Transform parent, LevelPresenter level, ObstacleType gearBase);
     FlyPlatform CreateFlyPlatform(Vector3 startPosition, Vector3 endPosition, Transform parent);
     SoldierPresenter CreateSoldierEnemy(Transform at, Transform attackPoint, PlayerTriggerObserver playerTriggerObserver,
-        LevelPresenter level, Transform parent);
+        LevelPresenter level, Transform parent, EnemyType type);
     CannonPresenter CreateCannon(Transform at, PlayerTriggerObserver playerTriggerObserver,
         LevelPresenter level, Transform parent);
     DemonPresenter CreateDemonEnemy(Transform at, PlayerTriggerObserver playerTriggerObserver,

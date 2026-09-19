@@ -280,7 +280,7 @@ ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
     }
 
     public SoldierPresenter CreateSoldierEnemy(Transform at, Transform attackPoint,
-        PlayerTriggerObserver playerTriggerObserver, LevelPresenter level, Transform parent)
+        PlayerTriggerObserver playerTriggerObserver, LevelPresenter level, Transform parent, EnemyType type)
     {
         SoldierView view = _assets.Instantiate(AssetsPath.SoldierEnemyPath, at.position)
             .GetComponent<SoldierView>();
@@ -289,7 +289,7 @@ ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
 
         view.transform.localRotation = at.localRotation;
 
-        EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(EnemyType.Soldier));
+        EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(type));
         EnemyShooter shooter = new EnemyShooter(model, view.Weapon, _projectilePool);
 
         SoldierPresenter presenter =

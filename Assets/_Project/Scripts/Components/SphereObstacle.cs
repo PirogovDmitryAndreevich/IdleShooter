@@ -4,22 +4,20 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class SphereObstacle : MonoBehaviour
 {
-    [SerializeField] private DamageableCollider _damageable;
-
-    [Header("Rigidbody")]
+    [SerializeField] private DamageableCollider Damageable;
     [SerializeField] private Rigidbody _rigidbody;
 
     private bool _isFinished;
 
-    private float _knockbackMultiplier = 2f;
-    private float _maxKnockbackForce = 20f;
+    private float _knockbackMultiplier;
+    private float _maxKnockbackForce;
 
     public event Action<SphereObstacle> ReachedFinish;
 
-    private void OnDestroy()
-    {
-        _damageable.DamageReceived -= TakeDamage;
-    }
+    protected Rigidbody Rigidbody => _rigidbody;
+
+    private void OnDestroy() => 
+        Damageable.DamageReceived -= TakeDamage;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -42,15 +40,15 @@ public class SphereObstacle : MonoBehaviour
         _knockbackMultiplier = knockbackMultiplier;
         _maxKnockbackForce = maxKnockbackForce;
 
-        _damageable.DamageReceived += TakeDamage;
+        Damageable.DamageReceived += TakeDamage;
     }
 
     public void ResetPhysics()
     {
         _isFinished = false;
 
-        _rigidbody.velocity = Vector3.zero;
-        _rigidbody.angularVelocity = Vector3.zero;
+        Rigidbody.velocity = Vector3.zero;
+        Rigidbody.angularVelocity = Vector3.zero;
     }
 
     public void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
@@ -60,7 +58,7 @@ public class SphereObstacle : MonoBehaviour
 
         float force = Mathf.Min(Mathf.Sqrt(damage) * _knockbackMultiplier, _maxKnockbackForce);
 
-        _rigidbody.AddForce(
+        Rigidbody.AddForce(
             -hitNormal.normalized * force,
             ForceMode.Impulse);
     }

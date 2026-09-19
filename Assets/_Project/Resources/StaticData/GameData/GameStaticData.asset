@@ -39,6 +39,7 @@ MonoBehaviour:
   - {fileID: 7973607129331795865, guid: 5701f3d27548eed48a2588c506c3ed74, type: 3}
   - {fileID: 3747227179678284615, guid: 31ddbeee1ab00fd4d9799342bea96ca4, type: 3}
   - {fileID: 2108223686594225440, guid: e2d9c90e9aa16f9458e249b20b675899, type: 3}
+  - {fileID: 5633725672271712823, guid: aa38af2ba8757ad459e5f45f2dd7ee59, type: 3}
   - {fileID: 2634710652558448042, guid: 3c510582e92230d49a2f0bd203711c55, type: 3}
   - {fileID: 1760690833189419678, guid: 786d20746d2a03d4eaf0f2ce01266c75, type: 3}
   - {fileID: 6819998497440159483, guid: b0b043a76ff419d4d8d4da10cf4ebf66, type: 3}
@@ -49,6 +50,7 @@ MonoBehaviour:
   LevelsData: []
   Obstacles:
   - {fileID: 11400000, guid: 6ef1317a4df606342b225353320fb28f, type: 2}
+  - {fileID: 11400000, guid: df05ac0b716191b4da6207bd0dc33b24, type: 2}
   - {fileID: 11400000, guid: d1f19145b9b950846bf86ecd27a0f086, type: 2}
   - {fileID: 11400000, guid: 9c3b5acf68df4004ba1d61a456579e2f, type: 2}
   - {fileID: 11400000, guid: 9851572614692e143bb796b12722ddac, type: 2}

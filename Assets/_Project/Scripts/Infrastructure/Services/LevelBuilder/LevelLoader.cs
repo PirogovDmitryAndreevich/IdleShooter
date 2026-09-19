@@ -61,6 +61,9 @@ public class LevelLoader : ILevelLoader
             case LevelType.Level_9:
                 yield return InitLevel9(position, operation);
                 break;
+            case LevelType.Level_10:
+                yield return InitLevel10(position, operation);
+                break;
             default:
                 Debug.LogError(
                     $"LevelLoader: unsupported level type {type}");
@@ -90,9 +93,9 @@ public class LevelLoader : ILevelLoader
 
         foreach (WarpSpawnPoint warpSpawnPoint in lobby.WarpSpawnPoint)
         {
-           _gameFactory.CreateWarp(warpSpawnPoint.Type,
-                warpSpawnPoint.transform.position,
-                lobby.transform);
+            _gameFactory.CreateWarp(warpSpawnPoint.Type,
+                 warpSpawnPoint.transform.position,
+                 lobby.transform);
         }
 
         presenter.Disposables.Add(warpStarter);
@@ -182,7 +185,8 @@ public class LevelLoader : ILevelLoader
                 soldierSpawnPoint.AttackPoint.transform,
                 levelView.PlayerTriggerObserver,
                 level,
-                levelView.transform);
+                levelView.transform,
+                EnemyType.Soldier);
 
             yield return null;
         }
@@ -332,6 +336,94 @@ public class LevelLoader : ILevelLoader
                 level,
                 ObstacleType.GearBase9);
         }
+
+        operation.Complete(level);
+
+        yield break;
+    }
+
+    private IEnumerator InitLevel10(Transform position, LevelLoadOperation operation)
+    {
+        LevelView_10 levelView = CreateLevelView<LevelView_10>(position, LevelType.Level_10);
+
+        LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+
+        Transform levelTransform = levelView.transform;
+
+        for (int i = 0; i < levelView.FlyPlatformSpawnPoints.Length; i++)
+        {
+            FlyPlatformSpawnPoint PlatformSpawnPoint = levelView.FlyPlatformSpawnPoints[i];
+
+            _gameFactory.CreateFlyPlatform(
+                PlatformSpawnPoint.transform.position,
+                PlatformSpawnPoint.EndPoint.transform.position,
+                levelTransform);
+
+            yield return null;
+        }
+
+        for (int i = 0; i < levelView.PlatformsAndGears.Length; i++)
+        {
+            FlyPlatformSpawnPoint platformSpawnPoint = levelView.PlatformsAndGears[i].PlatformSpawnPoint;
+
+            FlyPlatform platform = _gameFactory.CreateFlyPlatform(
+                platformSpawnPoint.transform.position,
+                platformSpawnPoint.EndPoint.transform.position,
+                levelTransform);
+
+            GearSpawnPoint gearSpawnPoint = levelView.PlatformsAndGears[i].GearSpawnPoint;
+
+            GearPresenter gear = _gameFactory.CreateGear(
+                gearSpawnPoint.transform,
+                levelView.transform,
+                level,
+                ObstacleType.Gear10);
+
+            gear.SetTriggerToMoving(platform);
+
+            yield return null;
+        }
+
+        for (int i = 0; i < levelView.CannonsSpawnPoints.Length; i++)
+        {
+            CannonPresenter cannon = _gameFactory.CreateCannon(
+                levelView.CannonsSpawnPoints[i].transform,
+                levelView.PlayerTriggerObserver,
+                level,
+                levelView.transform);
+
+            yield return null;
+        }
+
+        for (int i = 0; i < levelView.ZombieSpawnPoints.Length; i++)
+        {
+            _gameFactory.CreateZombieEnemy(
+                levelView.ZombieSpawnPoints[i].transform,
+                levelView.PlayerTriggerObserver,
+                level,
+                levelView.transform);
+
+            yield return null;
+        }
+
+        for (int i = 0; i < levelView.SoldierSpawnPoints.Length; i++)
+        {
+            SoldierSpawnPoint soldierSpawnPoint = levelView.SoldierSpawnPoints[i];
+
+            _gameFactory.CreateSoldierEnemy(
+                soldierSpawnPoint.transform,
+                soldierSpawnPoint.AttackPoint.transform,
+                levelView.PlayerTriggerObserver,
+                level,
+                levelView.transform,
+                EnemyType.Soldier10);
+
+            yield return null;
+        }
+
+        _gameFactory.CreateSphereSpawner(
+            levelView.transform,
+            levelView.SphereSpawnPoints);
 
         operation.Complete(level);
 

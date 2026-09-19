@@ -8,4 +8,7 @@ public enum EnemyType
     Zombie,
     Ghost,
     Cannon,
+    Cannon10,
+    Soldier10,
+    Zombie10
 }
