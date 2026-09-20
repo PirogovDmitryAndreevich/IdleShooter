@@ -53,9 +53,9 @@ public class CannonPresenter : EnemyPresenter, IIdleState, IShootingAttackState
     }
 
     // AttackState
-    public void OnEnterAttackState() { }
+    public void OnEnterShootState() { }
 
-    public void AttackingUpdate()
+    public void ShootingUpdate()
     {
         if (AttackTarget == null)
             return;
@@ -66,7 +66,7 @@ public class CannonPresenter : EnemyPresenter, IIdleState, IShootingAttackState
         _characterRotation.UpdateRotation(AttackTarget);
     }
 
-    public void OnExitAttackState() { }
+    public void OnExitShootState() { }
 
     // Helpers
     private void OnPlayerEnter(Transform transform)

@@ -4,4 +4,7 @@ public enum StatesType
     Move,
     Attack,
     Died,
+    Kick,
+    Shoot,
+    TakeDamage,
 }

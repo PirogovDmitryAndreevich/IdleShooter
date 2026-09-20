@@ -21,6 +21,8 @@ public interface IGameFactory : IService
         LevelPresenter level, Transform parent);
     DemonPresenter CreateDemonEnemy(Transform at, PlayerTriggerObserver playerTriggerObserver,
         LevelPresenter level, Transform parent);
+    RobotPresenter CreateRobotEnemy(Transform at, PlayerTriggerObserver playerTriggerObserver,
+        LevelPresenter level, Transform parent);
     Warp CreateWarp(LevelType type, Vector3 at, Transform parent);
     SphereObstacle CreateSphereObstacle();
     SphereSpawner CreateSphereSpawner(Transform at, SphereSpawnPoint[] spawnPoints);

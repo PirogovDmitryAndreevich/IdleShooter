@@ -18,11 +18,11 @@ class ShootingAttackState : CharacterState
     public override StatesType Type => StatesType.Attack;
 
     public override void Enter() =>
-        _shootingAttack.OnEnterAttackState();
+        _shootingAttack.OnEnterShootState();
 
     public override void Update() =>
-        _shootingAttack.AttackingUpdate();
+        _shootingAttack.ShootingUpdate();
 
     public override void Exit() =>
-        _shootingAttack.OnExitAttackState();
+        _shootingAttack.OnExitShootState();
 }

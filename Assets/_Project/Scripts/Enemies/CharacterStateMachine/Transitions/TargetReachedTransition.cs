@@ -20,6 +20,11 @@ class TargetReachedTransition : CharacterTransition
     public override void Transit()
     {
         base.Transit();
+        TransitTo();
+    }
+
+    protected virtual void TransitTo()
+    {
         StateMachine.ChangeState(StatesType.Attack);
     }
 }

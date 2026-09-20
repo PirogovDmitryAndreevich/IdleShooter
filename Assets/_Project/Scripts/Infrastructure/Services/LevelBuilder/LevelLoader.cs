@@ -64,6 +64,9 @@ public class LevelLoader : ILevelLoader
             case LevelType.Level_10:
                 yield return InitLevel10(position, operation);
                 break;
+            case LevelType.Level_11:
+                yield return InitLevel11(position, operation);
+                break;
             default:
                 Debug.LogError(
                     $"LevelLoader: unsupported level type {type}");
@@ -424,6 +427,23 @@ public class LevelLoader : ILevelLoader
         _gameFactory.CreateSphereSpawner(
             levelView.transform,
             levelView.SphereSpawnPoints);
+
+        operation.Complete(level);
+
+        yield break;
+    }
+
+    private IEnumerator InitLevel11(Transform position, LevelLoadOperation operation)
+    {
+        LevelView_11 levelView = CreateLevelView<LevelView_11>(position, LevelType.Level_11);
+
+        LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+
+        _gameFactory.CreateRobotEnemy(
+            levelView.RobotSpawnPoint.transform,
+            levelView.PlayerTriggerObserver,
+            level,
+            levelView.transform);
 
         operation.Complete(level);
 

@@ -10,5 +10,6 @@ public enum EnemyType
     Cannon,
     Cannon10,
     Soldier10,
-    Zombie10
+    Zombie10,
+    Robot,
 }

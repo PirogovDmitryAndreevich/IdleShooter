@@ -349,6 +349,30 @@ ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
         return presenter;
     }
 
+    public RobotPresenter CreateRobotEnemy(Transform at, PlayerTriggerObserver playerTriggerObserver,
+        LevelPresenter level, Transform parent)
+    {
+        RobotView view = _assets.Instantiate(AssetsPath.RobotPath, at.position)
+            .GetComponent<RobotView>();
+
+        view.transform.SetParent(parent);
+
+        EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(EnemyType.Robot));
+        EnemyShooter shooter = new EnemyShooter(model, view.Weapon, _projectilePool);
+
+        view.NavMeshAgent.speed = model.MoveSpeed;
+        view.NavMeshAgent.angularSpeed = model.RotateSpeed;
+
+        RobotPresenter presenter = new RobotPresenter(view, model, at, playerTriggerObserver, shooter);
+
+        view.Behaviour.SetPresenter(presenter);
+
+        level.Disposables.Add(presenter);
+        level.ResetObjects.Add(presenter);
+
+        return presenter;
+    }
+
     public Warp CreateWarp(LevelType type, Vector3 at, Transform parent)
     {
         Warp warp = _assets.Instantiate(AssetsPath.WarpPath, at)

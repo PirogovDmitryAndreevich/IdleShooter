@@ -82,10 +82,10 @@ public class SoldierPresenter : EnemyPresenter, IMoveState,
     }
 
     // AttackState
-    public void OnEnterAttackState() => 
+    public void OnEnterShootState() => 
         _view.Shooting();
 
-    public void AttackingUpdate()
+    public void ShootingUpdate()
     {
         if(AttackTarget == null)
             return;
@@ -96,7 +96,7 @@ public class SoldierPresenter : EnemyPresenter, IMoveState,
         _characterRotation.UpdateRotation(AttackTarget);
     }
 
-    public void OnExitAttackState() => 
+    public void OnExitShootState() => 
         _view.StopShooting();
 
     // Helpers

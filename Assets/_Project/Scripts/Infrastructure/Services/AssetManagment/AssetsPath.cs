@@ -29,4 +29,5 @@ public static class AssetsPath
     public const string GhostPath = "Enemies/Ghost/Ghost";
     public const string CannonPath = "Enemies/Cannon/Cannon";
     public const string CannonProjectilePath = "Weapons/Cannon/Projectile/CannonProjectile";
+    public const string RobotPath = "Enemies/Robot/Robot";
 }

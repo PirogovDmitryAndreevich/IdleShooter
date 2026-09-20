@@ -4,9 +4,9 @@ public interface IShootingAttackState : IPlayerInColliderReaction
 {
     Transform AttackTarget { get; }
 
-    void OnEnterAttackState();
+    void OnEnterShootState();
 
-    void AttackingUpdate();
+    void ShootingUpdate();
 
-    void OnExitAttackState();
+    void OnExitShootState();
 }

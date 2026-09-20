@@ -30,7 +30,7 @@ public class EnemyPresenter : IDisposable, IResetObject
         
     }
 
-    private void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    protected virtual void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         _view.HitEffect.Flash();
     }

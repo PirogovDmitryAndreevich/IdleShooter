@@ -3,7 +3,12 @@ guid: 416b0e780acedb441af08fd39d673284
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Robot1Mtl
+    second: {fileID: 2100000, guid: ace3d0ffdc572a04aae767bc16436840, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
