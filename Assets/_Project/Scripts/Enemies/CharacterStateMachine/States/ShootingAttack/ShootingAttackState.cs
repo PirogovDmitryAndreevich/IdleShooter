@@ -1,5 +1,3 @@
-using UnityEngine;
-
 class ShootingAttackState : CharacterState
 {
     private readonly IShootingAttackState _shootingAttack;

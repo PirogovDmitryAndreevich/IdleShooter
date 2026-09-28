@@ -15,7 +15,7 @@ MonoBehaviour:
   Type: 7
   ShooterType: 0
   ProjectileType: 1
-  FireRate: 0.01
+  FireRate: 0.1
   MaxAimDistance: 100
   Shake:
     PositionShakeSettings:
@@ -31,3 +31,5 @@ MonoBehaviour:
       Randomness: 90
       FadeOut: 1
   AnimationName: IsMinigun
+  Score: 250
+  Price: 250

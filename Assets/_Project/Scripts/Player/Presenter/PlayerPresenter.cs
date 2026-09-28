@@ -9,16 +9,19 @@ public class PlayerPresenter : IDisposable
     private readonly IInputService _input;
     private readonly CameraController _camera;
     private readonly WeaponSwitcher _weaponSwitcher;
+    private readonly DamageManager _damageManager;
+    private readonly PlayerHealth _health;
+    private readonly ILevelManager _level;
     private readonly IRotationHandler _rotationHandler;
     private readonly ThirdPersonController _controller;
 
     private IWeapon _weapon;
-    private float _damage = 1f;
     private bool _isAim;
 
     private bool HasWeapon => _weapon != null;
     private bool CanShoot => HasWeapon && _isAim;
     public bool IsAiming => _isAim;
+    public DamageManager DamageManager => _damageManager;
 
     public event Action<bool> AimChanged;
     public event Action<bool> WeaponAvailabilityChanged;
@@ -29,7 +32,10 @@ public class PlayerPresenter : IDisposable
         PlayerView view,
         IInputService inputService,
         CameraController camera,
-        WeaponSwitcher weaponSwitcher)
+        WeaponSwitcher weaponSwitcher,
+        DamageManager damageManager,
+        PlayerHealth health,
+        ILevelManager level)
     {
         _model = model;
         _view = view;
@@ -37,6 +43,9 @@ public class PlayerPresenter : IDisposable
         _input = inputService;
         _camera = camera;
         _weaponSwitcher = weaponSwitcher;
+        _damageManager = damageManager;
+        _health = health;
+        _level = level;
 
         _controller = new ThirdPersonController(
             _view.Transform,
@@ -52,6 +61,8 @@ public class PlayerPresenter : IDisposable
 
         _view.Damage += TakeDamage;
         _view.PlayerDied += OnPlayerDied;
+
+        _health.Died += OnPlayerDied;
     }
 
     public void Dispose()
@@ -61,6 +72,8 @@ public class PlayerPresenter : IDisposable
 
         _view.Damage -= TakeDamage;
         _view.PlayerDied -= OnPlayerDied;
+
+        _health.Died -= OnPlayerDied;
 
         _controller.Dispose();
         _weaponSwitcher.Dispose();
@@ -140,6 +153,7 @@ public class PlayerPresenter : IDisposable
     private void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         _view.HitEffect.Flash();
+        _health.TakeDamage(damage);
     }
 
     private void OnWeaponSwitched(IWeapon weapon)
@@ -182,8 +196,12 @@ public class PlayerPresenter : IDisposable
         if (!CanShoot)
             return;
 
-        if (_weapon.TryShoot(_damage))        
-            _camera.Shake(_weapon.ShakeData);        
+        if (_weapon.TryShoot(_damageManager.Damage))
+        {
+            _damageManager.PlayerShot();
+            _level.AddScore(_weapon.Score);
+            _camera.Shake(_weapon.ShakeData);
+        }
     }
 
     private void OnPlayerDied() => 

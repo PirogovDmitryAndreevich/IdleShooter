@@ -1,21 +1,29 @@
 using System;
 using UnityEngine;
 
-public class EnemyPresenter : IDisposable, IResetObject
+public abstract class EnemyPresenter : IDisposable, IResetObject
 {
+    protected CharacterStateMachine StateMachine;
+
     private readonly EnemyView _view;
     private readonly EnemyModel _model;
-    private readonly Health health;
+    private readonly Health _health;
+
+    private bool _isDied;
 
     public EnemyPresenter(EnemyView view, EnemyModel model)
     {
         _view = view;
         _model = model;
 
-        health = new Health(_model.HealthPoint);
+        _isDied = false;
 
-        _view.HealthBar.Construct(health);
+        _health = new Health(_model.HealthPoint);
+
+        _view.HealthBar.Construct(_health);
         _view.DamageableCollider.DamageReceived += TakeDamage;
+
+        _health.Died += OnDied;
     }
 
     public bool IsNeedReset { get; private set; }
@@ -27,11 +35,29 @@ public class EnemyPresenter : IDisposable, IResetObject
 
     public virtual void ResetObject()
     {
-        
+        _isDied = false;
+        _health.Reset();
+        _view.gameObject.SetActive(true);
+    }
+
+    public virtual void Update()
+    {
+        if (_isDied)
+            return;
+
+        StateMachine.Update();
     }
 
     protected virtual void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         _view.HitEffect.Flash();
+
+        _health.TakeDamage(damage);
+    }
+
+    protected virtual void OnDied()
+    {
+        _isDied = true;
+        _view.gameObject.SetActive(false);
     }
 }

@@ -12,6 +12,7 @@ public class GameFactory : IGameFactory
     private readonly IProjectilePool _projectilePool;
     private readonly IWarpService _warpService;
     private readonly ITransitionDataService _transitionDataService;
+    private readonly ILevelManager _levelManager;
     private readonly ICoroutineRunner _coroutineRunner;
     private PlayerPresenter _player;
     WeaponSwitcher _weaponSwitcher;
@@ -19,7 +20,7 @@ public class GameFactory : IGameFactory
     public GameFactory(IAssets assets, IInputService inputService, IStaticDataService staticDataService,
         IProgressService progressService, IPoolService poolService, IWeaponDataService weaponDataService,
         IGameSaveDataService gameSaveDataService, IProjectilePool projectilePool, IWarpService warpService,
-ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
+ITransitionDataService transitionDataService, ILevelManager levelManager, ICoroutineRunner coroutineRunner)
     {
         _assets = assets;
         _inputService = inputService;
@@ -31,6 +32,7 @@ ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
         _projectilePool = projectilePool;
         _warpService = warpService;
         _transitionDataService = transitionDataService;
+        _levelManager = levelManager;
         _coroutineRunner = coroutineRunner;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
@@ -56,8 +58,11 @@ ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
         CameraController camera = CreatePlayerCamera(player.View, UnityEngine.Camera.main);
         PlayerModel model = new PlayerModel(_staticDataService, _progressService);
 
+        DamageManager damageManager = new DamageManager(_progressService);
+        PlayerHealth playerHealth = new PlayerHealth(_progressService);
 
-        _player = new PlayerPresenter(model, player.View, _inputService, camera, _weaponSwitcher);
+        _player = new PlayerPresenter(model, player.View, _inputService, camera,
+            _weaponSwitcher, damageManager, playerHealth, _levelManager);
 
         Hud hud = CreateHud(_player);
 
@@ -74,7 +79,7 @@ ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
         Transition transition = _assets.Instantiate(AssetsPath.TransitionPath, at: at.position)
             .GetComponent<Transition>();
 
-        transition.Construct(type);
+        transition.Construct(type, _staticDataService.ForLevel(type), _warpService);
 
         transition.transform.rotation = at.rotation;
 
@@ -456,7 +461,7 @@ ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
         var hud = _assets.Instantiate(AssetsPath.HudPath)
             .GetComponent<Hud>();
 
-        hud.Construct(playerPresenter);
+        hud.Construct(playerPresenter, _levelManager);
 
         return hud;
     }

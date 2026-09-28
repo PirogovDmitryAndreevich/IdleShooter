@@ -1,10 +1,10 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Hud : MonoBehaviour
 {
     [SerializeField] private AimSwitcher _aimSwitcher;
+    [SerializeField] private DamagePanel _damagePanel;
     [SerializeField] private Image _aim; 
 
     private PlayerPresenter _playerPresenter;
@@ -16,9 +16,11 @@ public class Hud : MonoBehaviour
         _playerPresenter.WeaponAvailabilityChanged -= OnWeaponAvailabilityChanged;
     }
 
-    public void Construct(PlayerPresenter playerPresenter)
+    public void Construct(PlayerPresenter playerPresenter, ILevelManager levelManager)
     {
         _playerPresenter = playerPresenter;
+
+        _damagePanel.Construct(_playerPresenter.DamageManager, levelManager);
 
         _aim.gameObject.SetActive(false);
 

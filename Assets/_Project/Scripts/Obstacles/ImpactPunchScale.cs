@@ -44,9 +44,6 @@ public class ImpactPunchScale
 
     public void Reset()
     {
-        _impactTween?.Kill();
-        _impactTween = null;
-
         _target.localScale = _startScale;
     }
 }

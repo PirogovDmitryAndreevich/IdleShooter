@@ -15,7 +15,7 @@ MonoBehaviour:
   Type: 4
   ShooterType: 0
   ProjectileType: 1
-  FireRate: 0.2
+  FireRate: 0.45
   MaxAimDistance: 1000
   Shake:
     PositionShakeSettings:
@@ -31,3 +31,5 @@ MonoBehaviour:
       Randomness: 0
       FadeOut: 1
   AnimationName: IsOneHand
+  Score: 25
+  Price: 18

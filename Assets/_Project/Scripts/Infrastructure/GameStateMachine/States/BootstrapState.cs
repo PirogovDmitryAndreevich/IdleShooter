@@ -42,6 +42,10 @@ public class BootstrapState : IState
         _allServices.RegisterSingle<ITransitionDataService>(new TransitionDataService());
         RegisterInputService();
 
+        _allServices.RegisterSingle<ILevelManager>(new LevelManager(
+            _allServices.Single<IProgressService>(),
+            _allServices.Single<IStaticDataService>()));
+
         _allServices.RegisterSingle<IGameFactory>(new GameFactory(
             _allServices.Single<IAssets>(),
             _allServices.Single<IInputService>(),
@@ -53,11 +57,13 @@ public class BootstrapState : IState
             _allServices.Single<IProjectilePool>(),
             _allServices.Single<IWarpService>(),
             _allServices.Single<ITransitionDataService>(),
+            _allServices.Single<ILevelManager>(),
             _coroutineRunner));
 
         _allServices.RegisterSingle<ILevelLoader>(new LevelLoader(
             _allServices.Single<IGameFactory>(),
-            _coroutineRunner));
+            _coroutineRunner,
+            _allServices.Single<ITransitionDataService>()));
 
         _allServices.RegisterSingle<ILevelController>(new LevelController(
             _allServices.Single<ILevelLoader>(),

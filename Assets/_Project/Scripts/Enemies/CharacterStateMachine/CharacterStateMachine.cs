@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-abstract class CharacterStateMachine
+public abstract class CharacterStateMachine
 {
     protected CharacterState CurrentState;
     protected Dictionary<StatesType, CharacterState> States;

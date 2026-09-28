@@ -41,6 +41,9 @@ public class GearBasePresenter : IDisposable, IResetObject
     private void Died() =>
         _view.OnDied();
 
-    public void ResetObject() =>
+    public void ResetObject()
+    {
         _view.OnReset();
+        _model.Health.Reset();
+    }
 }

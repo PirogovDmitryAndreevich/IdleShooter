@@ -7,7 +7,7 @@ public class GameLoopState : IState
 
     private PlayerPresenter _player;
 
-    public GameLoopState(GameStateMachine gameStateMachine, ILevelController levelController, 
+    public GameLoopState(GameStateMachine gameStateMachine, ILevelController levelController,
         ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
     {
         _gameStateMachine = gameStateMachine;
@@ -19,8 +19,8 @@ public class GameLoopState : IState
     {
         _player = _transitionDataService.Player;
 
-        if(_player == null)        
-            _transitionDataService.PlayerCreated += OnPlayerCreated;        
+        if (_player == null)
+            _transitionDataService.PlayerCreated += OnPlayerCreated;
         else
             SetPlayer();
     }
@@ -29,11 +29,14 @@ public class GameLoopState : IState
     {
         _levelController.Dispose();
         _player.PlayerDied -= OnPlayerDied;
+
+        _transitionDataService?.Dispose();
     }
 
     private void OnPlayerDied()
     {
-       _levelController.WarpToLevel(LevelType.Lobby);
+        _levelController.WarpToLevel(LevelType.Lobby);
+        _transitionDataService.ResetEnteredLevels();
     }
 
     private void OnPlayerCreated()

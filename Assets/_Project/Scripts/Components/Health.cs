@@ -3,20 +3,21 @@ using UnityEngine;
 
 public class Health
 {
-    private readonly int _maxHealth;
-
     private float _currentHealth;
+    private int _maxHealth;
 
     public event Action HealthChanged;
+    public event Action Died;
 
     public Health(int maxHealth)
     {
         _maxHealth = maxHealth;
 
+        MaxHealth = _maxHealth;
         _currentHealth = _maxHealth;
     }
 
-    public int MaxHealth => _maxHealth;
+    public virtual int MaxHealth { get; }
     public float CurrentHealth => _currentHealth;
 
     public void TakeDamage(float damage)
@@ -27,6 +28,9 @@ public class Health
             _maxHealth);
 
         HealthChanged?.Invoke();
+
+        if (_currentHealth <= 0f)
+            Death();
     }
 
     public void Heal(float heal)
@@ -42,6 +46,21 @@ public class Health
     public void Reset()
     {
         _currentHealth = _maxHealth;
+        HealthChanged?.Invoke();
+    }
+
+    private void Death()
+    {
+        Died?.Invoke();
+    }
+
+    protected void IncreaseMaxHealth(int value)
+    {
+        if (value <= 0f)
+            return;
+
+        _maxHealth += value;
+
         HealthChanged?.Invoke();
     }
 }

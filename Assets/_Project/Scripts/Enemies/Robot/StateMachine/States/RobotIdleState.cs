@@ -13,7 +13,8 @@ class RobotIdleState : CharacterState
         {
             new RobotMoveToTargetTransition(stateMachine, moveState, waitWeaponReload, model),
             new RobotShootTransition(stateMachine, shootingAttack, waitWeaponReload),
-            new TakeDamageTransition(stateMachine, takingDamage)
+            new TakeDamageTransition(stateMachine, takingDamage),
+            new KickTransition(stateMachine, model, moveState)
         };
     }
 

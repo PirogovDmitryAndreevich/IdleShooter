@@ -23,7 +23,7 @@ public class RobotView : EnemyView
         _damageCollider.enabled = false;
     }
 
-    public void Attack()
+    public void Kick()
     {
         Animator.StopMove();
         Animator.Attack();

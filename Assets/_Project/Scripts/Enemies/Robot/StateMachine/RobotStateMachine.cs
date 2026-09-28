@@ -11,7 +11,7 @@ class RobotStateMachine : CharacterStateMachine
         States = new Dictionary<StatesType, CharacterState>()
         {
             [StatesType.Kick] = new KickAttackWithAnimationEventState(this, _robot, animationEvent),
-            [StatesType.Shoot] = new ShootingAttackState(this, _robot),
+            [StatesType.Shoot] = new RobotShootState(this, _robot, _robot),
             [StatesType.Idle] = new RobotIdleState(this, model, _robot, _robot, _robot, _robot, _robot),
             [StatesType.Move] = new RobotMoveState(this, _robot, model, _robot, _robot),
             [StatesType.TakeDamage] = new RobotTakeDamageState(this, _robot)

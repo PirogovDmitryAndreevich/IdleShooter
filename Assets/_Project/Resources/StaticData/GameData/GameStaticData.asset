@@ -35,6 +35,168 @@ MonoBehaviour:
   AimLayerMask:
     serializedVersion: 2
     m_Bits: 513
+  MaxLevel: 80
+  PlayerLevelsData:
+  - Level: 1
+    TargetScore: 0
+  - Level: 2
+    TargetScore: 2
+  - Level: 3
+    TargetScore: 4
+  - Level: 4
+    TargetScore: 6
+  - Level: 5
+    TargetScore: 11
+  - Level: 6
+    TargetScore: 19
+  - Level: 7
+    TargetScore: 33
+  - Level: 8
+    TargetScore: 57
+  - Level: 9
+    TargetScore: 96
+  - Level: 10
+    TargetScore: 163
+  - Level: 11
+    TargetScore: 274
+  - Level: 12
+    TargetScore: 457
+  - Level: 13
+    TargetScore: 757
+  - Level: 14
+    TargetScore: 1244
+  - Level: 15
+    TargetScore: 2030
+  - Level: 16
+    TargetScore: 3288
+  - Level: 17
+    TargetScore: 5285
+  - Level: 18
+    TargetScore: 8433
+  - Level: 19
+    TargetScore: 13355
+  - Level: 20
+    TargetScore: 20987
+  - Level: 21
+    TargetScore: 32729
+  - Level: 22
+    TargetScore: 50647
+  - Level: 23
+    TargetScore: 77766
+  - Level: 24
+    TargetScore: 118470
+  - Level: 25
+    TargetScore: 179054
+  - Level: 26
+    TargetScore: 268468
+  - Level: 27
+    TargetScore: 399303
+  - Level: 28
+    TargetScore: 589099
+  - Level: 29
+    TargetScore: 862023
+  - Level: 30
+    TargetScore: 1251025
+  - Level: 31
+    TargetScore: 1800525
+  - Level: 32
+    TargetScore: 2569737
+  - Level: 33
+    TargetScore: 3636666
+  - Level: 34
+    TargetScore: 5102840
+  - Level: 35
+    TargetScore: 7098762
+  - Level: 36
+    TargetScore: 9790001
+  - Level: 37
+    TargetScore: 13383798
+  - Level: 38
+    TargetScore: 18135894
+  - Level: 39
+    TargetScore: 24357194
+  - Level: 40
+    TargetScore: 32419732
+  - Level: 41
+    TargetScore: 42761216
+  - Level: 42
+    TargetScore: 55887284
+  - Level: 43
+    TargetScore: 72370496
+  - Level: 44
+    TargetScore: 92844936
+  - Level: 45
+    TargetScore: 117995336
+  - Level: 46
+    TargetScore: 148539696
+  - Level: 47
+    TargetScore: 185204560
+  - Level: 48
+    TargetScore: 228692464
+  - Level: 49
+    TargetScore: 279641696
+  - Level: 50
+    TargetScore: 338578848
+  - Level: 51
+    TargetScore: 405866048
+  - Level: 52
+    TargetScore: 481644800
+  - Level: 53
+    TargetScore: 565780224
+  - Level: 54
+    TargetScore: 657809024
+  - Level: 55
+    TargetScore: 756896768
+  - Level: 56
+    TargetScore: 861808448
+  - Level: 57
+    TargetScore: 970898112
+  - Level: 58
+    TargetScore: 1082121216
+  - Level: 59
+    TargetScore: 1193072896
+  - Level: 60
+    TargetScore: 1301053568
+  - Level: 61
+    TargetScore: 1403161600
+  - Level: 62
+    TargetScore: 1496409728
+  - Level: 63
+    TargetScore: 1577859840
+  - Level: 64
+    TargetScore: 1644769024
+  - Level: 65
+    TargetScore: 1694736768
+  - Level: 66
+    TargetScore: 1725842688
+  - Level: 67
+    TargetScore: 1736765824
+  - Level: 68
+    TargetScore: 1726872960
+  - Level: 69
+    TargetScore: 1696270080
+  - Level: 70
+    TargetScore: 1645811456
+  - Level: 71
+    TargetScore: 1577062272
+  - Level: 72
+    TargetScore: 1492220416
+  - Level: 73
+    TargetScore: 1393998336
+  - Level: 74
+    TargetScore: 1285478272
+  - Level: 75
+    TargetScore: 1169947904
+  - Level: 76
+    TargetScore: 1050731712
+  - Level: 77
+    TargetScore: 931028096
+  - Level: 78
+    TargetScore: 813765760
+  - Level: 79
+    TargetScore: 701486720
+  - Level: 80
+    TargetScore: 596263744
   LevelViews:
   - {fileID: 7973607129331795865, guid: 5701f3d27548eed48a2588c506c3ed74, type: 3}
   - {fileID: 3747227179678284615, guid: 31ddbeee1ab00fd4d9799342bea96ca4, type: 3}
@@ -48,7 +210,67 @@ MonoBehaviour:
   - {fileID: 3648302694217235265, guid: 32e668eb3707a6f4f82e3c85e0b8341f, type: 3}
   - {fileID: 8248851089113960167, guid: dec3b755c85da8d4daa1a1411c8ceccd, type: 3}
   - {fileID: 3124759299611094118, guid: 76ab7deb1ad16d34db928bc850a5aa5b, type: 3}
-  LevelsData: []
+  LevelsData:
+  - Type: 0
+    Recommended: 0
+    Wins: 0
+    EnemiesOnLevel: 
+    ObstaclesOnLevel: 
+  - Type: 1
+    Recommended: 1
+    Wins: 1
+    EnemiesOnLevel: 
+    ObstaclesOnLevel: 0000000000000000000000000000000000000000
+  - Type: 2
+    Recommended: 6
+    Wins: 3
+    EnemiesOnLevel: 
+    ObstaclesOnLevel: 030000000400000005000000050000000500000005000000
+  - Type: 3
+    Recommended: 9
+    Wins: 10
+    EnemiesOnLevel: 0000000000000000000000000000000000000000
+    ObstaclesOnLevel: 
+  - Type: 4
+    Recommended: 12
+    Wins: 20
+    EnemiesOnLevel: 01000000
+    ObstaclesOnLevel: 
+  - Type: 5
+    Recommended: 14
+    Wins: 50
+    EnemiesOnLevel: 
+    ObstaclesOnLevel: 
+  - Type: 6
+    Recommended: 16
+    Wins: 100
+    EnemiesOnLevel: 02000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000
+    ObstaclesOnLevel: 
+  - Type: 7
+    Recommended: 20
+    Wins: 150
+    EnemiesOnLevel: 03000000
+    ObstaclesOnLevel: 
+  - Type: 8
+    Recommended: 23
+    Wins: 230
+    EnemiesOnLevel: 04000000040000000400000004000000040000000400000004000000040000000400000004000000040000000400000004000000040000000400000004000000
+    ObstaclesOnLevel: 
+  - Type: 9
+    Recommended: 24
+    Wins: 300
+    EnemiesOnLevel: 
+    ObstaclesOnLevel: 070000000700000008000000080000000800000006000000
+  - Type: 10
+    Recommended: 24
+    Wins: 500
+    EnemiesOnLevel: 0500000005000000050000000500000005000000050000000600000006000000060000000600000007000000070000000700000007000000050000000500000005000000
+    ObstaclesOnLevel: 090000000900000009000000
+  - Type: 11
+    Recommended: 25
+    Wins: 0
+    EnemiesOnLevel: 08000000
+    ObstaclesOnLevel: 
   Obstacles:
   - {fileID: 11400000, guid: 6ef1317a4df606342b225353320fb28f, type: 2}
   - {fileID: 11400000, guid: df05ac0b716191b4da6207bd0dc33b24, type: 2}

@@ -1,6 +1,6 @@
 using System;
 
-abstract class CharacterTransition
+public abstract class CharacterTransition
 {
     protected CharacterStateMachine StateMachine;
 

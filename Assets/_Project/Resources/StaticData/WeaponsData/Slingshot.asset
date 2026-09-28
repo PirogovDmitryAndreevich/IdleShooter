@@ -31,3 +31,5 @@ MonoBehaviour:
       Randomness: 0
       FadeOut: 1
   AnimationName: IsOneHand
+  Score: 2
+  Price: 3

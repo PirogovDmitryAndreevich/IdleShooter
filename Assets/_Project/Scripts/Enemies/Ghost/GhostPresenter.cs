@@ -8,7 +8,6 @@ public class GhostPresenter : EnemyPresenter, IAttackWithAnimationEvent,
     private readonly Transform _spawnPoint;
     private readonly PlayerTriggerObserver _playerTriggerObserver;
     private readonly AgentMoveToTarget _agentMoveToTarget;
-    private readonly GhostStateMachine _stateMachine;
 
     public GhostPresenter(GhostView view, EnemyModel model,Transform spawnPoint,
         PlayerTriggerObserver playerTriggerObserver) : base(view, model)
@@ -19,7 +18,7 @@ public class GhostPresenter : EnemyPresenter, IAttackWithAnimationEvent,
         _playerTriggerObserver = playerTriggerObserver;
 
         _agentMoveToTarget = new AgentMoveToTarget(_view.NavMeshAgent);
-        _stateMachine = new GhostStateMachine(this, _model, _view.AttackEvent);
+        StateMachine = new GhostStateMachine(this, _model, _view.AttackEvent);
 
         _playerTriggerObserver.TargetEnter += OnPlayerEnter;
         _playerTriggerObserver.PlayerExited += OnPlayerExited;
@@ -29,9 +28,6 @@ public class GhostPresenter : EnemyPresenter, IAttackWithAnimationEvent,
     public bool IsPlayerInCollider { get; private set; }
 
     public Transform Transform => _view.transform;
-
-    public void Update() =>
-        _stateMachine.Update();
 
     public override void ResetObject()
     {

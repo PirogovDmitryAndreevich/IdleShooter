@@ -13,6 +13,11 @@ public class GameStaticData : ScriptableObject
     public LayerMask AimLayerMask;
 
     [Space]
+    [Header("Player")]
+    public int MaxLevel;
+    public PlayerLevelsStaticData[] PlayerLevelsData;
+
+    [Space]
     [Header("Levels")]
     public LevelView[] LevelViews;
     public LevelsStaticData[] LevelsData;

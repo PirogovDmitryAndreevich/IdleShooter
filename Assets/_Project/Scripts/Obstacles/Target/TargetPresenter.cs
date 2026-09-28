@@ -47,5 +47,6 @@ public class TargetPresenter : IDisposable, IResetObject
     {
         _impactView.Reset();
         _view.OnReset();
+        _model.Health.Reset();
     }
 }

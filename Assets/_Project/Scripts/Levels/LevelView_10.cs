@@ -2,8 +2,7 @@ public class LevelView_10 : LevelView
 {
     public CannonSpawnPoint[] CannonsSpawnPoints;
     public FlyPlatformAndGear[] PlatformsAndGears;
-    public SoldierSpawnPoint[] SoldierSpawnPoints;
-    public ZombieSpawnPoint[] ZombieSpawnPoints;
+    public FinalPhaseForLevel_10 ForFinalPhase;
     public FlyPlatformSpawnPoint[] FlyPlatformSpawnPoints;
     public PlayerTriggerObserver PlayerTriggerObserver;
     public SphereSpawnPoint[] SphereSpawnPoints;

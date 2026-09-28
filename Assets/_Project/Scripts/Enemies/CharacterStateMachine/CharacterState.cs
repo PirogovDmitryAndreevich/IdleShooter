@@ -1,4 +1,4 @@
-abstract class CharacterState
+public abstract class CharacterState
 {
     protected CharacterTransition[] Transitions;
 

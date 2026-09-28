@@ -11,4 +11,6 @@ public class WeaponStaticData : ScriptableObject
     public float MaxAimDistance = 1000;
     public ShootShakeSettings Shake;
     public string AnimationName;
+    public float Score = 1f;
+    public int Price = 1;
 }

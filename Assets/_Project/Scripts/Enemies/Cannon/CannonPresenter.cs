@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class CannonPresenter : EnemyPresenter, IIdleState, IShootingAttackState
+ public class CannonPresenter : EnemyPresenter, IIdleState, IShootingAttackState
 {
     private readonly EnemyDirectionOfView _directionOfView;
     private readonly RotateToTarget _characterRotation;
-    private readonly CannonStateMachine _stateMachine;
     private readonly EnemyView _view;
     private readonly EnemyShooter _shooter;
     private readonly PlayerTriggerObserver _playerTriggerObserver;
@@ -20,7 +19,8 @@ public class CannonPresenter : EnemyPresenter, IIdleState, IShootingAttackState
 
         _directionOfView = new EnemyDirectionOfView(transform, model);
         _characterRotation = new RotateToTarget(model, transform);
-        _stateMachine = new CannonStateMachine(this, model);
+
+        StateMachine = new CannonStateMachine(this, model);
 
         _playerTriggerObserver.TargetEnter += OnPlayerEnter;
         _playerTriggerObserver.PlayerExited += OnPlayerExited;
@@ -29,9 +29,6 @@ public class CannonPresenter : EnemyPresenter, IIdleState, IShootingAttackState
     public Transform AttackTarget { get; private set; }
     public Transform Transform => _view.transform;
     public bool IsPlayerInCollider { get; private set; }
-
-    public void Update() =>
-        _stateMachine.Update();
 
     public override void ResetObject()
     {

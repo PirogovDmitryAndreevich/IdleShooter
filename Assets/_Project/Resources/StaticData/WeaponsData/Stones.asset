@@ -18,10 +18,18 @@ MonoBehaviour:
   FireRate: 0.2
   MaxAimDistance: 25
   Shake:
-    Duration: 1
-    PositionStrength: 0.1
-    RotationStrength: 0.1
-    Vibrato: 20
-    Randomness: 90
-    FadeOut: 1
+    PositionShakeSettings:
+      Duration: 0.15
+      Strength: {x: 0, y: 0, z: 0}
+      Vibrato: 20
+      Randomness: 90
+      FadeOut: 1
+    RotationShakeSettings:
+      Duration: 0.15
+      Strength: {x: 0, y: 0, z: 0}
+      Vibrato: 20
+      Randomness: 90
+      FadeOut: 1
   AnimationName: AimStones
+  Score: 1
+  Price: 0

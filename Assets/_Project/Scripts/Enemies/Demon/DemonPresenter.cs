@@ -4,7 +4,6 @@ public class DemonPresenter : EnemyPresenter, IIdleState, IAttackWithAnimationEv
 {
     private readonly DemonView _view;
     private readonly PlayerTriggerObserver _playerTriggerObserver;
-    private readonly DemonStateMachine _stateMachine;
     private readonly AgentMoveToTarget _agentMoveToTarget;
     private readonly Transform _spawnPoint;
 
@@ -21,7 +20,7 @@ public class DemonPresenter : EnemyPresenter, IIdleState, IAttackWithAnimationEv
         _view.DamageCollider.Construct(model.Damage);
 
         _agentMoveToTarget = new AgentMoveToTarget(_view.NavMeshAgent);
-        _stateMachine = new DemonStateMachine(this, model, _view.AttackEvent);
+        StateMachine = new DemonStateMachine(this, model, _view.AttackEvent);
 
         _playerTriggerObserver.TargetEnter += OnPlayerEnter;
         _playerTriggerObserver.PlayerExited += OnPlayerExited;
@@ -30,9 +29,6 @@ public class DemonPresenter : EnemyPresenter, IIdleState, IAttackWithAnimationEv
     public Transform MoveTarget { get; private set; }
     public bool IsPlayerInCollider { get; private set; }
     public Transform Transform => _view.transform;
-
-    public void Update() => 
-        _stateMachine.Update();
 
     public override void ResetObject()
     {

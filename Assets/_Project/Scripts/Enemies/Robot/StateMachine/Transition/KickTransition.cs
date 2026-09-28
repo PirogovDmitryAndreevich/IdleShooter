@@ -11,6 +11,9 @@ class KickTransition : CharacterTransition
 
     public override bool IsNeedTransit()
     {
+        if (_moveState.MoveTarget == null)
+            return false;
+
         float sqrDistance = (_moveState.Transform.position - _moveState.MoveTarget.position).sqrMagnitude;
 
         return

@@ -13,4 +13,6 @@ public class EnemyStaticData : ScriptableObject
     public float MoveSpeed = 5f;
     public float StopMoveDistance = 0.3f;
     public float FireRate = 0.5f;
+    public float ShootingTime = 0.3f;
+    public float ReloadTime = 0.3f;
 }

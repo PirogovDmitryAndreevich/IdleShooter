@@ -5,7 +5,9 @@ public class Transition : MonoBehaviour
 {
     [SerializeField] private Transform _exitPoint;
     [SerializeField] private Transform _playerSpawnPoint;
+    [SerializeField] private EnterGate _enterGate;
     [SerializeField] private PlayerTriggerObserver _playerTriggerObserver;
+    [SerializeField] private WinsPoint _winsPoint;
 
     public event Action TransitionEntered;
 
@@ -16,9 +18,12 @@ public class Transition : MonoBehaviour
     private void OnDestroy() => 
         _playerTriggerObserver.TriggerEnter -= OnPlayerEntered;
 
-    public void Construct(LevelType type)
+    public void Construct(LevelType type, LevelsStaticData data, IWarpService warpService)
     {
         Type = type;
+
+        _enterGate.Construct(data);
+        _winsPoint.Construct(data, warpService);
 
         _playerTriggerObserver.TriggerEnter += OnPlayerEntered;
     }

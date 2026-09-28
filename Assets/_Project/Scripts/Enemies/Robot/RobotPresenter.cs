@@ -5,13 +5,16 @@ public class RobotPresenter : EnemyPresenter, IIdleState, IMoveState,
     ITakingDamage
 {
     private readonly RobotView _view;
+    private readonly EnemyModel _model;
     private readonly Transform _waitPoint;
-    private readonly RobotStateMachine _stateMachine;
     private readonly EnemyShooter _shooter;
     private readonly PlayerTriggerObserver _playerTriggerObserver;
     private readonly RotateToTarget _characterRotation;
     private readonly EnemyDirectionOfView _directionOfView;
     private readonly AgentMoveToTarget _agentMoveToTarget;
+
+    private float _shootTimer;
+    private float _reloadTimer;
 
     public RobotPresenter(RobotView view, EnemyModel model,
         Transform waitPoint,
@@ -19,6 +22,7 @@ public class RobotPresenter : EnemyPresenter, IIdleState, IMoveState,
         EnemyShooter shooter) : base(view, model)
     {
         _view = view;
+        _model = model;
         _waitPoint = waitPoint;
         _playerTriggerObserver = playerTriggerObserver;
         _shooter = shooter;
@@ -29,10 +33,12 @@ public class RobotPresenter : EnemyPresenter, IIdleState, IMoveState,
         _characterRotation = new RotateToTarget(model, transform);
         _agentMoveToTarget = new AgentMoveToTarget(_view.NavMeshAgent);
 
-        _stateMachine = new RobotStateMachine(this, model, view.AnimationEvent);
+        StateMachine = new RobotStateMachine(this, model, view.AnimationEvent);
 
         _playerTriggerObserver.TargetEnter += OnPlayerEnter;
         _playerTriggerObserver.PlayerExited += OnPlayerExited;
+
+        _reloadTimer = _model.ReloadTime;
     }
 
     public bool IsPlayerInCollider { get; private set; }
@@ -41,16 +47,13 @@ public class RobotPresenter : EnemyPresenter, IIdleState, IMoveState,
 
     public Transform AttackTarget { get; private set; }
 
-    public bool IsCanShoot { get; private set; } /// Сделать Reload
+    public bool IsCanShoot => IsReloading();
 
     public bool IsTakingDamageCompleted { get; private set; }
 
     public bool IsTakedDamage { get; private set; }
 
     public Transform Transform => _view.transform;
-
-    public void Update() => 
-        _stateMachine.Update();
 
     public override void ResetObject()
     {
@@ -89,7 +92,7 @@ public class RobotPresenter : EnemyPresenter, IIdleState, IMoveState,
 
     // KickAttack
     public void OnAttackStateEnter() =>
-        _view.Attack();
+        _view.Kick();
 
     public void OnDealDamage() =>
         _view.OnDealDamage();
@@ -98,22 +101,35 @@ public class RobotPresenter : EnemyPresenter, IIdleState, IMoveState,
         _view.OnAttackEnded();
 
     // ShootState
-    public void OnEnterShootState() =>
+    public void OnEnterShootState()
+    {
+        _shootTimer = _model.ShootTime;
+
         _view.Shooting();
+    }
 
     public void ShootingUpdate()
     {
-        if (AttackTarget == null)
+        if (AttackTarget == null || !IsCanShoot)
             return;
 
         if (_directionOfView.TrySeeTarget(AttackTarget))
             _shooter.TryShoot(AttackTarget);
 
+        _shootTimer -= Time.deltaTime;
+
+        if (_shootTimer <= 0f)
+            _reloadTimer = _model.ReloadTime;
+
         _characterRotation.UpdateRotation(AttackTarget);
     }
 
-    public void OnExitShootState() =>
+    public void OnExitShootState()
+    {
         _view.StopShooting();
+
+        _shootTimer = 0f;
+    }
 
     // TakeDamageState
     public void OnTakeDamageStateEnter()
@@ -152,6 +168,19 @@ public class RobotPresenter : EnemyPresenter, IIdleState, IMoveState,
     private void OnPlayerExited()
     {
         MoveTarget = _waitPoint;
+        AttackTarget = null;
         IsPlayerInCollider = false;
+    }
+
+    private bool IsReloading()
+    { 
+        if (_reloadTimer >= 0f)
+        {
+            _reloadTimer -= Time.deltaTime;
+
+            return false;
+        }
+
+        return true;
     }
 }

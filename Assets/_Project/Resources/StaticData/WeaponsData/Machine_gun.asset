@@ -31,3 +31,5 @@ MonoBehaviour:
       Randomness: 0
       FadeOut: 1
   AnimationName: IsMachine_gun
+  Score: 100
+  Price: 124

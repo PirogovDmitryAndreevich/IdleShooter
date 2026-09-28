@@ -9,7 +9,6 @@ public class SoldierPresenter : EnemyPresenter, IMoveState,
     private readonly RotateToTarget _characterRotation;
     private readonly EnemyDirectionOfView _directionOfView;
     private readonly AgentMoveToTarget _agentMoveToTarget;
-    private readonly SoldierStateMachine _stateMachine;
 
     private readonly Transform _waitPoint;
     private readonly Transform _attackPoint;
@@ -41,14 +40,12 @@ public class SoldierPresenter : EnemyPresenter, IMoveState,
         _characterRotation = new RotateToTarget(model, transform);
         _agentMoveToTarget = new AgentMoveToTarget(_view.NavMeshAgent);
 
-        _stateMachine = new SoldierStateMachine(this, model);
+        StateMachine = new SoldierStateMachine(this, model);
 
         _triggerObserver.TargetEnter += OnPlayerEnter;
         _triggerObserver.PlayerExited += OnPlayerExited;
     }
 
-    public void Update() =>
-        _stateMachine.Update();
 
     public override void Dispose()
     {

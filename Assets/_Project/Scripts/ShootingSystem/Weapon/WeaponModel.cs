@@ -9,6 +9,7 @@ public class WeaponModel
     public ShootShakeSettings Shake => _staticData.Shake;
     public string AnimationName => _staticData.AnimationName;
     public ProjectileType ProjectileType => _staticData.ProjectileType;
+    public float Score => _staticData.Score;
 
     public WeaponModel(WeaponStaticData staticData)
     {

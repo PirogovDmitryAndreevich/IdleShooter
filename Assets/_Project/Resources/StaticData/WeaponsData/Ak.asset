@@ -31,3 +31,5 @@ MonoBehaviour:
       Randomness: 0
       FadeOut: 1
   AnimationName: IsAk
+  Score: 50
+  Price: 24

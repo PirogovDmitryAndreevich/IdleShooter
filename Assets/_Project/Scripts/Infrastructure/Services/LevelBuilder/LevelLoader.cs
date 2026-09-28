@@ -6,11 +6,13 @@ public class LevelLoader : ILevelLoader
 {
     private readonly IGameFactory _gameFactory;
     private readonly ICoroutineRunner _coroutineRunner;
+    private readonly ITransitionDataService _transitionDataService;
 
-    public LevelLoader(IGameFactory gameFactory, ICoroutineRunner coroutineRunner)
+    public LevelLoader(IGameFactory gameFactory, ICoroutineRunner coroutineRunner, ITransitionDataService transitionDataService)
     {
         _gameFactory = gameFactory;
         _coroutineRunner = coroutineRunner;
+        _transitionDataService = transitionDataService;
     }
 
     public LevelLoadOperation InitLevel(LevelType type, Transform position)
@@ -113,6 +115,7 @@ public class LevelLoader : ILevelLoader
         LevelView_1 levelView = CreateLevelView<LevelView_1>(position, LevelType.Level_1);
 
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+        _transitionDataService.RegisterLevel(level);
 
         foreach (TargetSpawnPoint targetPoint in levelView.TargetsSpawnPoints)
         {
@@ -129,6 +132,7 @@ public class LevelLoader : ILevelLoader
         LevelView_2 levelView = CreateLevelView<LevelView_2>(position, LevelType.Level_2);
 
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+        _transitionDataService.RegisterLevel(level);
 
         foreach (TargetSpawnPoint targetPoint in levelView.TargetsSpawnPoints)
         {
@@ -180,6 +184,7 @@ public class LevelLoader : ILevelLoader
         LevelView_3 levelView = CreateLevelView<LevelView_3>(position, LevelType.Level_3);
 
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+        _transitionDataService.RegisterLevel(level);
 
         foreach (var soldierSpawnPoint in levelView.SoldierSpawnPoints)
         {
@@ -202,6 +207,7 @@ public class LevelLoader : ILevelLoader
         LevelView_4 levelView = CreateLevelView<LevelView_4>(position, LevelType.Level_4);
 
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+        _transitionDataService.RegisterLevel(level);
 
         _gameFactory.CreateDemonEnemy(
             levelView.DemonSpawnPoint.transform,
@@ -223,6 +229,7 @@ public class LevelLoader : ILevelLoader
             levelView.SphereSpawnPoints);
 
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+        _transitionDataService.RegisterLevel(level);
 
         operation.Complete(level);
 
@@ -234,6 +241,7 @@ public class LevelLoader : ILevelLoader
         LevelView_6 levelView = CreateLevelView<LevelView_6>(position, LevelType.Level_6);
 
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+        _transitionDataService.RegisterLevel(level);
 
         for (int i = 0; i < levelView.ZombiesSpawnPoints.Length; i++)
         {
@@ -254,6 +262,7 @@ public class LevelLoader : ILevelLoader
         LevelView_7 levelView = CreateLevelView<LevelView_7>(position, LevelType.Level_7);
 
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+        _transitionDataService.RegisterLevel(level);
 
         _gameFactory.CreateGhostEnemy(
             levelView.GhostSpawnPoint.transform,
@@ -271,6 +280,7 @@ public class LevelLoader : ILevelLoader
         LevelView_8 levelView = CreateLevelView<LevelView_8>(position, LevelType.Level_8);
 
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+        _transitionDataService.RegisterLevel(level);
 
         for (int i = 0; i < levelView.CannonSpawnPoints.Length; i++)
         {
@@ -293,6 +303,7 @@ public class LevelLoader : ILevelLoader
         LevelView_9 levelView = CreateLevelView<LevelView_9>(position, LevelType.Level_9);
 
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+        _transitionDataService.RegisterLevel(level);
 
         Transform levelTransform = levelView.transform;
 
@@ -350,6 +361,7 @@ public class LevelLoader : ILevelLoader
         LevelView_10 levelView = CreateLevelView<LevelView_10>(position, LevelType.Level_10);
 
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+        _transitionDataService.RegisterLevel(level);
 
         Transform levelTransform = levelView.transform;
 
@@ -398,25 +410,27 @@ public class LevelLoader : ILevelLoader
             yield return null;
         }
 
-        for (int i = 0; i < levelView.ZombieSpawnPoints.Length; i++)
+        FinalPhaseForLevel_10 finalPhase = levelView.ForFinalPhase;
+
+        for (int i = 0; i < finalPhase.ZombieSpawnPoints.Length; i++)
         {
             _gameFactory.CreateZombieEnemy(
-                levelView.ZombieSpawnPoints[i].transform,
-                levelView.PlayerTriggerObserver,
+                finalPhase.ZombieSpawnPoints[i].transform,
+                finalPhase.PlayerTriggerObserver,
                 level,
                 levelView.transform);
 
             yield return null;
         }
 
-        for (int i = 0; i < levelView.SoldierSpawnPoints.Length; i++)
+        for (int i = 0; i < finalPhase.SoldierSpawnPoints.Length; i++)
         {
-            SoldierSpawnPoint soldierSpawnPoint = levelView.SoldierSpawnPoints[i];
+            SoldierSpawnPoint soldierSpawnPoint = finalPhase.SoldierSpawnPoints[i];
 
             _gameFactory.CreateSoldierEnemy(
                 soldierSpawnPoint.transform,
                 soldierSpawnPoint.AttackPoint.transform,
-                levelView.PlayerTriggerObserver,
+                finalPhase.PlayerTriggerObserver,
                 level,
                 levelView.transform,
                 EnemyType.Soldier10);
@@ -438,6 +452,7 @@ public class LevelLoader : ILevelLoader
         LevelView_11 levelView = CreateLevelView<LevelView_11>(position, LevelType.Level_11);
 
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
+        _transitionDataService.RegisterLevel(level);
 
         _gameFactory.CreateRobotEnemy(
             levelView.RobotSpawnPoint.transform,

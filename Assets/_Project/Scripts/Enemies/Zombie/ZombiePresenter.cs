@@ -5,7 +5,6 @@ public class ZombiePresenter : EnemyPresenter, IAttackWithAnimationEvent,
 {
     private readonly ZombieView _view;
     private readonly PlayerTriggerObserver _playerTriggerObserver;
-    private readonly ZombieStateMachine _stateMachine;
     private readonly AgentMoveToTarget _agentMoveToTarget;
     private readonly Transform _spawnPoint;
 
@@ -20,7 +19,7 @@ public class ZombiePresenter : EnemyPresenter, IAttackWithAnimationEvent,
         _playerTriggerObserver = playerTriggerObserver;
 
         _agentMoveToTarget = new AgentMoveToTarget(_view.NavMeshAgent);
-        _stateMachine = new ZombieStateMachine(this, model, _view.AttackEvent);
+        StateMachine = new ZombieStateMachine(this, model, _view.AttackEvent);
 
         _playerTriggerObserver.TargetEnter += OnPlayerEnter;
         _playerTriggerObserver.PlayerExited += OnPlayerExited;
@@ -30,9 +29,6 @@ public class ZombiePresenter : EnemyPresenter, IAttackWithAnimationEvent,
     public bool IsPlayerInCollider { get; private set; }
 
     public Transform Transform => _view.transform;
-
-    public void Update() =>
-        _stateMachine.Update();
 
     public override void ResetObject()
     {
