@@ -20,10 +20,10 @@ MonoBehaviour:
     SphereRadius: 0.8
     CollisionOffset: 0.15
     CameraCollisionLerpSpeed: 15
-    AimFov: 20
+    AimFov: 50
     CameraFovSpeed: 7
-    MinFov: 12
-    MaxFov: 60
+    MinFov: 30
+    MaxFov: 80
     Sensitivity: 5
     FreeCameraLimit: {x: -45, y: 40}
     AimCameraLimit: {x: 15, y: 60}
@@ -303,3 +303,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3cc532343a7bb73418e74128c6096dd5, type: 2}
   - {fileID: 11400000, guid: 40976d1ac1527654894db675f7d708a2, type: 2}
   - {fileID: 11400000, guid: 1c069e724ec286548b053e7d82a0b6f3, type: 2}
+  ShootUIEffectAnimationSettings:
+    MoveDistance: 250
+    MoveDuration: 0.4
+    AnimationDuration: 0.4
+    MaxHorizontalAngle: 65

@@ -22,10 +22,12 @@ public class PlayerPresenter : IDisposable
     private bool CanShoot => HasWeapon && _isAim;
     public bool IsAiming => _isAim;
     public DamageManager DamageManager => _damageManager;
+    public PlayerHealth Health => _health;
 
     public event Action<bool> AimChanged;
     public event Action<bool> WeaponAvailabilityChanged;
     public event Action PlayerDied;
+    public event Action<float> PlayerShot;
 
     public PlayerPresenter(
         PlayerModel model,
@@ -201,9 +203,10 @@ public class PlayerPresenter : IDisposable
             _damageManager.PlayerShot();
             _level.AddScore(_weapon.Score);
             _camera.Shake(_weapon.ShakeData);
+            PlayerShot?.Invoke(_weapon.Score);
         }
     }
 
-    private void OnPlayerDied() => 
+    private void OnPlayerDied() =>
         PlayerDied?.Invoke();
 }

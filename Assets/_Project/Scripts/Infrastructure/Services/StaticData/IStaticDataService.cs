@@ -3,6 +3,7 @@
     public void Load();
 
     PlayerStaticData ForPlayer();
+    ShootUIEffectAnimationSettings GetShootAnimationSettings();
     WeaponView GetWeaponView(WeaponType type);
     WeaponStaticData GetWeaponData(WeaponType type);
     GameStaticData GetGameData();

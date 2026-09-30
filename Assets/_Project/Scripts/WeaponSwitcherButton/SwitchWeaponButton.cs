@@ -5,7 +5,9 @@ public class SwitchWeaponButton : MonoBehaviour
 {
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private TMP_Text _name;
-    [SerializeField] private TMP_Text _description;
+    [SerializeField] private TMP_Text _bonusText;
+    [SerializeField] private TMP_Text _priceText;
+
     [Header("Mesh Settings")]
     [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] private Material _closedMaterial;
@@ -44,6 +46,8 @@ public class SwitchWeaponButton : MonoBehaviour
         _weaponData = weaponData;
 
         _name.text = type.ToString();
+        _bonusText.text = $"+{_weaponData.Score}";
+        _priceText.text = $"требуется {_weaponData.Price}";
 
         _isOpened = _weaponsDataService.GetWeapon(_type);
 
@@ -59,6 +63,7 @@ public class SwitchWeaponButton : MonoBehaviour
             return;
 
         _isOpened = true;
+        _priceText.gameObject.SetActive(false);
         SetMaterial();
     }
 

@@ -9,6 +9,7 @@ public class StaticDataService : IStaticDataService
 
     private PlayerStaticData _playerStaticData;
     private GameStaticData _gameStaticData;
+    private ShootUIEffectAnimationSettings _shootAnimationSettings;
     private Dictionary<WeaponType, WeaponView> WeaponViews = new();
     private Dictionary<WeaponType, WeaponStaticData> WeaponsData = new();
     private Dictionary<EnemyType, EnemyStaticData> Enemies = new();
@@ -21,6 +22,8 @@ public class StaticDataService : IStaticDataService
         _gameStaticData = Resources.Load<GameStaticData>(GameDataPath);
 
         _playerStaticData = Resources.Load<PlayerStaticData>(PlayerStaticDataPath);
+
+        _shootAnimationSettings = _gameStaticData.ShootUIEffectAnimationSettings;
 
         WeaponViews = _gameStaticData.WeaponsView
             .WeaponViews
@@ -44,6 +47,9 @@ public class StaticDataService : IStaticDataService
 
     public PlayerStaticData ForPlayer() =>
         _playerStaticData;
+
+    public ShootUIEffectAnimationSettings GetShootAnimationSettings() =>
+        _shootAnimationSettings;
 
     public WeaponView GetWeaponView(WeaponType type) =>
         WeaponViews.TryGetValue(type, out WeaponView view)

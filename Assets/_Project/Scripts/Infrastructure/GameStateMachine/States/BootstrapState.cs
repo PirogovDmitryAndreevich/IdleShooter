@@ -34,6 +34,7 @@ public class BootstrapState : IState
         _allServices.RegisterSingle<IProgressService>(new ProgressService());
         _allServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(_allServices.Single<IProgressService>()));
         _allServices.RegisterSingle<IPoolService>(new Pool());
+        _allServices.RegisterSingle<IUIPoolService>(new UIPoolService());
         _allServices.RegisterSingle<IWeaponDataService>(new WeaponDataService(_allServices.Single<IProgressService>()));
         _allServices.RegisterSingle<IAssets>(new AssetProvider());
         _allServices.RegisterSingle<IGameSaveDataService>(new GameSaveDataService(_allServices.Single<IProgressService>()));
@@ -55,6 +56,7 @@ public class BootstrapState : IState
             _allServices.Single<IWeaponDataService>(),
             _allServices.Single<IGameSaveDataService>(),
             _allServices.Single<IProjectilePool>(),
+            _allServices.Single<IUIPoolService>(),
             _allServices.Single<IWarpService>(),
             _allServices.Single<ITransitionDataService>(),
             _allServices.Single<ILevelManager>(),

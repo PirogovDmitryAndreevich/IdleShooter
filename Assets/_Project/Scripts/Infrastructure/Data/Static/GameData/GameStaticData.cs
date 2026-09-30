@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName ="GameStaticData", menuName = "StaticData/GameData")]
+[CreateAssetMenu(fileName = "GameStaticData", menuName = "StaticData/GameData")]
 public class GameStaticData : ScriptableObject
 {
     public Vector3 LobbySpawnPosition;
@@ -34,4 +34,8 @@ public class GameStaticData : ScriptableObject
     [Header("Weapons")]
     public WeaponViewsData WeaponsView;
     public WeaponStaticData[] WeaponsStaticData;
+
+    [Space]
+    [Header("ShootUIEffectAnimation settings")]
+    public ShootUIEffectAnimationSettings ShootUIEffectAnimationSettings;
 }

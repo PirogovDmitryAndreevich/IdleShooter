@@ -10,6 +10,7 @@ public class GameFactory : IGameFactory
     private readonly IWeaponDataService _weaponDataService;
     private readonly IGameSaveDataService _gameSaveDataService;
     private readonly IProjectilePool _projectilePool;
+    private readonly IUIPoolService _uIPoolService;
     private readonly IWarpService _warpService;
     private readonly ITransitionDataService _transitionDataService;
     private readonly ILevelManager _levelManager;
@@ -19,8 +20,9 @@ public class GameFactory : IGameFactory
 
     public GameFactory(IAssets assets, IInputService inputService, IStaticDataService staticDataService,
         IProgressService progressService, IPoolService poolService, IWeaponDataService weaponDataService,
-        IGameSaveDataService gameSaveDataService, IProjectilePool projectilePool, IWarpService warpService,
-ITransitionDataService transitionDataService, ILevelManager levelManager, ICoroutineRunner coroutineRunner)
+        IGameSaveDataService gameSaveDataService, IProjectilePool projectilePool, IUIPoolService UIPoolService,
+        IWarpService warpService, ITransitionDataService transitionDataService, ILevelManager levelManager,
+        ICoroutineRunner coroutineRunner)
     {
         _assets = assets;
         _inputService = inputService;
@@ -30,6 +32,7 @@ ITransitionDataService transitionDataService, ILevelManager levelManager, ICorou
         _weaponDataService = weaponDataService;
         _gameSaveDataService = gameSaveDataService;
         _projectilePool = projectilePool;
+        _uIPoolService = UIPoolService;
         _warpService = warpService;
         _transitionDataService = transitionDataService;
         _levelManager = levelManager;
@@ -45,6 +48,8 @@ ITransitionDataService transitionDataService, ILevelManager levelManager, ICorou
         _poolService.RegisterFactory(() => CreateRPGMuzzle());
         _poolService.RegisterFactory(() => CreateRocketExplosion());
         _poolService.RegisterFactory(() => CreateSphereObstacle());
+
+        _uIPoolService.RegisterFactory(() => CreateShootUIEffect());
     }
 
     public PlayerPresenter CreatePlayer(UnityEngine.Vector3 at)
@@ -461,7 +466,11 @@ ITransitionDataService transitionDataService, ILevelManager levelManager, ICorou
         var hud = _assets.Instantiate(AssetsPath.HudPath)
             .GetComponent<Hud>();
 
-        hud.Construct(playerPresenter, _levelManager);
+        hud.Construct(playerPresenter,
+            _staticDataService.GetShootAnimationSettings(),
+            _levelManager, _uIPoolService);
+
+        _uIPoolService.SetCanvas(hud.GetComponent<Canvas>());
 
         return hud;
     }
@@ -530,5 +539,15 @@ ITransitionDataService transitionDataService, ILevelManager levelManager, ICorou
         muzzle.Construct(_poolService);
 
         return muzzle;
+    }
+
+    private ShootUIEffect CreateShootUIEffect()
+    {
+        ShootUIEffect effect = _assets.Instantiate(AssetsPath.ShootUIEffectPath)
+            .GetComponent<ShootUIEffect>();
+
+        effect.Construct(_poolService);
+
+        return effect;
     }
 }
