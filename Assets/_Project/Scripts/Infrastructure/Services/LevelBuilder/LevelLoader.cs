@@ -1,4 +1,3 @@
-using Assets._Project.Scripts.SpawnPoints.Obstacles;
 using System.Collections;
 using UnityEngine;
 
@@ -7,6 +6,8 @@ public class LevelLoader : ILevelLoader
     private readonly IGameFactory _gameFactory;
     private readonly ICoroutineRunner _coroutineRunner;
     private readonly ITransitionDataService _transitionDataService;
+
+    private Lobby _lobby;
 
     public LevelLoader(IGameFactory gameFactory, ICoroutineRunner coroutineRunner, ITransitionDataService transitionDataService)
     {
@@ -83,7 +84,10 @@ public class LevelLoader : ILevelLoader
 
         Lobby lobby = _gameFactory.CreateLobby();
 
+        _lobby = lobby;
+
         LevelPresenter presenter = new LevelPresenter(lobby, null);
+        _transitionDataService.RegisterLevel(presenter);
 
         PlayerPresenter player = _gameFactory.CreatePlayer(lobby.PlayerSpawnPoint.transform.position);
 
@@ -94,7 +98,6 @@ public class LevelLoader : ILevelLoader
                 spawnPoint.transform.position,
                 lobby.transform);
         }
-
 
         foreach (WarpSpawnPoint warpSpawnPoint in lobby.WarpSpawnPoint)
         {
@@ -112,14 +115,15 @@ public class LevelLoader : ILevelLoader
 
     private IEnumerator InitLevel1(Transform position, LevelLoadOperation operation)
     {
-        LevelView_1 levelView = CreateLevelView<LevelView_1>(position, LevelType.Level_1);
+        LevelView_1 levelView = _gameFactory.CreateLevel<LevelView_1>(position, LevelType.Level_1);
+        levelView.Construct(_lobby.TransitionFor1Level);
 
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
         _transitionDataService.RegisterLevel(level);
 
-        foreach (TargetSpawnPoint targetPoint in levelView.TargetsSpawnPoints)
+        foreach (ObstacleSpawnPoint obstacles in levelView.ObstacleSpawnPoints)
         {
-            _gameFactory.CreateTarget(targetPoint.transform, levelView.transform, level, ObstacleType.Target);
+            _gameFactory.CreateObstacle(obstacles.transform, levelView.transform, level, obstacles.Type);
 
             yield return null;
         }
@@ -134,20 +138,10 @@ public class LevelLoader : ILevelLoader
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
         _transitionDataService.RegisterLevel(level);
 
-        foreach (TargetSpawnPoint targetPoint in levelView.TargetsSpawnPoints)
+        foreach (ObstacleSpawnPoint obstacles in levelView.ObstacleSpawnPoints)
         {
-            _gameFactory.CreateTarget(targetPoint.transform, levelView.transform,
-                level, ObstacleType.TargetLevel2);
-
-            yield return null;
-        }
-
-        foreach (SpinningCylinderSpawnPoint cylinderPoint in levelView.SpinningCylinderSpawnPoint)
-        {
-            _gameFactory.CreateSpinningCylinder(
-                cylinderPoint.transform,
-                levelView.transform,
-                level, ObstacleType.SpinningCylinder);
+            ObstaclePresenter obstacle = _gameFactory.CreateObstacle(obstacles.transform, levelView.transform,
+                level, obstacles.Type);
 
             yield return null;
         }
@@ -155,26 +149,23 @@ public class LevelLoader : ILevelLoader
         FlyPlatform platform = _gameFactory.CreateFlyPlatform(
             levelView.FlyPlatformSpawnPoint.transform.position,
             levelView.FlyPlatformSpawnPoint.EndPoint.position,
-            levelView.transform);
+            levelView.transform,
+            level);
 
-        GearPresenter gear = _gameFactory.CreateGear(
-            levelView.GearSpawnPoint.transform,
+        ObstaclePresenter gear = _gameFactory.CreateObstacle(
+            levelView.GearForPlatformMoving.transform,
             levelView.transform,
             level,
             ObstacleType.Gear);
 
-        gear.SetTriggerToMoving(platform);
+        GearMoveToPlatform gearLogic = new GearMoveToPlatform(
+            _coroutineRunner,
+            gear.View,
+            platform,
+            levelView.FlyPlatformSpawnPoint.GearSpeed);
 
-        _gameFactory.CreateGearBase(levelView.GearBaseSpawnPoint.transform,
-            levelView.transform, level, ObstacleType.GearBase);
-
-        foreach (SpikeCylinderSpawnPoint spikeCylinderSpawnPoint in levelView.SpikeCylinderSpawnPoints)
-        {
-            _gameFactory.CreateSpikeCylinder(spikeCylinderSpawnPoint.transform,
-                levelView.transform, level, ObstacleType.SpikeCylinder);
-
-            yield return null;
-        }
+        level.ResetObjects.Add(gearLogic);
+        level.Disposables.Add(gearLogic);
 
         operation.Complete(level);
     }
@@ -188,13 +179,15 @@ public class LevelLoader : ILevelLoader
 
         foreach (var soldierSpawnPoint in levelView.SoldierSpawnPoints)
         {
-            _gameFactory.CreateSoldierEnemy(
+            SoldierPresenter soldier = _gameFactory.CreateSoldierEnemy(
                 soldierSpawnPoint.transform,
                 soldierSpawnPoint.AttackPoint.transform,
                 levelView.PlayerTriggerObserver,
                 level,
                 levelView.transform,
                 EnemyType.Soldier);
+
+            level.RegisterPlayerTarget(soldier);
 
             yield return null;
         }
@@ -209,11 +202,13 @@ public class LevelLoader : ILevelLoader
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
         _transitionDataService.RegisterLevel(level);
 
-        _gameFactory.CreateDemonEnemy(
+        DemonPresenter demon = _gameFactory.CreateDemonEnemy(
             levelView.DemonSpawnPoint.transform,
             levelView.PlayerTriggerObserver,
             level,
             levelView.transform);
+
+        level.RegisterPlayerTarget(demon);
 
         operation.Complete(level);
 
@@ -245,11 +240,14 @@ public class LevelLoader : ILevelLoader
 
         for (int i = 0; i < levelView.ZombiesSpawnPoints.Length; i++)
         {
-            _gameFactory.CreateZombieEnemy(
+            ZombiePresenter zombie = _gameFactory.CreateZombieEnemy(
                 levelView.ZombiesSpawnPoints[i].transform,
                 levelView.PlayerTriggerObserver,
                 level,
-                levelView.transform);
+                levelView.transform,
+                EnemyType.Zombie);
+
+            level.RegisterPlayerTarget(zombie);
 
             yield return null;
         }
@@ -264,11 +262,13 @@ public class LevelLoader : ILevelLoader
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
         _transitionDataService.RegisterLevel(level);
 
-        _gameFactory.CreateGhostEnemy(
+        GhostPresenter ghost = _gameFactory.CreateGhostEnemy(
             levelView.GhostSpawnPoint.transform,
             levelView.PlayerTriggerObserver,
             level,
             levelView.transform);
+
+        level.RegisterPlayerTarget(ghost);
 
         operation.Complete(level);
 
@@ -284,11 +284,13 @@ public class LevelLoader : ILevelLoader
 
         for (int i = 0; i < levelView.CannonSpawnPoints.Length; i++)
         {
-            _gameFactory.CreateCannon(
+            CannonPresenter cannon = _gameFactory.CreateCannon(
                 levelView.CannonSpawnPoints[i].transform,
                 levelView.PlayerTriggerObserver,
                 level,
                 levelView.transform);
+
+            level.RegisterPlayerTarget(cannon);
 
             yield return null;
         }
@@ -307,48 +309,45 @@ public class LevelLoader : ILevelLoader
 
         Transform levelTransform = levelView.transform;
 
-        for (int i = 0; i < levelView.FlyPlatformSpawnPoints.Length; i++)
+        for (int i = 0; i < levelView.PlatformsAndGears.Length; i++)
         {
-            FlyPlatformSpawnPoint PlatformSpawnPoint = levelView.FlyPlatformSpawnPoints[i];
+            FlyPlatformSpawnPoint PlatformSpawnPoint = levelView.PlatformsAndGears[i].PlatformSpawnPoint;
 
-            var platform = _gameFactory.CreateFlyPlatform(
+            FlyPlatform platform = _gameFactory.CreateFlyPlatform(
                 PlatformSpawnPoint.transform.position,
                 PlatformSpawnPoint.EndPoint.transform.position,
-                levelTransform);
+                levelTransform,
+                level);
 
-            GearSpawnPoint gearSpawnPoint = levelView.GearSpawnPoints[i];
+            ObstacleSpawnPoint gearSpawnPoint = levelView.PlatformsAndGears[i].GearSpawnPoint;
 
-            var gear = _gameFactory.CreateGear(
+            var gear = _gameFactory.CreateObstacle(
                 gearSpawnPoint.transform,
                 levelTransform,
                 level,
-                ObstacleType.Gear9);
+                gearSpawnPoint.Type);
 
-            gear.SetTriggerToMoving(platform);
+            GearMoveToPlatform gearLogic = new GearMoveToPlatform(
+                _coroutineRunner,
+                gear.View,
+                platform,
+                PlatformSpawnPoint.GearSpeed);
 
-            yield return null;
-        }
-
-        for (int i = 0; i < levelView.SpinningCylinderSpawnPoints.Length; i++)
-        {
-            _gameFactory.CreateSpinningCylinder(
-                levelView.SpinningCylinderSpawnPoints[i].transform,
-                levelTransform,
-                level,
-                ObstacleType.SpinningCylinder9);
+            level.ResetObjects.Add(gearLogic);
+            level.Disposables.Add(gearLogic);
 
             yield return null;
         }
 
-        for (int i = 0; i < levelView.GearBaseSpawnPoints.Length; i++)
+        for (int i = 0; i < levelView.ObstacleSpawnPoints.Length; i++)
         {
-            GearBaseSpawnPoint point = levelView.GearBaseSpawnPoints[i];
-
-            _gameFactory.CreateGearBase(
-                point.transform,
+            _gameFactory.CreateObstacle(
+                levelView.ObstacleSpawnPoints[i].transform,
                 levelTransform,
                 level,
-                ObstacleType.GearBase9);
+                levelView.ObstacleSpawnPoints[i].Type);
+
+            yield return null;
         }
 
         operation.Complete(level);
@@ -372,7 +371,8 @@ public class LevelLoader : ILevelLoader
             _gameFactory.CreateFlyPlatform(
                 PlatformSpawnPoint.transform.position,
                 PlatformSpawnPoint.EndPoint.transform.position,
-                levelTransform);
+                levelTransform,
+                level);
 
             yield return null;
         }
@@ -384,17 +384,25 @@ public class LevelLoader : ILevelLoader
             FlyPlatform platform = _gameFactory.CreateFlyPlatform(
                 platformSpawnPoint.transform.position,
                 platformSpawnPoint.EndPoint.transform.position,
-                levelTransform);
+                levelTransform,
+                level);
 
-            GearSpawnPoint gearSpawnPoint = levelView.PlatformsAndGears[i].GearSpawnPoint;
+            ObstacleSpawnPoint gearSpawnPoint = levelView.PlatformsAndGears[i].GearSpawnPoint;
 
-            GearPresenter gear = _gameFactory.CreateGear(
+            ObstaclePresenter gear = _gameFactory.CreateObstacle(
                 gearSpawnPoint.transform,
                 levelView.transform,
                 level,
-                ObstacleType.Gear10);
+                gearSpawnPoint.Type);
 
-            gear.SetTriggerToMoving(platform);
+            GearMoveToPlatform gearLogic = new GearMoveToPlatform(
+                _coroutineRunner,
+                gear.View,
+                platform,
+                platformSpawnPoint.GearSpeed);
+
+            level.ResetObjects.Add(gearLogic);
+            level.Disposables.Add(gearLogic);
 
             yield return null;
         }
@@ -414,11 +422,14 @@ public class LevelLoader : ILevelLoader
 
         for (int i = 0; i < finalPhase.ZombieSpawnPoints.Length; i++)
         {
-            _gameFactory.CreateZombieEnemy(
+            ZombiePresenter zombie = _gameFactory.CreateZombieEnemy(
                 finalPhase.ZombieSpawnPoints[i].transform,
                 finalPhase.PlayerTriggerObserver,
                 level,
-                levelView.transform);
+                levelView.transform,
+                EnemyType.Zombie10);
+
+            level.RegisterPlayerTarget(zombie);
 
             yield return null;
         }
@@ -427,13 +438,15 @@ public class LevelLoader : ILevelLoader
         {
             SoldierSpawnPoint soldierSpawnPoint = finalPhase.SoldierSpawnPoints[i];
 
-            _gameFactory.CreateSoldierEnemy(
+            SoldierPresenter soldier = _gameFactory.CreateSoldierEnemy(
                 soldierSpawnPoint.transform,
                 soldierSpawnPoint.AttackPoint.transform,
                 finalPhase.PlayerTriggerObserver,
                 level,
                 levelView.transform,
                 EnemyType.Soldier10);
+
+            level.RegisterPlayerTarget(soldier);
 
             yield return null;
         }
@@ -454,11 +467,13 @@ public class LevelLoader : ILevelLoader
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
         _transitionDataService.RegisterLevel(level);
 
-        _gameFactory.CreateRobotEnemy(
+        RobotPresenter robot = _gameFactory.CreateRobotEnemy(
             levelView.RobotSpawnPoint.transform,
             levelView.PlayerTriggerObserver,
             level,
             levelView.transform);
+
+        level.RegisterPlayerTarget(robot);
 
         operation.Complete(level);
 

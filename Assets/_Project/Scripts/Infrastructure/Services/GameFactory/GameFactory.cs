@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class GameFactory : IGameFactory
 {
@@ -15,6 +16,8 @@ public class GameFactory : IGameFactory
     private readonly ITransitionDataService _transitionDataService;
     private readonly ILevelManager _levelManager;
     private readonly ICoroutineRunner _coroutineRunner;
+
+    private ILevelController _levelController;
     private PlayerPresenter _player;
     WeaponSwitcher _weaponSwitcher;
 
@@ -52,6 +55,9 @@ public class GameFactory : IGameFactory
         _uIPoolService.RegisterFactory(() => CreateShootUIEffect());
     }
 
+    public void SetLevelController(ILevelController levelController) =>
+        _levelController = levelController;
+
     public PlayerPresenter CreatePlayer(UnityEngine.Vector3 at)
     {
         _weaponSwitcher = new WeaponSwitcher(this, _weaponDataService);
@@ -84,7 +90,7 @@ public class GameFactory : IGameFactory
         Transition transition = _assets.Instantiate(AssetsPath.TransitionPath, at: at.position)
             .GetComponent<Transition>();
 
-        transition.Construct(type, _staticDataService.ForLevel(type), _warpService);
+        transition.Construct(type, _staticDataService.ForLevel(type), _levelController);
 
         transition.transform.rotation = at.rotation;
 
@@ -101,7 +107,14 @@ public class GameFactory : IGameFactory
             _staticDataService.GetLevelView<Lobby>(LevelType.Lobby),
             at: gameData.LobbySpawnPosition);
 
+        lobby.Construct(lobby.LobbyTransition);
+
+        lobby.Transition.Construct(LevelType.Lobby, null, _levelController);
+
         _warpService.RegisterSpawnPoint(LevelType.Lobby, lobby.PlayerSpawnPoint.transform);
+
+        lobby.TransitionFor1Level.Construct(LevelType.Level_1, _staticDataService.ForLevel(LevelType.Level_1), _levelController);
+        _warpService.RegisterSpawnPoint(LevelType.Level_1, lobby.TransitionFor1Level.PlayerSpawnPoint);
 
         return lobby;
     }
@@ -131,10 +144,12 @@ public class GameFactory : IGameFactory
         return switcher;
     }
 
-    public TargetPresenter CreateTarget(Transform point, Transform parent, LevelPresenter level, ObstacleType target)
+    public ObstaclePresenter CreateObstacle(Transform point, Transform parent, LevelPresenter level, ObstacleType type)
     {
-        TargetView view = _assets.Instantiate(AssetsPath.TargetPath, at: point.position)
-            .GetComponent<TargetView>();
+        ObstacleStaticData data = _staticDataService.ForObstacle(type);
+
+        ObstacleView view = _assets.Instantiate(data.AssetPath, at: point.position)
+            .GetComponent<ObstacleView>();
 
         Transform transform = view.transform;
 
@@ -143,35 +158,9 @@ public class GameFactory : IGameFactory
 
         transform.SetParent(parent);
 
-        TargetModel model =
-            new TargetModel(_staticDataService.ForObstacle(target));
+        ObstacleModel model = new ObstacleModel(data);
 
-        TargetPresenter presenter = new TargetPresenter(model, view);
-
-        level.Disposables.Add(presenter);
-        level.ResetObjects.Add(presenter);
-
-        return presenter;
-    }
-
-    public SpinningCylinderPresenter CreateSpinningCylinder(Transform point, Transform parent,
-        LevelPresenter level, ObstacleType spinningCylinder)
-    {
-        SpinningCylinderView view = _assets.Instantiate(AssetsPath.SpinningCylinderPath, at: point.position)
-            .GetComponent<SpinningCylinderView>();
-
-        Transform transform = view.transform;
-
-        transform.localScale = point.localScale;
-        transform.localRotation = point.rotation;
-
-        transform.SetParent(parent);
-
-        SpinningCylinderModel model =
-            new SpinningCylinderModel(
-                _staticDataService.ForObstacle(spinningCylinder));
-
-        SpinningCylinderPresenter presenter = new SpinningCylinderPresenter(model, view);
+        ObstaclePresenter presenter = new ObstaclePresenter(view, model, type);
 
         level.Disposables.Add(presenter);
         level.ResetObjects.Add(presenter);
@@ -179,74 +168,7 @@ public class GameFactory : IGameFactory
         return presenter;
     }
 
-    public GearPresenter CreateGear(Transform point, Transform parent,
-        LevelPresenter level, ObstacleType gear)
-    {
-        GearView view = _assets.Instantiate(AssetsPath.GearPath, at: point.position)
-            .GetComponent<GearView>();
-
-        Transform transform = view.transform;
-
-        transform.localScale = point.localScale;
-        transform.localRotation = point.rotation;
-
-        transform.SetParent(parent);
-
-        GearModel model = new GearModel(_staticDataService.ForObstacle(gear));
-
-        GearPresenter presenter = new GearPresenter(model, view);
-
-        level.Disposables.Add(presenter);
-        level.ResetObjects.Add(presenter);
-
-        return presenter;
-    }
-
-    public GearBasePresenter CreateGearBase(Transform point, Transform parent,
-        LevelPresenter level, ObstacleType gearBase)
-    {
-        GearBaseView view = _assets.Instantiate(AssetsPath.GearBasePath, at: point.position)
-            .GetComponent<GearBaseView>();
-
-        Transform transform = view.transform;
-
-        transform.localScale = point.localScale;
-        transform.localRotation = point.rotation;
-
-        transform.SetParent(parent);
-
-        GearBaseModel model = new GearBaseModel(_staticDataService.ForObstacle(gearBase));
-        GearBasePresenter presenter = new GearBasePresenter(model, view);
-
-        level.Disposables.Add(presenter);
-        level.ResetObjects.Add(presenter);
-
-        return presenter;
-    }
-
-    public SpikeCylinderPresenter CreateSpikeCylinder(Transform point, Transform parent,
-        LevelPresenter level, ObstacleType spikeCylinder)
-    {
-        SpikeCylinderView view = _assets.Instantiate(AssetsPath.SpikeCylinderPath, at: point.position)
-            .GetComponent<SpikeCylinderView>();
-
-        Transform transform = view.transform;
-
-        transform.localScale = point.localScale;
-        transform.localRotation = point.rotation;
-
-        transform.SetParent(parent);
-
-        SpikeCylinderModel model = new SpikeCylinderModel(_staticDataService.ForObstacle(spikeCylinder));
-        SpikeCylinderPresenter presenter = new SpikeCylinderPresenter(model, view);
-
-        level.Disposables.Add(presenter);
-        level.ResetObjects.Add(presenter);
-
-        return presenter;
-    }
-
-    public FlyPlatform CreateFlyPlatform(Vector3 startPosition, Vector3 endPosition, Transform parent)
+    public FlyPlatform CreateFlyPlatform(Vector3 startPosition, Vector3 endPosition, Transform parent, LevelPresenter level)
     {
         FlyPlatform platform = _assets.Instantiate(AssetsPath.FlyPlatformPath, startPosition)
             .GetComponent<FlyPlatform>();
@@ -254,6 +176,8 @@ public class GameFactory : IGameFactory
         platform.Construct(endPosition);
 
         platform.transform.SetParent(parent);
+
+        level.ResetObjects.Add(platform);
 
         return platform;
     }
@@ -416,14 +340,14 @@ public class GameFactory : IGameFactory
     }
 
     public ZombiePresenter CreateZombieEnemy(Transform spawnPoint, PlayerTriggerObserver playerTriggerObserver,
-        LevelPresenter level, Transform parent)
+        LevelPresenter level, Transform parent, EnemyType type)
     {
         ZombieView view = _assets.Instantiate(AssetsPath.ZombiePath, spawnPoint.position)
             .GetComponent<ZombieView>();
 
         view.transform.SetParent(parent);
 
-        EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(EnemyType.Zombie));
+        EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(type));
 
         view.NavMeshAgent.speed = model.MoveSpeed;
         view.NavMeshAgent.angularSpeed = model.RotateSpeed;

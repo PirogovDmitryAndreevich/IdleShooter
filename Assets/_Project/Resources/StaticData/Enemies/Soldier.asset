@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   Damage: 10
-  HealthPoints: 0
+  HealthPoints: 15
   AttackDistance: 0.3
   ShootRange: 35
   ProjectileType: 1
@@ -22,3 +22,5 @@ MonoBehaviour:
   MoveSpeed: 5
   StopMoveDistance: 0.3
   FireRate: 0.7
+  ShootingTime: 0.3
+  ReloadTime: 0.3

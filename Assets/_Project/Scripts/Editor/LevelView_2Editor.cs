@@ -1,4 +1,3 @@
-using Assets._Project.Scripts.SpawnPoints.Obstacles;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,20 +14,8 @@ public class LevelView_2Editor : Editor
 
         if (GUILayout.Button("Save Changes"))
         {
-            levelView.TargetsSpawnPoints =
-                levelView.GetComponentsInChildren<TargetSpawnPoint>(false);
-
-            levelView.SpinningCylinderSpawnPoint =
-                levelView.GetComponentsInChildren<SpinningCylinderSpawnPoint>(false);
-
-            levelView.GearSpawnPoint =
-                levelView.GetComponentInChildren<GearSpawnPoint>(false);
-
-            levelView.SpikeCylinderSpawnPoints =
-                levelView.GetComponentsInChildren<SpikeCylinderSpawnPoint>(false);
-
-            levelView.GearBaseSpawnPoint =
-                levelView.GetComponentInChildren<GearBaseSpawnPoint>(false);
+            levelView.ObstacleSpawnPoints =
+                levelView.GetComponentsInChildren<ObstacleSpawnPoint>(false);
 
             levelView.FlyPlatformSpawnPoint =
                 levelView.GetComponentInChildren<FlyPlatformSpawnPoint>(false);

@@ -18,6 +18,8 @@ public class ZombiePresenter : EnemyPresenter, IAttackWithAnimationEvent,
         _spawnPoint = spawnPoint;
         _playerTriggerObserver = playerTriggerObserver;
 
+        _view.DamageCollider.Construct(model.Damage);
+
         _agentMoveToTarget = new AgentMoveToTarget(_view.NavMeshAgent);
         StateMachine = new ZombieStateMachine(this, model, _view.AttackEvent);
 

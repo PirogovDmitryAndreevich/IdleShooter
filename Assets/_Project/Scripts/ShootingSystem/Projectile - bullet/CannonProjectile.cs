@@ -58,7 +58,7 @@ public class CannonProjectile : Projectile
         StopFly(transform.position, transform.position.normalized);
     }
 
-    protected override void Hit(Vector3 hitPoint, Vector3 hitNormal) =>
+    protected override void Hit(Vector3 hitPoint, Vector3 hitNormal, bool isDamageable) =>
         StopFly(hitPoint, hitNormal);
 
     private void StopFly(Vector3 hitPoint, Vector3 hitNormal)

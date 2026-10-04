@@ -11,6 +11,8 @@ public class LevelPresenter : IDisposable
 
     public event Action<LevelType> TransitionEntered;
 
+    public List<IPlayerTarget> PlayerTargets = new List<IPlayerTarget>();
+
     public LevelType LevelType =>
         _levelView.LevelType;
 
@@ -36,6 +38,8 @@ public class LevelPresenter : IDisposable
     {
         foreach (IResetObject obj in ResetObjects)
             obj.ResetObject();
+
+        _transition.SetState(false);
     }
 
     public void SetActive(bool shouldBeActive)
@@ -50,6 +54,24 @@ public class LevelPresenter : IDisposable
 
         _transition.TransitionEntered -= OnTransitionEntered;
     }
+
+    public void RegisterPlayerTarget(IPlayerTarget playerTarget)
+    {
+        if (!PlayerTargets.Contains(playerTarget))
+            PlayerTargets.Add(playerTarget);
+    }
+
+    public bool CheckCompleted()
+    {
+        foreach (var target in PlayerTargets)
+            if (!target.IsDestroyed)
+                return false;
+
+        return true;
+    }
+
+    public void OpenTransition() => 
+        _transition.SetState(true);
 
     private void OnTransitionEntered() =>
         TransitionEntered?.Invoke(LevelType);

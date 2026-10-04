@@ -15,3 +15,4 @@ MonoBehaviour:
   Type: 2
   HealthPoints: 25
   Damage: 10
+  AssetPath: Obstacles/SpinningCylinder

@@ -4,6 +4,8 @@ public interface ITransitionDataService : IService, IDisposable
 {
     PlayerPresenter Player { get; }
 
+    LevelPresenter CurrentLevel { get; }
+
     event Action PlayerCreated;
 
     void SetPlayer(PlayerPresenter player);
@@ -12,5 +14,5 @@ public interface ITransitionDataService : IService, IDisposable
 
     void RegisterLevel(LevelPresenter level);
 
-
+    void OpenNextLevel();
 }

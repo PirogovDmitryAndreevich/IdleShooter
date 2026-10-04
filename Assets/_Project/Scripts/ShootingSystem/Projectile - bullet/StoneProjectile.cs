@@ -54,7 +54,7 @@ public class StoneProjectile : Projectile
         StopFly();
     }
 
-    protected override void Hit(Vector3 hitPoint, Vector3 hitNormal)
+    protected override void Hit(Vector3 hitPoint, Vector3 hitNormal, bool isDamageable)
     {
         StopFly();
     }

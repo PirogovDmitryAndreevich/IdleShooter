@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _exitPoint: {fileID: 3434311287445620126}
+  _desiredWeapon: 0
   _playerTriggerObserver: {fileID: 4797743765338283716}
   SoldierSpawnPoints:
   - {fileID: 6706147315666347482}
@@ -10061,7 +10062,7 @@ Transform:
   m_GameObject: {fileID: 5624668167081184296}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -21, y: 2.25, z: 4.500002}
+  m_LocalPosition: {x: -21, y: 2.18, z: 4.500002}
   m_LocalScale: {x: 1, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11102,7 +11103,7 @@ Transform:
   m_GameObject: {fileID: 9079843820897747209}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -24, y: 2.25, z: 4.5}
+  m_LocalPosition: {x: -24, y: 2.18, z: 4.5}
   m_LocalScale: {x: 1, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []

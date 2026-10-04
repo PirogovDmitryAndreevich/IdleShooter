@@ -16,6 +16,8 @@ public class RobotView : EnemyView
     public NavMeshAgent NavMeshAgent =>
         _navMeshAgent;
     public WeaponView Weapon => _weaponView;
+    public MeleeDamageCollider DamageCollider =>
+        _damageCollider;
 
     public void Idle()
     {

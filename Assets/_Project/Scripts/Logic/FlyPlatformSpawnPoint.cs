@@ -6,4 +6,5 @@ public class FlyPlatformSpawnPoint : MonoBehaviour
     public Color EndPointColor;
     public Vector3 Size;
     public Transform EndPoint;
+    public float GearSpeed;
 }

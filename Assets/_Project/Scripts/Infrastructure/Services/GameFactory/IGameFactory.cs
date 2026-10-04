@@ -2,19 +2,15 @@
 
 public interface IGameFactory : IService
 {
+    void SetLevelController(ILevelController levelController);
     PlayerPresenter CreatePlayer(Vector3 at);
     Transition CreateTransition(Transform at, LevelType type);
     T CreateLevel<T>(Transform spawnPoint, LevelType type) where T : LevelView;
     Lobby CreateLobby();
     WeaponPresenter CreateWeapon(WeaponType type);
     SwitchWeaponButton CreateWeaponSwitcher(WeaponType type, Vector3 position, Transform parent);
-    TargetPresenter CreateTarget(Transform point, Transform parent, LevelPresenter level, ObstacleType target);
-    SpinningCylinderPresenter CreateSpinningCylinder(Transform point, Transform parent, LevelPresenter level,
-        ObstacleType spinningCylinder);
-    GearPresenter CreateGear(Transform point, Transform parent, LevelPresenter level, ObstacleType gear);
-    SpikeCylinderPresenter CreateSpikeCylinder(Transform point, Transform parent, LevelPresenter level, ObstacleType spikeCylinder);
-    GearBasePresenter CreateGearBase(Transform point, Transform parent, LevelPresenter level, ObstacleType gearBase);
-    FlyPlatform CreateFlyPlatform(Vector3 startPosition, Vector3 endPosition, Transform parent);
+    ObstaclePresenter CreateObstacle(Transform point, Transform parent, LevelPresenter level, ObstacleType type);
+    FlyPlatform CreateFlyPlatform(Vector3 startPosition, Vector3 endPosition, Transform parent, LevelPresenter level);
     SoldierPresenter CreateSoldierEnemy(Transform at, Transform attackPoint, PlayerTriggerObserver playerTriggerObserver,
         LevelPresenter level, Transform parent, EnemyType type);
     CannonPresenter CreateCannon(Transform at, PlayerTriggerObserver playerTriggerObserver,
@@ -27,7 +23,7 @@ public interface IGameFactory : IService
     SphereObstacle CreateSphereObstacle();
     SphereSpawner CreateSphereSpawner(Transform at, SphereSpawnPoint[] spawnPoints);
     ZombiePresenter CreateZombieEnemy(Transform spawnPoint, PlayerTriggerObserver playerTriggerObserver,
-        LevelPresenter level, Transform parent);
+        LevelPresenter level, Transform parent, EnemyType type);
     GhostPresenter CreateGhostEnemy(Transform spawnPoint, PlayerTriggerObserver playerTriggerObserver,
         LevelPresenter level, Transform parent);
 }

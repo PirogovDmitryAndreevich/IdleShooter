@@ -207,6 +207,9 @@ public class PlayerPresenter : IDisposable
         }
     }
 
-    private void OnPlayerDied() =>
+    private void OnPlayerDied()
+    {
         PlayerDied?.Invoke();
+        _health.Reset();
+    }
 }

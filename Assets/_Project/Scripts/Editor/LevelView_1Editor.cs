@@ -1,4 +1,3 @@
-using Assets._Project.Scripts.SpawnPoints.Obstacles;
 using UnityEditor;
 using UnityEngine;
 
@@ -23,6 +22,6 @@ public class LevelView_1Editor : Editor
 
     private void FindTargets(LevelView_1 levelView)
     {
-        levelView.TargetsSpawnPoints = levelView.GetComponentsInChildren<TargetSpawnPoint>(false);
+        levelView.ObstacleSpawnPoints = levelView.GetComponentsInChildren<ObstacleSpawnPoint>(false);
     }
 }

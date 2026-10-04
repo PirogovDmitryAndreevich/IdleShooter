@@ -1,3 +1,6 @@
+using System.Collections;
+using UnityEngine;
+
 public class GameLoopState : IState
 {
     private readonly GameStateMachine _gameStateMachine;
@@ -6,6 +9,8 @@ public class GameLoopState : IState
     private readonly ICoroutineRunner _coroutineRunner;
 
     private PlayerPresenter _player;
+    private Coroutine _gameLoopCoroutine;
+    private bool _isGameLoopRunning;
 
     public GameLoopState(GameStateMachine gameStateMachine, ILevelController levelController,
         ITransitionDataService transitionDataService, ICoroutineRunner coroutineRunner)
@@ -23,6 +28,10 @@ public class GameLoopState : IState
             _transitionDataService.PlayerCreated += OnPlayerCreated;
         else
             SetPlayer();
+
+        _isGameLoopRunning = true;
+
+        _gameLoopCoroutine = _coroutineRunner.StartCoroutine(GameLoopCoroutine());
     }
 
     public void Exit()
@@ -31,6 +40,14 @@ public class GameLoopState : IState
         _player.PlayerDied -= OnPlayerDied;
 
         _transitionDataService?.Dispose();
+
+        _isGameLoopRunning = false;
+
+        if(_gameLoopCoroutine != null)
+        {
+            _coroutineRunner.StopCoroutine(_gameLoopCoroutine);
+            _gameLoopCoroutine = null;
+        }
     }
 
     private void OnPlayerDied()
@@ -50,5 +67,17 @@ public class GameLoopState : IState
     {
         _player = _transitionDataService.Player;
         _player.PlayerDied += OnPlayerDied;
+    }
+
+    private IEnumerator GameLoopCoroutine()
+    {
+        while (_isGameLoopRunning)
+        {
+            if (_transitionDataService.CurrentLevel != null && 
+                _transitionDataService.CurrentLevel.CheckCompleted())            
+                _transitionDataService.OpenNextLevel();            
+
+            yield return null;
+        }
     }
 }

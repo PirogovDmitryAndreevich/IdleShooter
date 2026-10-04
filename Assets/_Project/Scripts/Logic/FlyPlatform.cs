@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class FlyPlatform : MonoBehaviour
+public class FlyPlatform : MonoBehaviour, IResetObject
 {
     [SerializeField] private float _flySpeed;
     [SerializeField] private PlayerTriggerObserver _triggerObserver;
@@ -73,5 +73,11 @@ public class FlyPlatform : MonoBehaviour
 
     private void RemovePlayer() => 
         _characterController = null;
+
+    public void ResetObject()
+    {
+        transform.position = _startPosition;
+        _isEndPosition = false;
+    }
 }
 

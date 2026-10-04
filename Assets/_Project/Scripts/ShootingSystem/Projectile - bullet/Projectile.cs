@@ -32,10 +32,12 @@ public abstract class Projectile : MonoBehaviour
                 damageable = collision.collider.GetComponentInChildren<IDamageable>();
         }
 
-        if (damageable != null)
+        bool isDamageable = damageable != null;
+
+        if (isDamageable)
             damageable.TakeDamage(_damage, hitPoint, hitNormal);
 
-        Hit(hitPoint, hitNormal);
+            Hit(hitPoint, hitNormal, isDamageable);
     }
 
     public void Shoot(float damage, Vector3 startPosition, Vector3 targetPosition)
@@ -49,5 +51,5 @@ public abstract class Projectile : MonoBehaviour
 
     protected abstract void OnShoot(Vector3 startPosition, Vector3 targetPosition);
 
-    protected abstract void Hit(Vector3 hitPoint, Vector3 hitNormal);
+    protected abstract void Hit(Vector3 hitPoint, Vector3 hitNormal, bool isDamageable);
 }

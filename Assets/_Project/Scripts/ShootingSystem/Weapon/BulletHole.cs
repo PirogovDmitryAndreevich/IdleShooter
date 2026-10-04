@@ -23,7 +23,7 @@ public class BulletHole : MonoBehaviour
 
     public void Show(Vector3 point, Vector3 normal)
     {
-        transform.position = point + normal * 0.01f;
+        transform.position = point + normal;
         transform.rotation = Quaternion.LookRotation(-normal);
 
         if (_coroutine != null)

@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4537467813039548634}
   - component: {fileID: 2572909537438541571}
-  - component: {fileID: 4449453182787575388}
   - component: {fileID: 7226363720698190682}
+  - component: {fileID: 6794872258162329019}
   m_Layer: 0
   m_Name: SpinningCylinder
   m_TagString: Untagged
@@ -59,22 +59,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4449453182787575388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3080396475841416350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3deba42090511e74290aec3c9c8d66e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _healthBar: {fileID: 8695339119822084528}
-  _hitEffect: {fileID: 7226363720698190682}
-  _damageableCollider: {fileID: 6634202977452752499}
-  _damageCollider: {fileID: 6821387958193978332}
 --- !u!114 &7226363720698190682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +76,22 @@ MonoBehaviour:
   - {fileID: 6711909839447611000}
   - {fileID: 7889966300113945123}
   _duration: 0.12
+--- !u!114 &6794872258162329019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3080396475841416350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a0d4062f6310b43b4d517378b9e46b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthBar: {fileID: 8695339119822084528}
+  _hitEffect: {fileID: 7226363720698190682}
+  _damageableCollider: {fileID: 6634202977452752499}
+  _damageCollider: {fileID: 6821387958193978332}
 --- !u!1001 &3322226862476386802
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4
   m_IsActive: 1
 --- !u!4 &5609600847360419739
 Transform:
@@ -46,7 +46,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4
   m_IsActive: 1
 --- !u!4 &7711904021280411001
 Transform:
@@ -80,3 +80,4 @@ MonoBehaviour:
   EndPointColor: {r: 1, g: 0, b: 0, a: 1}
   Size: {x: 4, y: 1, z: 4}
   EndPoint: {fileID: 5609600847360419739}
+  GearSpeed: 2.5

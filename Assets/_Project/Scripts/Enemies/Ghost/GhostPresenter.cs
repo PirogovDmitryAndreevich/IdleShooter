@@ -17,6 +17,8 @@ public class GhostPresenter : EnemyPresenter, IAttackWithAnimationEvent,
         _spawnPoint = spawnPoint;
         _playerTriggerObserver = playerTriggerObserver;
 
+        _view.DamageCollider.Construct(model.Damage);
+
         _agentMoveToTarget = new AgentMoveToTarget(_view.NavMeshAgent);
         StateMachine = new GhostStateMachine(this, _model, _view.AttackEvent);
 

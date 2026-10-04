@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 236248890178342129}
-  - component: {fileID: 6959042538559016107}
   - component: {fileID: 2394337703775947965}
+  - component: {fileID: 4069535475975808307}
   m_Layer: 0
   m_Name: SpikeCylinder
   m_TagString: Untagged
@@ -37,22 +37,6 @@ Transform:
   - {fileID: 4364621715217440422}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6959042538559016107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4791178535609328333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 522f589a0bf3d5f4ba90df3fe8f779b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _healthBar: {fileID: 7568020932359454860}
-  _hitEffect: {fileID: 2394337703775947965}
-  _damageableCollider: {fileID: 1963896670725559901}
-  _damageCollider: {fileID: 7660603650914789884}
 --- !u!114 &2394337703775947965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,6 +52,22 @@ MonoBehaviour:
   _renderers:
   - {fileID: 5880869146659045726}
   _duration: 0.12
+--- !u!114 &4069535475975808307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4791178535609328333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a0d4062f6310b43b4d517378b9e46b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthBar: {fileID: 7568020932359454860}
+  _hitEffect: {fileID: 2394337703775947965}
+  _damageableCollider: {fileID: 1963896670725559901}
+  _damageCollider: {fileID: 7660603650914789884}
 --- !u!1001 &827554087042303346
 PrefabInstance:
   m_ObjectHideFlags: 0

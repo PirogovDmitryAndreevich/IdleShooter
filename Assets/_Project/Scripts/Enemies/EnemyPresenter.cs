@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public abstract class EnemyPresenter : IDisposable, IResetObject
+public abstract class EnemyPresenter : IDisposable, IResetObject, IPlayerTarget
 {
     protected CharacterStateMachine StateMachine;
 
@@ -10,6 +10,8 @@ public abstract class EnemyPresenter : IDisposable, IResetObject
     private readonly Health _health;
 
     private bool _isDied;
+
+    public bool IsDestroyed => _isDied;
 
     public EnemyPresenter(EnemyView view, EnemyModel model)
     {
@@ -25,8 +27,6 @@ public abstract class EnemyPresenter : IDisposable, IResetObject
 
         _health.Died += OnDied;
     }
-
-    public bool IsNeedReset { get; private set; }
 
     public virtual void Dispose()
     {

@@ -15,3 +15,4 @@ MonoBehaviour:
   Type: 5
   HealthPoints: 50
   Damage: 15
+  AssetPath: Obstacles/SpikeCylinder

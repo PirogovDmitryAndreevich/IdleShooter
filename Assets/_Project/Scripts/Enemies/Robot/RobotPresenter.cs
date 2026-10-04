@@ -27,6 +27,8 @@ public class RobotPresenter : EnemyPresenter, IIdleState, IMoveState,
         _playerTriggerObserver = playerTriggerObserver;
         _shooter = shooter;
 
+        _view.DamageCollider.Construct(model.Damage);
+
         Transform transform = _view.transform;
 
         _directionOfView = new EnemyDirectionOfView(transform, model);

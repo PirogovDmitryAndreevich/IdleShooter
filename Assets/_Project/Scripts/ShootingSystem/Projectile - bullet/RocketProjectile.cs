@@ -39,7 +39,7 @@ public class RocketProjectile : Projectile
         _animationCoroutine = StartCoroutine(FlyCoroutine(startPosition, targetPosition));
     }
 
-    protected override void Hit(Vector3 hitPoint, Vector3 hitNormal) => 
+    protected override void Hit(Vector3 hitPoint, Vector3 hitNormal, bool isDamageable) => 
         StopFly(hitPoint, hitNormal);
 
     private IEnumerator FlyCoroutine(Vector3 startPosition, Vector3 targetPosition)

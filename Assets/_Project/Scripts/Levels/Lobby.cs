@@ -5,4 +5,6 @@ public class Lobby : LevelView
     public WeaponSwitcherSpawnPoint[] WeaponSwitcherSpawnPoint;
     public WarpSpawnPoint[] WarpSpawnPoint;
     public PlayerSpawnPoint PlayerSpawnPoint;
+    public Transition LobbyTransition;
+    public Transition TransitionFor1Level;
 }

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ThirdPersonController : IDisposable
 {
+    private const float TeleportYOffset = 0.5f;
+
     // Компоненты
     private readonly IMovementCalculator _movementCalculator;    
     private readonly IJumpHandler _jumpHandler;
@@ -13,6 +15,8 @@ public class ThirdPersonController : IDisposable
     private readonly CharacterController _characterController;
     private readonly PlayerStaticData _playerData;
     private readonly IInputService _input;
+
+    private bool _skipNextMovement;
 
     public ThirdPersonController(
         Transform viewTransform,
@@ -55,6 +59,12 @@ public class ThirdPersonController : IDisposable
     }
     public void FixedUpdate()
     {
+        if (_skipNextMovement)
+        {
+            _skipNextMovement = false;
+            return;
+        }
+
         _jumpHandler.UpdateJumpDirection();
 
         _movementCalculator.UpdateMoveDirection(_input.Axis);
@@ -73,12 +83,14 @@ public class ThirdPersonController : IDisposable
         _characterController.enabled = false;
 
         _viewTransform.SetPositionAndRotation(
-            target.position,
-            target.rotation);
+    target.position + Vector3.up * TeleportYOffset,
+    target.rotation);
 
         _characterController.enabled = true;
 
         Physics.SyncTransforms();
+
+        _skipNextMovement = true;
     }
 
     public void Dispose()

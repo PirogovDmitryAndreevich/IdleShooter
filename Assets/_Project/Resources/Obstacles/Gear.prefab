@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5002894084774325955}
   - component: {fileID: 9078631856091659978}
-  - component: {fileID: 900680123791260336}
   - component: {fileID: 5039784303892109914}
+  - component: {fileID: 8275652986527339730}
   m_Layer: 0
   m_Name: Gear
   m_TagString: Untagged
@@ -59,22 +59,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &900680123791260336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2699748114782665006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eff3e3cf988e71747982d26bf3eac56a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _healthBar: {fileID: 5884364699088830194}
-  _hitEffect: {fileID: 5039784303892109914}
-  _damageableCollider: {fileID: 6062056556009645889}
-  _damageCollider: {fileID: 8459179834487005791}
 --- !u!114 &5039784303892109914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +74,22 @@ MonoBehaviour:
   _renderers:
   - {fileID: 2474237632864506036}
   _duration: 0.12
+--- !u!114 &8275652986527339730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2699748114782665006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a0d4062f6310b43b4d517378b9e46b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthBar: {fileID: 5884364699088830194}
+  _hitEffect: {fileID: 5039784303892109914}
+  _damageableCollider: {fileID: 6062056556009645889}
+  _damageCollider: {fileID: 8459179834487005791}
 --- !u!1001 &1465628511941988049
 PrefabInstance:
   m_ObjectHideFlags: 0

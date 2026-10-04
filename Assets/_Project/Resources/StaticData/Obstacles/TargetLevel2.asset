@@ -15,3 +15,4 @@ MonoBehaviour:
   Type: 1
   HealthPoints: 200
   Damage: 0
+  AssetPath: Obstacles/Target

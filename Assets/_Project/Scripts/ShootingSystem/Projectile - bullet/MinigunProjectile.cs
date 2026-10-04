@@ -55,12 +55,15 @@ public class MinigunProjectile : Projectile
         StopFly();
     }
 
-    protected override void Hit(Vector3 hitPoint, Vector3 hitNormal)
+    protected override void Hit(Vector3 hitPoint, Vector3 hitNormal, bool isDamageable)
     {
-        BulletHole bulletHole = _poolService.Get<BulletHole>();
-        BulletHitEffect effect = _poolService.Get<BulletHitEffect>();
+        if (!isDamageable)
+        {
+            BulletHole bulletHole = _poolService.Get<BulletHole>();
+            bulletHole.Show(hitPoint, hitNormal);
+        }
 
-        bulletHole.Show(hitPoint, hitNormal);
+        BulletHitEffect effect = _poolService.Get<BulletHitEffect>();
         effect.Play(hitPoint, hitNormal);
 
         StopFly();

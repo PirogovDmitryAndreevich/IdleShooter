@@ -7,6 +7,8 @@ public class TransitionDataService : ITransitionDataService
 
     private List<LevelType> _enteredLevels;
 
+    public LevelPresenter CurrentLevel { get; private set; }
+
     public TransitionDataService()
     {
         _levels = new Dictionary<LevelType, LevelPresenter>();
@@ -48,8 +50,26 @@ public class TransitionDataService : ITransitionDataService
             level.Value.TransitionEntered -= OnLevelEntered;
     }
 
+    public void OpenNextLevel()
+    {
+        if (CurrentLevel == null)
+            return;
+
+        if (TryGetNextLevel(out LevelPresenter nextLevel))
+            nextLevel.OpenTransition();
+    }
+
     private void OnLevelEntered(LevelType type)
     {
+        CurrentLevel = _levels[type];
         _enteredLevels.Add(type);
-    }    
+    }
+
+    private bool TryGetNextLevel(out LevelPresenter nextLevel)
+    {
+        int nextIndex = (int)CurrentLevel.LevelType + 1;
+        LevelType nextLevelType = (LevelType)nextIndex;
+
+        return _levels.TryGetValue(nextLevelType, out nextLevel);
+    }
 }

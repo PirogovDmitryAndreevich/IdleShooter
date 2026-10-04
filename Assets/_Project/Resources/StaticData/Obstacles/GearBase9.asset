@@ -15,4 +15,4 @@ MonoBehaviour:
   Type: 7
   HealthPoints: 3
   Damage: 25
-  MoveSpeed: 0
+  AssetPath: Obstacles/GearBase
