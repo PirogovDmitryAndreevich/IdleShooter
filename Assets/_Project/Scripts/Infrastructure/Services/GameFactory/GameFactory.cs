@@ -107,6 +107,8 @@ public class GameFactory : IGameFactory
             _staticDataService.GetLevelView<Lobby>(LevelType.Lobby),
             at: gameData.LobbySpawnPosition);
 
+        lobby.LeaderBoard.Construct(_levelManager);
+
         lobby.Construct(lobby.LobbyTransition);
 
         lobby.Transition.Construct(LevelType.Lobby, null, _levelController);
