@@ -45,6 +45,19 @@ public class WeaponPresenter : IWeapon
         return true;
     }
 
+    public bool TryShootPassive(Vector3 targetPoint)
+    {
+        if (Time.time < _nextFireTime)
+            return false;
+
+        _nextFireTime = Time.time + _model.FireRate;
+
+        _view.Shoot();
+        _shooter.ShootPassive(targetPoint);
+
+        return true;
+    }
+
     public void OnWeaponSelected(IWeapon weapon)
     {
         if (weapon != this)
@@ -56,7 +69,7 @@ public class WeaponPresenter : IWeapon
         switch (type)
         {
             case ShooterType.Projectile:
-                return new ProjectileShooter(_aimMask, _camera, _model, _view, _projectilePool, _pool);
+                return new ProjectileShooter(_aimMask, _camera, _model, _view, _projectilePool);
             case ShooterType.Raycast:
                 return new RaycastShooter(_camera, _aimMask, _model, _view, _pool);
             default:

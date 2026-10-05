@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerView : MonoBehaviour, IPlayer
+public class PlayerView : MonoBehaviour, IPlayer, IPassiveShooterInteractor
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private Transform _freeCameraTarget;
@@ -16,6 +16,7 @@ public class PlayerView : MonoBehaviour, IPlayer
 
     public event Action PlayerDied;
     public event Action<float, Vector3, Vector3> Damage;
+    public event Action<PassiveShooting> PassiveShooterInteract;
 
     private Dictionary<WeaponType, WeaponView> _weapons;
 
@@ -72,18 +73,15 @@ public class PlayerView : MonoBehaviour, IPlayer
         _currentWeapon.gameObject.SetActive(true);
     }
 
-    public void Died()
-    {
+    public void Died() => 
         PlayerDied?.Invoke();
-    }
 
-    public void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
-    {
+    public void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal) => 
         Damage?.Invoke(damage, hitPoint, hitNormal);
-    }
 
-    public void TakeDamage(float damage)
-    {
+    public void TakeDamage(float damage) => 
         TakeDamage(damage, transform.position, Vector3.up);
-    }
+
+    public void PassiveShooting(PassiveShooting passiveShooting) => 
+        PassiveShooterInteract?.Invoke(passiveShooting);
 }

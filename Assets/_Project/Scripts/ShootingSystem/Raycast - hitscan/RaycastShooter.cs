@@ -24,6 +24,18 @@ public class RaycastShooter : IShooter
     {
         Ray ray = _playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
+        ShootRealization(damage, ray);
+    }
+
+    public void ShootPassive(Vector3 targetPoint)
+    {
+        Ray ray = new Ray(_view.ShootPoint.position, (targetPoint - _view.ShootPoint.position).normalized);
+
+        ShootRealization(0f, ray);
+    }
+
+    private void ShootRealization(float damage, Ray ray)
+    {
         if (Physics.Raycast(ray, out RaycastHit hit, _model.MaxAimDistance, _hitMask))
         {
             HotTrail hotTrail = _pool.Get<HotTrail>();

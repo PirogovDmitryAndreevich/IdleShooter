@@ -16,13 +16,13 @@ public class FlyPlatform : MonoBehaviour, IResetObject
 
     private void OnDestroy()
     {
-        _triggerObserver.PlayerEntered -= StartMove;
+        _triggerObserver.ControllerEntered -= StartMove;
         _triggerObserver.PlayerExited -= RemovePlayer;
     }
 
     public void Construct(Vector3 endPosition)
     {
-        _triggerObserver.PlayerEntered += StartMove;
+        _triggerObserver.ControllerEntered += StartMove;
         _triggerObserver.PlayerExited += RemovePlayer;
 
         _startPosition = transform.position;

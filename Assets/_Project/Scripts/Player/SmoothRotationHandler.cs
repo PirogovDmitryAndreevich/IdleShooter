@@ -29,4 +29,21 @@ public class SmoothRotationHandler : IRotationHandler
             smoothness
         );
     }
+
+    public void RotateTowardsPoint(Transform player, Vector3 targetPoint, float smoothness)
+    {
+        Vector3 direction = targetPoint - player.position;
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < 0.0001f)
+            return;
+
+        Quaternion targetRotation =
+            Quaternion.LookRotation(direction);
+
+        player.rotation = Quaternion.Slerp(
+            player.rotation,
+            targetRotation,
+            smoothness * Time.deltaTime);
+    }
 }

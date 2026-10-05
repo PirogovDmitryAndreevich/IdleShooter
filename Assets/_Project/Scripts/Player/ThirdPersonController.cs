@@ -6,7 +6,7 @@ public class ThirdPersonController : IDisposable
     private const float TeleportYOffset = 0.5f;
 
     // Компоненты
-    private readonly IMovementCalculator _movementCalculator;    
+    private readonly IMovementCalculator _movementCalculator;
     private readonly IJumpHandler _jumpHandler;
     private readonly IHeadHitDetector _headHitDetector;
 
@@ -30,7 +30,7 @@ public class ThirdPersonController : IDisposable
         _viewTransform = viewTransform;
         _characterController = characterController;
 
-        _movementCalculator = new CameraRelativeMovementCalculator(playerCamera, data);        
+        _movementCalculator = new CameraRelativeMovementCalculator(playerCamera, data);
         _jumpHandler = new DefaultJumpHandler(data);
         _headHitDetector = new HeadHitDetector(data);
 
@@ -46,6 +46,8 @@ public class ThirdPersonController : IDisposable
     public bool IsRun =>
         _characterController.isGrounded &&
         _characterController.velocity.magnitude > _playerData.MovementThreshold;
+    public bool HasMovementInput =>
+    _input.Axis.sqrMagnitude > _playerData.MovementThreshold;
     public bool IsJumping => !_characterController.isGrounded;
     public Vector3 HorizontalDirection => _movementCalculator.HorizontalDirection;
 
@@ -85,6 +87,26 @@ public class ThirdPersonController : IDisposable
         _viewTransform.SetPositionAndRotation(
     target.position + Vector3.up * TeleportYOffset,
     target.rotation);
+
+        _characterController.enabled = true;
+
+        Physics.SyncTransforms();
+
+        _skipNextMovement = true;
+    }
+
+    public void SetToPoint(Transform target)
+    {
+        if (target == null)
+            return;
+
+        _jumpHandler.ForceEndJump();
+
+        _characterController.enabled = false;
+
+        _viewTransform.SetPositionAndRotation(
+                    target.position,
+                    target.rotation);
 
         _characterController.enabled = true;
 

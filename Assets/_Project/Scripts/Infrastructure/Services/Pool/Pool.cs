@@ -62,7 +62,7 @@ public class Pool : IPoolService
         if (!_pools.ContainsKey(type))
             _pools[type] = new Queue<Component>();
 
-        obj.gameObject.SetActive(false);
+        obj.gameObject?.SetActive(false);
 
         _pools[type].Enqueue(obj);
     }

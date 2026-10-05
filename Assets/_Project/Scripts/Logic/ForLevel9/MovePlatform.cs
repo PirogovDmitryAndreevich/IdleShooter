@@ -33,7 +33,7 @@ public class MovePlatform : MonoBehaviour
 
     private void OnEnable()
     {
-        _triggerObserver.PlayerEntered += SetPlayer;
+        _triggerObserver.ControllerEntered += SetPlayer;
         _triggerObserver.PlayerExited += RemovePlayer;
 
         StartMove();
@@ -41,7 +41,7 @@ public class MovePlatform : MonoBehaviour
 
     private void OnDisable()
     {
-        _triggerObserver.PlayerEntered -= SetPlayer;
+        _triggerObserver.ControllerEntered -= SetPlayer;
         _triggerObserver.PlayerExited -= RemovePlayer;
 
         StopMoveCoroutine();
