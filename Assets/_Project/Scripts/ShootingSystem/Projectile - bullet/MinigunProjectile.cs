@@ -42,8 +42,15 @@ public class MinigunProjectile : Projectile
 
         float elapsedTime = 0f;
 
+        Debug.DrawLine(
+    startPosition,
+    targetPosition,
+    Color.red,
+    1.5f);
+
         while (elapsedTime < duration)
         {
+
             elapsedTime += Time.deltaTime;
 
             float t = Mathf.Clamp01(elapsedTime / duration);

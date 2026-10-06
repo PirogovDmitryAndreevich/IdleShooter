@@ -45,7 +45,7 @@ public class ObstaclePresenter : IDisposable, IResetObject, IPlayerTarget
     {
         IsDied = false;
         _model.Health.Reset();
-        _view.gameObject.SetActive(true);
+        _view.OnReset();
     }
 
     protected virtual void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
