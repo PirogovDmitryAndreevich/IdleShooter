@@ -10,13 +10,19 @@ public class Transition : MonoBehaviour
     [SerializeField] private WinsPoint _winsPoint;
 
     public event Action TransitionEntered;
+    public event Action PlayerGiveWins;
 
     public LevelType Type { get; private set; }
     public Transform ExitPoint => _exitPoint;
     public Transform PlayerSpawnPoint => _playerSpawnPoint;
 
-    private void OnDestroy() =>
+    private void OnDestroy()
+    {
         _playerTriggerObserver.TriggerEnter -= OnPlayerEntered;
+
+        if (_winsPoint != null)
+            _winsPoint.PlayerGiveWins -= OnPlayerGiveWins;
+    }
 
     public void Construct(LevelType type, LevelsStaticData data, ILevelController levelController)
     {
@@ -30,6 +36,8 @@ public class Transition : MonoBehaviour
 
         _enterGate.Construct(data);
         _winsPoint.Construct(data, levelController);
+
+        _winsPoint.PlayerGiveWins += OnPlayerGiveWins;
     }
 
     public void SetState(bool isOpen)
@@ -46,4 +54,7 @@ public class Transition : MonoBehaviour
 
     private void OnPlayerEntered() =>
         TransitionEntered?.Invoke();
+
+    private void OnPlayerGiveWins() =>
+        PlayerGiveWins?.Invoke();
 }

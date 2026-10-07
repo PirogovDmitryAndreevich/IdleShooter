@@ -8,8 +8,8 @@ using UnityEngine;
     private readonly EnemyShooter _shooter;
     private readonly PlayerTriggerObserver _playerTriggerObserver;
 
-    public CannonPresenter(EnemyView view, EnemyModel model, EnemyShooter shooter,
-        PlayerTriggerObserver playerTriggerObserver) : base(view, model)
+    public CannonPresenter(CannonView view, EnemyModel model, EnemyShooter shooter,
+        PlayerTriggerObserver playerTriggerObserver) : base(view, model, view.Sounds)
     {
         _view = view;
         _shooter = shooter;

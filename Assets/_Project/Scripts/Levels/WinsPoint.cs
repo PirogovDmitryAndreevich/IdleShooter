@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ public class WinsPoint : MonoBehaviour
     [SerializeField] private PlayerTriggerObserver _playerTrigger;
 
     private ILevelController _levelController;
+
+    public event Action PlayerGiveWins;
 
     private void OnDestroy() => 
         _playerTrigger.TriggerEnter -= OnPlayerEnter;
@@ -23,5 +26,6 @@ public class WinsPoint : MonoBehaviour
     private void OnPlayerEnter()
     {
         _levelController.WarpToLevel(LevelType.Lobby);
+        PlayerGiveWins?.Invoke();
     }
 }

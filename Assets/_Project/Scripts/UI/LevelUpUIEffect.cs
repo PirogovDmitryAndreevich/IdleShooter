@@ -32,11 +32,14 @@ public class LevelUpUIEffect : MonoBehaviour
 
     private RectTransform _healthBar;
     private Vector2 _levelTextStartPosition;
+    private ILevelManager _levelManager;
+    private Sequence _sequence;
 
-    public void Construct(RectTransform healthBar)
+    public void Construct(RectTransform healthBar, ILevelManager levelManager)
     {
         _healthBar = healthBar;
         _levelTextStartPosition = _levelText.anchoredPosition;
+        _levelManager = levelManager;
     }
 
     public void Show()
@@ -45,30 +48,36 @@ public class LevelUpUIEffect : MonoBehaviour
 
         Prepare();
 
-        Sequence sequence = DOTween.Sequence();
+        _sequence = DOTween.Sequence();
 
         Vector2 textTargetPosition = _levelTextStartPosition + Vector2.up * _textMoveDistance;
 
         // LevelText появляется и поднимается вверх.
-        sequence.Append(_levelText.DOAnchorPos(textTargetPosition, _textShowDuration).SetEase(Ease.OutBack));
-        sequence.Join(_levelCanvasGroup.DOFade(1f, _textShowDuration * 0.7f).SetEase(Ease.OutQuad));
+        _sequence.Append(_levelText.DOAnchorPos(textTargetPosition, _textShowDuration).SetEase(Ease.OutBack));
+        _sequence.Join(_levelCanvasGroup.DOFade(1f, _textShowDuration * 0.7f).SetEase(Ease.OutQuad));
 
         // 2. Только после завершения движения текста
         // включаем сердца.
-        sequence.AppendCallback(EnableHearts);
+        _sequence.AppendCallback(EnableHearts);
 
         // Сердца вылетают из текста.
-        sequence.Append(CreateHeartScatterSequence());
+        _sequence.Append(CreateHeartScatterSequence());
 
         // Level Text быстро исчезает.
-        sequence.Append(_levelCanvasGroup.DOFade(0f, _textFadeDuration).SetEase(Ease.InQuad));
+        _sequence.Append(_levelCanvasGroup.DOFade(0f, _textFadeDuration).SetEase(Ease.InQuad));
 
         // Сердца летят в HealthBar.
-        sequence.Append(CreateHeartsFlySequence());
+        _sequence.Append(CreateHeartsFlySequence());
 
-        sequence.OnComplete(Hide);
+        _sequence.OnComplete(() =>
+        {
+            _sequence = null;
 
-        sequence.Play();
+            _levelManager.UpdateHealthView();
+            Hide();
+        });
+
+        _sequence.Play();
     }
 
     private void EnableHearts()
@@ -202,6 +211,9 @@ public class LevelUpUIEffect : MonoBehaviour
 
     private void KillAnimations()
     {
+        _sequence?.Kill();
+        _sequence = null;
+
         _levelText.DOKill();
 
         foreach (RectTransform heart in _hearts)

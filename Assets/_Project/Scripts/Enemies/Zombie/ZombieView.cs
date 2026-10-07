@@ -7,6 +7,7 @@ public class ZombieView : EnemyView
     [SerializeField] private MeleeDamageCollider _damageCollider;
     [SerializeField] private ZombieBehaviour _zombieBehaviour;
     [SerializeField] private NavMeshAgent _navMeshAgent;
+    [SerializeField] private ZombieSounds _sounds;
 
     public AnimationEvent AttackEvent =>
         _attackEvent;
@@ -16,6 +17,7 @@ public class ZombieView : EnemyView
         _damageCollider;
     public NavMeshAgent NavMeshAgent =>
         _navMeshAgent;
+    public ZombieSounds Sounds => _sounds;
 
     public void Idle()
     {

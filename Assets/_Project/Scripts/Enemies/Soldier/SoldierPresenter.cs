@@ -26,7 +26,7 @@ public class SoldierPresenter : EnemyPresenter, IMoveState,
         Transform attackPoint,
         EnemyShooter shooter,
         PlayerTriggerObserver triggerObserver)
-        : base(view, model)
+        : base(view, model, view.Sounds)
     {
         _view = view;
         _waitPoint = waitPoint;

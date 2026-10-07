@@ -7,6 +7,7 @@ public class DemonView : EnemyView
     [SerializeField] private MeleeDamageCollider _damageCollider;
     [SerializeField] private DemonBehaviour _demonBehaviour;
     [SerializeField] private NavMeshAgent _navMeshAgent;
+    [SerializeField] private DemonSounds _sounds;
 
     public AnimationEvent AttackEvent =>
         _attackEvent;
@@ -16,6 +17,7 @@ public class DemonView : EnemyView
         _damageCollider;
     public NavMeshAgent NavMeshAgent =>
         _navMeshAgent;
+    public DemonSounds Sounds => _sounds;
 
     public void Idle()
     {

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class ObstacleModel
 {
     private readonly ObstacleStaticData _data;
@@ -15,4 +17,7 @@ public class ObstacleModel
 
     public float Damage =>
         _data.Damage;
+
+    public AudioClip TakeDamageSound =>
+        _data.TakeDamageSound;
 }

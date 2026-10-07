@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class EnemyView : MonoBehaviour
+public abstract class EnemyView : MonoBehaviour
 {
     [SerializeField] protected EnemiesAnimator Animator;    
     [SerializeField] private HitFlash _hitEffect;
     [SerializeField] private DamageableCollider _damageableCollider;
     [SerializeField] private HealthBar _healthBar;
+    [SerializeField] private SoundsHandler _soundsHandler;
 
     public HitFlash HitEffect => _hitEffect;    
 
@@ -14,4 +15,7 @@ public class EnemyView : MonoBehaviour
 
     public HealthBar HealthBar =>
         _healthBar;
+
+    public SoundsHandler SoundsHandler =>
+        _soundsHandler;
 }

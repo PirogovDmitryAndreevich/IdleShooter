@@ -6,6 +6,7 @@ public class ObstacleView : MonoBehaviour
     [SerializeField] private HitFlash _hitEffect;
     [SerializeField] private DamageableCollider _damageableCollider;
     [SerializeField] private DamageCollider _damageCollider;
+    [SerializeField] private SoundsHandler _soundsHandler;
 
     public HealthBar HealthBar =>
         _healthBar;
@@ -15,6 +16,8 @@ public class ObstacleView : MonoBehaviour
         _hitEffect;
     public DamageCollider DamageCollider =>
         _damageCollider;
+    public SoundsHandler SoundsHandler =>
+        _soundsHandler;
 
     public void OnDied() =>
         gameObject.SetActive(false);

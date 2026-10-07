@@ -11,7 +11,7 @@ public class DemonPresenter : EnemyPresenter, IIdleState, IAttackWithAnimationEv
         EnemyModel model,
         DemonView view,
         Transform spawnPoint,
-        PlayerTriggerObserver playerTriggerObserver) : base(view, model)
+        PlayerTriggerObserver playerTriggerObserver) : base(view, model, view.Sounds)
     {
         _view = view;
         _spawnPoint = spawnPoint;

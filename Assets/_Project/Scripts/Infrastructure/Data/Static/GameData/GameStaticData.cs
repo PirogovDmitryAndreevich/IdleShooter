@@ -38,4 +38,8 @@ public class GameStaticData : ScriptableObject
     [Space]
     [Header("ShootUIEffectAnimation settings")]
     public ShootUIEffectAnimationSettings ShootUIEffectAnimationSettings;
+
+    [Space]
+    [Header("Sounds Effects")]
+    public SoundsEffects SoundsEffects;
 }

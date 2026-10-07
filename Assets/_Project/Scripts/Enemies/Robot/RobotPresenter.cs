@@ -19,7 +19,7 @@ public class RobotPresenter : EnemyPresenter, IIdleState, IMoveState,
     public RobotPresenter(RobotView view, EnemyModel model,
         Transform waitPoint,
         PlayerTriggerObserver playerTriggerObserver,
-        EnemyShooter shooter) : base(view, model)
+        EnemyShooter shooter) : base(view, model, view.Sounds)
     {
         _view = view;
         _model = model;

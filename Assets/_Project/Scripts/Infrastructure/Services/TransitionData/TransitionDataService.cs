@@ -6,13 +6,16 @@ public class TransitionDataService : ITransitionDataService
     private Dictionary<LevelType, LevelPresenter> _levels;
 
     private List<LevelType> _enteredLevels;
+    private readonly IInterstitialAdvService _interstitialAdvService;
 
     public LevelPresenter CurrentLevel { get; private set; }
 
-    public TransitionDataService()
+    public TransitionDataService(IInterstitialAdvService interstitialAdvService)
     {
         _levels = new Dictionary<LevelType, LevelPresenter>();
         _enteredLevels = new List<LevelType>();
+
+        _interstitialAdvService = interstitialAdvService;
     }
 
     public PlayerPresenter Player { get; private set; }
@@ -63,6 +66,8 @@ public class TransitionDataService : ITransitionDataService
     {
         CurrentLevel = _levels[type];
         _enteredLevels.Add(type);
+
+        _interstitialAdvService.TryShowAdv();
     }
 
     private bool TryGetNextLevel(out LevelPresenter nextLevel)

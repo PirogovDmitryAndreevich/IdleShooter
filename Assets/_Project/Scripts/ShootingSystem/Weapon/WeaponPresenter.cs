@@ -42,6 +42,8 @@ public class WeaponPresenter : IWeapon
         _view.Shoot();
         _shooter.Shoot(damage);
 
+        _view.SoundHandler.PlayRandomPithSound(_model.ShootSound);
+
         return true;
     }
 
@@ -54,6 +56,8 @@ public class WeaponPresenter : IWeapon
 
         _view.Shoot();
         _shooter.ShootPassive(targetPoint);
+
+        _view.SoundHandler.PlayRandomPithSound(_model.ShootSound);
 
         return true;
     }

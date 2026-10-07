@@ -82,6 +82,7 @@ public class PlayerPresenter : IDisposable
 
         _health.Died -= OnPlayerDied;
 
+        _health.Dispose();
         _controller.Dispose();
         _weaponSwitcher.Dispose();
     }

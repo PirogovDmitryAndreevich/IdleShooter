@@ -12,7 +12,7 @@ public class ZombiePresenter : EnemyPresenter, IAttackWithAnimationEvent,
         ZombieView view,
         EnemyModel model,
         Transform spawnPoint,
-        PlayerTriggerObserver playerTriggerObserver) : base(view, model)
+        PlayerTriggerObserver playerTriggerObserver) : base(view, model, view.Sounds)
     {
         _view = view;
         _spawnPoint = spawnPoint;

@@ -10,6 +10,7 @@ public class LevelPresenter : IDisposable
     public List<System.IDisposable> Disposables;
 
     public event Action<LevelType> TransitionEntered;
+    public event Action PlayerGiveWins;
 
     public List<IPlayerTarget> PlayerTargets = new List<IPlayerTarget>();
 
@@ -31,7 +32,10 @@ public class LevelPresenter : IDisposable
         _transition = transition;
 
         if (transition != null)
+        {
             _transition.TransitionEntered += OnTransitionEntered;
+            _transition.PlayerGiveWins += OnPlayerGiveWins;
+        }
     }
 
     public void ResetLevel()
@@ -52,7 +56,11 @@ public class LevelPresenter : IDisposable
         foreach (System.IDisposable disposable in Disposables)
             disposable?.Dispose();
 
-        _transition.TransitionEntered -= OnTransitionEntered;
+        if (_transition != null)
+        {
+            _transition.TransitionEntered -= OnTransitionEntered;
+            _transition.PlayerGiveWins -= OnPlayerGiveWins;
+        }
     }
 
     public void RegisterPlayerTarget(IPlayerTarget playerTarget)
@@ -75,4 +83,7 @@ public class LevelPresenter : IDisposable
 
     private void OnTransitionEntered() =>
         TransitionEntered?.Invoke(LevelType);
+
+    private void OnPlayerGiveWins() =>
+        PlayerGiveWins?.Invoke();
 }

@@ -10,7 +10,7 @@ public class GhostPresenter : EnemyPresenter, IAttackWithAnimationEvent,
     private readonly AgentMoveToTarget _agentMoveToTarget;
 
     public GhostPresenter(GhostView view, EnemyModel model,Transform spawnPoint,
-        PlayerTriggerObserver playerTriggerObserver) : base(view, model)
+        PlayerTriggerObserver playerTriggerObserver) : base(view, model, view.Sounds)
     {
         _view = view;
         _model = model;

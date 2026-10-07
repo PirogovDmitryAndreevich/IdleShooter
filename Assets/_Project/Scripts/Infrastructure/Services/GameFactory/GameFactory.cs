@@ -15,8 +15,8 @@ public class GameFactory : IGameFactory
     private readonly IWarpService _warpService;
     private readonly ITransitionDataService _transitionDataService;
     private readonly ILevelManager _levelManager;
-    private readonly ICoroutineRunner _coroutineRunner;
-
+    private readonly IInterstitialAdvService _interstitialAdvService;
+    private readonly IAudioManager _audioManager;
     private ILevelController _levelController;
     private PlayerPresenter _player;
     WeaponSwitcher _weaponSwitcher;
@@ -25,7 +25,7 @@ public class GameFactory : IGameFactory
         IProgressService progressService, IPoolService poolService, IWeaponDataService weaponDataService,
         IGameSaveDataService gameSaveDataService, IProjectilePool projectilePool, IUIPoolService UIPoolService,
         IWarpService warpService, ITransitionDataService transitionDataService, ILevelManager levelManager,
-        ICoroutineRunner coroutineRunner)
+        IInterstitialAdvService interstitialAdvService, IAudioManager audioManager)
     {
         _assets = assets;
         _inputService = inputService;
@@ -39,7 +39,8 @@ public class GameFactory : IGameFactory
         _warpService = warpService;
         _transitionDataService = transitionDataService;
         _levelManager = levelManager;
-        _coroutineRunner = coroutineRunner;
+        _interstitialAdvService = interstitialAdvService;
+        _audioManager = audioManager;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
@@ -70,7 +71,7 @@ public class GameFactory : IGameFactory
         PlayerModel model = new PlayerModel(_staticDataService, _progressService);
 
         DamageManager damageManager = new DamageManager(_progressService);
-        PlayerHealth playerHealth = new PlayerHealth(_progressService);
+        PlayerHealth playerHealth = new PlayerHealth(_levelManager);
 
         _player = new PlayerPresenter(model, player.View, _inputService, camera,
             _weaponSwitcher, damageManager, playerHealth, _levelManager);
@@ -160,6 +161,8 @@ public class GameFactory : IGameFactory
 
         transform.SetParent(parent);
 
+        view.SoundsHandler.Construct(_audioManager);
+
         ObstacleModel model = new ObstacleModel(data);
 
         ObstaclePresenter presenter = new ObstaclePresenter(view, model, type);
@@ -188,6 +191,8 @@ public class GameFactory : IGameFactory
     {
         WeaponView view = _assets.Instantiate(_staticDataService.GetWeaponView(type));
         WeaponModel model = new WeaponModel(_staticDataService.GetWeaponData(type));
+
+        view.SoundHandler.Construct(_audioManager);
 
         WeaponPresenter presenter = new WeaponPresenter(model, view, UnityEngine.Camera.main,
             _staticDataService.GetGameData(), _projectilePool, _poolService);
@@ -225,6 +230,8 @@ public class GameFactory : IGameFactory
 
         view.transform.localRotation = at.localRotation;
 
+        view.SoundsHandler.Construct(_audioManager);
+
         EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(type));
         EnemyShooter shooter = new EnemyShooter(model, view.Weapon, _projectilePool);
 
@@ -248,6 +255,8 @@ public class GameFactory : IGameFactory
         view.transform.SetParent(parent);
 
         view.transform.localRotation = at.localRotation;
+
+        view.SoundsHandler.Construct(_audioManager);
 
         EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(EnemyType.Cannon));
         EnemyShooter shooter = new EnemyShooter(model, view.Weapon, _projectilePool);
@@ -275,6 +284,8 @@ public class GameFactory : IGameFactory
         view.NavMeshAgent.speed = model.MoveSpeed;
         view.NavMeshAgent.angularSpeed = model.RotateSpeed;
 
+        view.SoundsHandler.Construct(_audioManager);
+
         DemonPresenter presenter = new DemonPresenter(model, view, at, playerTriggerObserver);
 
         view.DemonBehaviour.SetPresenter(presenter);
@@ -298,6 +309,8 @@ public class GameFactory : IGameFactory
 
         view.NavMeshAgent.speed = model.MoveSpeed;
         view.NavMeshAgent.angularSpeed = model.RotateSpeed;
+
+        view.SoundsHandler.Construct(_audioManager);
 
         RobotPresenter presenter = new RobotPresenter(view, model, at, playerTriggerObserver, shooter);
 
@@ -354,6 +367,8 @@ public class GameFactory : IGameFactory
         view.NavMeshAgent.speed = model.MoveSpeed;
         view.NavMeshAgent.angularSpeed = model.RotateSpeed;
 
+        view.SoundsHandler.Construct(_audioManager);
+
         ZombiePresenter presenter = new ZombiePresenter(view, model, spawnPoint, playerTriggerObserver);
 
         view.ZombieBehaviour.SetPresenter(presenter);
@@ -377,6 +392,8 @@ public class GameFactory : IGameFactory
         view.NavMeshAgent.speed = model.MoveSpeed;
         view.NavMeshAgent.angularSpeed = model.RotateSpeed;
 
+        view.SoundsHandler.Construct(_audioManager);
+
         GhostPresenter presenter = new GhostPresenter(view, model, spawnPoint, playerTriggerObserver);
 
         view.GhostBehaviour.SetPresenter(presenter);
@@ -394,7 +411,8 @@ public class GameFactory : IGameFactory
 
         hud.Construct(playerPresenter,
             _staticDataService.GetShootAnimationSettings(),
-            _levelManager, _uIPoolService);
+            _levelManager, _uIPoolService,
+            _interstitialAdvService);
 
         _uIPoolService.SetCanvas(hud.GetComponent<Canvas>());
 

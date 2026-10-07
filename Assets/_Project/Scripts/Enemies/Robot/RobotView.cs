@@ -8,6 +8,7 @@ public class RobotView : EnemyView
     [SerializeField] private NavMeshAgent _navMeshAgent;
     [SerializeField] private MeleeDamageCollider _damageCollider;
     [SerializeField] private RobotBehaviour _behaviour;
+    [SerializeField] private RobotSounds _sounds;
 
     public RobotBehaviour Behaviour =>
         _behaviour;
@@ -18,6 +19,7 @@ public class RobotView : EnemyView
     public WeaponView Weapon => _weaponView;
     public MeleeDamageCollider DamageCollider =>
         _damageCollider;
+    public RobotSounds Sounds => _sounds;
 
     public void Idle()
     {

@@ -11,4 +11,5 @@
     LevelsStaticData ForLevel(LevelType type);
     ObstacleStaticData ForObstacle(ObstacleType type);
     T GetLevelView<T>(LevelType type) where T : LevelView;
+    SoundsEffects GetSoundEffects();
 }

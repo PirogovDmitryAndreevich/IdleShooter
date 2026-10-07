@@ -1,17 +1,19 @@
-public class PlayerHealth : Health
+using System;
+
+public class PlayerHealth : Health, IDisposable
 {
-    private readonly PlayerSaveData _saveData;
+    private readonly ILevelManager _levelManager;
 
-    public PlayerHealth(IProgressService progress) : base(progress.Data.PlayerData.Health)
+    public PlayerHealth(ILevelManager levelManager) : base(levelManager.PlayerHealth)
     {
-        _saveData = progress.Data.PlayerData;
+        _levelManager = levelManager;
+
+        _levelManager.HealthViewUpdated += UpdateHealth;
     }
 
+    public void Dispose() => 
+        _levelManager.HealthViewUpdated -= UpdateHealth;
 
-    public void AddHealth(int healthPoints)
-    {
-        IncreaseMaxHealth(healthPoints);
-
-        _saveData.Health += healthPoints; 
-    }
+    private void UpdateHealth(int maxHealth) => 
+        IncreaseMaxHealth(maxHealth);
 }

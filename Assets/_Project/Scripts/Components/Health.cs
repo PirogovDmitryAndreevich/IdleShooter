@@ -12,12 +12,10 @@ public class Health
     public Health(int maxHealth)
     {
         _maxHealth = maxHealth;
-
-        MaxHealth = _maxHealth;
         _currentHealth = _maxHealth;
     }
 
-    public virtual int MaxHealth { get; }
+    public virtual int MaxHealth => _maxHealth;
     public float CurrentHealth => _currentHealth;
 
     public void TakeDamage(float damage)
@@ -59,7 +57,7 @@ public class Health
         if (value <= 0f)
             return;
 
-        _maxHealth += value;
+        _maxHealth = value;
 
         HealthChanged?.Invoke();
     }

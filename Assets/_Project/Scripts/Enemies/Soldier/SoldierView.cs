@@ -6,11 +6,13 @@ public class SoldierView : EnemyView
     [SerializeField] private WeaponView _weaponView;
     [SerializeField] private SoldierBehaviour _behavior;
     [SerializeField] private NavMeshAgent _navMeshAgent;
+    [SerializeField] private SoldierSounds _sounds;
 
     public WeaponView Weapon => _weaponView;
     public SoldierBehaviour Behaviour => _behavior;
     public NavMeshAgent NavMeshAgent =>
         _navMeshAgent;
+    public SoldierSounds Sounds => _sounds;
 
     public void Idle() =>
         Animator.Idle();

@@ -19,6 +19,9 @@ public class GameStaticDataEditor : Editor
     private float _growthStart = 1.15f; // коэффициент роста на старте
     private float _growthEnd = 1.08f;   // коэффициент роста в конце
 
+    private int _healthPerLevel = 10;
+    private int _baseHealth = 100;
+
     private Vector2 _simulationTableScroll;
     private BalanceSimulationResult[] _simulationResults;
 
@@ -34,6 +37,7 @@ public class GameStaticDataEditor : Editor
             EditorUtility.SetDirty(target);
         }
 
+        DrawLevelGenerator(gameData);
         DrawSimulation(gameData);
     }
 
@@ -63,6 +67,11 @@ public class GameStaticDataEditor : Editor
         _growthStart = EditorGUILayout.FloatField("Growth Start", _growthStart);
         _growthEnd = EditorGUILayout.FloatField("Growth End", _growthEnd);
 
+        EditorGUILayout.Space(5);
+
+        _baseHealth = EditorGUILayout.IntField("Base Health", _baseHealth);
+        _healthPerLevel = EditorGUILayout.IntField("Health Per Level", _healthPerLevel);
+
         EditorGUILayout.HelpBox(
             "XP(n) = XP(n-1) * Lerp(GrowthStart, GrowthEnd, n / MaxLevel)\n" +
             "XP(1) = 0, XP(2) = Base XP",
@@ -79,14 +88,16 @@ public class GameStaticDataEditor : Editor
 
     private void FillLevels(GameStaticData gameData, int maxLevel)
     {
-        if (maxLevel < 1) maxLevel = 1;
+        if (maxLevel < 1)
+            maxLevel = 1;
 
         var list = new List<PlayerLevelsStaticData>(maxLevel);
 
         list.Add(new PlayerLevelsStaticData
         {
             Level = 1,
-            TargetScore = 0
+            TargetScore = 0,
+            Health = _baseHealth
         });
 
         float prev = 0f;
@@ -94,66 +105,41 @@ public class GameStaticDataEditor : Editor
         for (int level = 2; level <= maxLevel; level++)
         {
             // t — доля прогресса 0..1
-            float t = maxLevel > 1 ? (level - 1) / (float)(maxLevel - 1) : 0f;
+            float t = maxLevel > 1
+                ? (level - 1) / (float)(maxLevel - 1)
+                : 0f;
 
             // коэффициент роста плавно падает от GrowthStart к GrowthEnd
             float growth = Mathf.Lerp(_growthStart, _growthEnd, t);
 
             float xp;
+
             if (level == 2)
                 xp = _baseXp;
             else
                 xp = prev * growth;
 
             // Ограничение: не больше int.MaxValue
-            if (xp > int.MaxValue) xp = int.MaxValue;
+            if (xp > int.MaxValue)
+                xp = int.MaxValue;
 
             int targetScore = Mathf.RoundToInt(xp);
+
+            // Health
+            int health = _baseHealth +
+                         (level - 1) * _healthPerLevel;
 
             list.Add(new PlayerLevelsStaticData
             {
                 Level = level,
-                TargetScore = targetScore
+                TargetScore = targetScore,
+                Health = health
             });
 
             prev = xp;
         }
 
         gameData.PlayerLevelsData = list.ToArray();
-    }
-
-    // =========================================================
-    //  PLAYER LEVELS TABLE
-    // =========================================================
-
-    private void DrawPlayerLevelTable(GameStaticData gameData)
-    {
-        if (gameData.PlayerLevelsData == null || gameData.PlayerLevelsData.Length == 0)
-            return;
-
-        EditorGUILayout.Space(4);
-        EditorGUILayout.LabelField("Levels Table", EditorStyles.boldLabel);
-
-        EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
-        GUILayout.Label("Level", EditorStyles.toolbarButton, GUILayout.Width(60));
-        GUILayout.Label("Target Score", EditorStyles.toolbarButton, GUILayout.Width(120));
-        EditorGUILayout.EndHorizontal();
-
-        _levelTableScroll = EditorGUILayout.BeginScrollView(
-            _levelTableScroll,
-            GUILayout.Height(300));
-
-        for (int i = 0; i < gameData.PlayerLevelsData.Length; i++)
-        {
-            var lvl = gameData.PlayerLevelsData[i];
-
-            EditorGUILayout.BeginHorizontal("box");
-            GUILayout.Label(lvl.Level.ToString(), GUILayout.Width(60));
-            GUILayout.Label(NumberFormatter.NumberAsString(lvl.TargetScore), GUILayout.Width(120));
-            EditorGUILayout.EndHorizontal();
-        }
-
-        EditorGUILayout.EndScrollView();
     }
 
     private void DrawSimulation(GameStaticData gameData)
@@ -193,47 +179,52 @@ public class GameStaticDataEditor : Editor
         GUILayout.Label(
             "Run",
             EditorStyles.toolbarButton,
-            GUILayout.Width(45));
+            GUILayout.Width(45)); // Run
 
         GUILayout.Label(
             "Level",
             EditorStyles.toolbarButton,
-            GUILayout.Width(45));
+            GUILayout.Width(45)); // GameLevel
 
         GUILayout.Label(
             "Weapon",
             EditorStyles.toolbarButton,
-            GUILayout.Width(90));
+            GUILayout.Width(90)); // Weapon
 
         GUILayout.Label(
-            "Player Level Start",
+            "Player Level",
             EditorStyles.toolbarButton,
-            GUILayout.Width(100));
+            GUILayout.Width(100)); // PlayerLevel
 
         GUILayout.Label(
-            "Player Level End",
+            "+Score",
             EditorStyles.toolbarButton,
-            GUILayout.Width(100));
+            GUILayout.Width(100)); // Score
 
         GUILayout.Label(
-            "Damage Start",
+            "Total Score",
             EditorStyles.toolbarButton,
-            GUILayout.Width(100));
+            GUILayout.Width(100)); // Total Score
 
         GUILayout.Label(
-            "Damage End",
+            "Target Score",
             EditorStyles.toolbarButton,
-            GUILayout.Width(100));
+            GUILayout.Width(100)); // Target Score
+
+        GUILayout.Label(
+            "Health",
+            EditorStyles.toolbarButton,
+            GUILayout.Width(70)); // Health
+
+        GUILayout.Label(
+            "Damage",
+            EditorStyles.toolbarButton,
+            GUILayout.Width(100)); // Damage
 
         GUILayout.Label(
             "Shots",
             EditorStyles.toolbarButton,
-            GUILayout.Width(55));
-
-        GUILayout.Label(
-            "Score",
-            EditorStyles.toolbarButton,
-            GUILayout.Width(100));
+            GUILayout.Width(55)); // Shots
 
         GUILayout.Label(
             "Wins +",
@@ -257,50 +248,93 @@ public class GameStaticDataEditor : Editor
                 _simulationTableScroll,
                 GUILayout.Height(400));
 
+        int totalScore = 0;
+        int playerLevel = 0;
+        int playerHealth = 0;
+        int run = 0;
+
+        string playerLevelStr;
+        string playerHealthStr;
+        string runStr;
+
         for (int i = 0;
              i < _simulationResults.Length;
              i++)
         {
             BalanceSimulationResult result =
-                _simulationResults[i];          
+                _simulationResults[i];
+
+            if (playerLevel != result.PlayerLevel)
+            {
+                playerLevelStr = result.PlayerLevel.ToString();
+                playerLevel = result.PlayerLevel;
+            }
+            else
+            {
+                playerLevelStr = "-";
+            }
+
+            if (playerHealth != result.Health)
+            {
+                playerHealthStr = result.Health.ToString();
+                playerHealth = result.Health;
+            }
+            else
+            {
+                playerHealthStr = "-";
+            }
+
+            if (run != result.Run)
+            {
+                runStr = result.Run.ToString();
+                run = result.Run;
+            }
+            else
+            {
+                runStr = "-";
+            }
 
             EditorGUILayout.BeginHorizontal("box");
 
             GUILayout.Label(
-                result.Run.ToString(),
-                GUILayout.Width(45));
+                runStr,
+                GUILayout.Width(45)); // Run
 
             GUILayout.Label(
-                result.GameLevel.ToString(),
-                GUILayout.Width(45));
+               result.GameLevel.ToString(),
+                GUILayout.Width(45)); // GameLevel
 
             GUILayout.Label(
                 result.Weapon.ToString(),
-                GUILayout.Width(90));
+                GUILayout.Width(90)); // Weapon
 
             GUILayout.Label(
-                result.PlayerLevelStart.ToString(),
-                GUILayout.Width(100));
-
-            GUILayout.Label(
-                result.PlayerLevelEnd.ToString(),
-                GUILayout.Width(100));
-
-            GUILayout.Label(
-                result.DamageStart.ToString(),
-                GUILayout.Width(100));
-
-            GUILayout.Label(
-                result.DamageEnd.ToString(),
-                GUILayout.Width(100));
-
-            GUILayout.Label(
-                result.Shots.ToString(),
-                GUILayout.Width(55));
+                playerLevelStr,
+                GUILayout.Width(100)); // PlayerLevel
 
             GUILayout.Label(
                 result.Score.ToString(),
-                GUILayout.Width(100));
+                GUILayout.Width(100)); // Score
+
+            GUILayout.Label(
+                (totalScore += result.Score).ToString(),
+                GUILayout.Width(100)); // Total Score
+
+            GUILayout.Label(
+                result.TargetScore.ToString(),
+                GUILayout.Width(100)); // Target Score
+
+            GUILayout.Label(
+                playerHealthStr,
+                GUILayout.Width(70)); // Health
+
+            GUILayout.Label(
+                result.Damage.ToString(),
+                GUILayout.Width(100)); // Damage
+
+            GUILayout.Label(
+                result.Shots.ToString(),
+                GUILayout.Width(55)); // Shots
 
             GUILayout.Label(
                 result.WinsReceived.ToString(),
@@ -345,7 +379,7 @@ public class GameStaticDataEditor : Editor
                 gameData.LevelsData[index];
 
             level.Recommended =
-                result.PlayerLevelStart;
+                result.PlayerLevel;
         }
 
         EditorUtility.SetDirty(gameData);
@@ -459,7 +493,6 @@ public class BalanceSimulator
             lastLevel = _sortedLevels[i];
 
             int startDamage = _damage;
-            int startPlayerLevel = _currentPlayerLevel;
             int startScore = (int)_score;
 
             EnteringLevel(lastLevel);
@@ -477,14 +510,14 @@ public class BalanceSimulator
 
                 Weapon = _currentWeapon.Type,
 
-                DamageStart = startDamage,
-                DamageEnd = _damage,
+                Damage = _damage,
 
-                PlayerLevelStart = startPlayerLevel,
-                PlayerLevelEnd = _currentPlayerLevel,
+                PlayerLevel = _currentPlayerLevel,
+                Health = GetCurrentPlayerHealth(),
 
                 Shots = shots,
                 Score = score,
+                TargetScore = GetNextPlayerTargetScore(),
 
                 WinsReceived = 0,
                 WinsBalance = _wins
@@ -575,6 +608,36 @@ public class BalanceSimulator
         }
     }
 
+    private int GetCurrentPlayerHealth()
+    {
+        PlayerLevelsStaticData[] playerLevels =
+            _gameData.PlayerLevelsData;
+
+        for (int i = 0; i < playerLevels.Length; i++)
+        {
+            if (playerLevels[i].Level == _currentPlayerLevel)
+                return playerLevels[i].Health;
+        }
+
+        return 0;
+    }
+
+    private int GetNextPlayerTargetScore()
+    {
+        PlayerLevelsStaticData[] playerLevels =
+       _gameData.PlayerLevelsData;
+
+        int nextLevel = _currentPlayerLevel + 1;
+
+        for (int i = 0; i < playerLevels.Length; i++)
+        {
+            if (playerLevels[i].Level == nextLevel)
+                return playerLevels[i].TargetScore;
+        }
+
+        return 0;
+    }
+
     private bool TryBuyNextWeapon(
     BalanceSimulationResult result)
     {
@@ -627,14 +690,13 @@ public class BalanceSimulationResult
 
     public WeaponType Weapon;
 
-    public int PlayerLevelStart;
-    public int PlayerLevelEnd;
-
-    public int DamageStart;
-    public int DamageEnd;
+    public int PlayerLevel;
+    public int Health;
+    public int Damage;
 
     public int Shots;
     public int Score;
+    public int TargetScore;
 
     public int WinsReceived;
     public int WinsBalance;

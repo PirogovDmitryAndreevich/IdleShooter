@@ -5,4 +5,5 @@ public class PlayerLevelsStaticData
 {
     public int Level;
     public int TargetScore;
+    public int Health;
 }

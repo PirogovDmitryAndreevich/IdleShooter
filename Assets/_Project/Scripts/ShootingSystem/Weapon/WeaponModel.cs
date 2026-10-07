@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class WeaponModel
 {
     private readonly WeaponStaticData _staticData;
@@ -10,6 +12,7 @@ public class WeaponModel
     public string AnimationName => _staticData.AnimationName;
     public ProjectileType ProjectileType => _staticData.ProjectileType;
     public float Score => _staticData.Score;
+    public AudioClip ShootSound => _staticData.ShootSound;
 
     public WeaponModel(WeaponStaticData staticData)
     {

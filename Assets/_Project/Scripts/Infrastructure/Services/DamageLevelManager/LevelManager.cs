@@ -13,10 +13,12 @@ public class LevelManager : ILevelManager
 
     public event Action<float, float> ScoreChanged;
     public event Action<int> LevelChanged;
+    public event Action<int> HealthViewUpdated;
     public event Action MaxLevelReached;
 
     public int CurrentLevel => _progress.Data.PlayerData.Level;
     public float CurrentScore => _progress.Data.PlayerData.CurrentScore;
+    public int PlayerHealth => _progress.Data.PlayerData.Health;
 
     public bool IsMaxLevel =>
         CurrentLevel >= _levelData.Length;
@@ -64,6 +66,12 @@ public class LevelManager : ILevelManager
         return (CurrentScore - currentTarget) / levelScore;
     }
 
+    public void UpdateHealthView()
+    {
+        HealthViewUpdated?.Invoke(
+            _progress.Data.PlayerData.Health);
+    }
+
     private void UpdateLevel()
     {
         int previousLevel = CurrentLevel;
@@ -72,6 +80,8 @@ public class LevelManager : ILevelManager
                CurrentScore >= GetNextTargetScore())
         {
             _progress.Data.PlayerData.Level++;
+
+            UpdatePlayerHealth();
         }
 
         if (CurrentLevel != previousLevel)
@@ -79,5 +89,13 @@ public class LevelManager : ILevelManager
 
         if (IsMaxLevel && previousLevel != CurrentLevel)
             MaxLevelReached?.Invoke();
+    }
+
+    private void UpdatePlayerHealth()
+    {
+        int health =
+            _levelData[CurrentLevel - 1].Health;
+
+        _progress.Data.PlayerData.Health = health;
     }
 }

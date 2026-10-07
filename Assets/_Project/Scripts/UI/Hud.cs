@@ -8,6 +8,7 @@ public class Hud : MonoBehaviour
     [SerializeField] private PlayerHealthBar _healthBar;
     [SerializeField] private LevelUpUIEffect _levelUp;
     [SerializeField] private Image _aim;
+    [SerializeField] private InterstitialTimer _interstitialTimer;
 
     private PlayerPresenter _playerPresenter;
     private IUIPoolService _pool;
@@ -31,7 +32,8 @@ public class Hud : MonoBehaviour
     public void Construct(PlayerPresenter playerPresenter,
         ShootUIEffectAnimationSettings settings,
         ILevelManager levelManager,
-        IUIPoolService pool)
+        IUIPoolService pool,
+        IInterstitialAdvService interstitialAdvService)
     {
         _playerPresenter = playerPresenter;
         _pool = pool;
@@ -39,9 +41,10 @@ public class Hud : MonoBehaviour
 
         _shootEffectUIAnimation = new ShootEffectUIAnimation(_aim.rectTransform, settings);
 
+        _interstitialTimer.Construct(interstitialAdvService);
         _damagePanel.Construct(_playerPresenter.DamageManager, _levelManager);
         _healthBar.Construct(_playerPresenter.Health);
-        _levelUp.Construct(_healthBar.HealthIcon);
+        _levelUp.Construct(_healthBar.HealthIcon, _levelManager);
 
         _aim.gameObject.SetActive(false);
 
