@@ -7,6 +7,7 @@ public class SaveData
     public WeaponsSaveData Weapons;
     public GameSaveData Game;
     public AudioSettingSaveData Audio;
+    public RewardsSaveData Rewards;
 
     public SaveData()
     {
@@ -14,5 +15,6 @@ public class SaveData
         Weapons = new WeaponsSaveData();
         Game = new GameSaveData();
         Audio = new AudioSettingSaveData();
+        Rewards = new RewardsSaveData();
     }
 }

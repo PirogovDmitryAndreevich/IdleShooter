@@ -43,7 +43,7 @@ public abstract class EnemyPresenter : IDisposable, IResetObject, IPlayerTarget
     {
         _isDied = false;
         _health.Reset();
-        _view.gameObject.SetActive(true);
+        _view.Mesh.SetActive(true);
     }
 
     public virtual void Update()
@@ -65,7 +65,8 @@ public abstract class EnemyPresenter : IDisposable, IResetObject, IPlayerTarget
     protected virtual void OnDied()
     {
         _view.SoundsHandler.PlaySound(_sounds.DiedSound);
+        _view.DeathEffect.Play();
         _isDied = true;
-        _view.gameObject.SetActive(false);
+        _view.Mesh.SetActive(false);
     }
 }

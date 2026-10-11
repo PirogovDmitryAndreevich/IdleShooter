@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e1423145175d6b43bfbbaa3d878e69e, type: 3}
+  m_Name: RobotWeapon
+  m_EditorClassIdentifier: 
+  Type: 10
+  ShooterType: 0
+  ProjectileType: 0
+  FireRate: 0.2
+  MaxAimDistance: 1000
+  Shake:
+    PositionShakeSettings:
+      Duration: 0.15
+      Strength: {x: 0, y: 0, z: 0}
+      Vibrato: 20
+      Randomness: 90
+      FadeOut: 1
+    RotationShakeSettings:
+      Duration: 0.15
+      Strength: {x: 0, y: 0, z: 0}
+      Vibrato: 20
+      Randomness: 90
+      FadeOut: 1
+  AnimationName: 
+  Score: 1
+  Price: 1
+  ShootSound: {fileID: 8300000, guid: eb4c0c6fc2c15ef4d95894958d66b8af, type: 3}

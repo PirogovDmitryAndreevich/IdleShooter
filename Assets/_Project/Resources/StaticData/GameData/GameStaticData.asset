@@ -298,57 +298,57 @@ MonoBehaviour:
     ObstaclesOnLevel: 
   - Type: 1
     Recommended: 1
-    Wins: 1
+    Wins: 0
     EnemiesOnLevel: 
     ObstaclesOnLevel: 0000000000000000000000000000000000000000
   - Type: 2
     Recommended: 1
-    Wins: 3
+    Wins: 1
     EnemiesOnLevel: 
     ObstaclesOnLevel: 030000000400000005000000050000000500000005000000
   - Type: 3
     Recommended: 5
-    Wins: 10
+    Wins: 3
     EnemiesOnLevel: 0000000000000000000000000000000000000000
     ObstaclesOnLevel: 
   - Type: 4
     Recommended: 13
-    Wins: 20
+    Wins: 10
     EnemiesOnLevel: 01000000
     ObstaclesOnLevel: 
   - Type: 5
     Recommended: 19
-    Wins: 50
+    Wins: 20
     EnemiesOnLevel: 
     ObstaclesOnLevel: 
   - Type: 6
     Recommended: 29
-    Wins: 100
+    Wins: 50
     EnemiesOnLevel: 02000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000
     ObstaclesOnLevel: 
   - Type: 7
     Recommended: 39
-    Wins: 150
+    Wins: 100
     EnemiesOnLevel: 03000000
     ObstaclesOnLevel: 
   - Type: 8
     Recommended: 47
-    Wins: 230
+    Wins: 150
     EnemiesOnLevel: 04000000040000000400000004000000040000000400000004000000040000000400000004000000040000000400000004000000040000000400000004000000
     ObstaclesOnLevel: 
   - Type: 9
     Recommended: 50
-    Wins: 300
+    Wins: 230
     EnemiesOnLevel: 
     ObstaclesOnLevel: 070000000700000008000000080000000800000006000000
   - Type: 10
     Recommended: 53
-    Wins: 500
+    Wins: 300
     EnemiesOnLevel: 0500000005000000050000000500000005000000050000000600000006000000060000000600000007000000070000000700000007000000050000000500000005000000
     ObstaclesOnLevel: 090000000900000009000000
   - Type: 11
     Recommended: 55
-    Wins: 0
+    Wins: 500
     EnemiesOnLevel: 08000000
     ObstaclesOnLevel: 
   Obstacles:
@@ -379,6 +379,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fb6fa2ddc94f3474da63c63f46004d13, type: 2}
   - {fileID: 11400000, guid: 764724b166de2af44abca16420d2d407, type: 2}
   - {fileID: 11400000, guid: e65758121e7f0264cb63be63340ca9f6, type: 2}
+  - {fileID: 11400000, guid: 9c0ac0543df9d534d913908e035f7a9c, type: 2}
   - {fileID: 11400000, guid: fa14339884508bc43850015a69f6a114, type: 2}
   - {fileID: 11400000, guid: 3cc532343a7bb73418e74128c6096dd5, type: 2}
   - {fileID: 11400000, guid: 40976d1ac1527654894db675f7d708a2, type: 2}
@@ -388,3 +389,7 @@ MonoBehaviour:
     MoveDuration: 0.4
     AnimationDuration: 0.4
     MaxHorizontalAngle: 65
+  SoundsEffects:
+    SwitchWeaponSound: {fileID: 0}
+    LevelUpSound: {fileID: 0}
+    TakeWinsSound: {fileID: 0}

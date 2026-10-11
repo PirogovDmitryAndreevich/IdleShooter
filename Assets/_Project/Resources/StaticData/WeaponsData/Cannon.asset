@@ -31,3 +31,6 @@ MonoBehaviour:
       Randomness: 90
       FadeOut: 1
   AnimationName: 
+  Score: 1
+  Price: 1
+  ShootSound: {fileID: 8300000, guid: 982a6ec929b5f28428e04b74184bf560, type: 3}

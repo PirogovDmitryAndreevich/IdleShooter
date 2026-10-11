@@ -7,6 +7,8 @@ public abstract class EnemyView : MonoBehaviour
     [SerializeField] private DamageableCollider _damageableCollider;
     [SerializeField] private HealthBar _healthBar;
     [SerializeField] private SoundsHandler _soundsHandler;
+    [SerializeField] private GameObject _mesh;
+    [SerializeField] private DeathEffect _deathEffect;
 
     public HitFlash HitEffect => _hitEffect;    
 
@@ -18,4 +20,10 @@ public abstract class EnemyView : MonoBehaviour
 
     public SoundsHandler SoundsHandler =>
         _soundsHandler;
+
+    public DeathEffect DeathEffect => 
+        _deathEffect;
+
+    public GameObject Mesh =>
+        _mesh;
 }

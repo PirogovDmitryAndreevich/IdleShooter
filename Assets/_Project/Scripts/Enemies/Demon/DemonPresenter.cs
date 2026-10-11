@@ -24,6 +24,8 @@ public class DemonPresenter : EnemyPresenter, IIdleState, IAttackWithAnimationEv
 
         _playerTriggerObserver.TargetEnter += OnPlayerEnter;
         _playerTriggerObserver.PlayerExited += OnPlayerExited;
+
+        _view.StepEvent.Step += OnStep;
     }
 
     public Transform MoveTarget { get; private set; }
@@ -41,6 +43,8 @@ public class DemonPresenter : EnemyPresenter, IIdleState, IAttackWithAnimationEv
 
         _playerTriggerObserver.TargetEnter -= OnPlayerEnter;
         _playerTriggerObserver.PlayerExited -= OnPlayerExited;
+
+        _view.StepEvent.Step -= OnStep;
     }
 
     // IdleState
@@ -67,8 +71,11 @@ public class DemonPresenter : EnemyPresenter, IIdleState, IAttackWithAnimationEv
 
 
     // AttackState
-    public void OnAttackStateEnter() =>
+    public void OnAttackStateEnter()
+    {
         _view.Attack();
+        _view.SoundsHandler.PlayRandomPithSound(_view.Sounds.Attack);
+    }
 
     public void OnDealDamage() => 
         _view.OnDealDamage();
@@ -89,4 +96,8 @@ public class DemonPresenter : EnemyPresenter, IIdleState, IAttackWithAnimationEv
         MoveTarget = _spawnPoint;
         IsPlayerInCollider = false;
     }
+
+    private void OnStep() =>
+        _view.SoundsHandler
+        .PlayRandomPithSound(_view.Sounds.Step);
 }

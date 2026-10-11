@@ -226,6 +226,10 @@ public class GameFactory : IGameFactory
         SoldierView view = _assets.Instantiate(AssetsPath.SoldierEnemyPath, at.position)
             .GetComponent<SoldierView>();
 
+        WeaponStaticData weaponStaticData = _staticDataService.GetWeaponData(view.Weapon.Type);
+
+        view.Weapon.SoundHandler.Construct(_audioManager);
+
         view.transform.SetParent(parent);
 
         view.transform.localRotation = at.localRotation;
@@ -233,7 +237,7 @@ public class GameFactory : IGameFactory
         view.SoundsHandler.Construct(_audioManager);
 
         EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(type));
-        EnemyShooter shooter = new EnemyShooter(model, view.Weapon, _projectilePool);
+        EnemyShooter shooter = new EnemyShooter(model, view.Weapon, weaponStaticData, _projectilePool);
 
         SoldierPresenter presenter =
             new SoldierPresenter(model, view, at, attackPoint, shooter, playerTriggerObserver);
@@ -252,14 +256,18 @@ public class GameFactory : IGameFactory
         CannonView view = _assets.Instantiate(AssetsPath.CannonPath, at.position)
             .GetComponent<CannonView>();
 
+        WeaponStaticData weaponStaticData = _staticDataService.GetWeaponData(view.Weapon.Type);
+
         view.transform.SetParent(parent);
 
         view.transform.localRotation = at.localRotation;
 
         view.SoundsHandler.Construct(_audioManager);
+        // оружие и персонаж используют один обработчик
+        //view.Weapon.SoundHandler.Construct(_audioManager);
 
         EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(EnemyType.Cannon));
-        EnemyShooter shooter = new EnemyShooter(model, view.Weapon, _projectilePool);
+        EnemyShooter shooter = new EnemyShooter(model, view.Weapon, weaponStaticData, _projectilePool);
 
         CannonPresenter presenter = new CannonPresenter(view, model, shooter, playerTriggerObserver);
 
@@ -302,15 +310,19 @@ public class GameFactory : IGameFactory
         RobotView view = _assets.Instantiate(AssetsPath.RobotPath, at.position)
             .GetComponent<RobotView>();
 
+        WeaponStaticData weaponStaticData = _staticDataService.GetWeaponData(view.Weapon.Type);
+
         view.transform.SetParent(parent);
 
         EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(EnemyType.Robot));
-        EnemyShooter shooter = new EnemyShooter(model, view.Weapon, _projectilePool);
+        EnemyShooter shooter = new EnemyShooter(model, view.Weapon, weaponStaticData, _projectilePool);
 
         view.NavMeshAgent.speed = model.MoveSpeed;
         view.NavMeshAgent.angularSpeed = model.RotateSpeed;
 
         view.SoundsHandler.Construct(_audioManager);
+        // оружие и персонаж используют один обработчик
+        //view.Weapon.SoundHandler.Construct(_audioManager);
 
         RobotPresenter presenter = new RobotPresenter(view, model, at, playerTriggerObserver, shooter);
 

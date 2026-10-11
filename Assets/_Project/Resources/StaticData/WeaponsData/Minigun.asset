@@ -33,3 +33,4 @@ MonoBehaviour:
   AnimationName: IsMinigun
   Score: 250
   Price: 250
+  ShootSound: {fileID: 8300000, guid: f93d70741b3430541901b7e9b94b1b21, type: 3}

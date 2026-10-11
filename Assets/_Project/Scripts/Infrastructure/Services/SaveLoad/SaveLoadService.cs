@@ -10,8 +10,10 @@ public class SaveLoadService : ISaveLoadService
     public void SaveProgress() =>
         YandexGamesSave();
 
-    public SaveData LoadProgress() =>
-        YG2.saves.Data;
+    public SaveData LoadProgress()
+    {
+        return YG2.saves.Data;
+    }
 
     private void YandexGamesSave()
     {

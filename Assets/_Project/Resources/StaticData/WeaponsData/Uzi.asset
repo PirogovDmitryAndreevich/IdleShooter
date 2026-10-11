@@ -33,3 +33,4 @@ MonoBehaviour:
   AnimationName: IsOneHand
   Score: 25
   Price: 18
+  ShootSound: {fileID: 8300000, guid: 63b84bfb44b71e044b27f03fa17f1149, type: 3}

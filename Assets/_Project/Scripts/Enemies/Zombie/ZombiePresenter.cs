@@ -69,8 +69,11 @@ public class ZombiePresenter : EnemyPresenter, IAttackWithAnimationEvent,
 
 
     // AttackState
-    public void OnAttackStateEnter() =>
+    public void OnAttackStateEnter()
+    {
+        _view.SoundsHandler.PlaySound(_view.Sounds.Attack);
         _view.Attack();
+    }
 
     public void OnDealDamage() => 
         _view.OnDealDamage();

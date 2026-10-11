@@ -9,6 +9,9 @@ public class GhostPresenter : EnemyPresenter, IAttackWithAnimationEvent,
     private readonly PlayerTriggerObserver _playerTriggerObserver;
     private readonly AgentMoveToTarget _agentMoveToTarget;
 
+    private float _stepInterval;
+    private float _nextStepTime;
+
     public GhostPresenter(GhostView view, EnemyModel model,Transform spawnPoint,
         PlayerTriggerObserver playerTriggerObserver) : base(view, model, view.Sounds)
     {
@@ -21,6 +24,8 @@ public class GhostPresenter : EnemyPresenter, IAttackWithAnimationEvent,
 
         _agentMoveToTarget = new AgentMoveToTarget(_view.NavMeshAgent);
         StateMachine = new GhostStateMachine(this, _model, _view.AttackEvent);
+
+        _stepInterval = _view.Sounds.Step.length;
 
         _playerTriggerObserver.TargetEnter += OnPlayerEnter;
         _playerTriggerObserver.PlayerExited += OnPlayerExited;
@@ -54,22 +59,39 @@ public class GhostPresenter : EnemyPresenter, IAttackWithAnimationEvent,
     }
 
     // MoveState
-    public void OnMoveStateEnter() =>
+    public void OnMoveStateEnter()
+    {
+        _nextStepTime = 0f;
         _view.Move();
+    }
 
-    public void MovingUpdate() =>
+    public void MovingUpdate()
+    {
+        if (_nextStepTime < Time.time)
+        {
+            _view.SoundsHandler.PlaySound(_view.Sounds.Step);
+            _nextStepTime = Time.time + _stepInterval;
+        }
+
         _agentMoveToTarget.Move(MoveTarget.position);
+    }
 
     public void OnMoveStateExit()
     {
+        _nextStepTime = 0f;
         _view.StopMove();
         _agentMoveToTarget.StopMove();
     }
 
 
     // AttackState
-    public void OnAttackStateEnter() =>
+    public void OnAttackStateEnter()
+    {
+        _view.SoundsHandler
+            .PlayRandomPithSound(_view.Sounds.AttackSound);
+
         _view.Attack();
+    }
 
     public void OnDealDamage() =>
         _view.OnDealDamage();

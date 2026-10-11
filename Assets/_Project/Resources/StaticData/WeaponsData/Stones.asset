@@ -33,3 +33,4 @@ MonoBehaviour:
   AnimationName: AimStones
   Score: 1
   Price: 0
+  ShootSound: {fileID: 8300000, guid: 5b757d2f86abebb4186bef30a3eebbd6, type: 3}

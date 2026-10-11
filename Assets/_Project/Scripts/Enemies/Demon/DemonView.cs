@@ -4,6 +4,7 @@ using UnityEngine.AI;
 public class DemonView : EnemyView
 {
     [SerializeField] private AnimationEvent _attackEvent;
+    [SerializeField] private EnemyStepAnimationEvent _stepEvent;
     [SerializeField] private MeleeDamageCollider _damageCollider;
     [SerializeField] private DemonBehaviour _demonBehaviour;
     [SerializeField] private NavMeshAgent _navMeshAgent;
@@ -11,6 +12,8 @@ public class DemonView : EnemyView
 
     public AnimationEvent AttackEvent =>
         _attackEvent;
+    public EnemyStepAnimationEvent StepEvent => 
+        _stepEvent;
     public DemonBehaviour DemonBehaviour =>
         _demonBehaviour;
     public MeleeDamageCollider DamageCollider =>

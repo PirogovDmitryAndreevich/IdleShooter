@@ -7,6 +7,8 @@ public class ObstacleView : MonoBehaviour
     [SerializeField] private DamageableCollider _damageableCollider;
     [SerializeField] private DamageCollider _damageCollider;
     [SerializeField] private SoundsHandler _soundsHandler;
+    [SerializeField] private GameObject _mesh;
+    [SerializeField] private DestroyEffect _destroyEffect;
 
     public HealthBar HealthBar =>
         _healthBar;
@@ -19,9 +21,14 @@ public class ObstacleView : MonoBehaviour
     public SoundsHandler SoundsHandler =>
         _soundsHandler;
 
-    public void OnDied() =>
-        gameObject.SetActive(false);
+    public void OnDied()
+    {
+        _mesh.SetActive(false);
+        _destroyEffect.Play();
+    }
 
-    public void OnReset() =>
-        gameObject.SetActive(true);
+    public void OnReset()
+    {
+        _mesh.SetActive(true);
+    }
 }

@@ -2,10 +2,10 @@ using System;
 
 public class AudioManager : IAudioManager
 {
-    private readonly AudioSettingSaveData _saveData;
+    private readonly IProgressService _progress;
 
     public AudioManager(IProgressService progress) =>
-        _saveData = progress.Data.Audio;
+        _progress = progress;
 
     public event Action SoundVolumeChanged;
     public event Action SoundMuteChanged;
@@ -14,25 +14,25 @@ public class AudioManager : IAudioManager
     public event Action MusicMuteChanged;
 
     public float SoundVolume =>
-        _saveData.SoundVolume;
+        _progress.Data.Audio.SoundVolume;
 
     public float MusicVolume =>
-        _saveData.MusicVolume;
+        _progress.Data.Audio.MusicVolume;
 
     public bool IsSoundMute =>
-        _saveData.IsSoundMute;
+        _progress.Data.Audio.IsSoundMute;
 
     public bool IsMusicMute =>
-        _saveData.IsMusicMute;
+        _progress.Data.Audio.IsMusicMute;
 
     public void ChangeSoundVolume(float value)
     {
-        if (_saveData.SoundVolume == value)
+        if (_progress.Data.Audio.SoundVolume == value)
             return;
 
-        _saveData.SoundVolume = value;
+        _progress.Data.Audio.SoundVolume = value;
 
-        bool shouldBeMuted = _saveData.SoundVolume <= 0;
+        bool shouldBeMuted = _progress.Data.Audio.SoundVolume <= 0;
 
         if (IsSoundMute != shouldBeMuted)
             SwitchSoundMute();
@@ -42,18 +42,18 @@ public class AudioManager : IAudioManager
 
     public void SwitchSoundMute()
     {
-        _saveData.IsSoundMute = !IsSoundMute;
+        _progress.Data.Audio.IsSoundMute = !IsSoundMute;
         SoundMuteChanged?.Invoke();
     }
 
     public void ChangeMusicVolume(float value)
     {
-        if (_saveData.MusicVolume == value)
+        if (_progress.Data.Audio.MusicVolume == value)
             return;
 
-        _saveData.MusicVolume = value;
+        _progress.Data.Audio.MusicVolume = value;
 
-        bool shouldBeMuted = _saveData.MusicVolume <= 0;
+        bool shouldBeMuted = _progress.Data.Audio.MusicVolume <= 0;
 
         if (IsMusicMute != shouldBeMuted)
             SwitchMusicMute();
@@ -63,7 +63,7 @@ public class AudioManager : IAudioManager
 
     public void SwitchMusicMute()
     {
-        _saveData.IsMusicMute = !IsMusicMute;
+        _progress.Data.Audio.IsMusicMute = !IsMusicMute;
         MusicMuteChanged?.Invoke();
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine.AI;
 public class RobotView : EnemyView
 {
     [SerializeField] private AnimationEvent _animationEvent;
+    [SerializeField] private EnemyStepAnimationEvent _stepEvent;
     [SerializeField] private WeaponView _weaponView;
     [SerializeField] private NavMeshAgent _navMeshAgent;
     [SerializeField] private MeleeDamageCollider _damageCollider;
@@ -12,6 +13,8 @@ public class RobotView : EnemyView
 
     public RobotBehaviour Behaviour =>
         _behaviour;
+    public EnemyStepAnimationEvent StepEvent =>
+        _stepEvent;
     public AnimationEvent AnimationEvent =>
         _animationEvent;
     public NavMeshAgent NavMeshAgent =>

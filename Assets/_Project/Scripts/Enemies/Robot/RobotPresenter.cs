@@ -41,6 +41,8 @@ public class RobotPresenter : EnemyPresenter, IIdleState, IMoveState,
         _playerTriggerObserver.PlayerExited += OnPlayerExited;
 
         _reloadTimer = _model.ReloadTime;
+
+        _view.StepEvent.Step += OnStep;
     }
 
     public bool IsPlayerInCollider { get; private set; }
@@ -68,6 +70,8 @@ public class RobotPresenter : EnemyPresenter, IIdleState, IMoveState,
 
         _playerTriggerObserver.TargetEnter -= OnPlayerEnter;
         _playerTriggerObserver.PlayerExited -= OnPlayerExited;
+
+        _view.StepEvent.Step -= OnStep;
     }
 
     // IdleState
@@ -96,8 +100,11 @@ public class RobotPresenter : EnemyPresenter, IIdleState, IMoveState,
     public void OnAttackStateEnter() =>
         _view.Kick();
 
-    public void OnDealDamage() =>
+    public void OnDealDamage()
+    {
+        _view.SoundsHandler.PlayRandomPithSound(_view.Sounds.Kick);
         _view.OnDealDamage();
+    }
 
     public void OnAttackEnded() =>
         _view.OnAttackEnded();
@@ -185,4 +192,8 @@ public class RobotPresenter : EnemyPresenter, IIdleState, IMoveState,
 
         return true;
     }
+
+    private void OnStep() =>
+        _view.SoundsHandler
+        .PlayRandomPithSound(_view.Sounds.Step);
 }

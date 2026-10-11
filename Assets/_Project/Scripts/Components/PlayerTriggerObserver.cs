@@ -7,7 +7,7 @@ public class PlayerTriggerObserver : MonoBehaviour
     public event Action TriggerEnter;
     public event Action<Transform> TargetEnter;
     public event Action<CharacterController> ControllerEntered;
-    public event Action<IPassiveShooterInteractor> PassiveShooterEntered;
+    public event Action<IPlayer> PlayerEntered;
     public event Action PlayerExited;
 
     private void OnTriggerEnter(Collider other)
@@ -26,14 +26,13 @@ public class PlayerTriggerObserver : MonoBehaviour
         {
             TriggerEnter?.Invoke();
 
-            if (other.TryGetComponent(out CharacterController cc))            
-                ControllerEntered?.Invoke(cc);        
-            
-            if(other.TryGetComponent(out Transform transform))
+            if (other.TryGetComponent(out CharacterController cc))
+                ControllerEntered?.Invoke(cc);
+
+            if (other.TryGetComponent(out Transform transform))
                 TargetEnter?.Invoke(transform);
 
-            if(other.TryGetComponent(out IPassiveShooterInteractor passiveveShooter))
-                PassiveShooterEntered?.Invoke(passiveveShooter);
+            PlayerEntered?.Invoke(player);
         }
     }
 

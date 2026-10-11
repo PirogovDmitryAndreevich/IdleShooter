@@ -5,15 +5,18 @@ public class EnemyShooter
     private const float EyeHeight = 0.7f;
 
     private readonly EnemyModel _model;
+    private readonly WeaponStaticData _weaponStaticData;
     private readonly WeaponView _view;
     private readonly IProjectilePool _projectilePool;
 
     private float _nextFireTime = 0f;
 
-    public EnemyShooter(EnemyModel model, WeaponView view, IProjectilePool projectilePool)
+    public EnemyShooter(EnemyModel model, WeaponView view,
+        WeaponStaticData weaponStaticData, IProjectilePool projectilePool)
     {
         _model = model;
         _view = view;
+        _weaponStaticData = weaponStaticData;
         _projectilePool = projectilePool;
     }
 
@@ -33,6 +36,7 @@ public class EnemyShooter
         if (target == null)
             return;
 
+        _view.SoundHandler.PlayRandomPithSound(_weaponStaticData.ShootSound);
         _view.Shoot();
 
         Vector3 shootPosition = _view.ShootPoint.position;

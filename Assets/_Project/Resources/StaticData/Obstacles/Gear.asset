@@ -15,4 +15,5 @@ MonoBehaviour:
   Type: 3
   HealthPoints: 25
   Damage: 100
+  TakeDamageSound: {fileID: 8300000, guid: c7bc9533e32f84247bff4f9e46b1b366, type: 3}
   AssetPath: Obstacles/Gear

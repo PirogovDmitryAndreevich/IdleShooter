@@ -19,7 +19,7 @@ public class PlayerPresenter : IDisposable
     private bool _isAim;
     private bool _isPassiveShooting;
     private bool _skipPassiveMovementCheck;
-    private PassiveShooting _passiveShooting;
+    private IPassiveShooting _passiveShooting;
 
     private bool HasWeapon => _weapon != null;
     private bool CanShoot => HasWeapon && _isAim;
@@ -168,7 +168,7 @@ public class PlayerPresenter : IDisposable
         _camera.SyncWithPlayer(target.rotation);
     }
 
-    private void OnPassiveShooting(PassiveShooting passiveShooting)
+    private void OnPassiveShooting(IPassiveShooting passiveShooting)
     {
         if (passiveShooting == null || !HasWeapon || _isPassiveShooting)
             return;

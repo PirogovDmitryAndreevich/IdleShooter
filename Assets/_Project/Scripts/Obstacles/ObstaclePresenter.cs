@@ -53,11 +53,11 @@ public class ObstaclePresenter : IDisposable, IResetObject, IPlayerTarget
         if (IsDied)
             return;
 
-        _model.Health.TakeDamage(damage);
-
+        _view.SoundsHandler.PlayRandomPithSound(_model.TakeDamageSound);
         _impactView.Play();
         _view.HitFlash.Flash();
 
+        _model.Health.TakeDamage(damage);
     }
 
     protected virtual void Died()
