@@ -18,7 +18,6 @@ public class PlayerPresenter : IDisposable
     private IWeapon _weapon;
     private bool _isAim;
     private bool _isPassiveShooting;
-    //private bool _skipPassiveMovementCheck;
     private IPassiveShooting _passiveShooting;
 
     private bool HasWeapon => _weapon != null;
@@ -177,7 +176,6 @@ public class PlayerPresenter : IDisposable
 
         _passiveShooting = passiveShooting;
         _isPassiveShooting = true;
-        //_skipPassiveMovementCheck = true;
 
         _animator.SetRun(false);
         _animator.SetJump(false);
@@ -193,16 +191,6 @@ public class PlayerPresenter : IDisposable
 
     private void UpdatePassiveShooting()
     {
-        /*if (_skipPassiveMovementCheck)
-        {
-            _skipPassiveMovementCheck = false;
-        }
-        else if (_controller.HasMovementInput)
-        {
-            StopPassiveShooting();
-            return;
-        }*/
-
         if (!_isPassiveShooting || _passiveShooting == null)
             return;
 
@@ -225,7 +213,6 @@ public class PlayerPresenter : IDisposable
 
         _isPassiveShooting = false;
         _passiveShooting = null;
-        //_skipPassiveMovementCheck = false;
     }
 
     private void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
@@ -290,6 +277,7 @@ public class PlayerPresenter : IDisposable
 
         if (_weapon.TryShootPassive(targetPoint))
         {
+            _damageManager.PlayerShot();
             _level.AddScore(_weapon.Score * _passiveShooting.Multiplicator);
             PlayerShot?.Invoke(_weapon.Score * _passiveShooting.Multiplicator);
         }
