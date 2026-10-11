@@ -18,6 +18,7 @@ public class GameFactory : IGameFactory
     private readonly IInterstitialAdvService _interstitialAdvService;
     private readonly IAudioManager _audioManager;
     private readonly IRewardAdvService _rewardAdvService;
+    private readonly IWindowsService _windowsService;
     private ILevelController _levelController;
     private PlayerPresenter _player;
     WeaponSwitcher _weaponSwitcher;
@@ -26,7 +27,8 @@ public class GameFactory : IGameFactory
         IProgressService progressService, IPoolService poolService, IWeaponDataService weaponDataService,
         IGameSaveDataService gameSaveDataService, IProjectilePool projectilePool, IUIPoolService UIPoolService,
         IWarpService warpService, ITransitionDataService transitionDataService, ILevelManager levelManager,
-        IInterstitialAdvService interstitialAdvService, IAudioManager audioManager, IRewardAdvService rewardAdvService)
+        IInterstitialAdvService interstitialAdvService, IAudioManager audioManager,
+        IRewardAdvService rewardAdvService, IWindowsService windowsService)
     {
         _assets = assets;
         _inputService = inputService;
@@ -43,6 +45,7 @@ public class GameFactory : IGameFactory
         _interstitialAdvService = interstitialAdvService;
         _audioManager = audioManager;
         _rewardAdvService = rewardAdvService;
+        _windowsService = windowsService;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
@@ -112,6 +115,7 @@ public class GameFactory : IGameFactory
 
         lobby.LeaderBoard.Construct(_levelManager);
         lobby.PassiveShootingReward.Construct(_rewardAdvService, _progressService);
+        lobby.Gift.Construct(_windowsService);
 
         lobby.Construct(lobby.LobbyTransition);
 
@@ -428,6 +432,14 @@ public class GameFactory : IGameFactory
             _staticDataService.GetShootAnimationSettings(),
             _levelManager, _uIPoolService,
             _interstitialAdvService);
+
+        foreach (var window in hud.Windows)
+            window.Construct(_windowsService);
+
+        foreach (var button in hud.WindowsButton)
+            button.Construct(_windowsService);
+
+        hud.AudioSettings.Construct(_audioManager);
 
         _uIPoolService.SetCanvas(hud.GetComponent<Canvas>());
 

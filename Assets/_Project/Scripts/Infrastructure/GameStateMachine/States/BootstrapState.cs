@@ -42,6 +42,7 @@ public class BootstrapState : IState
         _allServices.RegisterSingle<IProjectilePool>(new ProjectilePool());
         _allServices.RegisterSingle<IWarpService>(new WarpService());
         _allServices.RegisterSingle<IInterstitialAdvService>(new InterstitialAdvService());
+        _allServices.RegisterSingle<IWindowsService>(new WindowsService());
         _allServices.RegisterSingle<ITransitionDataService>(new TransitionDataService(_allServices.Single<IInterstitialAdvService>()));
         _allServices.RegisterSingle<IAudioManager>(new AudioManager(_allServices.Single<IProgressService>()));
         RegisterInputService();
@@ -65,7 +66,8 @@ public class BootstrapState : IState
             _allServices.Single<ILevelManager>(),
             _allServices.Single<IInterstitialAdvService>(),
             _allServices.Single<IAudioManager>(),
-            _allServices.Single<IRewardAdvService>()));
+            _allServices.Single<IRewardAdvService>(),
+            _allServices.Single<IWindowsService>()));
 
         _allServices.RegisterSingle<ILevelLoader>(new LevelLoader(
             _allServices.Single<IGameFactory>(),

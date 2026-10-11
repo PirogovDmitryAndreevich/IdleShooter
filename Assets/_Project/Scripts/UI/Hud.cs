@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,11 +10,21 @@ public class Hud : MonoBehaviour
     [SerializeField] private LevelUpUIEffect _levelUp;
     [SerializeField] private Image _aim;
     [SerializeField] private InterstitialTimer _interstitialTimer;
+    [SerializeField] private WindowBase[] _windows;
+    [SerializeField] private WindowButton[] _windowsButtons;
+    [SerializeField] private AudioSettings _audioSettings;
 
     private PlayerPresenter _playerPresenter;
     private IUIPoolService _pool;
     private ILevelManager _levelManager;
     private ShootEffectUIAnimation _shootEffectUIAnimation;
+
+    public WindowBase[] Windows =>
+        _windows;
+    public WindowButton[] WindowsButton =>
+        _windowsButtons;
+    public AudioSettings AudioSettings =>
+        _audioSettings;
 
     private void OnDestroy()
     {
@@ -21,12 +32,6 @@ public class Hud : MonoBehaviour
         _playerPresenter.AimChanged -= OnAimChanged;
         _playerPresenter.WeaponAvailabilityChanged -= OnWeaponAvailabilityChanged;
         _playerPresenter.PlayerShot -= OnPlayerShoot;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-            OnPlayerLevelUp(0);
     }
 
     public void Construct(PlayerPresenter playerPresenter,

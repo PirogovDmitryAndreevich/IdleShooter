@@ -9,4 +9,5 @@ public class Lobby : LevelView
     public Transition LobbyTransition;
     public Transition TransitionFor1Level;
     public PassiveShootingReward PassiveShootingReward;
+    public Gift Gift;
 }
