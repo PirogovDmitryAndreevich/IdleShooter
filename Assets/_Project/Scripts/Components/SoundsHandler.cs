@@ -12,6 +12,9 @@ public class SoundsHandler : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (_audioManager == null)
+            return;
+
         _audioManager.SoundVolumeChanged -= OnSoundVolumeChanged;
         _audioManager.SoundMuteChanged -= OnSoundMuteChanged;
     }

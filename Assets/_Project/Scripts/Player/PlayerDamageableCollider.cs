@@ -10,4 +10,6 @@ public interface IPlayer : IDamageable
     void Died();
 
     void PassiveShooting(IPassiveShooting passiveShooting);
+
+    void OnStopPassiveShooting();
 }

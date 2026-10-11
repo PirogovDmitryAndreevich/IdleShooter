@@ -32,7 +32,7 @@ public class GearMoveToPlatform : IDisposable, IResetObject
 
     private void StartMoving(Vector3 endPosition)
     {
-        if (!_gear.gameObject.activeInHierarchy)
+        if (!_gear.Mesh.activeInHierarchy)
             return;
 
         Vector3 targetPosition = new Vector3(endPosition.x, _gear.transform.position.y, endPosition.z);
@@ -43,7 +43,7 @@ public class GearMoveToPlatform : IDisposable, IResetObject
 
     private IEnumerator Moving(Vector3 startPosition, Vector3 endPosition, float speed)
     {
-        if (!_gear.gameObject.activeInHierarchy)
+        if (!_gear.Mesh.activeInHierarchy)
             yield break;
 
         float distance = Vector3.Distance(startPosition, endPosition);
@@ -59,7 +59,7 @@ public class GearMoveToPlatform : IDisposable, IResetObject
 
             _gear.transform.position = Vector3.Lerp(startPosition, endPosition, t);
 
-            if (!_gear.gameObject.activeInHierarchy)
+            if (!_gear.Mesh.activeInHierarchy)
                 yield break;
 
             yield return null;

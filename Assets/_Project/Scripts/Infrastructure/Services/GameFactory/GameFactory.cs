@@ -17,6 +17,7 @@ public class GameFactory : IGameFactory
     private readonly ILevelManager _levelManager;
     private readonly IInterstitialAdvService _interstitialAdvService;
     private readonly IAudioManager _audioManager;
+    private readonly IRewardAdvService _rewardAdvService;
     private ILevelController _levelController;
     private PlayerPresenter _player;
     WeaponSwitcher _weaponSwitcher;
@@ -25,7 +26,7 @@ public class GameFactory : IGameFactory
         IProgressService progressService, IPoolService poolService, IWeaponDataService weaponDataService,
         IGameSaveDataService gameSaveDataService, IProjectilePool projectilePool, IUIPoolService UIPoolService,
         IWarpService warpService, ITransitionDataService transitionDataService, ILevelManager levelManager,
-        IInterstitialAdvService interstitialAdvService, IAudioManager audioManager)
+        IInterstitialAdvService interstitialAdvService, IAudioManager audioManager, IRewardAdvService rewardAdvService)
     {
         _assets = assets;
         _inputService = inputService;
@@ -41,6 +42,7 @@ public class GameFactory : IGameFactory
         _levelManager = levelManager;
         _interstitialAdvService = interstitialAdvService;
         _audioManager = audioManager;
+        _rewardAdvService = rewardAdvService;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
@@ -109,6 +111,7 @@ public class GameFactory : IGameFactory
             at: gameData.LobbySpawnPosition);
 
         lobby.LeaderBoard.Construct(_levelManager);
+        lobby.PassiveShootingReward.Construct(_rewardAdvService, _progressService);
 
         lobby.Construct(lobby.LobbyTransition);
 

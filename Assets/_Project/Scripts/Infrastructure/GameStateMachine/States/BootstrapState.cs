@@ -33,6 +33,7 @@ public class BootstrapState : IState
         RegisterStaticData();
         _allServices.RegisterSingle<IProgressService>(new ProgressService());
         _allServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(_allServices.Single<IProgressService>()));
+        _allServices.RegisterSingle<IRewardAdvService>(new RewardAdvService());
         _allServices.RegisterSingle<IPoolService>(new Pool());
         _allServices.RegisterSingle<IUIPoolService>(new UIPoolService());
         _allServices.RegisterSingle<IWeaponDataService>(new WeaponDataService(_allServices.Single<IProgressService>()));
@@ -63,7 +64,8 @@ public class BootstrapState : IState
             _allServices.Single<ITransitionDataService>(),
             _allServices.Single<ILevelManager>(),
             _allServices.Single<IInterstitialAdvService>(),
-            _allServices.Single<IAudioManager>()));
+            _allServices.Single<IAudioManager>(),
+            _allServices.Single<IRewardAdvService>()));
 
         _allServices.RegisterSingle<ILevelLoader>(new LevelLoader(
             _allServices.Single<IGameFactory>(),

@@ -18,7 +18,7 @@ public class PlayerPresenter : IDisposable
     private IWeapon _weapon;
     private bool _isAim;
     private bool _isPassiveShooting;
-    private bool _skipPassiveMovementCheck;
+    //private bool _skipPassiveMovementCheck;
     private IPassiveShooting _passiveShooting;
 
     private bool HasWeapon => _weapon != null;
@@ -66,7 +66,8 @@ public class PlayerPresenter : IDisposable
 
         _view.Damage += TakeDamage;
         _view.PlayerDied += OnPlayerDied;
-        _view.PassiveShooterInteract += OnPassiveShooting;
+        _view.PassiveShooterInteract += StartPassiveShooting;
+        _view.StopPassiveShooting += StopPassiveShooting;
 
         _health.Died += OnPlayerDied;
     }
@@ -78,7 +79,8 @@ public class PlayerPresenter : IDisposable
 
         _view.Damage -= TakeDamage;
         _view.PlayerDied -= OnPlayerDied;
-        _view.PassiveShooterInteract -= OnPassiveShooting;
+        _view.PassiveShooterInteract -= StartPassiveShooting;
+        _view.StopPassiveShooting -= StopPassiveShooting;
 
         _health.Died -= OnPlayerDied;
 
@@ -89,10 +91,10 @@ public class PlayerPresenter : IDisposable
 
     public void FixedUpdate()
     {
+        _controller.FixedUpdate();
+
         if (_isPassiveShooting)
             return;
-
-        _controller.FixedUpdate();
 
         if (_isAim)
         {
@@ -114,13 +116,13 @@ public class PlayerPresenter : IDisposable
     {
         _camera.Update();
 
+        _controller.Update();
+
         if (_isPassiveShooting)
         {
             UpdatePassiveShooting();
             return;
         }
-
-        _controller.Update();
 
         _animator.SetRun(_controller.IsRun);
         _animator.SetJump(_controller.IsJumping);
@@ -168,14 +170,14 @@ public class PlayerPresenter : IDisposable
         _camera.SyncWithPlayer(target.rotation);
     }
 
-    private void OnPassiveShooting(IPassiveShooting passiveShooting)
+    private void StartPassiveShooting(IPassiveShooting passiveShooting)
     {
         if (passiveShooting == null || !HasWeapon || _isPassiveShooting)
             return;
 
         _passiveShooting = passiveShooting;
         _isPassiveShooting = true;
-        _skipPassiveMovementCheck = true;
+        //_skipPassiveMovementCheck = true;
 
         _animator.SetRun(false);
         _animator.SetJump(false);
@@ -191,7 +193,7 @@ public class PlayerPresenter : IDisposable
 
     private void UpdatePassiveShooting()
     {
-        if (_skipPassiveMovementCheck)
+        /*if (_skipPassiveMovementCheck)
         {
             _skipPassiveMovementCheck = false;
         }
@@ -199,7 +201,10 @@ public class PlayerPresenter : IDisposable
         {
             StopPassiveShooting();
             return;
-        }
+        }*/
+
+        if (!_isPassiveShooting || _passiveShooting == null)
+            return;
 
         _rotationHandler.RotateTowardsPoint(
             _view.transform,
@@ -207,6 +212,20 @@ public class PlayerPresenter : IDisposable
             _model.StaticData.RotationSmoothness);
 
         PassiveShoot(_passiveShooting.TargetPoint.position);
+    }
+
+    private void StopPassiveShooting()
+    {
+        if (!_isPassiveShooting)
+            return;
+
+        _animator.SetWeaponAnimation(
+                _weapon.AnimationName,
+                false);
+
+        _isPassiveShooting = false;
+        _passiveShooting = null;
+        //_skipPassiveMovementCheck = false;
     }
 
     private void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
@@ -274,20 +293,6 @@ public class PlayerPresenter : IDisposable
             _level.AddScore(_weapon.Score * _passiveShooting.Multiplicator);
             PlayerShot?.Invoke(_weapon.Score * _passiveShooting.Multiplicator);
         }
-    }
-
-    private void StopPassiveShooting()
-    {
-        if (!_isPassiveShooting)
-            return;
-
-        _animator.SetWeaponAnimation(
-                _weapon.AnimationName,
-                false);
-
-        _isPassiveShooting = false;
-        _passiveShooting = null;
-        _skipPassiveMovementCheck = false;
     }
 
     private void OnPlayerDied()

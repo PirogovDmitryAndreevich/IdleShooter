@@ -17,6 +17,7 @@ public class PlayerView : MonoBehaviour, IPlayer
     public event Action PlayerDied;
     public event Action<float, Vector3, Vector3> Damage;
     public event Action<IPassiveShooting> PassiveShooterInteract;
+    public event Action StopPassiveShooting;
 
     private Dictionary<WeaponType, WeaponView> _weapons;
 
@@ -84,4 +85,7 @@ public class PlayerView : MonoBehaviour, IPlayer
 
     public void PassiveShooting(IPassiveShooting passiveShooting) => 
         PassiveShooterInteract?.Invoke(passiveShooting);
+
+    public void OnStopPassiveShooting() =>
+        StopPassiveShooting?.Invoke();
 }

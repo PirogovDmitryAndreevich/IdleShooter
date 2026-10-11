@@ -20,6 +20,7 @@ public class ObstacleView : MonoBehaviour
         _damageCollider;
     public SoundsHandler SoundsHandler =>
         _soundsHandler;
+    public GameObject Mesh => _mesh;
 
     public void OnDied()
     {
