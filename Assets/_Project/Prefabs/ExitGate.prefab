@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5280258520838056539}
-  - component: {fileID: 9074326852911538865}
-  - component: {fileID: 577276631286517579}
+  - component: {fileID: 518791295807162024}
   m_Layer: 11
-  m_Name: EnterGatex
+  m_Name: ExitGate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,28 +35,7 @@ Transform:
   - {fileID: 2952011332555141548}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &9074326852911538865
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2485236300585557887}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 10}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &577276631286517579
+--- !u!114 &518791295807162024
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,13 +44,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2485236300585557887}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ccfc511d2f583a4e833b833f3794ba0, type: 3}
+  m_Script: {fileID: 11500000, guid: 3fc3b8091acc4de49901c84ce09a8f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _levelText: {fileID: 6573402155608863296}
   _recommendedLevel: {fileID: 681373593623390361}
-  _lock: {fileID: 7378768276038177804}
-  _collider: {fileID: 2518372901713551692}
+  _lock: {fileID: 0}
+  _collider: {fileID: 0}
 --- !u!1 &3126190671205742791
 GameObject:
   m_ObjectHideFlags: 0

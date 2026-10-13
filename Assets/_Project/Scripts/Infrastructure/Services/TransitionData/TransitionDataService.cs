@@ -45,12 +45,16 @@ public class TransitionDataService : ITransitionDataService
         _levels[level.LevelType] = level;
 
         level.TransitionEntered += OnLevelEntered;
+        level.PlayerGiveWins += OnPlayerTookWins;
     }
 
     public void Dispose()
     {
         foreach (var level in _levels)
+        {
             level.Value.TransitionEntered -= OnLevelEntered;
+            level.Value.PlayerGiveWins -= OnPlayerTookWins;
+        }
     }
 
     public void OpenNextLevel()
@@ -76,5 +80,10 @@ public class TransitionDataService : ITransitionDataService
         LevelType nextLevelType = (LevelType)nextIndex;
 
         return _levels.TryGetValue(nextLevelType, out nextLevel);
+    }
+
+    private void OnPlayerTookWins()
+    {
+        ResetEnteredLevels();
     }
 }

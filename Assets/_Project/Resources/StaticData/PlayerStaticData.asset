@@ -16,7 +16,7 @@ MonoBehaviour:
   JumpForce: 18
   JumpTime: 0.85
   RotationSmoothness: 0.15
-  Gravity: 9.8
+  Gravity: 11.1
   GroundStickForce: -0.5
   HeadHitDistance: 1.1
   MovementThreshold: 0.9

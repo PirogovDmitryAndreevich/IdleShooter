@@ -9,6 +9,7 @@ public class PlayerSaveData
     public int Level;
     public float CurrentScore;
     public int Health;
+    public int Wins;
 
     public PlayerSaveData()
     {
@@ -16,5 +17,6 @@ public class PlayerSaveData
         Level = StartValue;
         CurrentScore = 0f;
         Health = 100;
+        Wins = 0;
     }
 }

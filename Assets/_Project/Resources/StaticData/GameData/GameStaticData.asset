@@ -393,3 +393,39 @@ MonoBehaviour:
     SwitchWeaponSound: {fileID: 0}
     LevelUpSound: {fileID: 0}
     TakeWinsSound: {fileID: 0}
+  Gifts:
+  - Type: 0
+    Data:
+      Type: 0
+      RewardType: 0
+      Count: 100
+      Timer: 1.5
+    Sprite: {fileID: -1476575700, guid: c226c2cb204d697458e0c77115a68983, type: 3}
+  - Type: 1
+    Data:
+      Type: 1
+      RewardType: 0
+      Count: 500
+      Timer: 5
+    Sprite: {fileID: -1476575700, guid: c226c2cb204d697458e0c77115a68983, type: 3}
+  - Type: 2
+    Data:
+      Type: 2
+      RewardType: 1
+      Count: 2
+      Timer: 15
+    Sprite: {fileID: -1476575700, guid: c226c2cb204d697458e0c77115a68983, type: 3}
+  - Type: 3
+    Data:
+      Type: 3
+      RewardType: 1
+      Count: 5
+      Timer: 30
+    Sprite: {fileID: -1476575700, guid: c226c2cb204d697458e0c77115a68983, type: 3}
+  - Type: 4
+    Data:
+      Type: 4
+      RewardType: 2
+      Count: 10
+      Timer: 45
+    Sprite: {fileID: 587938785, guid: c226c2cb204d697458e0c77115a68983, type: 3}

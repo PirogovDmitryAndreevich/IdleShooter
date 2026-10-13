@@ -42,4 +42,8 @@ public class GameStaticData : ScriptableObject
     [Space]
     [Header("Sounds Effects")]
     public SoundsEffects SoundsEffects;
+
+    [Space]
+    [Header("Gifts")]
+    public GiftsData[] Gifts;
 }

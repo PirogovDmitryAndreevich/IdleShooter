@@ -24,6 +24,7 @@ public class GameStateMachine
             [typeof(GameLoopState)] = new GameLoopState(this,
             allServices.Single<ILevelController>(),
             allServices.Single<ITransitionDataService>(),
+            allServices.Single<ITimeRewardManager>(),
             coroutineRunner),
         };
     }

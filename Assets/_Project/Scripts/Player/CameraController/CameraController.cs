@@ -27,6 +27,7 @@ public class CameraController
         Camera camera,
         IInputService inputService,
         IGameSaveDataService gameSaveDataService,
+        ISettingsManager settingsManager,
         GameStaticData gameStaticData)
     {
         _gameStaticData = gameStaticData;
@@ -49,6 +50,7 @@ public class CameraController
         _rotation = new CameraRotation(
             inputService,
             gameSaveDataService,
+            settingsManager,
             gameStaticData,
             _movement.Parent);
 

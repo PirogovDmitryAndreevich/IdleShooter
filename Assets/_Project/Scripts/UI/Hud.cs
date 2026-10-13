@@ -11,8 +11,11 @@ public class Hud : MonoBehaviour
     [SerializeField] private Image _aim;
     [SerializeField] private InterstitialTimer _interstitialTimer;
     [SerializeField] private WindowBase[] _windows;
+    [SerializeField] private GiftsButton _giftsButton;
     [SerializeField] private WindowButton[] _windowsButtons;
-    [SerializeField] private AudioSettings _audioSettings;
+    [SerializeField] private SettingsView _audioSettings;
+    [SerializeField] private GiftRewardButton[] _rewardButtons;
+    [SerializeField] private WinsPanel _winsPanel;
 
     private PlayerPresenter _playerPresenter;
     private IUIPoolService _pool;
@@ -23,8 +26,14 @@ public class Hud : MonoBehaviour
         _windows;
     public WindowButton[] WindowsButton =>
         _windowsButtons;
-    public AudioSettings AudioSettings =>
+    public SettingsView AudioSettings =>
         _audioSettings;
+    public GiftRewardButton[] GiftsRewardButtons =>
+            _rewardButtons;
+    public WinsPanel WinsPanel =>
+        _winsPanel;
+    public GiftsButton GiftsButton =>
+        _giftsButton;
 
     private void OnDestroy()
     {

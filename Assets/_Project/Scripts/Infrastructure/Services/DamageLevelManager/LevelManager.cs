@@ -15,10 +15,12 @@ public class LevelManager : ILevelManager
     public event Action<int> LevelChanged;
     public event Action<int> HealthViewUpdated;
     public event Action MaxLevelReached;
+    public event Action<int> WinsChanged;
 
     public int CurrentLevel => _progress.Data.PlayerData.Level;
     public float CurrentScore => _progress.Data.PlayerData.CurrentScore;
     public int PlayerHealth => _progress.Data.PlayerData.Health;
+    public int Wins => _progress.Data.PlayerData.Wins;
 
     public bool IsMaxLevel =>
         CurrentLevel >= _levelData.Length;
@@ -35,6 +37,12 @@ public class LevelManager : ILevelManager
         ScoreChanged?.Invoke(
             CurrentScore,
              GetNextTargetScore());
+    }
+
+    public void ChangeWins(int value)
+    {
+        _progress.Data.PlayerData.Wins += value;
+        WinsChanged?.Invoke(Wins);
     }
 
     public float GetCurrentTargetScore()

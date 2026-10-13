@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class AudioSettingSaveData
+public class SettingSaveData
 {
     public float SoundVolume;
     public bool IsSoundMute;
@@ -9,12 +9,16 @@ public class AudioSettingSaveData
     public bool IsMusicMute;
     public float MusicVolume;
 
-    public AudioSettingSaveData()
+    public float Sensitivity;
+
+    public SettingSaveData()
     {
         IsSoundMute = false;
         SoundVolume = 0.5f;
 
         IsMusicMute = false;
         MusicVolume = 0.5f;
+
+        Sensitivity = 7f;
     }
 }

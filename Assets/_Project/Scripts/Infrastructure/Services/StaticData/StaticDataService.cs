@@ -17,6 +17,7 @@ public class StaticDataService : IStaticDataService
     private Dictionary<LevelType, LevelsStaticData> LevelsData = new();
     private Dictionary<LevelType, LevelView> LevelsView = new();
     private Dictionary<ObstacleType, ObstacleStaticData> Obstacles = new();
+    private Dictionary<GiftType, GiftsData> Gifts;
 
     public void Load()
     {
@@ -46,6 +47,9 @@ public class StaticDataService : IStaticDataService
 
         LevelsView = _gameStaticData.LevelViews
             .ToDictionary(x => x.LevelType, x => x);
+
+        Gifts = _gameStaticData.Gifts
+            .ToDictionary(x => x.Type, x => x);
     }
 
     public PlayerStaticData ForPlayer() =>
@@ -89,4 +93,9 @@ public class StaticDataService : IStaticDataService
 
     public SoundsEffects GetSoundEffects() =>
         _soundEffects;
+
+    public GiftsData ForGift(GiftType type) =>
+        Gifts.TryGetValue(type, out GiftsData data)
+        ? data
+        : null;
 }

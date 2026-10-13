@@ -34,6 +34,7 @@ public class BootstrapState : IState
         _allServices.RegisterSingle<IProgressService>(new ProgressService());
         _allServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(_allServices.Single<IProgressService>()));
         _allServices.RegisterSingle<IRewardAdvService>(new RewardAdvService());
+        _allServices.RegisterSingle<ITimeRewardManager>(new TimeRewardManager());
         _allServices.RegisterSingle<IPoolService>(new Pool());
         _allServices.RegisterSingle<IUIPoolService>(new UIPoolService());
         _allServices.RegisterSingle<IWeaponDataService>(new WeaponDataService(_allServices.Single<IProgressService>()));
@@ -44,12 +45,14 @@ public class BootstrapState : IState
         _allServices.RegisterSingle<IInterstitialAdvService>(new InterstitialAdvService());
         _allServices.RegisterSingle<IWindowsService>(new WindowsService());
         _allServices.RegisterSingle<ITransitionDataService>(new TransitionDataService(_allServices.Single<IInterstitialAdvService>()));
-        _allServices.RegisterSingle<IAudioManager>(new AudioManager(_allServices.Single<IProgressService>()));
+        _allServices.RegisterSingle<ISettingsManager>(new SettingsManager(_allServices.Single<IProgressService>()));
         RegisterInputService();
 
         _allServices.RegisterSingle<ILevelManager>(new LevelManager(
             _allServices.Single<IProgressService>(),
             _allServices.Single<IStaticDataService>()));
+
+        _allServices.RegisterSingle<IGiftService>(new GiftService(_allServices.Single<ILevelManager>()));
 
         _allServices.RegisterSingle<IGameFactory>(new GameFactory(
             _allServices.Single<IAssets>(),
@@ -65,9 +68,11 @@ public class BootstrapState : IState
             _allServices.Single<ITransitionDataService>(),
             _allServices.Single<ILevelManager>(),
             _allServices.Single<IInterstitialAdvService>(),
-            _allServices.Single<IAudioManager>(),
+            _allServices.Single<ISettingsManager>(),
             _allServices.Single<IRewardAdvService>(),
-            _allServices.Single<IWindowsService>()));
+            _allServices.Single<IWindowsService>(),
+            _allServices.Single<IGiftService>(),
+            _allServices.Single<ITimeRewardManager>()));
 
         _allServices.RegisterSingle<ILevelLoader>(new LevelLoader(
             _allServices.Single<IGameFactory>(),

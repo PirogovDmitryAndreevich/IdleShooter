@@ -8,7 +8,7 @@ public class SoundsHandler : MonoBehaviour
     [SerializeField] private float _lowPith = 0f;
     [SerializeField] private float _topPith = 2f;
 
-    private IAudioManager _audioManager;
+    private ISettingsManager _audioManager;
 
     private void OnDestroy()
     {
@@ -19,7 +19,7 @@ public class SoundsHandler : MonoBehaviour
         _audioManager.SoundMuteChanged -= OnSoundMuteChanged;
     }
 
-    public void Construct(IAudioManager audioManager)
+    public void Construct(ISettingsManager audioManager)
     {
         _audioManager = audioManager;
 

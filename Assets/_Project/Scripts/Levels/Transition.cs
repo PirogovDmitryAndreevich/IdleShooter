@@ -5,6 +5,7 @@ public class Transition : MonoBehaviour
 {
     [SerializeField] private Transform _exitPoint;
     [SerializeField] private Transform _playerSpawnPoint;
+    [SerializeField] private ExitGate _exitGate;
     [SerializeField] private EnterGate _enterGate;
     [SerializeField] private PlayerTriggerObserver _playerTriggerObserver;
     [SerializeField] private WinsPoint _winsPoint;
@@ -24,7 +25,8 @@ public class Transition : MonoBehaviour
             _winsPoint.PlayerGiveWins -= OnPlayerGiveWins;
     }
 
-    public void Construct(LevelType type, LevelsStaticData data, ILevelController levelController)
+    public void Construct(LevelType type, LevelsStaticData data,
+        ILevelController levelController, ILevelManager levelManager)
     {
         Type = type;
 
@@ -34,8 +36,8 @@ public class Transition : MonoBehaviour
             || type == LevelType.Lobby)
             return;
 
-        _enterGate.Construct(data);
-        _winsPoint.Construct(data, levelController);
+        _exitGate.Construct(data);
+        _winsPoint.Construct(data, levelController, levelManager);
 
         _winsPoint.PlayerGiveWins += OnPlayerGiveWins;
     }

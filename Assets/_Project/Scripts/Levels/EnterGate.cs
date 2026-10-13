@@ -1,22 +1,13 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnterGate : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _levelText;
-    [SerializeField] private TMP_Text _recommendedLevel;
     [SerializeField] private Image _lock;
     [SerializeField] private Collider _collider;
 
-    public void Construct(LevelsStaticData data)
-    {
-        _levelText.text = ((int)data.Type).ToString();
-
-        _recommendedLevel.text = data.Recommended.ToString();
-
+    private void Start() => 
         Lock();
-    }
 
     public void Lock()
     {

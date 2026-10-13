@@ -16,9 +16,11 @@ public class GameFactory : IGameFactory
     private readonly ITransitionDataService _transitionDataService;
     private readonly ILevelManager _levelManager;
     private readonly IInterstitialAdvService _interstitialAdvService;
-    private readonly IAudioManager _audioManager;
+    private readonly ISettingsManager _settingsManager;
     private readonly IRewardAdvService _rewardAdvService;
     private readonly IWindowsService _windowsService;
+    private readonly IGiftService _giftService;
+    private readonly ITimeRewardManager _timeRewardManager;
     private ILevelController _levelController;
     private PlayerPresenter _player;
     WeaponSwitcher _weaponSwitcher;
@@ -27,8 +29,9 @@ public class GameFactory : IGameFactory
         IProgressService progressService, IPoolService poolService, IWeaponDataService weaponDataService,
         IGameSaveDataService gameSaveDataService, IProjectilePool projectilePool, IUIPoolService UIPoolService,
         IWarpService warpService, ITransitionDataService transitionDataService, ILevelManager levelManager,
-        IInterstitialAdvService interstitialAdvService, IAudioManager audioManager,
-        IRewardAdvService rewardAdvService, IWindowsService windowsService)
+        IInterstitialAdvService interstitialAdvService, ISettingsManager audioManager,
+        IRewardAdvService rewardAdvService, IWindowsService windowsService,
+        IGiftService giftService, ITimeRewardManager timeRewardManager)
     {
         _assets = assets;
         _inputService = inputService;
@@ -43,9 +46,11 @@ public class GameFactory : IGameFactory
         _transitionDataService = transitionDataService;
         _levelManager = levelManager;
         _interstitialAdvService = interstitialAdvService;
-        _audioManager = audioManager;
+        _settingsManager = audioManager;
         _rewardAdvService = rewardAdvService;
         _windowsService = windowsService;
+        _giftService = giftService;
+        _timeRewardManager = timeRewardManager;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
@@ -96,7 +101,7 @@ public class GameFactory : IGameFactory
         Transition transition = _assets.Instantiate(AssetsPath.TransitionPath, at: at.position)
             .GetComponent<Transition>();
 
-        transition.Construct(type, _staticDataService.ForLevel(type), _levelController);
+        transition.Construct(type, _staticDataService.ForLevel(type), _levelController, _levelManager);
 
         transition.transform.rotation = at.rotation;
 
@@ -115,15 +120,18 @@ public class GameFactory : IGameFactory
 
         lobby.LeaderBoard.Construct(_levelManager);
         lobby.PassiveShootingReward.Construct(_rewardAdvService, _progressService);
-        lobby.Gift.Construct(_windowsService);
+        lobby.Gift.Construct(_windowsService, _timeRewardManager);
 
         lobby.Construct(lobby.LobbyTransition);
 
-        lobby.Transition.Construct(LevelType.Lobby, null, _levelController);
+        lobby.Transition.Construct(LevelType.Lobby, null, _levelController, _levelManager);
 
         _warpService.RegisterSpawnPoint(LevelType.Lobby, lobby.PlayerSpawnPoint.transform);
 
-        lobby.TransitionFor1Level.Construct(LevelType.Level_1, _staticDataService.ForLevel(LevelType.Level_1), _levelController);
+        lobby.TransitionFor1Level.Construct(LevelType.Level_1,
+            _staticDataService.ForLevel(LevelType.Level_1),
+            _levelController, _levelManager);
+
         _warpService.RegisterSpawnPoint(LevelType.Level_1, lobby.TransitionFor1Level.PlayerSpawnPoint);
 
         return lobby;
@@ -168,7 +176,7 @@ public class GameFactory : IGameFactory
 
         transform.SetParent(parent);
 
-        view.SoundsHandler.Construct(_audioManager);
+        view.SoundsHandler.Construct(_settingsManager);
 
         ObstacleModel model = new ObstacleModel(data);
 
@@ -199,7 +207,7 @@ public class GameFactory : IGameFactory
         WeaponView view = _assets.Instantiate(_staticDataService.GetWeaponView(type));
         WeaponModel model = new WeaponModel(_staticDataService.GetWeaponData(type));
 
-        view.SoundHandler.Construct(_audioManager);
+        view.SoundHandler.Construct(_settingsManager);
 
         WeaponPresenter presenter = new WeaponPresenter(model, view, UnityEngine.Camera.main,
             _staticDataService.GetGameData(), _projectilePool, _poolService);
@@ -235,13 +243,13 @@ public class GameFactory : IGameFactory
 
         WeaponStaticData weaponStaticData = _staticDataService.GetWeaponData(view.Weapon.Type);
 
-        view.Weapon.SoundHandler.Construct(_audioManager);
+        view.Weapon.SoundHandler.Construct(_settingsManager);
 
         view.transform.SetParent(parent);
 
         view.transform.localRotation = at.localRotation;
 
-        view.SoundsHandler.Construct(_audioManager);
+        view.SoundsHandler.Construct(_settingsManager);
 
         EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(type));
         EnemyShooter shooter = new EnemyShooter(model, view.Weapon, weaponStaticData, _projectilePool);
@@ -269,7 +277,7 @@ public class GameFactory : IGameFactory
 
         view.transform.localRotation = at.localRotation;
 
-        view.SoundsHandler.Construct(_audioManager);
+        view.SoundsHandler.Construct(_settingsManager);
         // оружие и персонаж используют один обработчик
         //view.Weapon.SoundHandler.Construct(_audioManager);
 
@@ -299,7 +307,7 @@ public class GameFactory : IGameFactory
         view.NavMeshAgent.speed = model.MoveSpeed;
         view.NavMeshAgent.angularSpeed = model.RotateSpeed;
 
-        view.SoundsHandler.Construct(_audioManager);
+        view.SoundsHandler.Construct(_settingsManager);
 
         DemonPresenter presenter = new DemonPresenter(model, view, at, playerTriggerObserver);
 
@@ -327,7 +335,7 @@ public class GameFactory : IGameFactory
         view.NavMeshAgent.speed = model.MoveSpeed;
         view.NavMeshAgent.angularSpeed = model.RotateSpeed;
 
-        view.SoundsHandler.Construct(_audioManager);
+        view.SoundsHandler.Construct(_settingsManager);
         // оружие и персонаж используют один обработчик
         //view.Weapon.SoundHandler.Construct(_audioManager);
 
@@ -386,7 +394,7 @@ public class GameFactory : IGameFactory
         view.NavMeshAgent.speed = model.MoveSpeed;
         view.NavMeshAgent.angularSpeed = model.RotateSpeed;
 
-        view.SoundsHandler.Construct(_audioManager);
+        view.SoundsHandler.Construct(_settingsManager);
 
         ZombiePresenter presenter = new ZombiePresenter(view, model, spawnPoint, playerTriggerObserver);
 
@@ -411,7 +419,7 @@ public class GameFactory : IGameFactory
         view.NavMeshAgent.speed = model.MoveSpeed;
         view.NavMeshAgent.angularSpeed = model.RotateSpeed;
 
-        view.SoundsHandler.Construct(_audioManager);
+        view.SoundsHandler.Construct(_settingsManager);
 
         GhostPresenter presenter = new GhostPresenter(view, model, spawnPoint, playerTriggerObserver);
 
@@ -439,7 +447,17 @@ public class GameFactory : IGameFactory
         foreach (var button in hud.WindowsButton)
             button.Construct(_windowsService);
 
-        hud.AudioSettings.Construct(_audioManager);
+        foreach (GiftRewardButton giftButton in hud.GiftsRewardButtons)
+        {
+            GiftsData data = _staticDataService.ForGift(giftButton.Type);
+
+            _timeRewardManager.RegisterGift(giftButton.Type, data.Data.Timer);
+            giftButton.Construct(_giftService, _timeRewardManager, data.Data, data.Sprite);
+        }
+
+        hud.AudioSettings.Construct(_settingsManager);
+        hud.WinsPanel.Construct(_levelManager);
+        hud.GiftsButton.Construct(_windowsService, _timeRewardManager);
 
         _uIPoolService.SetCanvas(hud.GetComponent<Canvas>());
 
@@ -448,7 +466,8 @@ public class GameFactory : IGameFactory
 
     private CameraController CreatePlayerCamera(PlayerView player, UnityEngine.Camera camera)
     {
-        return new CameraController(player, camera, _inputService, _gameSaveDataService,
+        return new CameraController(player, camera, _inputService,
+            _gameSaveDataService, _settingsManager,
            _staticDataService.GetGameData());
     }
 

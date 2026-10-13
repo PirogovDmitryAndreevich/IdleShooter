@@ -4,6 +4,7 @@ public class CameraRotation
 {
     private readonly IInputService _inputService;
     private readonly IGameSaveDataService _gameSaveData;
+    private readonly ISettingsManager _settingsManager;
     private readonly GameStaticData _gameStaticData;
     private readonly Transform _parent;
 
@@ -16,11 +17,13 @@ public class CameraRotation
     public CameraRotation(
         IInputService inputService,
         IGameSaveDataService gameSaveDataService,
+        ISettingsManager settingsManager,
         GameStaticData gameStaticData,
         Transform parent)
     {
         _inputService = inputService;
         _gameSaveData = gameSaveDataService;
+        _settingsManager = settingsManager;
         _gameStaticData = gameStaticData;
         _parent = parent;
 
@@ -35,8 +38,8 @@ public class CameraRotation
 
         Vector2 input = _inputService.LookInputVector;
 
-        _mouseX += input.x * _gameSaveData.Sensitivity;
-        _mouseY += input.y * _gameSaveData.Sensitivity;
+        _mouseX += input.x * _settingsManager.Sensitivity;
+        _mouseY += input.y * _settingsManager.Sensitivity;
 
         _mouseY = Mathf.Clamp(
             _mouseY,
@@ -58,8 +61,8 @@ public class CameraRotation
 
         Vector2 input = _inputService.LookInputVector;
 
-        _mouseX += input.x * _gameSaveData.Sensitivity;
-        _mouseY += input.y * _gameSaveData.Sensitivity;
+        _mouseX += input.x * _settingsManager.Sensitivity;
+        _mouseY += input.y * _settingsManager.Sensitivity;
 
         _mouseY = Mathf.Clamp(
             _mouseY,

@@ -4,7 +4,7 @@ public class MusicHandler : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
 
-    private IAudioManager _audioManager;
+    private ISettingsManager _audioManager;
 
     private void OnDestroy()
     {
@@ -12,7 +12,7 @@ public class MusicHandler : MonoBehaviour
         _audioManager.SoundMuteChanged -= OnMusicMuteChanged;
     }
 
-    public void Construct(IAudioManager audioManager)
+    public void Construct(ISettingsManager audioManager)
     {
         _audioManager = audioManager;
 
