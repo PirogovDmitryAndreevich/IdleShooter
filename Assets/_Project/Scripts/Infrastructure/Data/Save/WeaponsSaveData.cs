@@ -10,14 +10,14 @@ public class WeaponsSaveData
     {
         OpenedWeapons = new List<WeaponType>()
         {
-            WeaponType.Stones,
+            WeaponType.Stones,/*
             WeaponType.Slingshot,
             WeaponType.Minigun,
             WeaponType.Gun,
             WeaponType.Uzi,
             WeaponType.AK,
             WeaponType.Machine_gun,
-            WeaponType.RPG,
+            WeaponType.RPG,*/
         };
     }
 }

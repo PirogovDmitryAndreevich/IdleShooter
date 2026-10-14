@@ -8,6 +8,7 @@ public class FlyPlatform : MonoBehaviour, IResetObject
     [SerializeField] private PlayerTriggerObserver _triggerObserver;
 
     private CharacterController _characterController;
+    private Coroutine _flyCoroutine;
     private bool _isEndPosition;
     private Vector3 _startPosition;
     private Vector3 _endPosition;
@@ -29,6 +30,18 @@ public class FlyPlatform : MonoBehaviour, IResetObject
         _endPosition = endPosition;
     }
 
+    public void ResetObject()
+    {
+        if (_flyCoroutine != null)
+        {
+            StopCoroutine(_flyCoroutine);
+            _flyCoroutine = null;
+        }
+
+        transform.position = _startPosition;
+        _isEndPosition = false;
+    }
+
     private void StartMove(CharacterController characterController)
     {
         _characterController = characterController;
@@ -36,7 +49,13 @@ public class FlyPlatform : MonoBehaviour, IResetObject
         Vector3 startPosition = _isEndPosition ? _endPosition : _startPosition;
         Vector3 endPosition = _isEndPosition ? _startPosition : _endPosition;
 
-        StartCoroutine(Moving(startPosition, endPosition));
+        if (_flyCoroutine != null)
+        {
+            StopCoroutine(_flyCoroutine);
+            _flyCoroutine = null;
+        }
+
+        _flyCoroutine = StartCoroutine(Moving(startPosition, endPosition));
 
         StartMoving?.Invoke(startPosition);
     }
@@ -69,15 +88,10 @@ public class FlyPlatform : MonoBehaviour, IResetObject
 
         transform.position = endPosition;
         _isEndPosition = !_isEndPosition;
+        _flyCoroutine = null;
     }
 
     private void RemovePlayer() => 
-        _characterController = null;
-
-    public void ResetObject()
-    {
-        transform.position = _startPosition;
-        _isEndPosition = false;
-    }
+        _characterController = null;    
 }
 

@@ -27,8 +27,12 @@ public class GearMoveToPlatform : IDisposable, IResetObject
     public void Dispose() => 
         _platform.StartMoving -= StartMoving;
 
-    public void ResetObject() => 
+    public void ResetObject()
+    {
         _gear.transform.position = _gearStartPosition;
+        _gear.OnReset();
+        _platform.ResetObject();
+    }
 
     private void StartMoving(Vector3 endPosition)
     {

@@ -3,12 +3,14 @@ using System;
 public class WeaponDataService : IWeaponDataService
 {
     private readonly IProgressService _progress;
+    private readonly IMetricsService _metrics;
 
     public event Action<WeaponType> WeaponOpened;
 
-    public WeaponDataService(IProgressService progress)
+    public WeaponDataService(IProgressService progress, IMetricsService metrics)
     {
         _progress = progress;
+        _metrics = metrics;
     }
 
     public void AddNewWeapon(WeaponType type)
@@ -19,6 +21,8 @@ public class WeaponDataService : IWeaponDataService
         _progress.Data.Weapons.OpenedWeapons.Add(type);
 
         WeaponOpened?.Invoke(type);
+
+        _metrics.BoughtWeapon(type);
     }
 
     public void ForInitialize()

@@ -12,18 +12,22 @@ public class MusicHandler : MonoBehaviour
         _audioManager.SoundMuteChanged -= OnMusicMuteChanged;
     }
 
-    public void Construct(ISettingsManager audioManager)
+    public void Construct(ISettingsManager audioManager, AudioClip clip)
     {
         _audioManager = audioManager;
 
-        _audioSource.playOnAwake = false;
-        _audioSource.loop = false;
+        _audioSource.clip = clip;
+
+        _audioSource.playOnAwake = true;
+        _audioSource.loop = true;
 
         OnMusicVolumeChanged();
         OnMusicMuteChanged();
 
         _audioManager.MusicVolumeChanged += OnMusicVolumeChanged;
         _audioManager.MusicMuteChanged += OnMusicMuteChanged;
+
+        _audioSource.Play();
     }
 
     private void OnMusicVolumeChanged() => 

@@ -15,7 +15,8 @@ public interface ILevelManager : IService
     event Action<int> WinsChanged;
 
     void AddScore(float score);
-    void ChangeWins(int value);
+    void AddWins(int value);
+    void SpendWins(int value);
     float GetCurrentTargetScore();
     float GetLevelProgress();
     float GetNextTargetScore();

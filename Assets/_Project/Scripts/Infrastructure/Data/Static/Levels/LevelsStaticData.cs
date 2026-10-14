@@ -12,6 +12,8 @@ public class LevelsStaticData
     [Min(0)]
     public int Wins;
 
+    public Sprite Icon;
+
     public EnemyType[] EnemiesOnLevel;
     public ObstacleType[] ObstaclesOnLevel;
 }

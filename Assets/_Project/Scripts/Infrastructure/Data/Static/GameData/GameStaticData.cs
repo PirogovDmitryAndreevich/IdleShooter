@@ -4,7 +4,10 @@ using UnityEngine;
 public class GameStaticData : ScriptableObject
 {
     public Vector3 LobbySpawnPosition;
+    public AudioClip BackgroundMusic;
 
+    [Space]
+    [Header("Camera Settings")]
     public CameraSettingsData CameraSettingsData;
 
     [Space]

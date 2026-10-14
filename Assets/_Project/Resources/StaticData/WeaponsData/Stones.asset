@@ -15,7 +15,7 @@ MonoBehaviour:
   Type: 1
   ShooterType: 0
   ProjectileType: 0
-  FireRate: 0.2
+  FireRate: 0.7
   MaxAimDistance: 25
   Shake:
     PositionShakeSettings:

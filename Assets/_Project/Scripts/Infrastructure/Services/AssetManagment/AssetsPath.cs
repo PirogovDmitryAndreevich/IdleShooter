@@ -31,4 +31,5 @@ public static class AssetsPath
     public const string CannonProjectilePath = "Weapons/Cannon/Projectile/CannonProjectile";
     public const string RobotPath = "Enemies/Robot/Robot";
     public const string ShootUIEffectPath = "ShootUIEffect/ShootUIEffect";
+    public const string MusicHandlerPath = "MusicHandler/BgMusic";
 }

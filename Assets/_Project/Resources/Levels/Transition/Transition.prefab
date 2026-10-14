@@ -1251,8 +1251,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _exitPoint: {fileID: 2582477121215961204}
   _playerSpawnPoint: {fileID: 5374091854950160399}
-  _exitGate: {fileID: 0}
-  _enterGate: {fileID: 0}
+  _exitGate: {fileID: 1979228427973068133}
+  _enterGate: {fileID: 7943152377212529245}
   _playerTriggerObserver: {fileID: 3963152472472539487}
   _winsPoint: {fileID: 1122647218451117578}
 --- !u!1 &2003742068456130681
@@ -1838,6 +1838,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8f9d97bcff6588469162e28cfe34b8e, type: 3}
+--- !u!114 &1979228427973068133 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 518791295807162024, guid: e8f9d97bcff6588469162e28cfe34b8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 2036959826522014669}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fc3b8091acc4de49901c84ce09a8f23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6125884012450687382 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5280258520838056539, guid: e8f9d97bcff6588469162e28cfe34b8e,

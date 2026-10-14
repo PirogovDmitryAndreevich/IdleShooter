@@ -30,7 +30,7 @@ public class WinsPoint : MonoBehaviour
     private void OnPlayerEnter()
     {
         _levelController.WarpToLevel(LevelType.Lobby);
-        _levelManager.ChangeWins(_winsCount);
+        _levelManager.AddWins(_winsCount);
         PlayerGiveWins?.Invoke();
     }
 }

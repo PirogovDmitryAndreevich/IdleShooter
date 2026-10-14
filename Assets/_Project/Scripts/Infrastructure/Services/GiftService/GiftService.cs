@@ -38,5 +38,5 @@ public class GiftService : IGiftService
     }
 
     private void AddWinsGift(int value) =>
-        _levelManager.ChangeWins(value);
+        _levelManager.AddWins(value);
 }

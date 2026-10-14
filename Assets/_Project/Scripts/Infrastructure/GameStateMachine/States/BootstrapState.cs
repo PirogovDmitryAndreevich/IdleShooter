@@ -32,12 +32,12 @@ public class BootstrapState : IState
     {
         RegisterStaticData();
         _allServices.RegisterSingle<IProgressService>(new ProgressService());
+        _allServices.RegisterSingle<IMetricsService>(new MetricsService(_allServices.Single<IProgressService>()));
         _allServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(_allServices.Single<IProgressService>()));
         _allServices.RegisterSingle<IRewardAdvService>(new RewardAdvService());
         _allServices.RegisterSingle<ITimeRewardManager>(new TimeRewardManager());
         _allServices.RegisterSingle<IPoolService>(new Pool());
         _allServices.RegisterSingle<IUIPoolService>(new UIPoolService());
-        _allServices.RegisterSingle<IWeaponDataService>(new WeaponDataService(_allServices.Single<IProgressService>()));
         _allServices.RegisterSingle<IAssets>(new AssetProvider());
         _allServices.RegisterSingle<IGameSaveDataService>(new GameSaveDataService(_allServices.Single<IProgressService>()));
         _allServices.RegisterSingle<IProjectilePool>(new ProjectilePool());
@@ -48,9 +48,19 @@ public class BootstrapState : IState
         _allServices.RegisterSingle<ISettingsManager>(new SettingsManager(_allServices.Single<IProgressService>()));
         RegisterInputService();
 
+        _allServices.RegisterSingle<IWeaponDataService>(new WeaponDataService(
+            _allServices.Single<IProgressService>(),
+            _allServices.Single<IMetricsService>()));
+
         _allServices.RegisterSingle<ILevelManager>(new LevelManager(
             _allServices.Single<IProgressService>(),
-            _allServices.Single<IStaticDataService>()));
+            _allServices.Single<IStaticDataService>(),
+            _allServices.Single<IMetricsService>()));
+
+        _allServices.RegisterSingle<IWeaponBuyController>(new WeaponBuyController(
+            _allServices.Single<ILevelManager>(),
+            _allServices.Single<IStaticDataService>(),
+            _allServices.Single<IWeaponDataService>()));
 
         _allServices.RegisterSingle<IGiftService>(new GiftService(_allServices.Single<ILevelManager>()));
 
@@ -72,7 +82,8 @@ public class BootstrapState : IState
             _allServices.Single<IRewardAdvService>(),
             _allServices.Single<IWindowsService>(),
             _allServices.Single<IGiftService>(),
-            _allServices.Single<ITimeRewardManager>()));
+            _allServices.Single<ITimeRewardManager>(),
+            _allServices.Single<IMetricsService>()));
 
         _allServices.RegisterSingle<ILevelLoader>(new LevelLoader(
             _allServices.Single<IGameFactory>(),

@@ -17,7 +17,7 @@ public class SettingSaveData
         SoundVolume = 0.5f;
 
         IsMusicMute = false;
-        MusicVolume = 0.5f;
+        MusicVolume = 0.2f;
 
         Sensitivity = 7f;
     }

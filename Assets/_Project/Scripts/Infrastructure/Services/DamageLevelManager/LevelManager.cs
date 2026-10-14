@@ -3,11 +3,13 @@ using System;
 public class LevelManager : ILevelManager
 {
     private readonly IProgressService _progress;
+    private readonly IMetricsService _metrics;
     private readonly PlayerLevelsStaticData[] _levelData;
 
-    public LevelManager(IProgressService progress, IStaticDataService staticData)
+    public LevelManager(IProgressService progress, IStaticDataService staticData, IMetricsService metrics)
     {
         _progress = progress;
+        _metrics = metrics;
         _levelData = staticData.GetGameData().PlayerLevelsData;
     }
 
@@ -39,9 +41,15 @@ public class LevelManager : ILevelManager
              GetNextTargetScore());
     }
 
-    public void ChangeWins(int value)
+    public void AddWins(int value)
     {
         _progress.Data.PlayerData.Wins += value;
+        WinsChanged?.Invoke(Wins);
+    }
+
+    public void SpendWins(int value)
+    {
+        _progress.Data.PlayerData.Wins -= value;
         WinsChanged?.Invoke(Wins);
     }
 
@@ -88,6 +96,7 @@ public class LevelManager : ILevelManager
                CurrentScore >= GetNextTargetScore())
         {
             _progress.Data.PlayerData.Level++;
+            _metrics.PlayerLevelUp();
 
             UpdatePlayerHealth();
         }

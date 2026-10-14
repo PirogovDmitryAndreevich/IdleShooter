@@ -294,61 +294,73 @@ MonoBehaviour:
   - Type: 0
     Recommended: 0
     Wins: 0
+    Icon: {fileID: 0}
     EnemiesOnLevel: 
     ObstaclesOnLevel: 
   - Type: 1
     Recommended: 1
     Wins: 0
+    Icon: {fileID: -1222529782, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 
     ObstaclesOnLevel: 0000000000000000000000000000000000000000
   - Type: 2
     Recommended: 1
     Wins: 1
+    Icon: {fileID: -585476635, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 
     ObstaclesOnLevel: 030000000400000005000000050000000500000005000000
   - Type: 3
     Recommended: 5
     Wins: 3
+    Icon: {fileID: -470251013, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 0000000000000000000000000000000000000000
     ObstaclesOnLevel: 
   - Type: 4
     Recommended: 13
     Wins: 10
+    Icon: {fileID: 837903637, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 01000000
     ObstaclesOnLevel: 
   - Type: 5
     Recommended: 19
     Wins: 20
+    Icon: {fileID: -261057880, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 
     ObstaclesOnLevel: 
   - Type: 6
     Recommended: 29
     Wins: 50
+    Icon: {fileID: -1342112313, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 02000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000
     ObstaclesOnLevel: 
   - Type: 7
     Recommended: 39
     Wins: 100
+    Icon: {fileID: -1730412551, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 03000000
     ObstaclesOnLevel: 
   - Type: 8
     Recommended: 47
     Wins: 150
+    Icon: {fileID: 2128259957, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 04000000040000000400000004000000040000000400000004000000040000000400000004000000040000000400000004000000040000000400000004000000
     ObstaclesOnLevel: 
   - Type: 9
     Recommended: 50
     Wins: 230
+    Icon: {fileID: -1365484655, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 
     ObstaclesOnLevel: 070000000700000008000000080000000800000006000000
   - Type: 10
     Recommended: 53
     Wins: 300
+    Icon: {fileID: 829833447, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 0500000005000000050000000500000005000000050000000600000006000000060000000600000007000000070000000700000007000000050000000500000005000000
     ObstaclesOnLevel: 090000000900000009000000
   - Type: 11
     Recommended: 55
     Wins: 500
+    Icon: {fileID: -2032951055, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 08000000
     ObstaclesOnLevel: 
   Obstacles:

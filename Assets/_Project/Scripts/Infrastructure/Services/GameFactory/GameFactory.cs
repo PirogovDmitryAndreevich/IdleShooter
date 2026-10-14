@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class GameFactory : IGameFactory
 {
@@ -21,9 +20,11 @@ public class GameFactory : IGameFactory
     private readonly IWindowsService _windowsService;
     private readonly IGiftService _giftService;
     private readonly ITimeRewardManager _timeRewardManager;
+    private readonly IMetricsService _metrics;
+
     private ILevelController _levelController;
     private PlayerPresenter _player;
-    WeaponSwitcher _weaponSwitcher;
+    private WeaponSwitcher _weaponSwitcher;
 
     public GameFactory(IAssets assets, IInputService inputService, IStaticDataService staticDataService,
         IProgressService progressService, IPoolService poolService, IWeaponDataService weaponDataService,
@@ -31,7 +32,7 @@ public class GameFactory : IGameFactory
         IWarpService warpService, ITransitionDataService transitionDataService, ILevelManager levelManager,
         IInterstitialAdvService interstitialAdvService, ISettingsManager audioManager,
         IRewardAdvService rewardAdvService, IWindowsService windowsService,
-        IGiftService giftService, ITimeRewardManager timeRewardManager)
+        IGiftService giftService, ITimeRewardManager timeRewardManager, IMetricsService metricsService)
     {
         _assets = assets;
         _inputService = inputService;
@@ -51,6 +52,7 @@ public class GameFactory : IGameFactory
         _windowsService = windowsService;
         _giftService = giftService;
         _timeRewardManager = timeRewardManager;
+        _metrics = metricsService;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
@@ -93,6 +95,8 @@ public class GameFactory : IGameFactory
         _warpService.RegisterPlayer(_player);
         _transitionDataService.SetPlayer(_player);
 
+        CreateBackgroundMusic();
+
         return _player;
     }
 
@@ -101,7 +105,8 @@ public class GameFactory : IGameFactory
         Transition transition = _assets.Instantiate(AssetsPath.TransitionPath, at: at.position)
             .GetComponent<Transition>();
 
-        transition.Construct(type, _staticDataService.ForLevel(type), _levelController, _levelManager);
+        transition.Construct(type, _staticDataService.ForLevel(type), _levelController,
+            _levelManager, _metrics);
 
         transition.transform.rotation = at.rotation;
 
@@ -124,13 +129,13 @@ public class GameFactory : IGameFactory
 
         lobby.Construct(lobby.LobbyTransition);
 
-        lobby.Transition.Construct(LevelType.Lobby, null, _levelController, _levelManager);
+        lobby.Transition.Construct(LevelType.Lobby, null, _levelController, _levelManager, _metrics);
 
         _warpService.RegisterSpawnPoint(LevelType.Lobby, lobby.PlayerSpawnPoint.transform);
 
         lobby.TransitionFor1Level.Construct(LevelType.Level_1,
             _staticDataService.ForLevel(LevelType.Level_1),
-            _levelController, _levelManager);
+            _levelController, _levelManager, _metrics);
 
         _warpService.RegisterSpawnPoint(LevelType.Level_1, lobby.TransitionFor1Level.PlayerSpawnPoint);
 
@@ -539,5 +544,13 @@ public class GameFactory : IGameFactory
         effect.Construct(_poolService);
 
         return effect;
+    }
+
+    private void CreateBackgroundMusic()
+    {
+        MusicHandler handler = _assets.Instantiate(AssetsPath.MusicHandlerPath)
+            .GetComponent <MusicHandler>();
+
+        handler.Construct(_settingsManager, _staticDataService.GetGameData().BackgroundMusic);
     }
 }

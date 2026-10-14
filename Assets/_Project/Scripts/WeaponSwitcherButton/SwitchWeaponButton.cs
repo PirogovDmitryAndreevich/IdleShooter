@@ -38,7 +38,8 @@ public class SwitchWeaponButton : MonoBehaviour
         _weaponSwitcher.WeaponOpened -= OpenedWeapon;
     }
 
-    public void Construct(WeaponSwitcher weaponSwitcher, IWeaponDataService weaponsDataService, WeaponType type, WeaponStaticData weaponData)
+    public void Construct(WeaponSwitcher weaponSwitcher, IWeaponDataService weaponsDataService,
+        WeaponType type, WeaponStaticData weaponData)
     {
         _type = type;
         _weaponSwitcher = weaponSwitcher;
