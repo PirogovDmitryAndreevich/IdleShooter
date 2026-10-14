@@ -34,6 +34,7 @@ public class BootstrapState : IState
         _allServices.RegisterSingle<IProgressService>(new ProgressService());
         _allServices.RegisterSingle<IMetricsService>(new MetricsService(_allServices.Single<IProgressService>()));
         _allServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(_allServices.Single<IProgressService>()));
+        _allServices.RegisterSingle<ILocalizationService>(new LocalizationService(_coroutineRunner));
         _allServices.RegisterSingle<IRewardAdvService>(new RewardAdvService());
         _allServices.RegisterSingle<ITimeRewardManager>(new TimeRewardManager());
         _allServices.RegisterSingle<IPoolService>(new Pool());

@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Tables;
 
 public class SwitchWeaponButton : MonoBehaviour
 {
@@ -7,6 +9,11 @@ public class SwitchWeaponButton : MonoBehaviour
     [SerializeField] private TMP_Text _name;
     [SerializeField] private TMP_Text _bonusText;
     [SerializeField] private TMP_Text _priceText;
+
+    [Header("Localization")]
+    [SerializeField] private LocalizedString _bonusLocale;
+    [SerializeField] private LocalizedString _priceLocale;
+    [SerializeField] private LocalizedStringTable _localizedTable;
 
     [Header("Mesh Settings")]
     [SerializeField] private MeshRenderer _meshRenderer;
@@ -20,6 +27,8 @@ public class SwitchWeaponButton : MonoBehaviour
     private WeaponStaticData _weaponData;
     private bool _isOpened;
     private bool _isSelected;
+
+    private LocalizedString _nameLocale;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -36,6 +45,15 @@ public class SwitchWeaponButton : MonoBehaviour
     {
         _weaponSwitcher.WeaponSwitched -= OnSwitchWeapon;
         _weaponSwitcher.WeaponOpened -= OpenedWeapon;
+
+        if (_bonusLocale != null)
+            _bonusLocale.StringChanged -= UpdateBonusText;
+
+        if (_priceLocale != null)
+            _priceLocale.StringChanged -= UpdatePriceText;
+
+        if (_nameLocale != null)
+            _nameLocale.StringChanged -= UpdateNameText;
     }
 
     public void Construct(WeaponSwitcher weaponSwitcher, IWeaponDataService weaponsDataService,
@@ -46,9 +64,15 @@ public class SwitchWeaponButton : MonoBehaviour
         _weaponsDataService = weaponsDataService;
         _weaponData = weaponData;
 
-        _name.text = type.ToString();
-        _bonusText.text = $"+{_weaponData.Score}";
-        _priceText.text = $"требуется {_weaponData.Price}";
+        _nameLocale = new LocalizedString(_localizedTable.TableReference, _type.ToString());
+
+        UpdateNameText(_nameLocale.GetLocalizedString());
+        UpdateBonusText(_bonusLocale.GetLocalizedString());
+        UpdatePriceText(_priceLocale.GetLocalizedString());
+
+        _nameLocale.StringChanged += UpdateNameText;
+        _bonusLocale.StringChanged += UpdateBonusText;
+        _priceLocale.StringChanged += UpdatePriceText;
 
         _isOpened = _weaponsDataService.GetWeapon(_type);
 
@@ -57,6 +81,15 @@ public class SwitchWeaponButton : MonoBehaviour
 
         SetMaterial();
     }
+
+    private void UpdateBonusText(string value) => 
+        _bonusText.text = string.Format(value, _weaponData.Score);
+
+    private void UpdatePriceText(string value) =>
+        _priceText.text = string.Format(value, _weaponData.Price);
+
+    private void UpdateNameText(string value) =>
+        _name.text = value;
 
     private void OpenedWeapon(IWeapon weapon)
     {

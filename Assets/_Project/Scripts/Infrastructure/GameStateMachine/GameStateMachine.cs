@@ -19,7 +19,8 @@ public class GameStateMachine
             [typeof(LoadSceneState)] = new LoadSceneState(this,
             sceneLoader,
             allServices.Single<IWeaponDataService>(),
-            allServices.Single<ILevelController>()),
+            allServices.Single<ILevelController>(),
+            allServices.Single<ILocalizationService>()),
 
             [typeof(GameLoopState)] = new GameLoopState(this,
             allServices.Single<ILevelController>(),
