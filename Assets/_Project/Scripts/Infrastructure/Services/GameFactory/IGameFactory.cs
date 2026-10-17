@@ -3,7 +3,7 @@
 public interface IGameFactory : IService
 {
     void SetLevelController(ILevelController levelController);
-    PlayerPresenter CreatePlayer(Vector3 at);
+    PlayerPresenter CreatePlayer(Vector3 at , bool isDesktop);
     Transition CreateTransition(Transform at, LevelType type);
     T CreateLevel<T>(Transform spawnPoint, LevelType type) where T : LevelView;
     Lobby CreateLobby();

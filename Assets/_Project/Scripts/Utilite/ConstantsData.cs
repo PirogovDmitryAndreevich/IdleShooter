@@ -13,5 +13,7 @@ public class ConstantsData : MonoBehaviour
         public const string MouseRigth = "MouseRigth";
         public const string MouseUp = "MouseUp";
         public const string MouseScroll = "Mouse ScrollWheel";
+        public const string JoystickX = "JoystickX";
+        public const string JoystickY = "JoystickY";
     }
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class MobileInputService : InputService
 {
@@ -7,7 +6,10 @@ public class MobileInputService : InputService
     private const string JumpButton = "Jump";
     private const string ShotButton = "Shot";
 
-    private float _lastPinchDistance;
+    private readonly ISliderZoomController _sliderZoom;
+
+    public MobileInputService(ISliderZoomController sliderZoom) => 
+        _sliderZoom = sliderZoom;
 
     public override bool IsCameraMoving =>
         LookInputVector != Vector3.zero;
@@ -21,8 +23,8 @@ public class MobileInputService : InputService
     public override bool IsShoot =>
         GetShotButtonDown();
 
-    public override float ZoomInput => 
-        Input.GetAxis(ConstantsData.InputAxis.MouseScroll);
+    public override float ZoomInput =>
+        _sliderZoom.GetZoomInput();
 
     public override bool JumpPressed =>
         SimpleInput.GetButtonDown(JumpButton); 
@@ -37,8 +39,8 @@ public class MobileInputService : InputService
     private Vector3 SimpleInputLookAxis() =>
         new Vector2
             (
-                SimpleInput.GetAxis(ConstantsData.InputAxis.MouseX),
-                SimpleInput.GetAxis(ConstantsData.InputAxis.MouseY)
+                SimpleInput.GetAxis(ConstantsData.InputAxis.JoystickX),
+                SimpleInput.GetAxis(ConstantsData.InputAxis.JoystickY)
             );
 
     public override bool GetInteractButtonDown() => 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using YG;
 
 public class GameFactory : IGameFactory
 {
@@ -23,6 +24,7 @@ public class GameFactory : IGameFactory
     private readonly IMetricsService _metrics;
     private readonly ICrownsManager _crownsManager;
     private readonly ITutorialService _tutorialService;
+    private readonly ISliderZoomController _sliderZoomController;
 
     private ILevelController _levelController;
     private PlayerPresenter _player;
@@ -35,7 +37,7 @@ public class GameFactory : IGameFactory
         IInterstitialAdvService interstitialAdvService, ISettingsManager audioManager,
         IRewardAdvService rewardAdvService, IWindowsService windowsService,
         IGiftService giftService, ITimeRewardManager timeRewardManager, IMetricsService metricsService,
-        ICrownsManager crownsManager, ITutorialService tutorialService)
+        ICrownsManager crownsManager, ITutorialService tutorialService, ISliderZoomController sliderZoomController)
     {
         _assets = assets;
         _inputService = inputService;
@@ -58,6 +60,7 @@ public class GameFactory : IGameFactory
         _metrics = metricsService;
         _crownsManager = crownsManager;
         _tutorialService = tutorialService;
+        _sliderZoomController = sliderZoomController;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
@@ -76,7 +79,7 @@ public class GameFactory : IGameFactory
     public void SetLevelController(ILevelController levelController) =>
         _levelController = levelController;
 
-    public PlayerPresenter CreatePlayer(UnityEngine.Vector3 at)
+    public PlayerPresenter CreatePlayer(UnityEngine.Vector3 at, bool isDesktop)
     {
         _weaponSwitcher = new WeaponSwitcher(this, _weaponDataService);
 
@@ -94,7 +97,7 @@ public class GameFactory : IGameFactory
         _player = new PlayerPresenter(model, player.View, _inputService, camera,
             _weaponSwitcher, damageManager, playerHealth, _levelManager);
 
-        Hud hud = CreateHud(_player);
+        Hud hud = CreateHud(_player ,isDesktop);
 
         player.Initialize(_player);
 
@@ -462,10 +465,9 @@ public class GameFactory : IGameFactory
         return presenter;
     }
 
-    private Hud CreateHud(PlayerPresenter playerPresenter)
+    private Hud CreateHud(PlayerPresenter playerPresenter, bool isDesktop)
     {
-        var hud = _assets.Instantiate(AssetsPath.HudPath)
-            .GetComponent<Hud>();
+        Hud hud = InitHud(isDesktop);
 
         hud.Construct(playerPresenter,
             _staticDataService.GetShootAnimationSettings(),
@@ -495,6 +497,24 @@ public class GameFactory : IGameFactory
         _uIPoolService.SetCanvas(hud.GetComponent<Canvas>());
 
         return hud;
+    }
+
+    private Hud InitHud(bool isDesktop)
+    {
+        if (isDesktop)
+        {
+            return _assets.Instantiate(AssetsPath.HudPath)
+                .GetComponent<Hud>();
+        }
+        else
+        {
+            HudMobile hud = _assets.Instantiate(AssetsPath.HudMobile)
+                .GetComponent<HudMobile>();
+
+            hud.SliderZoom.Construct(_sliderZoomController, _staticDataService);
+
+            return hud;
+        }
     }
 
     private CameraController CreatePlayerCamera(PlayerView player, UnityEngine.Camera camera)
@@ -577,7 +597,7 @@ public class GameFactory : IGameFactory
     private void CreateBackgroundMusic()
     {
         MusicHandler handler = _assets.Instantiate(AssetsPath.MusicHandlerPath)
-            .GetComponent <MusicHandler>();
+            .GetComponent<MusicHandler>();
 
         handler.Construct(_settingsManager, _staticDataService.GetGameData().BackgroundMusic);
     }

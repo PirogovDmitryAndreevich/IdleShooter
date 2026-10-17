@@ -170,11 +170,8 @@ public class PlayerPresenter : IDisposable
     }
 
     // For Tutorial
-    public void StartDrawLine(Transform target)
-    {
-        UnityEngine.Debug.Log("StartDrawLine");
+    public void StartDrawLine(Transform target) => 
         _view.LineDraw.StartDraw(target);
-    }
 
     public void StopDrawLine() =>
         _view.LineDraw.StopDraw();

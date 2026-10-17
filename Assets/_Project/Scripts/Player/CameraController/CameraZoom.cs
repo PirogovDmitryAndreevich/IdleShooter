@@ -27,11 +27,13 @@ public class CameraZoom
 
     public void Update()
     {
-        if (_inputService.ZoomInput == 0)
+        float zoomInput = _inputService.ZoomInput;
+
+        if (zoomInput == 0)
             return;
 
         _targetFov -=
-            _inputService.ZoomInput *
+            zoomInput *
             _gameSaveData.Sensitivity *
             2f;
 

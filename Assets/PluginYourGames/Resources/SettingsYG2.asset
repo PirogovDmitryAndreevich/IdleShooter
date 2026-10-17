@@ -180,6 +180,8 @@ MonoBehaviour:
         rank: 5
         score: 127000
         extraData: 
+  Localization:
+    setLanguageMod: 1
   Metrica:
     enable: 0
     metricaCounterID: 0
@@ -208,7 +210,7 @@ MonoBehaviour:
     initDelaySimulation: 0
     buildNumber: 13
   Simulation:
-    device: 0
+    device: 1
     language: ru
     enableInterAdv: 1
     advIntervalSimulation: 60
@@ -255,6 +257,7 @@ MonoBehaviour:
     showFirstAdv: 0
     interAdvInterval: 0
     postponeCallByFail: 0
+    setLanguageMod: 0
     useYandexMetrica: 0
     metricaCounterID: 0
     skipInterAdvAfterReward: 0

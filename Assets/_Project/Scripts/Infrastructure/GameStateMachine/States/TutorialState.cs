@@ -66,9 +66,7 @@ public class TutorialState : IState
     public IEnumerator TutorialCoroutine()
     {
         while (!_tutorialService.IsReady)        
-            yield return null;        
-
-        UnityEngine.Debug.Log($"IsWeaponSwitcherStudied {_progressService.Data.Tutorial.IsWeaponSwitcherStudied}");
+            yield return null;
 
         if (!_progressService.Data.Tutorial.IsWeaponSwitcherStudied)
         {

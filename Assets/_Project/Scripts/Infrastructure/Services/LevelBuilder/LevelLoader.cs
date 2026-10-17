@@ -7,14 +7,16 @@ public class LevelLoader : ILevelLoader
     private readonly IGameFactory _gameFactory;
     private readonly ICoroutineRunner _coroutineRunner;
     private readonly ITransitionDataService _transitionDataService;
-
+    private readonly bool _isDesktop;
     private Lobby _lobby;
 
-    public LevelLoader(IGameFactory gameFactory, ICoroutineRunner coroutineRunner, ITransitionDataService transitionDataService)
+    public LevelLoader(IGameFactory gameFactory, ICoroutineRunner coroutineRunner,
+        ITransitionDataService transitionDataService, bool isDesktop)
     {
         _gameFactory = gameFactory;
         _coroutineRunner = coroutineRunner;
         _transitionDataService = transitionDataService;
+        _isDesktop = isDesktop;
     }
 
     public LevelLoadOperation InitLevel(LevelType type, Transform position)
@@ -36,7 +38,7 @@ public class LevelLoader : ILevelLoader
         switch (type)
         {
             case LevelType.Lobby:
-                yield return InitLobby(position, operation);
+                yield return InitLobby(position, operation, _isDesktop);
                 break;
             case LevelType.Level_1:
                 yield return InitLevel1(position, operation);
@@ -79,7 +81,7 @@ public class LevelLoader : ILevelLoader
         }
     }
 
-    private IEnumerator InitLobby(Transform position, LevelLoadOperation operation)
+    private IEnumerator InitLobby(Transform position, LevelLoadOperation operation, bool isDesktop)
     {
         WarpService warpStarter = new WarpService();
 
@@ -90,7 +92,7 @@ public class LevelLoader : ILevelLoader
         LevelPresenter presenter = new LevelPresenter(lobby, null);
         _transitionDataService.RegisterLevel(presenter);
 
-        PlayerPresenter player = _gameFactory.CreatePlayer(lobby.PlayerSpawnPoint.transform.position);
+        PlayerPresenter player = _gameFactory.CreatePlayer(lobby.PlayerSpawnPoint.transform.position, isDesktop);
 
         foreach (WeaponSwitcherSpawnPoint spawnPoint in lobby.WeaponSwitcherSpawnPoint)
         {

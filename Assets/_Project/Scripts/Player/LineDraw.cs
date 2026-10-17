@@ -41,8 +41,6 @@ public class LineDraw : MonoBehaviour
 
     public void StartDraw(Transform target)
     {
-        Debug.Log("[LineDraw] start draw");
-
         _target = target;
         _line.enabled = true;
     }

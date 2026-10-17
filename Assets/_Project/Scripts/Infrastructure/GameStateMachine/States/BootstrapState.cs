@@ -1,3 +1,5 @@
+using YG;
+
 public class BootstrapState : IState
 {
     private const string InitialSceneName = "Initial";
@@ -6,6 +8,7 @@ public class BootstrapState : IState
     private readonly AllServices _allServices;
     private readonly SceneLoader _sceneLoader;
     private readonly ICoroutineRunner _coroutineRunner;
+    private readonly bool _isDesktop;
 
     public BootstrapState(GameStateMachine gameStateMachine, AllServices allServices, SceneLoader sceneLoader,
         ICoroutineRunner coroutineRunner)
@@ -14,6 +17,7 @@ public class BootstrapState : IState
         _allServices = allServices;
         _sceneLoader = sceneLoader;
         _coroutineRunner = coroutineRunner;
+        _isDesktop = YG2.envir.isDesktop;
 
         RegisterService();
     }
@@ -23,10 +27,8 @@ public class BootstrapState : IState
 
     public void Exit() { }
 
-    private void EnterLoadLevel()
-    {
+    private void EnterLoadLevel() => 
         _gameStateMachine.Enter<LoadProgressState>();
-    }
 
     private void RegisterService()
     {
@@ -49,7 +51,8 @@ public class BootstrapState : IState
         _allServices.RegisterSingle<ITransitionDataService>(new TransitionDataService(_allServices.Single<IInterstitialAdvService>()));
         _allServices.RegisterSingle<ISettingsManager>(new SettingsManager(_allServices.Single<IProgressService>()));
         _allServices.RegisterSingle<ITutorialService>(new TutorialService());
-        RegisterInputService();
+        _allServices.RegisterSingle<ISliderZoomController>(new SliderZoomController());
+        _allServices.RegisterSingle(RegisterInputService());
 
         _allServices.RegisterSingle<IWeaponDataService>(new WeaponDataService(
             _allServices.Single<IProgressService>(),
@@ -88,12 +91,14 @@ public class BootstrapState : IState
             _allServices.Single<ITimeRewardManager>(),
             _allServices.Single<IMetricsService>(),
             _allServices.Single<ICrownsManager>(),
-            _allServices.Single<ITutorialService>()));
+            _allServices.Single<ITutorialService>(),
+            _allServices.Single<ISliderZoomController>()));
 
         _allServices.RegisterSingle<ILevelLoader>(new LevelLoader(
             _allServices.Single<IGameFactory>(),
             _coroutineRunner,
-            _allServices.Single<ITransitionDataService>()));
+            _allServices.Single<ITransitionDataService>(),
+            _isDesktop));
 
         _allServices.RegisterSingle<ILevelController>(new LevelController(
             _allServices.Single<ILevelLoader>(),
@@ -104,9 +109,12 @@ public class BootstrapState : IState
             .SetLevelController(_allServices.Single<ILevelController>());
     }
 
-    private void RegisterInputService()
+    private IInputService RegisterInputService()
     {
-        _allServices.RegisterSingle<IInputService>(new StandaloneInputService());
+        if (_isDesktop)
+            return new StandaloneInputService();
+        else
+            return new MobileInputService(_allServices.Single<ISliderZoomController>());
     }
 
     private void RegisterStaticData()
