@@ -20,7 +20,15 @@ public class GameStateMachine
             sceneLoader,
             allServices.Single<IWeaponDataService>(),
             allServices.Single<ILevelController>(),
-            allServices.Single<ILocalizationService>()),
+            allServices.Single<ILocalizationService>(),
+            allServices.Single<IProgressService>()),
+
+            [typeof(TutorialState)] = new TutorialState(this,
+            coroutineRunner,
+            allServices.Single<IProgressService>(),
+            allServices.Single<ITutorialService>(),
+            allServices.Single<ISaveLoadService>(),
+            allServices.Single<ILevelManager>()),
 
             [typeof(GameLoopState)] = new GameLoopState(this,
             allServices.Single<ILevelController>(),

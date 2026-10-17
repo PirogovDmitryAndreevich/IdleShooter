@@ -13,7 +13,8 @@ public class GhostPresenter : EnemyPresenter, IAttackWithAnimationEvent,
     private float _nextStepTime;
 
     public GhostPresenter(GhostView view, EnemyModel model,Transform spawnPoint,
-        PlayerTriggerObserver playerTriggerObserver) : base(view, model, view.Sounds)
+        PlayerTriggerObserver playerTriggerObserver, ICrownsManager crownsManager) 
+        : base(view, model, view.Sounds, crownsManager)
     {
         _view = view;
         _model = model;

@@ -1,0 +1,47 @@
+{
+    "intExample": 5,
+    "strExample": "Hello!",
+    "boolExample": [
+        false,
+        false,
+        false,
+        false
+    ],
+    "idSave": 4,
+    "Data": {
+        "PlayerData": {
+            "Damage": 27.0,
+            "Level": 1,
+            "CurrentScore": 26.0,
+            "Health": 100,
+            "Wins": 1,
+            "Crowns": 0
+        },
+        "Weapons": {
+            "OpenedWeapons": [
+                1
+            ]
+        },
+        "Game": {
+            "Sensitivity": 5.0
+        },
+        "Settings": {
+            "SoundVolume": 0.5,
+            "IsSoundMute": false,
+            "IsMusicMute": false,
+            "MusicVolume": 0.20000000298023225,
+            "Sensitivity": 7.0
+        },
+        "Rewards": {
+            "PassiveShootingRewardTime": 0.0
+        },
+        "Tutorial": {
+            "IsTutorialComplete": true,
+            "IsWeaponSwitcherStudied": true,
+            "IsAimButtonStudied": true,
+            "IsPassiveShootingStudied": false,
+            "IsGameLevelStudied": true,
+            "IsLevelUpStudied": false
+        }
+    }
+}

@@ -7,13 +7,16 @@ public class ObstaclePresenter : IDisposable, IResetObject, IPlayerTarget
     private readonly ObstacleModel _model;
     private readonly ImpactPunchScale _impactView;
     private readonly ObstacleType _type;
+    private readonly ICrownsManager _crownsManger;
     protected bool IsDied;
 
-    public ObstaclePresenter(ObstacleView view, ObstacleModel model, ObstacleType type)
+    public ObstaclePresenter(ObstacleView view, ObstacleModel model,
+        ObstacleType type, ICrownsManager crownsManager)
     {
         _view = view;
         _model = model;
         _type = type;
+        _crownsManger = crownsManager;
 
         _impactView = new ImpactPunchScale(_view.transform);
         _view.HealthBar.Construct(_model.Health);
@@ -64,6 +67,7 @@ public class ObstaclePresenter : IDisposable, IResetObject, IPlayerTarget
     {
         _impactView.Reset();
         _view.OnDied();
+        _crownsManger.AddCrown(_model.Crowns);
         IsDied = true;
     }
 }

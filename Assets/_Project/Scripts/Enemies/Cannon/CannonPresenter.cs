@@ -9,7 +9,8 @@ using UnityEngine;
     private readonly PlayerTriggerObserver _playerTriggerObserver;
 
     public CannonPresenter(CannonView view, EnemyModel model, EnemyShooter shooter,
-        PlayerTriggerObserver playerTriggerObserver) : base(view, model, view.Sounds)
+        PlayerTriggerObserver playerTriggerObserver, ICrownsManager crownsManager)
+        : base(view, model, view.Sounds, crownsManager)
     {
         _view = view;
         _shooter = shooter;

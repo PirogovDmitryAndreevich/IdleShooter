@@ -18,6 +18,7 @@ public class EnemyModel
     public float FireRate => _data.FireRate;
     public float ShootTime => _data.ShootingTime;
     public float ReloadTime => _data.ReloadTime;
+    public int Crowns => _data.Crowns;
     public ProjectileType ProjectileType =>
         _data.ProjectileType;
 }

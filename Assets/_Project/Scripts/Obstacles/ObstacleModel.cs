@@ -18,6 +18,9 @@ public class ObstacleModel
     public float Damage =>
         _data.Damage;
 
+    public int Crowns => 
+        _data.Crowns;
+
     public AudioClip TakeDamageSound =>
         _data.TakeDamageSound;
 }

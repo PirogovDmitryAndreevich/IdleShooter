@@ -95,6 +95,50 @@ MonoBehaviour:
     m_Key: RPG
     m_Metadata:
       m_Items: []
+  - m_Id: 707139738787840
+    m_Key: Gifts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 837296118030336
+    m_Key: Aim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 837457003143168
+    m_Key: AimBonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 839118824136704
+    m_Key: LevelUp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 839156904222720
+    m_Key: LevelUpBonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 839716055277568
+    m_Key: Wins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 839765615173632
+    m_Key: WinsBonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 839856627376128
+    m_Key: Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 839867683561472
+    m_Key: ScoreBonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 840990880423936
+    m_Key: Crowns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 841004016984064
+    m_Key: CrownsBonus
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

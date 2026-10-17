@@ -29,7 +29,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5597736165376
-    m_Localized: +{0} <sprite name="Shoot">/ per shot
+    m_Localized: +{0} <sprite name="Score">/ per shot
     m_Metadata:
       m_Items: []
   - m_Id: 20999832821760
@@ -98,6 +98,66 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34273265672192
     m_Localized: RPG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 707139738787840
+    m_Localized: Gifts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 837296118030336
+    m_Localized: 'Whoa, I have a <color=#FFD54F>WEAPON!</color>
+
+      Press the
+      <color=#55D6FF>aim button</color>
+
+      and show the enemies what I can do!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 839118824136704
+    m_Localized: '<color=#69F0AE>HOORAY!</color> A new level!
+
+      I''m getting
+      <color=#FFD54F>STRONGER</color>, and my health has increased! All right, bring
+      it on!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 839156904222720
+    m_Localized: "<color=#59FF56>New Level</color>\t\t<color=#FF383A>Health</color>
+      increased"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 839716055277568
+    m_Localized: 'Wow! Look at these <color=#FFD54F>TROPHIES!</color>   <sprite name="Cup">
+
+      I''ll
+      save them up to buy
+
+      a <color=#55D6FF>NEW WEAPON!</color>
+
+      I want
+      a cooler gun!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 839856627376128
+    m_Localized: 'Awesome! I get <color=#FFD54F>POINTS!</color>   <sprite name="Score">
+
+      for
+      every shot!
+
+      The more I shoot,
+
+      the closer I get to a <color=#69F0AE>NEW
+      LEVEL!</color>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 840990880423936
+    m_Localized: 'Yes! <color=#FFD54F>CROWNS!</color> <sprite name="Crown">
+
+      I
+      destroy enemies and obstacles, collect crowns, and climb <color=#55D6FF>THE
+      LEADERBOARD!</color>
+
+      Now that''s a royal job!'
     m_Metadata:
       m_Items: []
   references:

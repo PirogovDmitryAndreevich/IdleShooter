@@ -21,6 +21,8 @@ public class GameFactory : IGameFactory
     private readonly IGiftService _giftService;
     private readonly ITimeRewardManager _timeRewardManager;
     private readonly IMetricsService _metrics;
+    private readonly ICrownsManager _crownsManager;
+    private readonly ITutorialService _tutorialService;
 
     private ILevelController _levelController;
     private PlayerPresenter _player;
@@ -32,7 +34,8 @@ public class GameFactory : IGameFactory
         IWarpService warpService, ITransitionDataService transitionDataService, ILevelManager levelManager,
         IInterstitialAdvService interstitialAdvService, ISettingsManager audioManager,
         IRewardAdvService rewardAdvService, IWindowsService windowsService,
-        IGiftService giftService, ITimeRewardManager timeRewardManager, IMetricsService metricsService)
+        IGiftService giftService, ITimeRewardManager timeRewardManager, IMetricsService metricsService,
+        ICrownsManager crownsManager, ITutorialService tutorialService)
     {
         _assets = assets;
         _inputService = inputService;
@@ -53,6 +56,8 @@ public class GameFactory : IGameFactory
         _giftService = giftService;
         _timeRewardManager = timeRewardManager;
         _metrics = metricsService;
+        _crownsManager = crownsManager;
+        _tutorialService = tutorialService;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
@@ -79,6 +84,7 @@ public class GameFactory : IGameFactory
             .GetComponent<PlayerBehaviour>();
 
         player.View.Construct();
+        player.View.LineDraw.Construct(player.View.transform);
         CameraController camera = CreatePlayerCamera(player.View, UnityEngine.Camera.main);
         PlayerModel model = new PlayerModel(_staticDataService, _progressService);
 
@@ -95,6 +101,8 @@ public class GameFactory : IGameFactory
         _warpService.RegisterPlayer(_player);
         _transitionDataService.SetPlayer(_player);
 
+        _tutorialService.SetPlayerPresenter(_player);
+        _tutorialService.SetHud(hud);
         CreateBackgroundMusic();
 
         return _player;
@@ -112,6 +120,9 @@ public class GameFactory : IGameFactory
 
         _warpService.RegisterSpawnPoint(type, transition.PlayerSpawnPoint);
 
+        if (type == LevelType.Level_2)
+            _tutorialService.SetTransition2(transition);
+
         return transition;
     }
 
@@ -123,7 +134,7 @@ public class GameFactory : IGameFactory
             _staticDataService.GetLevelView<Lobby>(LevelType.Lobby),
             at: gameData.LobbySpawnPosition);
 
-        lobby.LeaderBoard.Construct(_levelManager);
+        lobby.LeaderBoard.Construct(_crownsManager);
         lobby.PassiveShootingReward.Construct(_rewardAdvService, _progressService);
         lobby.Gift.Construct(_windowsService, _timeRewardManager);
 
@@ -137,7 +148,10 @@ public class GameFactory : IGameFactory
             _staticDataService.ForLevel(LevelType.Level_1),
             _levelController, _levelManager, _metrics);
 
+
         _warpService.RegisterSpawnPoint(LevelType.Level_1, lobby.TransitionFor1Level.PlayerSpawnPoint);
+
+        _tutorialService.SetPassiveShooter(lobby.PassiveShooting);
 
         return lobby;
     }
@@ -149,6 +163,9 @@ public class GameFactory : IGameFactory
             at: spawnPoint.position);
 
         level.transform.rotation = spawnPoint.rotation;
+
+        if (type == LevelType.Level_1)
+            _tutorialService.SetLevelView_1(level as LevelView_1);
 
         return level;
     }
@@ -163,6 +180,9 @@ public class GameFactory : IGameFactory
         switcher.Construct(_weaponSwitcher, _weaponDataService, type, weaponData);
 
         switcher.transform.SetParent(parent);
+
+        if (type == WeaponType.Stones)
+            _tutorialService.SetStonesWeaponSwitcher(switcher);
 
         return switcher;
     }
@@ -185,7 +205,7 @@ public class GameFactory : IGameFactory
 
         ObstacleModel model = new ObstacleModel(data);
 
-        ObstaclePresenter presenter = new ObstaclePresenter(view, model, type);
+        ObstaclePresenter presenter = new ObstaclePresenter(view, model, type, _crownsManager);
 
         level.Disposables.Add(presenter);
         level.ResetObjects.Add(presenter);
@@ -260,7 +280,8 @@ public class GameFactory : IGameFactory
         EnemyShooter shooter = new EnemyShooter(model, view.Weapon, weaponStaticData, _projectilePool);
 
         SoldierPresenter presenter =
-            new SoldierPresenter(model, view, at, attackPoint, shooter, playerTriggerObserver);
+            new SoldierPresenter(model, view, at, attackPoint,
+            shooter, playerTriggerObserver, _crownsManager);
 
         view.Behaviour.SetPresenter(presenter);
 
@@ -289,7 +310,8 @@ public class GameFactory : IGameFactory
         EnemyModel model = new EnemyModel(_staticDataService.ForEnemy(EnemyType.Cannon));
         EnemyShooter shooter = new EnemyShooter(model, view.Weapon, weaponStaticData, _projectilePool);
 
-        CannonPresenter presenter = new CannonPresenter(view, model, shooter, playerTriggerObserver);
+        CannonPresenter presenter = new CannonPresenter(view, model, shooter,
+            playerTriggerObserver, _crownsManager);
 
         view.Behaviour.SetPresenter(presenter);
 
@@ -314,7 +336,8 @@ public class GameFactory : IGameFactory
 
         view.SoundsHandler.Construct(_settingsManager);
 
-        DemonPresenter presenter = new DemonPresenter(model, view, at, playerTriggerObserver);
+        DemonPresenter presenter = new DemonPresenter(model, view, at,
+            playerTriggerObserver, _crownsManager);
 
         view.DemonBehaviour.SetPresenter(presenter);
 
@@ -344,7 +367,8 @@ public class GameFactory : IGameFactory
         // оружие и персонаж используют один обработчик
         //view.Weapon.SoundHandler.Construct(_audioManager);
 
-        RobotPresenter presenter = new RobotPresenter(view, model, at, playerTriggerObserver, shooter);
+        RobotPresenter presenter = new RobotPresenter(view, model, at,
+            playerTriggerObserver, shooter, _crownsManager);
 
         view.Behaviour.SetPresenter(presenter);
 
@@ -401,7 +425,8 @@ public class GameFactory : IGameFactory
 
         view.SoundsHandler.Construct(_settingsManager);
 
-        ZombiePresenter presenter = new ZombiePresenter(view, model, spawnPoint, playerTriggerObserver);
+        ZombiePresenter presenter = new ZombiePresenter(view, model, spawnPoint,
+            playerTriggerObserver, _crownsManager);
 
         view.ZombieBehaviour.SetPresenter(presenter);
 
@@ -426,7 +451,8 @@ public class GameFactory : IGameFactory
 
         view.SoundsHandler.Construct(_settingsManager);
 
-        GhostPresenter presenter = new GhostPresenter(view, model, spawnPoint, playerTriggerObserver);
+        GhostPresenter presenter = new GhostPresenter(view, model, spawnPoint,
+            playerTriggerObserver, _crownsManager);
 
         view.GhostBehaviour.SetPresenter(presenter);
 
@@ -463,6 +489,8 @@ public class GameFactory : IGameFactory
         hud.AudioSettings.Construct(_settingsManager);
         hud.WinsPanel.Construct(_levelManager);
         hud.GiftsButton.Construct(_windowsService, _timeRewardManager);
+        hud.UserInfo.Construct(_crownsManager);
+        hud.TutorialUI.Construct();
 
         _uIPoolService.SetCanvas(hud.GetComponent<Canvas>());
 

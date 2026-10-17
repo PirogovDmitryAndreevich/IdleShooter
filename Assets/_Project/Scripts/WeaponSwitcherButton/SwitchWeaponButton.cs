@@ -30,6 +30,8 @@ public class SwitchWeaponButton : MonoBehaviour
 
     private LocalizedString _nameLocale;
 
+    public bool IsSelected => _isSelected;
+
     private void OnTriggerEnter(Collider other)
     {
         if (!_isOpened)

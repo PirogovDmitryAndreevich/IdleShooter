@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelLoader : ILevelLoader
@@ -121,12 +122,18 @@ public class LevelLoader : ILevelLoader
         LevelPresenter level = new LevelPresenter(levelView, levelView.Transition);
         _transitionDataService.RegisterLevel(level);
 
+        List<ObstaclePresenter> targets = new List<ObstaclePresenter>();
+
         foreach (ObstacleSpawnPoint obstacles in levelView.ObstacleSpawnPoints)
         {
-            _gameFactory.CreateObstacle(obstacles.transform, levelView.transform, level, obstacles.Type);
+            var target =_gameFactory.CreateObstacle(obstacles.transform, levelView.transform, level, obstacles.Type);
+
+            targets.Add(target);
 
             yield return null;
         }
+
+        levelView.Targets = targets.ToArray();
 
         operation.Complete(level);
     }

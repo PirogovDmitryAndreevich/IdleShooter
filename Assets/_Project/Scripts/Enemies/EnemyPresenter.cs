@@ -9,6 +9,7 @@ public abstract class EnemyPresenter : IDisposable, IResetObject, IPlayerTarget
 
     private readonly EnemyView _view;
     private readonly EnemySounds _sounds;
+    private readonly ICrownsManager _crownManger;
     private readonly EnemyModel _model;
     private readonly Health _health;
 
@@ -16,11 +17,12 @@ public abstract class EnemyPresenter : IDisposable, IResetObject, IPlayerTarget
 
     public bool IsDestroyed => _isDied;
 
-    public EnemyPresenter(EnemyView view, EnemyModel model, EnemySounds sounds)
+    public EnemyPresenter(EnemyView view, EnemyModel model, EnemySounds sounds, ICrownsManager crownsManager)
     {
         _view = view;
         _model = model;
         _sounds = sounds;
+        _crownManger = crownsManager;
 
         SoundsHandler = _view.SoundsHandler;
 
@@ -66,6 +68,7 @@ public abstract class EnemyPresenter : IDisposable, IResetObject, IPlayerTarget
     {
         _view.SoundsHandler.PlaySound(_sounds.DiedSound);
         _view.DeathEffect.Play();
+        _crownManger.AddCrown(_model.Crowns);
         _isDied = true;
         _view.Mesh.SetActive(false);
     }

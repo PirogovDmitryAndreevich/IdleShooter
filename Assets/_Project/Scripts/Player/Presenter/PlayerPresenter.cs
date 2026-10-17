@@ -169,6 +169,16 @@ public class PlayerPresenter : IDisposable
         _camera.SyncWithPlayer(target.rotation);
     }
 
+    // For Tutorial
+    public void StartDrawLine(Transform target)
+    {
+        UnityEngine.Debug.Log("StartDrawLine");
+        _view.LineDraw.StartDraw(target);
+    }
+
+    public void StopDrawLine() =>
+        _view.LineDraw.StopDraw();
+
     private void StartPassiveShooting(IPassiveShooting passiveShooting)
     {
         if (passiveShooting == null || !HasWeapon || _isPassiveShooting)

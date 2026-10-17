@@ -21,6 +21,7 @@ public class ObstacleView : MonoBehaviour
     public SoundsHandler SoundsHandler =>
         _soundsHandler;
     public GameObject Mesh => _mesh;
+    public Transform Transform => transform;
 
     public void OnDied()
     {

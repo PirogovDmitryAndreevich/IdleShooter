@@ -1,6 +1,11 @@
+using UnityEngine;
+
 public class LevelView_1 : LevelView
 {
     public override LevelType LevelType => LevelType.Level_1;
 
     public ObstacleSpawnPoint[] ObstacleSpawnPoints;
+
+    [HideInInspector]
+    public ObstaclePresenter[] Targets;
 }

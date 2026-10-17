@@ -8,6 +8,7 @@ public class Lobby : LevelView
     public PlayerSpawnPoint PlayerSpawnPoint;
     public Transition LobbyTransition;
     public Transition TransitionFor1Level;
+    public PassiveShooting PassiveShooting;
     public PassiveShootingReward PassiveShootingReward;
     public Gift Gift;
 }

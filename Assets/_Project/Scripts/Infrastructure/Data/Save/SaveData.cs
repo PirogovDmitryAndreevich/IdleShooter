@@ -8,6 +8,7 @@ public class SaveData
     public GameSaveData Game;
     public SettingSaveData Settings;
     public RewardsSaveData Rewards;
+    public TutorialSaveData Tutorial;
 
     public SaveData()
     {
@@ -16,5 +17,6 @@ public class SaveData
         Game = new GameSaveData();
         Settings = new SettingSaveData();
         Rewards = new RewardsSaveData();
+        Tutorial = new TutorialSaveData();
     }
 }

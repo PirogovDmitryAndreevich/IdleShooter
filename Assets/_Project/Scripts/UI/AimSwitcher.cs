@@ -9,19 +9,23 @@ public class AimSwitcher : MonoBehaviour
     /*[SerializeField] private Sprite _normalSprite;
     [SerializeField] private Sprite _selectedSprite;*/
 
-    private bool _isAim;
-
     public event Action AimClicked;
+
+    public bool IsAim { get; private set; }
 
     private void OnDestroy() => 
         _button.onClick.RemoveListener(OnClick);
 
-    private void Start() => 
+    private void Start()
+    {
+        IsAim = false;
+
         _button.onClick.AddListener(OnClick);
+    }
 
     public void SetAimState(bool isAim)
     {
-        _isAim = isAim;
+        IsAim = isAim;
 
         /*_image.sprite = _isAim
             ? _selectedSprite

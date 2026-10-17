@@ -10,6 +10,7 @@ public class PlayerSaveData
     public float CurrentScore;
     public int Health;
     public int Wins;
+    public int Crowns;
 
     public PlayerSaveData()
     {
@@ -18,5 +19,6 @@ public class PlayerSaveData
         CurrentScore = 0f;
         Health = 100;
         Wins = 0;
+        Crowns = 0;
     }
 }

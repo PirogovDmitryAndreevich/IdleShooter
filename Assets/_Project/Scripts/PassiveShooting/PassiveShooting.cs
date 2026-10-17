@@ -22,6 +22,7 @@ public class PassiveShooting : MonoBehaviour, IPassiveShooting, IDamageable
     public Transform PlayerPoint => _playerPoint;
     public Transform TargetPoint => _targetPoint;
     public int Multiplicator => multiplicator;
+    public bool IsPlayerInTrigger => IsPlayerInside;
 
     private void OnDestroy()
     {

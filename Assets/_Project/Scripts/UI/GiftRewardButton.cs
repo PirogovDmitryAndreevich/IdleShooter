@@ -8,9 +8,13 @@ public class GiftRewardButton : MonoBehaviour
     [SerializeField] private GiftType _type;
     [Space]
     [SerializeField] private Image _icon;
+    [SerializeField] private Image _bgFrame;
     [SerializeField] private TMP_Text _countText;
     [SerializeField] private TMP_Text _timerText;
     [SerializeField] private Button _button;
+    [SerializeField] private GameObject _collectFrame;
+    [SerializeField] private Color _noAvailable;
+    [SerializeField] private Color _available;
 
     private IGiftService _giftService;
     private float _giftValue;
@@ -42,12 +46,18 @@ public class GiftRewardButton : MonoBehaviour
     public void Construct(IGiftService giftService, ITimeRewardManager timeRewardManager,
         GiftStaticData data, Sprite sprite)
     {
+        _bgFrame.color = _noAvailable;
+
         _giftService = giftService;
         _icon.sprite = sprite;
         _timeRewardManager = timeRewardManager;
 
         _giftValue = data.Count;
-        _countText.text = _giftValue.ToString();
+
+        if (_type == GiftType.fourth || _type == GiftType.third)
+            _countText.text = "X" + _giftValue.ToString();
+        else
+            _countText.text = _giftValue.ToString();
 
         _button.onClick.AddListener(OnClick);
 
@@ -59,6 +69,8 @@ public class GiftRewardButton : MonoBehaviour
         if (!_timeRewardManager.TryClaim(_type))
             return;
 
+        _collectFrame.SetActive(true);
+        _bgFrame.color = _noAvailable;
         _giftService.AddGift(_type, _giftValue);
         RefreshAvailability();
     }
@@ -67,6 +79,7 @@ public class GiftRewardButton : MonoBehaviour
     {
         IsAvailable = _timeRewardManager.IsAvailable(_type);
         _button.interactable = IsAvailable;
+        _bgFrame.color = IsAvailable ? _available : _noAvailable;
 
         UpdateTimerText();
     }

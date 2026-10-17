@@ -19,6 +19,7 @@ public class Transition : MonoBehaviour
 
     public Transform ExitPoint => _exitPoint;
     public Transform PlayerSpawnPoint => _playerSpawnPoint;
+    public Transform WinsPoint => _winsPoint.transform;
 
     private void OnDestroy()
     {

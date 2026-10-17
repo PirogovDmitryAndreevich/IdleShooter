@@ -5,22 +5,22 @@ public class LeaderBoard : MonoBehaviour
 {
     [SerializeField] private LeaderboardYG _leaderboard;
 
-    private ILevelManager _levelManager;
+    private ICrownsManager _crownsManager;
 
-    private void OnDestroy() => 
-        _levelManager.LevelChanged -= SetNewValueLB;
+    private void OnDestroy() =>
+       _crownsManager.CrownChanged -= SetNewValueLB;
 
-    public void Construct(ILevelManager levelManager)
+    public void Construct(ICrownsManager crownsManager)
     {
-        _levelManager = levelManager;
-        _levelManager.LevelChanged += SetNewValueLB;
+        _crownsManager = crownsManager;
+        _crownsManager.CrownChanged += SetNewValueLB;
 
-        SetNewValueLB(_levelManager.CurrentLevel);
+        SetNewValueLB();
     }
 
-    private void SetNewValueLB(int level)
+    private void SetNewValueLB()
     {
-        _leaderboard.SetLeaderboard(_levelManager.CurrentLevel);
+        _leaderboard.SetLeaderboard(_crownsManager.GetCurrentCrowns());
         _leaderboard.UpdateLB();
     }
 }
