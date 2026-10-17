@@ -10,11 +10,11 @@
     "idSave": 4,
     "Data": {
         "PlayerData": {
-            "Damage": 27.0,
+            "Damage": 1,
             "Level": 1,
-            "CurrentScore": 26.0,
+            "CurrentScore": 0,
             "Health": 100,
-            "Wins": 1,
+            "Wins": 0,
             "Crowns": 0
         },
         "Weapons": {
@@ -36,11 +36,11 @@
             "PassiveShootingRewardTime": 0.0
         },
         "Tutorial": {
-            "IsTutorialComplete": true,
-            "IsWeaponSwitcherStudied": true,
-            "IsAimButtonStudied": true,
+            "IsTutorialComplete": false,
+            "IsWeaponSwitcherStudied": false,
+            "IsAimButtonStudied": false,
             "IsPassiveShootingStudied": false,
-            "IsGameLevelStudied": true,
+            "IsGameLevelStudied": false,
             "IsLevelUpStudied": false
         }
     }

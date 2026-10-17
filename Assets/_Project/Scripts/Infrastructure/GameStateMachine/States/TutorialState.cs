@@ -10,7 +10,7 @@ public class TutorialState : IState
     private readonly ITutorialService _tutorialService;
     private readonly ISaveLoadService _save;
     private readonly ILevelManager _levelManager;
-
+    private readonly ITransitionDataService _transitionDataService;
     private bool _isLevelUpStudiedStarted;
     private bool _isGiveWinsStudied;
     private Coroutine _coroutine;
@@ -21,7 +21,8 @@ public class TutorialState : IState
         IProgressService progressService,
         ITutorialService tutorialService,
         ISaveLoadService saveLoadService,
-        ILevelManager levelManager)
+        ILevelManager levelManager,
+        ITransitionDataService transitionDataService)
     {
         _gameStateMachine = gameStateMachine;
         _coroutineRunner = coroutineRunner;
@@ -29,6 +30,7 @@ public class TutorialState : IState
         _tutorialService = tutorialService;
         _save = saveLoadService;
         _levelManager = levelManager;
+        _transitionDataService = transitionDataService;
     }
 
     public void Enter()
@@ -77,7 +79,7 @@ public class TutorialState : IState
 
             _tutorialService.Player.StopDrawLine();
             _progressService.Data.Tutorial.IsWeaponSwitcherStudied = true;
-            _save.SaveProgress();
+            //_save.SaveProgress();
         }
 
         if (!_progressService.Data.Tutorial.IsAimButtonStudied)
@@ -92,7 +94,7 @@ public class TutorialState : IState
             hud.TutorialUI.HideAimTutorialMessage();
 
             _progressService.Data.Tutorial.IsAimButtonStudied = true;
-            _save.SaveProgress();
+            //_save.SaveProgress();
         }
 
         if (!_progressService.Data.Tutorial.IsPassiveShootingStudied)
@@ -107,6 +109,8 @@ public class TutorialState : IState
             _tutorialService.Player.StopDrawLine();
 
             hud.TutorialUI.ShowScoreMessage();
+            _progressService.Data.Tutorial.IsPassiveShootingStudied = true;
+            //_save.SaveProgress();
         }
 
         if (!_progressService.Data.Tutorial.IsGameLevelStudied)
@@ -118,6 +122,9 @@ public class TutorialState : IState
 
             while (!obstacle.IsDestroyed)
                 yield return null;
+
+            if (_transitionDataService.CurrentLevel != null)
+                _transitionDataService.OpenNextLevel();
 
             obstacle = _tutorialService.LevelView_1.Targets[1];
             _tutorialService.Player.StartDrawLine(obstacle.View.Transform);
@@ -158,12 +165,12 @@ public class TutorialState : IState
             _tutorialService.Hud.TutorialUI.ShowGiveWinsMessage();
 
             _progressService.Data.Tutorial.IsGameLevelStudied = true;
-            _save.SaveProgress();
+            //_save.SaveProgress();
         }
 
 
         _progressService.Data.Tutorial.IsTutorialComplete = true;
-        _save.SaveProgress();
+        //_save.SaveProgress();
 
         _coroutine = null;
 

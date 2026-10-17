@@ -28,7 +28,8 @@ public class GameStateMachine
             allServices.Single<IProgressService>(),
             allServices.Single<ITutorialService>(),
             allServices.Single<ISaveLoadService>(),
-            allServices.Single<ILevelManager>()),
+            allServices.Single<ILevelManager>(),
+            allServices.Single<ITransitionDataService>()),
 
             [typeof(GameLoopState)] = new GameLoopState(this,
             allServices.Single<ILevelController>(),
