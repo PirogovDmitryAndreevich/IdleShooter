@@ -4,7 +4,7 @@ public class MobileInputService : InputService
 {
     private const string InteractButton = "Interact";
     private const string JumpButton = "Jump";
-    private const string ShotButton = "Shot";
+    private const string ShootButton = "Shoot";
 
     private readonly ISliderZoomController _sliderZoom;
 
@@ -21,7 +21,7 @@ public class MobileInputService : InputService
         SimpleInputLookAxis();
 
     public override bool IsShoot =>
-        GetShotButtonDown();
+        SimpleInput.GetButton(ShootButton);
 
     public override float ZoomInput =>
         _sliderZoom.GetZoomInput();
@@ -45,7 +45,4 @@ public class MobileInputService : InputService
 
     public override bool GetInteractButtonDown() => 
         SimpleInput.GetButtonDown(InteractButton);
-
-    public bool GetShotButtonDown() =>
-        SimpleInput.GetButtonDown(ShotButton);
 }

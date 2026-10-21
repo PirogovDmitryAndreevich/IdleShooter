@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: Demon
   m_EditorClassIdentifier: 
   Type: 1
-  Damage: 10
-  HealthPoints: 10
+  Damage: 350
+  HealthPoints: 7000
   AttackDistance: 1
+  ShootRange: 35
   ProjectileType: 0
   RotateSpeed: 120
   MoveSpeed: 2
   StopMoveDistance: 0.3
   FireRate: 0.5
+  ShootingTime: 0.3
+  ReloadTime: 0.3
+  Crowns: 80

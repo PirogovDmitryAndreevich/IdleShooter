@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: TargetLevel2
   m_EditorClassIdentifier: 
   Type: 1
-  HealthPoints: 200
+  HealthPoints: 7000
   Damage: 0
+  Crowns: 45
   TakeDamageSound: {fileID: 8300000, guid: c7bc9533e32f84247bff4f9e46b1b366, type: 3}
   AssetPath: Obstacles/Target

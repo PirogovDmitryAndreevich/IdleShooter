@@ -52,6 +52,7 @@ public class BootstrapState : IState
         _allServices.RegisterSingle<ISettingsManager>(new SettingsManager(_allServices.Single<IProgressService>()));
         _allServices.RegisterSingle<ITutorialService>(new TutorialService());
         _allServices.RegisterSingle<ISliderZoomController>(new SliderZoomController());
+        _allServices.RegisterSingle<IPauseService>(new PauseService());
         _allServices.RegisterSingle(RegisterInputService());
 
         _allServices.RegisterSingle<IWeaponDataService>(new WeaponDataService(
@@ -92,7 +93,8 @@ public class BootstrapState : IState
             _allServices.Single<IMetricsService>(),
             _allServices.Single<ICrownsManager>(),
             _allServices.Single<ITutorialService>(),
-            _allServices.Single<ISliderZoomController>()));
+            _allServices.Single<ISliderZoomController>(),
+            _allServices.Single<IPauseService>()));
 
         _allServices.RegisterSingle<ILevelLoader>(new LevelLoader(
             _allServices.Single<IGameFactory>(),

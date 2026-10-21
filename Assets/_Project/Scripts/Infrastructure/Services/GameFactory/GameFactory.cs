@@ -25,6 +25,7 @@ public class GameFactory : IGameFactory
     private readonly ICrownsManager _crownsManager;
     private readonly ITutorialService _tutorialService;
     private readonly ISliderZoomController _sliderZoomController;
+    private readonly IPauseService _pauseService;
 
     private ILevelController _levelController;
     private PlayerPresenter _player;
@@ -37,7 +38,8 @@ public class GameFactory : IGameFactory
         IInterstitialAdvService interstitialAdvService, ISettingsManager audioManager,
         IRewardAdvService rewardAdvService, IWindowsService windowsService,
         IGiftService giftService, ITimeRewardManager timeRewardManager, IMetricsService metricsService,
-        ICrownsManager crownsManager, ITutorialService tutorialService, ISliderZoomController sliderZoomController)
+        ICrownsManager crownsManager, ITutorialService tutorialService,
+        ISliderZoomController sliderZoomController, IPauseService pauseService)
     {
         _assets = assets;
         _inputService = inputService;
@@ -61,6 +63,7 @@ public class GameFactory : IGameFactory
         _crownsManager = crownsManager;
         _tutorialService = tutorialService;
         _sliderZoomController = sliderZoomController;
+        _pauseService = pauseService;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
@@ -475,7 +478,7 @@ public class GameFactory : IGameFactory
             _interstitialAdvService);
 
         foreach (var window in hud.Windows)
-            window.Construct(_windowsService);
+            window.Construct(_windowsService, _pauseService);
 
         foreach (var button in hud.WindowsButton)
             button.Construct(_windowsService);
@@ -492,7 +495,7 @@ public class GameFactory : IGameFactory
         hud.WinsPanel.Construct(_levelManager);
         hud.GiftsButton.Construct(_windowsService, _timeRewardManager);
         hud.UserInfo.Construct(_crownsManager);
-        hud.TutorialUI.Construct();
+        hud.TutorialUI.Construct(_pauseService);
 
         _uIPoolService.SetCanvas(hud.GetComponent<Canvas>());
 

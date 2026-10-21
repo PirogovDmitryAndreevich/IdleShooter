@@ -17,6 +17,7 @@ public class Hud : MonoBehaviour
     [SerializeField] private WinsPanel _winsPanel;
     [SerializeField] private UserInfo _userInfo;
     [SerializeField] private HudTutorialView _tutorialView;
+    [SerializeField] private WeaponWarningPopup _weaponWarning;
 
     private PlayerPresenter _playerPresenter;
     private IUIPoolService _pool;
@@ -41,6 +42,8 @@ public class Hud : MonoBehaviour
         _userInfo;
     public HudTutorialView TutorialUI =>
         _tutorialView;
+    public WeaponWarningPopup WeaponWarning =>
+        _weaponWarning;
 
     private void OnDestroy()
     {
@@ -82,10 +85,18 @@ public class Hud : MonoBehaviour
     {
         _aimSwitcher.gameObject.SetActive(visible);
 
-        if (!visible)
-        {
-            _aim.gameObject.SetActive(false);
-        }
+        if (!visible)        
+            _aim.gameObject.SetActive(false);        
+    }
+
+    public void StartTutorial()
+    {
+        _giftsButton.gameObject.SetActive(false);
+    }
+
+    public void TutorialEnded()
+    {
+        _giftsButton.gameObject.SetActive(true);
     }
 
     private void OnAimClicked()
@@ -103,6 +114,7 @@ public class Hud : MonoBehaviour
     private void OnWeaponAvailabilityChanged(bool hasWeapon)
     {
         SetAimSwitcherVisible(hasWeapon);
+        _weaponWarning.View(!hasWeapon);
     }
 
     private void OnPlayerShoot(float score)

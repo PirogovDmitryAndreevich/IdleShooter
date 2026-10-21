@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Soldier
   m_EditorClassIdentifier: 
   Type: 0
-  Damage: 10
-  HealthPoints: 15
+  Damage: 30
+  HealthPoints: 450
   AttackDistance: 0.3
   ShootRange: 35
   ProjectileType: 1
@@ -24,3 +24,4 @@ MonoBehaviour:
   FireRate: 0.7
   ShootingTime: 0.3
   ReloadTime: 0.3
+  Crowns: 35

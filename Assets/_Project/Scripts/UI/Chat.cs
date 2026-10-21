@@ -2,7 +2,6 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
-using UnityEngine.Localization.Tables;
 using UnityEngine.UI;
 
 public class Chat : MonoBehaviour
@@ -14,11 +13,21 @@ public class Chat : MonoBehaviour
     [SerializeField] private LocalizedStringTable _localizedTable;
 
     private bool _withButton;
+    private LocalizedString _messageLocale;
+    private LocalizedString _bonusLocale;
 
     public event Action ClickedButton;
 
-    private void OnDestroy() =>
+    private void OnDestroy()
+    {
+        if (_messageLocale != null)
+            _messageLocale.StringChanged -= UpdateMessage;
+
+        if (_bonusLocale != null)
+            _bonusLocale.StringChanged -= UpdateBonus;
+
         _button.onClick.RemoveListener(Hide);
+    }
 
     public void Show(Sprite character, MessageStringKey messageKey, BonusStringKey bonusKey, bool withButton = true)
     {
@@ -47,24 +56,42 @@ public class Chat : MonoBehaviour
             ClickedButton?.Invoke();
         }
 
+        if (_messageLocale != null)
+            _messageLocale.StringChanged -= UpdateMessage;
+
+        if (_bonusLocale != null)
+            _bonusLocale.StringChanged -= UpdateBonus;
+
         gameObject.SetActive(false);
     }
 
     private void SetMessage(MessageStringKey key)
     {
-        LocalizedString localizedString = new LocalizedString(
-        _localizedTable.TableReference,
-        key.ToString());
+        if (_messageLocale != null)
+            _messageLocale.StringChanged -= UpdateMessage;
 
-        _message.text = localizedString.GetLocalizedString() ?? string.Empty;
+        _messageLocale = new LocalizedString(
+            _localizedTable.TableReference,
+            key.ToString());
+
+        _messageLocale.StringChanged += UpdateMessage;
     }
 
     private void SetBonusString(BonusStringKey key)
     {
-        LocalizedString localizedString = new LocalizedString(
-        _localizedTable.TableReference,
-        key.ToString());
+        if (_bonusLocale != null)
+            _bonusLocale.StringChanged -= UpdateBonus;
 
-        _bonus.text = localizedString.GetLocalizedString() ?? string.Empty;
+        _bonusLocale = new LocalizedString(
+            _localizedTable.TableReference,
+            key.ToString());
+
+        _bonusLocale.StringChanged += UpdateBonus;
     }
+
+    private void UpdateMessage(string value) => 
+        _message.text = value ?? string.Empty;
+
+    private void UpdateBonus(string value) => 
+        _bonus.text = value ?? string.Empty;
 }

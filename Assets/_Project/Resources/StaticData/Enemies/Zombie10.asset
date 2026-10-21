@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Zombie10
   m_EditorClassIdentifier: 
   Type: 7
-  Damage: 1
-  HealthPoints: 1
+  Damage: 200
+  HealthPoints: 85000
   AttackDistance: 0.5
   ShootRange: 35
   ProjectileType: 0
@@ -22,3 +22,6 @@ MonoBehaviour:
   MoveSpeed: 1
   StopMoveDistance: 0.3
   FireRate: 0.5
+  ShootingTime: 0.3
+  ReloadTime: 0.3
+  Crowns: 200

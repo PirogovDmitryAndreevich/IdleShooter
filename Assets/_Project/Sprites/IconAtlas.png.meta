@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 562462764b3973b4b952fbd472c3531b
+guid: 30d61eecba295654baa5afb6111e0d50
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -74,7 +74,7 @@ TextureImporter:
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
-    crunchedCompression: 1
+    crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
     ignorePlatformSupport: 0
@@ -123,106 +123,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Settings
+      name: Aim
       rect:
         serializedVersion: 2
-        x: 1
-        y: 432
-        width: 75
-        height: 79
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cfc5f41f6feaa33448cd5303878dea7a
-      internalID: -223755255
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cup
-      rect:
-        serializedVersion: 2
-        x: 77
-        y: 396
-        width: 142
-        height: 115
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 99a1aa4f6479d0042ad02f124b187cc9
-      internalID: 759405219
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HP
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 333
-        width: 67
-        height: 62
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f3f13e3713c01fd46b94290a12fcbfe6
-      internalID: -114316471
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lock
-      rect:
-        serializedVersion: 2
-        x: 69
-        y: 297
-        width: 70
-        height: 98
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0474245a80a84da4db4944e9879fbcea
-      internalID: -687144860
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Score
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 169
+        x: 2
+        y: 382
         width: 128
-        height: 126
+        height: 128
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0902d22a84fba6a45b26b0673b3f9325
-      internalID: 1452464936
+      spriteID: 5d3f9780afa6fc4418e8aaeceb2f41d9
+      internalID: -340059800
       vertices: []
       indices: 
       edges: []
@@ -231,19 +147,82 @@ TextureImporter:
       name: Mark
       rect:
         serializedVersion: 2
-        x: 130
-        y: 217
+        x: 132
+        y: 431
         width: 80
         height: 79
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 523927ed4190e2c428f721777888ad03
-      internalID: -450774252
+      spriteID: 19a1da6afbd367d438dcd241cff3f6c1
+      internalID: -2093131431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Damage
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 483
+        width: 64
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc668ee32850a3746b0bb758edd66096
+      internalID: -563252005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Settings
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 391
+        width: 114
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bac70217182f04f4cad2fc1b6df5cdf1
+      internalID: 888947172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ADV
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 432
+        width: 73
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6e3453afb5abe549a00cd64e19498ca
+      internalID: -1263763659
       vertices: []
       indices: 
       edges: []
@@ -252,19 +231,19 @@ TextureImporter:
       name: Gift
       rect:
         serializedVersion: 2
-        x: 1
-        y: 87
+        x: 2
+        y: 299
         width: 76
-        height: 80
+        height: 81
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f89c672f2ab4eae42866f1d52a64f1b7
-      internalID: 887940038
+      spriteID: 0861b79eb95d51b4a9730e84cbeb86ae
+      internalID: 71464637
       vertices: []
       indices: 
       edges: []
@@ -273,103 +252,250 @@ TextureImporter:
       name: Close
       rect:
         serializedVersion: 2
-        x: 78
-        y: 114
+        x: 80
+        y: 327
         width: 49
         height: 53
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a78d1e44ec1df0a41bd336ca73e470b5
-      internalID: 697627374
+      spriteID: 09b591077f30b0a409c5d0a468ea255f
+      internalID: 878718569
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MusicOn
+      name: Lock
       rect:
         serializedVersion: 2
-        x: 128
-        y: 112
+        x: 131
+        y: 207
+        width: 122
+        height: 173
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd97cb063a6c1814b9984a7603ec1132
+      internalID: -1010653624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Music_Off
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 325
+        width: 67
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82fddc5cec33c664985bbea77050e2bc
+      internalID: 1229868124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Music_On
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 325
         width: 56
         height: 55
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ccf2bc1224723d54098504420de10663
-      internalID: 158791374
+      spriteID: 6428c1feccf9b9849b4f9df6052649ff
+      internalID: -1314664105
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MusicOff
+      name: Sound_Off
       rect:
         serializedVersion: 2
-        x: 185
-        y: 112
+        x: 382
+        y: 318
         width: 67
-        height: 55
+        height: 62
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 09318b403479ee5459d7774326a1778b
-      internalID: 1641943832
+      spriteID: 66b5cbcffab2eac4ba723104cfaa22b8
+      internalID: 1078092946
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SoundOff
+      name: Sound_On
       rect:
         serializedVersion: 2
-        x: 1
-        y: 24
-        width: 67
-        height: 61
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9c00a045359604449ac4865eb04213c8
-      internalID: 1664687312
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SoundOn
-      rect:
-        serializedVersion: 2
-        x: 69
-        y: 30
+        x: 2
+        y: 150
         width: 60
         height: 55
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd11f6ab2f3e86f47b8cb15eb12a2bbe
-      internalID: -170858295
+      spriteID: ceeb06ef3021f524abd83b30b356cd29
+      internalID: 1727868302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crown
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 145
+        width: 59
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8aaff6d37d048b24fa32b0b80208eaf0
+      internalID: 177180908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HP
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 143
+        width: 67
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b46c8e2e3e01f9a4888cee3f721e8f32
+      internalID: -1810875005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Like
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 77
+        width: 119
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bb4e6ab94e64a24981f59b9d0f12b9d
+      internalID: 1186715337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sensitivity
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 155
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51f5dd6fd7bf0d94d8ca4d5ae567a865
+      internalID: -1995660701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 141
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a751a70510588e54cac490b8f1371a4f
+      internalID: 993409248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wins
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 26
+        width: 60
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07f01f5fdb8036b43b646221879a8c01
+      internalID: 515668394
       vertices: []
       indices: 
       edges: []
@@ -385,24 +511,31 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Close: 697627374
-      Cup: 759405219
-      Gift: 887940038
-      HP: -114316471
-      IconsAtlas_10: 1183714186
-      IconsAtlas_11: -2042587273
-      IconsAtlas_12: -1217538065
-      IconsAtlas_14: -768560772
-      IconsAtlas_16: 984389861
-      IconsAtlas_17: -400256409
-      Lock: -687144860
-      Mark: -450774252
-      MusicOff: 1641943832
-      MusicOn: 158791374
-      Score: 1452464936
-      Settings: -223755255
-      SoundOff: 1664687312
-      SoundOn: -170858295
+      ADV: -1263763659
+      Aim: -340059800
+      Close: 878718569
+      Crown: 177180908
+      Damage: -563252005
+      Gift: 71464637
+      HP: -1810875005
+      IconAtlas_12: -659455195
+      IconAtlas_13: -1615345994
+      IconAtlas_14: 1678008607
+      IconAtlas_15: -393330651
+      IconAtlas_17: 1044626209
+      IconAtlas_23: -1205495865
+      IconAtlas_9: 839236087
+      Like: 1186715337
+      Lock: -1010653624
+      Mark: -2093131431
+      Music_Off: 1229868124
+      Music_On: -1314664105
+      Sensitivity: -1995660701
+      Settings: 888947172
+      Shoot: 993409248
+      Sound_Off: 1078092946
+      Sound_On: 1727868302
+      Wins: 515668394
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

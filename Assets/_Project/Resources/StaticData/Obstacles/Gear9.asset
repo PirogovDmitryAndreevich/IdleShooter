@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Gear9
   m_EditorClassIdentifier: 
   Type: 8
-  HealthPoints: 3
+  HealthPoints: 63000
   Damage: 100
+  Crowns: 150
   TakeDamageSound: {fileID: 8300000, guid: c7bc9533e32f84247bff4f9e46b1b366, type: 3}
   AssetPath: Obstacles/Gear

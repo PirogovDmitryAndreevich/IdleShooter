@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PassiveShootingReward : PassiveShooting
 {
+    [SerializeField] private GameObject _icon;
+
     [Header("Timers")]
     [SerializeField] private TMP_Text _accessTimerText;
     [SerializeField] private TMP_Text _rewardIntervalText;
@@ -49,6 +51,7 @@ public class PassiveShootingReward : PassiveShooting
         _rewardService.GiveReward += OnGiveReward;
 
         IsAccess = false;
+        _icon.SetActive(true);
         _timer = 0f;
         _rewardInterval = 0f;
 
@@ -94,6 +97,7 @@ public class PassiveShootingReward : PassiveShooting
     private void OpenAccess()
     {
         IsAccess = true;
+        _icon.SetActive(false);
         _timer = _accessTime;
         _rewardInterval = 0f;
 
@@ -123,6 +127,7 @@ public class PassiveShootingReward : PassiveShooting
             Player.OnStopPassiveShooting();
 
         IsAccess = false;
+        _icon.SetActive(true);
         _timer = 0f;
 
         HideTimer(_accessTimerText);

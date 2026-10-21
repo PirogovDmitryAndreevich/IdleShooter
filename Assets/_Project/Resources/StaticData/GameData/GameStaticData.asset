@@ -42,241 +42,241 @@ MonoBehaviour:
     TargetScore: 0
     Health: 100
   - Level: 2
-    TargetScore: 100
+    TargetScore: 17
     Health: 110
   - Level: 3
-    TargetScore: 120
+    TargetScore: 21
     Health: 120
   - Level: 4
-    TargetScore: 143
+    TargetScore: 26
     Health: 130
   - Level: 5
-    TargetScore: 171
+    TargetScore: 33
     Health: 140
   - Level: 6
-    TargetScore: 204
+    TargetScore: 41
     Health: 150
   - Level: 7
-    TargetScore: 243
+    TargetScore: 50
     Health: 160
   - Level: 8
-    TargetScore: 289
+    TargetScore: 62
     Health: 170
   - Level: 9
-    TargetScore: 343
+    TargetScore: 76
     Health: 180
   - Level: 10
-    TargetScore: 407
+    TargetScore: 94
     Health: 190
   - Level: 11
-    TargetScore: 482
+    TargetScore: 115
     Health: 200
   - Level: 12
-    TargetScore: 570
+    TargetScore: 141
     Health: 210
   - Level: 13
-    TargetScore: 674
+    TargetScore: 173
     Health: 220
   - Level: 14
-    TargetScore: 795
+    TargetScore: 212
     Health: 230
   - Level: 15
-    TargetScore: 937
+    TargetScore: 258
     Health: 240
   - Level: 16
-    TargetScore: 1103
+    TargetScore: 314
     Health: 250
   - Level: 17
-    TargetScore: 1297
+    TargetScore: 382
     Health: 260
   - Level: 18
-    TargetScore: 1523
+    TargetScore: 464
     Health: 270
   - Level: 19
-    TargetScore: 1786
+    TargetScore: 562
     Health: 280
   - Level: 20
-    TargetScore: 2092
+    TargetScore: 679
     Health: 290
   - Level: 21
-    TargetScore: 2446
+    TargetScore: 820
     Health: 300
   - Level: 22
-    TargetScore: 2858
+    TargetScore: 987
     Health: 310
   - Level: 23
-    TargetScore: 3334
+    TargetScore: 1188
     Health: 320
   - Level: 24
-    TargetScore: 3884
+    TargetScore: 1426
     Health: 330
   - Level: 25
-    TargetScore: 4519
+    TargetScore: 1708
     Health: 340
   - Level: 26
-    TargetScore: 5251
+    TargetScore: 2044
     Health: 350
   - Level: 27
-    TargetScore: 6094
+    TargetScore: 2440
     Health: 360
   - Level: 28
-    TargetScore: 7063
+    TargetScore: 2909
     Health: 370
   - Level: 29
-    TargetScore: 8176
+    TargetScore: 3460
     Health: 380
   - Level: 30
-    TargetScore: 9451
+    TargetScore: 4110
     Health: 390
   - Level: 31
-    TargetScore: 10910
+    TargetScore: 4872
     Health: 400
   - Level: 32
-    TargetScore: 12578
+    TargetScore: 5765
     Health: 410
   - Level: 33
-    TargetScore: 14482
+    TargetScore: 6809
     Health: 420
   - Level: 34
-    TargetScore: 16653
+    TargetScore: 8028
     Health: 430
   - Level: 35
-    TargetScore: 19124
+    TargetScore: 9447
     Health: 440
   - Level: 36
-    TargetScore: 21932
+    TargetScore: 11097
     Health: 450
   - Level: 37
-    TargetScore: 25119
+    TargetScore: 13012
     Health: 460
   - Level: 38
-    TargetScore: 28731
+    TargetScore: 15229
     Health: 470
   - Level: 39
-    TargetScore: 32818
+    TargetScore: 17791
     Health: 480
   - Level: 40
-    TargetScore: 37438
+    TargetScore: 20746
     Health: 490
   - Level: 41
-    TargetScore: 42651
+    TargetScore: 24146
     Health: 500
   - Level: 42
-    TargetScore: 48525
+    TargetScore: 28053
     Health: 510
   - Level: 43
-    TargetScore: 55134
+    TargetScore: 32530
     Health: 520
   - Level: 44
-    TargetScore: 62559
+    TargetScore: 37653
     Health: 530
   - Level: 45
-    TargetScore: 70890
+    TargetScore: 43501
     Health: 540
   - Level: 46
-    TargetScore: 80222
+    TargetScore: 50164
     Health: 550
   - Level: 47
-    TargetScore: 90661
+    TargetScore: 57739
     Health: 560
   - Level: 48
-    TargetScore: 102321
+    TargetScore: 66334
     Health: 570
   - Level: 49
-    TargetScore: 115325
+    TargetScore: 76066
     Health: 580
   - Level: 50
-    TargetScore: 129806
+    TargetScore: 87062
     Health: 590
   - Level: 51
-    TargetScore: 145909
+    TargetScore: 99460
     Health: 600
   - Level: 52
-    TargetScore: 163787
+    TargetScore: 113409
     Health: 610
   - Level: 53
-    TargetScore: 183608
+    TargetScore: 129071
     Health: 620
   - Level: 54
-    TargetScore: 205548
+    TargetScore: 146619
     Health: 630
   - Level: 55
-    TargetScore: 229797
+    TargetScore: 166236
     Health: 640
   - Level: 56
-    TargetScore: 256558
+    TargetScore: 188120
     Health: 650
   - Level: 57
-    TargetScore: 286046
+    TargetScore: 212480
     Health: 660
   - Level: 58
-    TargetScore: 318489
+    TargetScore: 239538
     Health: 670
   - Level: 59
-    TargetScore: 354128
+    TargetScore: 269526
     Health: 680
   - Level: 60
-    TargetScore: 393216
+    TargetScore: 302688
     Health: 690
   - Level: 61
-    TargetScore: 436022
+    TargetScore: 339278
     Health: 700
   - Level: 62
-    TargetScore: 482826
+    TargetScore: 379562
     Health: 710
   - Level: 63
-    TargetScore: 533920
+    TargetScore: 423813
     Health: 720
   - Level: 64
-    TargetScore: 589610
+    TargetScore: 472310
     Health: 730
   - Level: 65
-    TargetScore: 650212
+    TargetScore: 525340
     Health: 740
   - Level: 66
-    TargetScore: 716057
+    TargetScore: 583194
     Health: 750
   - Level: 67
-    TargetScore: 787481
+    TargetScore: 646164
     Health: 760
   - Level: 68
-    TargetScore: 864834
+    TargetScore: 714543
     Health: 770
   - Level: 69
-    TargetScore: 948471
+    TargetScore: 788620
     Health: 780
   - Level: 70
-    TargetScore: 1038756
+    TargetScore: 868680
     Health: 790
   - Level: 71
-    TargetScore: 1136057
+    TargetScore: 954999
     Health: 800
   - Level: 72
-    TargetScore: 1240747
+    TargetScore: 1047839
     Health: 810
   - Level: 73
-    TargetScore: 1353199
+    TargetScore: 1147450
     Health: 820
   - Level: 74
-    TargetScore: 1473788
+    TargetScore: 1254061
     Health: 830
   - Level: 75
-    TargetScore: 1602885
+    TargetScore: 1367879
     Health: 840
   - Level: 76
-    TargetScore: 1740855
+    TargetScore: 1489084
     Health: 850
   - Level: 77
-    TargetScore: 1888056
+    TargetScore: 1617824
     Health: 860
   - Level: 78
-    TargetScore: 2044837
+    TargetScore: 1754212
     Health: 870
   - Level: 79
-    TargetScore: 2211530
+    TargetScore: 1898324
     Health: 880
   - Level: 80
-    TargetScore: 2388452
+    TargetScore: 2050190
     Health: 890
   LevelViews:
   - {fileID: 7973607129331795865, guid: 5701f3d27548eed48a2588c506c3ed74, type: 3}
@@ -299,67 +299,67 @@ MonoBehaviour:
     EnemiesOnLevel: 
     ObstaclesOnLevel: 
   - Type: 1
-    Recommended: 1
+    Recommended: 2
     Wins: 0
     Icon: {fileID: -1222529782, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 
     ObstaclesOnLevel: 0000000000000000000000000000000000000000
   - Type: 2
-    Recommended: 1
+    Recommended: 10
     Wins: 1
     Icon: {fileID: -585476635, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 
     ObstaclesOnLevel: 030000000400000005000000050000000500000005000000
   - Type: 3
-    Recommended: 5
+    Recommended: 17
     Wins: 3
     Icon: {fileID: -470251013, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 0000000000000000000000000000000000000000
     ObstaclesOnLevel: 
   - Type: 4
-    Recommended: 13
+    Recommended: 26
     Wins: 10
     Icon: {fileID: 837903637, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 01000000
     ObstaclesOnLevel: 
   - Type: 5
-    Recommended: 19
+    Recommended: 31
     Wins: 20
     Icon: {fileID: -261057880, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 
     ObstaclesOnLevel: 
   - Type: 6
-    Recommended: 29
+    Recommended: 43
     Wins: 50
     Icon: {fileID: -1342112313, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 02000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000020000000200000002000000
     ObstaclesOnLevel: 
   - Type: 7
-    Recommended: 39
+    Recommended: 52
     Wins: 100
     Icon: {fileID: -1730412551, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 03000000
     ObstaclesOnLevel: 
   - Type: 8
-    Recommended: 47
+    Recommended: 63
     Wins: 150
     Icon: {fileID: 2128259957, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 04000000040000000400000004000000040000000400000004000000040000000400000004000000040000000400000004000000040000000400000004000000
     ObstaclesOnLevel: 
   - Type: 9
-    Recommended: 50
+    Recommended: 68
     Wins: 230
     Icon: {fileID: -1365484655, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 
     ObstaclesOnLevel: 070000000700000008000000080000000800000006000000
   - Type: 10
-    Recommended: 53
+    Recommended: 72
     Wins: 300
     Icon: {fileID: 829833447, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 0500000005000000050000000500000005000000050000000600000006000000060000000600000007000000070000000700000007000000050000000500000005000000
     ObstaclesOnLevel: 090000000900000009000000
   - Type: 11
-    Recommended: 55
+    Recommended: 75
     Wins: 500
     Icon: {fileID: -2032951055, guid: 129fde8095f64c149b01311eab529fe9, type: 3}
     EnemiesOnLevel: 08000000

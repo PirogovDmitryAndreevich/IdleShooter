@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
-using UnityEngine.Localization.Tables;
 
 public class SwitchWeaponButton : MonoBehaviour
 {
@@ -67,10 +66,6 @@ public class SwitchWeaponButton : MonoBehaviour
         _weaponData = weaponData;
 
         _nameLocale = new LocalizedString(_localizedTable.TableReference, _type.ToString());
-
-        UpdateNameText(_nameLocale.GetLocalizedString());
-        UpdateBonusText(_bonusLocale.GetLocalizedString());
-        UpdatePriceText(_priceLocale.GetLocalizedString());
 
         _nameLocale.StringChanged += UpdateNameText;
         _bonusLocale.StringChanged += UpdateBonusText;

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Robot
   m_EditorClassIdentifier: 
   Type: 8
-  Damage: 10
-  HealthPoints: 10
+  Damage: 250
+  HealthPoints: 250000
   AttackDistance: 1
   ShootRange: 35
   ProjectileType: 3
@@ -24,3 +24,4 @@ MonoBehaviour:
   FireRate: 0.5
   ShootingTime: 3
   ReloadTime: 8
+  Crowns: 500

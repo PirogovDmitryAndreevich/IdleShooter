@@ -65,7 +65,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 33433826058240
-    m_Localized: Required {0}<sprite name="Cup">
+    m_Localized: Required {0} <sprite name="Cup">
     m_Metadata:
       m_Items: []
   - m_Id: 33559642595328

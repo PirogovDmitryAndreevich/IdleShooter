@@ -7,7 +7,7 @@ public class WindowBase : MonoBehaviour
     [SerializeField] private WindowId _windowId;
 
     private IWindowsService _windowService;
-
+    private IPauseService _pause;
 
     private void OnDestroy()
     {
@@ -15,9 +15,10 @@ public class WindowBase : MonoBehaviour
         _closeButton.onClick.RemoveListener(Close);
     }
 
-    public void Construct(IWindowsService windowsService)
+    public void Construct(IWindowsService windowsService, IPauseService pause)
     {
         _windowService = windowsService;
+        _pause = pause;
 
         _closeButton.onClick.AddListener(Close);
         _windowService.OpeningWindow += OnOpenWindow;
@@ -30,16 +31,18 @@ public class WindowBase : MonoBehaviour
         if (id != _windowId)
             return;
 
-        Open();
+        Open();        
     }
 
     private void Open()
     {
         gameObject.SetActive(true);
+        _pause.Pause();
     }
 
     private void Close()
     {
+        _pause.Run();
         gameObject.SetActive(false);
     }
 }

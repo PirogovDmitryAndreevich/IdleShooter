@@ -20,11 +20,11 @@ public class PlayerPresenter : IDisposable
     private bool _isPassiveShooting;
     private IPassiveShooting _passiveShooting;
 
-    private bool HasWeapon => _weapon != null;
-    private bool CanShoot => HasWeapon && _isAim;
     public bool IsAiming => _isAim;
     public DamageManager DamageManager => _damageManager;
     public PlayerHealth Health => _health;
+    public bool HasWeapon => _weapon != null;
+    private bool CanShoot => HasWeapon && _isAim;
 
     public event Action<bool> AimChanged;
     public event Action<bool> WeaponAvailabilityChanged;
@@ -193,6 +193,8 @@ public class PlayerPresenter : IDisposable
                 _weapon.AnimationName,
                 true);
 
+        AimChanged?.Invoke(true);
+
         _controller.SetToPoint(_passiveShooting.PlayerPoint);
     }
 
@@ -218,6 +220,7 @@ public class PlayerPresenter : IDisposable
                 _weapon.AnimationName,
                 false);
 
+        AimChanged?.Invoke(false);
         _isPassiveShooting = false;
         _passiveShooting = null;
     }

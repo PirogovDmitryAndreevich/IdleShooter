@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cannon10
   m_EditorClassIdentifier: 
   Type: 5
-  Damage: 10
+  Damage: 66000
   HealthPoints: 10
   AttackDistance: 0
   ShootRange: 18
@@ -22,3 +22,6 @@ MonoBehaviour:
   MoveSpeed: 0
   StopMoveDistance: 0
   FireRate: 1.5
+  ShootingTime: 0.3
+  ReloadTime: 0.3
+  Crowns: 150

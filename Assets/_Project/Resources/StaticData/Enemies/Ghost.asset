@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: Ghost
   m_EditorClassIdentifier: 
   Type: 3
-  Damage: 10
-  HealthPoints: 10
+  Damage: 600
+  HealthPoints: 60000
   AttackDistance: 1.5
+  ShootRange: 35
   ProjectileType: 0
   RotateSpeed: 120
   MoveSpeed: 2
   StopMoveDistance: 0.5
   FireRate: 0.5
+  ShootingTime: 0.3
+  ReloadTime: 0.3
+  Crowns: 250

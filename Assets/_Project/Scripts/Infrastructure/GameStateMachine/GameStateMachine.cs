@@ -14,13 +14,13 @@ public class GameStateMachine
 
             [typeof(LoadProgressState)] = new LoadProgressState(this,
             allServices.Single<ISaveLoadService>(),
-            allServices.Single<IProgressService>()),
+            allServices.Single<IProgressService>(),
+            allServices.Single<ILocalizationService>()),
 
             [typeof(LoadSceneState)] = new LoadSceneState(this,
             sceneLoader,
             allServices.Single<IWeaponDataService>(),
             allServices.Single<ILevelController>(),
-            allServices.Single<ILocalizationService>(),
             allServices.Single<IProgressService>()),
 
             [typeof(TutorialState)] = new TutorialState(this,
@@ -29,7 +29,8 @@ public class GameStateMachine
             allServices.Single<ITutorialService>(),
             allServices.Single<ISaveLoadService>(),
             allServices.Single<ILevelManager>(),
-            allServices.Single<ITransitionDataService>()),
+            allServices.Single<ITransitionDataService>(),
+            allServices.Single<ILevelController>()),
 
             [typeof(GameLoopState)] = new GameLoopState(this,
             allServices.Single<ILevelController>(),

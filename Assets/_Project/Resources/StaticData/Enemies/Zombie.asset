@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: Zombie
   m_EditorClassIdentifier: 
   Type: 2
-  Damage: 1
-  HealthPoints: 1
+  Damage: 50
+  HealthPoints: 2700
   AttackDistance: 0.5
+  ShootRange: 35
   ProjectileType: 0
   RotateSpeed: 120
   MoveSpeed: 1
   StopMoveDistance: 0.3
   FireRate: 0.5
+  ShootingTime: 0.3
+  ReloadTime: 0.3
+  Crowns: 10

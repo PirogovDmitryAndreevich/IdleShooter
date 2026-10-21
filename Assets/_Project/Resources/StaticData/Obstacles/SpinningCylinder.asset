@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: SpinningCylinder
   m_EditorClassIdentifier: 
   Type: 2
-  HealthPoints: 25
+  HealthPoints: 185
   Damage: 10
+  Crowns: 15
   TakeDamageSound: {fileID: 8300000, guid: c7bc9533e32f84247bff4f9e46b1b366, type: 3}
   AssetPath: Obstacles/SpinningCylinder

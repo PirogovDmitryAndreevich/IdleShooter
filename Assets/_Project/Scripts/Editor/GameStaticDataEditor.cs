@@ -37,7 +37,7 @@ public class GameStaticDataEditor : Editor
             EditorUtility.SetDirty(target);
         }
 
-        DrawLevelGenerator(gameData);
+        DrawPlayerLevelGenerator(gameData);
         DrawSimulation(gameData);
     }
 
@@ -55,10 +55,10 @@ public class GameStaticDataEditor : Editor
     }
 
     // =========================================================
-    //  LEVEL GENERATOR (формула)
+    //  PLAYER LEVELS GENERATOR (формула)
     // =========================================================
 
-    private void DrawLevelGenerator(GameStaticData gameData)
+    private void DrawPlayerLevelGenerator(GameStaticData gameData)
     {
         EditorGUILayout.BeginVertical("box");
         EditorGUILayout.LabelField("Level Generator", EditorStyles.boldLabel);
@@ -77,7 +77,7 @@ public class GameStaticDataEditor : Editor
             "XP(1) = 0, XP(2) = Base XP",
             MessageType.Info);
 
-        if (GUILayout.Button("Fill Levels"))
+        if (GUILayout.Button("Fill Player Levels"))
         {
             FillLevels(gameData, gameData.MaxLevel);
             EditorUtility.SetDirty(target);
@@ -141,6 +141,10 @@ public class GameStaticDataEditor : Editor
 
         gameData.PlayerLevelsData = list.ToArray();
     }
+
+    // =========================================================
+    //  GAME LEVELS GENERATOR
+    // =========================================================
 
     private void DrawSimulation(GameStaticData gameData)
     {
@@ -439,8 +443,10 @@ public class BalanceSimulator
                 .ToList();
 
         var cannon = _sortedWeapons.FirstOrDefault(x => x.Type == WeaponType.Cannon);
+        var robotWeapon = _sortedWeapons.FirstOrDefault(x => x.Type == WeaponType.RobotWeapon);
 
         _sortedWeapons.Remove(cannon);
+        _sortedWeapons.Remove(robotWeapon);
 
         if (_sortedWeapons.Count == 0)
             return _results;
@@ -487,10 +493,12 @@ public class BalanceSimulator
     {
         LevelsStaticData lastLevel = null;
         BalanceSimulationResult lastResult = null;
+        int lastIndex = 0;
 
         for (int i = 1; i < _currentMaxLevelIndex; i++)
         {
-            lastLevel = _sortedLevels[i];
+            lastIndex = i;
+            lastLevel = _sortedLevels[lastIndex];
 
             int startDamage = _damage;
             int startScore = (int)_score;
@@ -506,7 +514,7 @@ public class BalanceSimulator
             lastResult = new BalanceSimulationResult
             {
                 Run = _currentRun,
-                GameLevel = i,
+                GameLevel = lastIndex,
 
                 Weapon = _currentWeapon.Type,
 
@@ -531,7 +539,10 @@ public class BalanceSimulator
 
         // Награда только за самый дальний
         // пройденный уровень.
-        _wins += lastLevel.Wins;
+        if (TryGetNextGameLevel(lastIndex))
+        {
+            _wins += _sortedLevels[lastIndex + 1].Wins;
+        }
 
         lastResult.WinsReceived =
             lastLevel.Wins;
@@ -544,6 +555,14 @@ public class BalanceSimulator
 
     private void EnteringLevel(LevelsStaticData level)
     {
+        if (level.Type == LevelType.Level_5)
+        {
+            _damage += 10;
+            _score += 10;
+
+            CheckPlayerLevelUp();
+        }
+
         for (int i = 0; i < level.EnemiesOnLevel.Length; i++)
         {
             EnemyType enemyType =
@@ -668,6 +687,13 @@ public class BalanceSimulator
             _wins;
 
         return true;
+    }
+
+    private bool TryGetNextGameLevel(int lastIndex)
+    {
+        int nextIndex = lastIndex + 1;
+
+        return nextIndex < _sortedLevels.Count;
     }
 
     private bool IsLastLevelReached()

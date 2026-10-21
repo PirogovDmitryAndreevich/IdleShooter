@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.MPE;
 using UnityEngine;
 
 public class TutorialState : IState
@@ -11,9 +10,12 @@ public class TutorialState : IState
     private readonly ISaveLoadService _save;
     private readonly ILevelManager _levelManager;
     private readonly ITransitionDataService _transitionDataService;
+    private readonly ILevelController _levelController;
+
     private bool _isLevelUpStudiedStarted;
     private bool _isGiveWinsStudied;
     private Coroutine _coroutine;
+    private PlayerPresenter _player;
 
     public TutorialState(
         GameStateMachine gameStateMachine,
@@ -22,7 +24,8 @@ public class TutorialState : IState
         ITutorialService tutorialService,
         ISaveLoadService saveLoadService,
         ILevelManager levelManager,
-        ITransitionDataService transitionDataService)
+        ITransitionDataService transitionDataService,
+        ILevelController levelController)
     {
         _gameStateMachine = gameStateMachine;
         _coroutineRunner = coroutineRunner;
@@ -31,10 +34,18 @@ public class TutorialState : IState
         _save = saveLoadService;
         _levelManager = levelManager;
         _transitionDataService = transitionDataService;
+        _levelController = levelController;
     }
 
     public void Enter()
     {
+        _player = _transitionDataService.Player;
+
+        if (_player == null)
+            _transitionDataService.PlayerCreated += OnPlayerCreated;
+        else
+            SetPlayer();
+
         if (!_progressService.Data.Tutorial.IsLevelUpStudied)
         {
             _levelManager.LevelChanged += OnLevelUp;
@@ -67,6 +78,8 @@ public class TutorialState : IState
     {
         while (!_tutorialService.IsReady)        
             yield return null;
+
+        _tutorialService.Hud.StartTutorial();
 
         if (!_progressService.Data.Tutorial.IsWeaponSwitcherStudied)
         {
@@ -162,6 +175,7 @@ public class TutorialState : IState
 
             _tutorialService.Hud.TutorialUI.ShowGiveWinsMessage();
 
+            _tutorialService.Hud.TutorialEnded();
             _progressService.Data.Tutorial.IsGameLevelStudied = true;
             //_save.SaveProgress();
         }
@@ -184,4 +198,22 @@ public class TutorialState : IState
 
     private void OnLevelUp(int obj) => 
         _tutorialService.Hud.TutorialUI.ShowLevelUpMessage();
+
+    private void OnPlayerCreated()
+    {
+        _transitionDataService.PlayerCreated -= OnPlayerCreated;
+        SetPlayer();
+    }
+
+    private void SetPlayer()
+    {
+        _player = _transitionDataService.Player;
+        _player.PlayerDied += OnPlayerDied;
+    }
+
+    private void OnPlayerDied()
+    {
+        _levelController.WarpToLevel(LevelType.Lobby);
+        _transitionDataService.ResetEnteredLevels();
+    }
 }

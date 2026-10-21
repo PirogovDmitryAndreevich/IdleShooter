@@ -22,11 +22,8 @@ public class ExitGate : MonoBehaviour
     {
         _data = data;
 
-        if (_levelText != null)
-        {            
-            UpdateLevelText(_levelLocale.GetLocalizedString());
-            _levelLocale.StringChanged += UpdateLevelText;
-        }
+        if (_levelText != null)        
+            _levelLocale.StringChanged += UpdateLevelText;        
 
         if (_recommendedLevel != null)
             _recommendedLevel.text = data.Recommended.ToString();

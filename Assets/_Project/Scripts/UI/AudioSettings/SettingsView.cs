@@ -24,7 +24,7 @@ public class SettingsView : MonoBehaviour
     [SerializeField] private Image _soundImage;
     [SerializeField] private Image _musicImage;
 
-    private ISettingsManager _settingsManager;
+    private ISettingsManager _settingsManager;    
 
     private void OnDestroy()
     {
@@ -38,7 +38,7 @@ public class SettingsView : MonoBehaviour
 
     public void Construct(ISettingsManager settingsManager)
     {
-        _settingsManager = settingsManager;
+        _settingsManager = settingsManager;        
 
         _sensitivitySlider.minValue = 1f;
         _sensitivitySlider.maxValue = 10f;

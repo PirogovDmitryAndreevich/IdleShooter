@@ -6,8 +6,8 @@ public class AimSwitcher : MonoBehaviour
 {
     [SerializeField] private Button _button;
     [SerializeField] private Image _image;
-    /*[SerializeField] private Sprite _normalSprite;
-    [SerializeField] private Sprite _selectedSprite;*/
+    [SerializeField] private Sprite _viewSprite;
+    [SerializeField] private Sprite _aimSprite;
 
     public event Action AimClicked;
 
@@ -27,9 +27,9 @@ public class AimSwitcher : MonoBehaviour
     {
         IsAim = isAim;
 
-        /*_image.sprite = _isAim
-            ? _selectedSprite
-            : _normalSprite;*/
+        _image.sprite = IsAim
+            ? _aimSprite
+            : _viewSprite;
     }
 
     private void OnClick()
