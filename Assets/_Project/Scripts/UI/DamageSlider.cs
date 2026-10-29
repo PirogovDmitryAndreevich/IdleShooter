@@ -55,6 +55,8 @@ public class DamageSlider : MonoBehaviour
             return;
         }
         
-        _valuesText.text = $"{_levelManager.CurrentScore:0} / {_levelManager.GetNextTargetScore():0}"; 
+        _valuesText.text =
+            $"{NumberFormatter.NumberAsString(_levelManager.CurrentScore):0} /" +
+            $" {NumberFormatter.NumberAsString(_levelManager.GetNextTargetScore()):0}"; 
     }
 }

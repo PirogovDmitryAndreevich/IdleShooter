@@ -7,4 +7,5 @@ public enum ProjectileType
     Minigun,
     Rocket,
     Cannon,
+    Robot,
 }

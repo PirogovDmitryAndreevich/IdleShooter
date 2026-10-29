@@ -36,6 +36,7 @@ public class GameStateMachine
             allServices.Single<ILevelController>(),
             allServices.Single<ITransitionDataService>(),
             allServices.Single<ITimeRewardManager>(),
+            allServices.Single<IReviewHandler>(),
             coroutineRunner),
         };
     }

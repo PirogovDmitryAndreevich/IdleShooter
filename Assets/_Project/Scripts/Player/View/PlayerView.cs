@@ -12,6 +12,7 @@ public class PlayerView : MonoBehaviour, IPlayer
     [SerializeField] private HitFlash _hitEffect;
     [SerializeField] private DamageableCollider _damageableCollider;
     [SerializeField] private LineDraw _lineDraw;
+    [SerializeField] private SoundsHandler _soundHandler;
 
     private WeaponView _currentWeapon;
 
@@ -30,6 +31,7 @@ public class PlayerView : MonoBehaviour, IPlayer
     public Transform WeaponSpawnParent => _weaponSpawnParent;
     public HitFlash HitEffect => _hitEffect;
     public LineDraw LineDraw => _lineDraw;
+    public SoundsHandler SoundsHandler => _soundHandler;
 
     private void OnDestroy() => 
         _damageableCollider.DamageReceived -= TakeDamage;

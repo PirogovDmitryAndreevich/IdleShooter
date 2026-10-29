@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GameStaticData", menuName = "StaticData/GameData")]
@@ -5,6 +6,7 @@ public class GameStaticData : ScriptableObject
 {
     public Vector3 LobbySpawnPosition;
     public AudioClip BackgroundMusic;
+    public int ReviewScore = 100;
 
     [Space]
     [Header("Camera Settings")]
@@ -49,4 +51,25 @@ public class GameStaticData : ScriptableObject
     [Space]
     [Header("Gifts")]
     public GiftsData[] Gifts;
+
+    [Space]
+    [Header("Sounds")]
+    public SoundsData Sounds;
+}
+
+[Serializable]
+public class SoundsData
+{
+    [Header("UI Sounds")]
+    public AudioClip LevelUp;
+    public AudioClip OpenWindow;
+    public AudioClip CloseWindow;
+    public AudioClip Slider;
+    public AudioClip GiftButtonCollect;
+
+    [Header("Player Sounds")]
+    public AudioClip PlayerStep;
+    public AudioClip SelectWeapon;
+    public AudioClip Aim;
+    public AudioClip Jump;
 }

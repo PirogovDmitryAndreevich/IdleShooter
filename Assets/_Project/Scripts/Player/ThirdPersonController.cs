@@ -14,6 +14,8 @@ public class ThirdPersonController : IDisposable
     private readonly Transform _viewTransform;
     private readonly CharacterController _characterController;
     private readonly PlayerStaticData _playerData;
+    private readonly SoundsHandler _soundsHandler;
+    private readonly SoundsData _soundsData;
     private readonly IInputService _input;
 
     private bool _skipNextMovement;
@@ -23,10 +25,14 @@ public class ThirdPersonController : IDisposable
         CharacterController characterController,
         IInputService inputService,
         PlayerStaticData data,
-        Camera playerCamera)
+        Camera playerCamera,
+        SoundsHandler soundsHandler,
+        SoundsData soundsData)
     {
         _input = inputService;
         _playerData = data;
+        _soundsHandler = soundsHandler;
+        _soundsData = soundsData;
         _viewTransform = viewTransform;
         _characterController = characterController;
 
@@ -54,7 +60,10 @@ public class ThirdPersonController : IDisposable
     public void Update()
     {
         if (_input.JumpPressed && _characterController.isGrounded && !_jumpHandler.IsJumping)
+        {
+            _soundsHandler.PlayRandomPithSound(_soundsData.Jump);
             _jumpHandler.StartJump();
+        }
 
         if (_headHitDetector.CheckHeadHit(_viewTransform, _characterController))
             _jumpHandler.ForceEndJump();
@@ -72,7 +81,11 @@ public class ThirdPersonController : IDisposable
         _movementCalculator.UpdateMoveDirection(_input.Axis);
 
         Vector3 movement = _jumpHandler.VerticalDirection + _movementCalculator.HorizontalDirection;
+
         _characterController.Move(movement);
+
+        if (IsRun)
+            _soundsHandler.PlayStepSound(_soundsData.PlayerStep);
     }
 
     public void Teleport(Transform target)

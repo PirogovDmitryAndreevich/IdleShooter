@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LobbySpawnPosition: {x: -6, y: 0, z: 10.949997}
   BackgroundMusic: {fileID: 8300000, guid: 46c73f8de49251c408ee225d73511493, type: 3}
+  ReviewScore: 100
   CameraSettingsData:
     MaxDistance: 2.5
     OffsetDistanceY: 1.5
@@ -413,32 +414,42 @@ MonoBehaviour:
       RewardType: 0
       Count: 100
       Timer: 1.5
-    Sprite: {fileID: -1476575700, guid: c226c2cb204d697458e0c77115a68983, type: 3}
+    Sprite: {fileID: 993409248, guid: 30d61eecba295654baa5afb6111e0d50, type: 3}
   - Type: 1
     Data:
       Type: 1
       RewardType: 0
       Count: 500
       Timer: 5
-    Sprite: {fileID: -1476575700, guid: c226c2cb204d697458e0c77115a68983, type: 3}
+    Sprite: {fileID: 993409248, guid: 30d61eecba295654baa5afb6111e0d50, type: 3}
   - Type: 2
     Data:
       Type: 2
       RewardType: 1
       Count: 2
       Timer: 15
-    Sprite: {fileID: -1476575700, guid: c226c2cb204d697458e0c77115a68983, type: 3}
+    Sprite: {fileID: 993409248, guid: 30d61eecba295654baa5afb6111e0d50, type: 3}
   - Type: 3
     Data:
       Type: 3
       RewardType: 1
       Count: 5
       Timer: 30
-    Sprite: {fileID: -1476575700, guid: c226c2cb204d697458e0c77115a68983, type: 3}
+    Sprite: {fileID: 993409248, guid: 30d61eecba295654baa5afb6111e0d50, type: 3}
   - Type: 4
     Data:
       Type: 4
       RewardType: 2
       Count: 10
       Timer: 45
-    Sprite: {fileID: 587938785, guid: c226c2cb204d697458e0c77115a68983, type: 3}
+    Sprite: {fileID: 515668394, guid: 30d61eecba295654baa5afb6111e0d50, type: 3}
+  Sounds:
+    LevelUp: {fileID: 8300000, guid: 2e57291208fdeb54aa99f7d754de973c, type: 3}
+    OpenWindow: {fileID: 8300000, guid: fea29da6f0b635e46857189eb08422ff, type: 3}
+    CloseWindow: {fileID: 8300000, guid: 1c884f4d725a5f44a81401414f3570fe, type: 3}
+    Slider: {fileID: 8300000, guid: ed220f27d3d906d4085f629f56f6ff2a, type: 3}
+    GiftButtonCollect: {fileID: 8300000, guid: 65e1dec519520cf408c3b9f75735a4d5, type: 3}
+    PlayerStep: {fileID: 8300000, guid: 9f1c1e6379115c84fbd88a31ba596439, type: 3}
+    SelectWeapon: {fileID: 8300000, guid: 013337f3221751146b26d0e6eac8065e, type: 3}
+    Aim: {fileID: 8300000, guid: fe45d113a87842b44822f2008ea8765a, type: 3}
+    Jump: {fileID: 8300000, guid: 4b6c46d32479e3f4c91141235822e322, type: 3}

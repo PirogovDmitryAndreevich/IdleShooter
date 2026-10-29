@@ -17,7 +17,7 @@ MonoBehaviour:
   HealthPoints: 250000
   AttackDistance: 1
   ShootRange: 35
-  ProjectileType: 3
+  ProjectileType: 4
   RotateSpeed: 120
   MoveSpeed: 2
   StopMoveDistance: 0.3

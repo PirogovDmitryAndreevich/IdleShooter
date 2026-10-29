@@ -33,18 +33,27 @@ public class LevelUpUIEffect : MonoBehaviour
     private RectTransform _healthBar;
     private Vector2 _levelTextStartPosition;
     private ILevelManager _levelManager;
+    private SoundsHandler _soundsHandler;
+    private SoundsData _soundsData;
     private Sequence _sequence;
 
-    public void Construct(RectTransform healthBar, ILevelManager levelManager)
+    public void Construct(RectTransform healthBar, ILevelManager levelManager,
+        SoundsHandler soundsHandler, SoundsData soundsData)
     {
         _healthBar = healthBar;
         _levelTextStartPosition = _levelText.anchoredPosition;
         _levelManager = levelManager;
+        _soundsHandler = soundsHandler;
+        _soundsData = soundsData;
     }
 
     public void Show()
     {
         KillAnimations();
+
+        _soundsHandler.StopSound();
+
+        _soundsHandler.PlaySound(_soundsData.LevelUp);
 
         Prepare();
 

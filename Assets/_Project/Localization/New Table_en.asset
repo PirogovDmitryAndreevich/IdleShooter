@@ -176,6 +176,16 @@ MonoBehaviour:
     m_Localized: ' '
     m_Metadata:
       m_Items: []
+  - m_Id: 4305459363176448
+    m_Localized: 'Leave a review
+
+      and get a gift'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4305564652789760
+    m_Localized: No, thanks
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

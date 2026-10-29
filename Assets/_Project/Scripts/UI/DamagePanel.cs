@@ -25,6 +25,6 @@ public class DamagePanel : MonoBehaviour
 
     private void OnDamageChanged(float damage)
     {
-        _damageText.text = damage.ToString();
+        _damageText.text = NumberFormatter.NumberAsString(damage);
     }
 }

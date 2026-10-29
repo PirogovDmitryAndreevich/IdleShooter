@@ -26,6 +26,7 @@ public class GameFactory : IGameFactory
     private readonly ITutorialService _tutorialService;
     private readonly ISliderZoomController _sliderZoomController;
     private readonly IPauseService _pauseService;
+    private readonly IReviewHandler _reviewHandler;
 
     private ILevelController _levelController;
     private PlayerPresenter _player;
@@ -39,7 +40,7 @@ public class GameFactory : IGameFactory
         IRewardAdvService rewardAdvService, IWindowsService windowsService,
         IGiftService giftService, ITimeRewardManager timeRewardManager, IMetricsService metricsService,
         ICrownsManager crownsManager, ITutorialService tutorialService,
-        ISliderZoomController sliderZoomController, IPauseService pauseService)
+        ISliderZoomController sliderZoomController, IPauseService pauseService, IReviewHandler reviewHandler)
     {
         _assets = assets;
         _inputService = inputService;
@@ -64,11 +65,13 @@ public class GameFactory : IGameFactory
         _tutorialService = tutorialService;
         _sliderZoomController = sliderZoomController;
         _pauseService = pauseService;
+        _reviewHandler = reviewHandler;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
         _projectilePool.Register(ProjectileType.Rocket, () => CreateRocketProjectile());
         _projectilePool.Register(ProjectileType.Cannon, () => CreateCannonProjectile());
+        _projectilePool.Register(ProjectileType.Robot, () => CreateRobotProjectile());
 
         _poolService.RegisterFactory(() => CreateBulletHole());
         _poolService.RegisterFactory(() => CreateHitEffect());
@@ -91,6 +94,7 @@ public class GameFactory : IGameFactory
 
         player.View.Construct();
         player.View.LineDraw.Construct(player.View.transform);
+        player.View.SoundsHandler.Construct(_settingsManager);
         CameraController camera = CreatePlayerCamera(player.View, UnityEngine.Camera.main);
         PlayerModel model = new PlayerModel(_staticDataService, _progressService);
 
@@ -98,7 +102,8 @@ public class GameFactory : IGameFactory
         PlayerHealth playerHealth = new PlayerHealth(_levelManager);
 
         _player = new PlayerPresenter(model, player.View, _inputService, camera,
-            _weaponSwitcher, damageManager, playerHealth, _levelManager);
+            _weaponSwitcher, damageManager, playerHealth, _levelManager,
+            _staticDataService.GetGameData().Sounds);
 
         Hud hud = CreateHud(_player ,isDesktop);
 
@@ -244,26 +249,6 @@ public class GameFactory : IGameFactory
             _staticDataService.GetGameData(), _projectilePool, _poolService);
 
         return presenter;
-    }
-
-    public StoneProjectile CreateStoneProjectile()
-    {
-        StoneProjectile stone = _assets.Instantiate(AssetsPath.StoneProjectilePath)
-            .GetComponent<StoneProjectile>();
-
-        stone.Construct(_projectilePool);
-
-        return stone;
-    }
-
-    public MinigunProjectile CreateMinigunProjectile()
-    {
-        MinigunProjectile projectile = _assets.Instantiate(AssetsPath.MinigunProjectilePath)
-            .GetComponent<MinigunProjectile>();
-
-        projectile.Construct(_projectilePool, _poolService);
-
-        return projectile;
     }
 
     public SoldierPresenter CreateSoldierEnemy(Transform at, Transform attackPoint,
@@ -470,15 +455,21 @@ public class GameFactory : IGameFactory
 
     private Hud CreateHud(PlayerPresenter playerPresenter, bool isDesktop)
     {
+        SoundsData soundsData = _staticDataService.GetGameData().Sounds;
+
         Hud hud = InitHud(isDesktop);
+
+        hud.SoundsHandler.Construct(_settingsManager);
 
         hud.Construct(playerPresenter,
             _staticDataService.GetShootAnimationSettings(),
             _levelManager, _uIPoolService,
-            _interstitialAdvService);
+            _interstitialAdvService,
+            soundsData);
 
         foreach (var window in hud.Windows)
-            window.Construct(_windowsService, _pauseService);
+            window.Construct(_windowsService, _pauseService,
+                hud.SoundsHandler, soundsData);
 
         foreach (var button in hud.WindowsButton)
             button.Construct(_windowsService);
@@ -488,14 +479,17 @@ public class GameFactory : IGameFactory
             GiftsData data = _staticDataService.ForGift(giftButton.Type);
 
             _timeRewardManager.RegisterGift(giftButton.Type, data.Data.Timer);
-            giftButton.Construct(_giftService, _timeRewardManager, data.Data, data.Sprite);
+            giftButton.Construct(_giftService, _timeRewardManager, data.Data, data.Sprite,
+                hud.SoundsHandler, soundsData);
         }
 
-        hud.AudioSettings.Construct(_settingsManager);
+        hud.AudioSettings.Construct(_settingsManager, hud.SoundsHandler, soundsData);
         hud.WinsPanel.Construct(_levelManager);
         hud.GiftsButton.Construct(_windowsService, _timeRewardManager);
         hud.UserInfo.Construct(_crownsManager);
         hud.TutorialUI.Construct(_pauseService);
+        hud.ReviewButton.Construct(_windowsService, _reviewHandler);
+        hud.ReviewPopup.Construct(_windowsService, _pauseService, _reviewHandler);
 
         _uIPoolService.SetCanvas(hud.GetComponent<Canvas>());
 
@@ -547,6 +541,26 @@ public class GameFactory : IGameFactory
         return effect;
     }
 
+    private StoneProjectile CreateStoneProjectile()
+    {
+        StoneProjectile stone = _assets.Instantiate(AssetsPath.StoneProjectilePath)
+            .GetComponent<StoneProjectile>();
+
+        stone.Construct(_projectilePool);
+
+        return stone;
+    }
+
+    private MinigunProjectile CreateMinigunProjectile()
+    {
+        MinigunProjectile projectile = _assets.Instantiate(AssetsPath.MinigunProjectilePath)
+            .GetComponent<MinigunProjectile>();
+
+        projectile.Construct(_projectilePool, _poolService);
+
+        return projectile;
+    }
+
     private RocketProjectile CreateRocketProjectile()
     {
         RocketProjectile projectile = _assets.Instantiate(AssetsPath.RocketProjectilePath)
@@ -561,6 +575,16 @@ public class GameFactory : IGameFactory
     {
         CannonProjectile projectile = _assets.Instantiate(AssetsPath.CannonProjectilePath)
             .GetComponent<CannonProjectile>();
+
+        projectile.Construct(_projectilePool, _poolService);
+
+        return projectile;
+    }
+
+    private RobotProjectile CreateRobotProjectile()
+    {
+        RobotProjectile projectile = _assets.Instantiate(AssetsPath.RobotProjectilePath)
+            .GetComponent<RobotProjectile>();
 
         projectile.Construct(_projectilePool, _poolService);
 

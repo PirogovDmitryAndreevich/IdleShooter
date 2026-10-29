@@ -24,6 +24,8 @@ public class SettingsView : MonoBehaviour
     [SerializeField] private Image _soundImage;
     [SerializeField] private Image _musicImage;
 
+    private SoundsHandler _soundsHandler;
+    private SoundsData _soundsData;
     private ISettingsManager _settingsManager;    
 
     private void OnDestroy()
@@ -36,9 +38,12 @@ public class SettingsView : MonoBehaviour
         _musicButton.onClick.RemoveListener(SwitchMuteMusic);
     }
 
-    public void Construct(ISettingsManager settingsManager)
+    public void Construct(ISettingsManager settingsManager,
+        SoundsHandler soundsHandler, SoundsData soundsData)
     {
-        _settingsManager = settingsManager;        
+        _settingsManager = settingsManager;
+        _soundsHandler = soundsHandler;
+        _soundsData = soundsData;
 
         _sensitivitySlider.minValue = 1f;
         _sensitivitySlider.maxValue = 10f;
@@ -57,6 +62,7 @@ public class SettingsView : MonoBehaviour
     private void ChangedSoundVolume(float value)
     {
         _settingsManager.ChangeSoundVolume(value);
+        _soundsHandler.PlaySound(_soundsData.Slider);
 
         if (value <= 0f)
         {
@@ -75,6 +81,7 @@ public class SettingsView : MonoBehaviour
     private void ChangedMusicVolume(float value)
     {
         _settingsManager.ChangeMusicVolume(value);
+        _soundsHandler.PlaySound(_soundsData.Slider);
 
         if (value <= 0f)
         {

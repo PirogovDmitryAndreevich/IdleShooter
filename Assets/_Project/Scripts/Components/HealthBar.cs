@@ -29,7 +29,9 @@ public class HealthBar : MonoBehaviour
 
     private void UpdateHealthView()
     {
-        _valueText.text = $"{_health.CurrentHealth} / {_health.MaxHealth}";
+        _valueText.text = $"{NumberFormatter.NumberAsString(_health.CurrentHealth)} /" +
+            $" {NumberFormatter.NumberAsString(_health.MaxHealth)}";
+
         _slider.value = (float)_health.CurrentHealth / _health.MaxHealth;
     }
 }

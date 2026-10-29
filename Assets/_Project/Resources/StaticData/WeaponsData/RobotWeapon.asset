@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 10
   ShooterType: 0
-  ProjectileType: 0
+  ProjectileType: 4
   FireRate: 0.2
   MaxAimDistance: 1000
   Shake:

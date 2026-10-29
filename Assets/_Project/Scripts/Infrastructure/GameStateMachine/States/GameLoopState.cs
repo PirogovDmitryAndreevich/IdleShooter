@@ -7,6 +7,7 @@ public class GameLoopState : IState
     private readonly ILevelController _levelController;
     private readonly ITransitionDataService _transitionDataService;
     private readonly ITimeRewardManager _timeRewardManager;
+    private readonly IReviewHandler _reviewHandler;
     private readonly ICoroutineRunner _coroutineRunner;
 
     private PlayerPresenter _player;
@@ -15,12 +16,13 @@ public class GameLoopState : IState
 
     public GameLoopState(GameStateMachine gameStateMachine, ILevelController levelController,
         ITransitionDataService transitionDataService, ITimeRewardManager timeRewardManager,
-        ICoroutineRunner coroutineRunner)
+IReviewHandler reviewHandler, ICoroutineRunner coroutineRunner)
     {
         _gameStateMachine = gameStateMachine;
         _levelController = levelController;
         _transitionDataService = transitionDataService;
         _timeRewardManager = timeRewardManager;
+        _reviewHandler = reviewHandler;
         _coroutineRunner = coroutineRunner;
     }
     public void Enter()
@@ -74,9 +76,11 @@ public class GameLoopState : IState
 
     private IEnumerator GameLoopCoroutine()
     {
+        _reviewHandler.UpdateData();
+
         while (_isGameLoopRunning)
         {
-            _timeRewardManager.Update();
+            _timeRewardManager.Update();            
 
             if (_transitionDataService.CurrentLevel != null && 
                 _transitionDataService.CurrentLevel.CheckCompleted())            

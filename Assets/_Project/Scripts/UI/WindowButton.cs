@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,3 +22,4 @@ public class WindowButton : MonoBehaviour
     private void OnClick() => 
         _windowService.OpenWindow(_windowId);
 }
+

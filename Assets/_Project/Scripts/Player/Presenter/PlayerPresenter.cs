@@ -12,6 +12,7 @@ public class PlayerPresenter : IDisposable
     private readonly DamageManager _damageManager;
     private readonly PlayerHealth _health;
     private readonly ILevelManager _level;
+    private readonly SoundsData _soundsData;
     private readonly IRotationHandler _rotationHandler;
     private readonly ThirdPersonController _controller;
 
@@ -39,7 +40,8 @@ public class PlayerPresenter : IDisposable
         WeaponSwitcher weaponSwitcher,
         DamageManager damageManager,
         PlayerHealth health,
-        ILevelManager level)
+        ILevelManager level,
+        SoundsData soundsData)
     {
         _model = model;
         _view = view;
@@ -50,13 +52,16 @@ public class PlayerPresenter : IDisposable
         _damageManager = damageManager;
         _health = health;
         _level = level;
+        _soundsData = soundsData;
 
         _controller = new ThirdPersonController(
             _view.Transform,
             _view.CharacterController,
             _input,
             _model.StaticData,
-            _camera.Camera);
+            _camera.Camera,
+            _view.SoundsHandler,
+            _soundsData);
 
         _rotationHandler = new SmoothRotationHandler();
 
@@ -144,6 +149,7 @@ public class PlayerPresenter : IDisposable
             return;
 
         _isAim = isAim;
+        _view.SoundsHandler.PlaySound(_soundsData.Aim);
 
         if (HasWeapon)
         {
@@ -242,6 +248,7 @@ public class PlayerPresenter : IDisposable
 
         _weapon = weapon;
         _view.SwitchWeapon(_weapon);
+        _view.SoundsHandler.PlaySound(_soundsData.SelectWeapon);
 
         if (_weapon == null)
         {

@@ -33,4 +33,5 @@ public static class AssetsPath
     public const string ShootUIEffectPath = "ShootUIEffect/ShootUIEffect";
     public const string MusicHandlerPath = "MusicHandler/BgMusic";
     public const string HudMobile = "Hud/HudMobile";
+    public const string RobotProjectilePath = "Weapons/RobotWeapon/RobotProjectile Variant";
 }

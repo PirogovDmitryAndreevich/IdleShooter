@@ -18,6 +18,9 @@ public class Hud : MonoBehaviour
     [SerializeField] private UserInfo _userInfo;
     [SerializeField] private HudTutorialView _tutorialView;
     [SerializeField] private WeaponWarningPopup _weaponWarning;
+    [SerializeField] private ReviewButton _reviewButton;
+    [SerializeField] private ReviewPopup _reviewPopup;
+    [SerializeField] private SoundsHandler _soundsHandler; 
 
     private PlayerPresenter _playerPresenter;
     private IUIPoolService _pool;
@@ -44,6 +47,9 @@ public class Hud : MonoBehaviour
         _tutorialView;
     public WeaponWarningPopup WeaponWarning =>
         _weaponWarning;
+    public ReviewButton ReviewButton => _reviewButton;
+    public ReviewPopup ReviewPopup => _reviewPopup;
+    public SoundsHandler SoundsHandler => _soundsHandler;
 
     private void OnDestroy()
     {
@@ -57,7 +63,8 @@ public class Hud : MonoBehaviour
         ShootUIEffectAnimationSettings settings,
         ILevelManager levelManager,
         IUIPoolService pool,
-        IInterstitialAdvService interstitialAdvService)
+        IInterstitialAdvService interstitialAdvService,
+        SoundsData soundsData)
     {
         _playerPresenter = playerPresenter;
         _pool = pool;
@@ -68,7 +75,7 @@ public class Hud : MonoBehaviour
         _interstitialTimer.Construct(interstitialAdvService);
         _damagePanel.Construct(_playerPresenter.DamageManager, _levelManager);
         _healthBar.Construct(_playerPresenter.Health);
-        _levelUp.Construct(_healthBar.HealthIcon, _levelManager);
+        _levelUp.Construct(_healthBar.HealthIcon, _levelManager, _soundsHandler, soundsData);
 
         _aim.gameObject.SetActive(false);
 

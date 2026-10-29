@@ -19,6 +19,8 @@ public class GiftRewardButton : MonoBehaviour
     private IGiftService _giftService;
     private float _giftValue;
     private ITimeRewardManager _timeRewardManager;
+    private SoundsHandler _soundsHandler;
+    private SoundsData _soundsData;
 
     public bool IsAvailable { get; private set; }
     public GiftType Type => _type;
@@ -44,13 +46,15 @@ public class GiftRewardButton : MonoBehaviour
     }
 
     public void Construct(IGiftService giftService, ITimeRewardManager timeRewardManager,
-        GiftStaticData data, Sprite sprite)
+        GiftStaticData data, Sprite sprite, SoundsHandler soundsHandler, SoundsData soundsData)
     {
         _bgFrame.color = _noAvailable;
 
         _giftService = giftService;
         _icon.sprite = sprite;
         _timeRewardManager = timeRewardManager;
+        _soundsHandler = soundsHandler;
+        _soundsData = soundsData;
 
         _giftValue = data.Count;
 
@@ -62,6 +66,8 @@ public class GiftRewardButton : MonoBehaviour
         _button.onClick.AddListener(OnClick);
 
         _timeRewardManager.AvailabilityChanged += OnAvailabilityChanged;
+
+        _collectFrame.gameObject.SetActive(false);
     }
 
     private void OnClick()
@@ -69,6 +75,7 @@ public class GiftRewardButton : MonoBehaviour
         if (!_timeRewardManager.TryClaim(_type))
             return;
 
+        _soundsHandler.PlaySound(_soundsData.GiftButtonCollect);
         _collectFrame.SetActive(true);
         _bgFrame.color = _noAvailable;
         _giftService.AddGift(_type, _giftValue);

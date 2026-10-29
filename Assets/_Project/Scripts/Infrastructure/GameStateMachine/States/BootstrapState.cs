@@ -37,7 +37,7 @@ public class BootstrapState : IState
         _allServices.RegisterSingle<IMetricsService>(new MetricsService(_allServices.Single<IProgressService>()));
         _allServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(_allServices.Single<IProgressService>()));
         _allServices.RegisterSingle<ILocalizationService>(new LocalizationService(_coroutineRunner));
-        _allServices.RegisterSingle<ICrownsManager>(new CrownsManager(_allServices.Single<IProgressService>()));
+        _allServices.RegisterSingle<ICrownsManager>(new CrownsManager(_allServices.Single<IProgressService>()));        
         _allServices.RegisterSingle<IRewardAdvService>(new RewardAdvService());
         _allServices.RegisterSingle<ITimeRewardManager>(new TimeRewardManager());
         _allServices.RegisterSingle<IPoolService>(new Pool());
@@ -63,6 +63,10 @@ public class BootstrapState : IState
             _allServices.Single<IProgressService>(),
             _allServices.Single<IStaticDataService>(),
             _allServices.Single<IMetricsService>()));
+
+        _allServices.RegisterSingle<IReviewHandler>(new ReviewHandler(
+            _allServices.Single<ILevelManager>(),
+            _allServices.Single<IStaticDataService>()));
 
         _allServices.RegisterSingle<IWeaponBuyController>(new WeaponBuyController(
             _allServices.Single<ILevelManager>(),
@@ -94,7 +98,8 @@ public class BootstrapState : IState
             _allServices.Single<ICrownsManager>(),
             _allServices.Single<ITutorialService>(),
             _allServices.Single<ISliderZoomController>(),
-            _allServices.Single<IPauseService>()));
+            _allServices.Single<IPauseService>(),
+            _allServices.Single<IReviewHandler>()));
 
         _allServices.RegisterSingle<ILevelLoader>(new LevelLoader(
             _allServices.Single<IGameFactory>(),
