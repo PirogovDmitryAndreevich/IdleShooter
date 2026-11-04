@@ -27,6 +27,7 @@ public class GameFactory : IGameFactory
     private readonly ISliderZoomController _sliderZoomController;
     private readonly IPauseService _pauseService;
     private readonly IReviewHandler _reviewHandler;
+    private readonly IPlayerDiedService _playerDiedService;
 
     private ILevelController _levelController;
     private PlayerPresenter _player;
@@ -40,7 +41,7 @@ public class GameFactory : IGameFactory
         IRewardAdvService rewardAdvService, IWindowsService windowsService,
         IGiftService giftService, ITimeRewardManager timeRewardManager, IMetricsService metricsService,
         ICrownsManager crownsManager, ITutorialService tutorialService,
-        ISliderZoomController sliderZoomController, IPauseService pauseService, IReviewHandler reviewHandler)
+        ISliderZoomController sliderZoomController, IPauseService pauseService, IReviewHandler reviewHandler, IPlayerDiedService playerDiedService)
     {
         _assets = assets;
         _inputService = inputService;
@@ -66,6 +67,7 @@ public class GameFactory : IGameFactory
         _sliderZoomController = sliderZoomController;
         _pauseService = pauseService;
         _reviewHandler = reviewHandler;
+        _playerDiedService = playerDiedService;
 
         _projectilePool.Register(ProjectileType.Stone, () => CreateStoneProjectile());
         _projectilePool.Register(ProjectileType.Minigun, () => CreateMinigunProjectile());
@@ -498,6 +500,8 @@ public class GameFactory : IGameFactory
         hud.TutorialUI.Construct(_pauseService);
         hud.ReviewButton.Construct(_windowsService, _reviewHandler);
         hud.ReviewPopup.Construct(_windowsService, _pauseService, _reviewHandler);
+        hud.PlayerDiedPopup.Construct(_playerDiedService, _windowsService, _pauseService,
+            hud.SoundsHandler, soundsData);
 
         _uIPoolService.SetCanvas(hud.GetComponent<Canvas>());
 

@@ -8,31 +8,28 @@ public class GameLoopState : IState
     private readonly ITransitionDataService _transitionDataService;
     private readonly ITimeRewardManager _timeRewardManager;
     private readonly IReviewHandler _reviewHandler;
+    private readonly IPlayerDiedService _playerDiedService;
     private readonly ICoroutineRunner _coroutineRunner;
-
-    private PlayerPresenter _player;
+    
     private Coroutine _gameLoopCoroutine;
     private bool _isGameLoopRunning;
 
-    public GameLoopState(GameStateMachine gameStateMachine, ILevelController levelController,
+    public GameLoopState(GameStateMachine gameStateMachine,
+        ILevelController levelController,
         ITransitionDataService transitionDataService, ITimeRewardManager timeRewardManager,
-IReviewHandler reviewHandler, ICoroutineRunner coroutineRunner)
+        IReviewHandler reviewHandler, IPlayerDiedService playerDiedService, ICoroutineRunner coroutineRunner)
     {
         _gameStateMachine = gameStateMachine;
         _levelController = levelController;
         _transitionDataService = transitionDataService;
         _timeRewardManager = timeRewardManager;
         _reviewHandler = reviewHandler;
+        _playerDiedService = playerDiedService;
         _coroutineRunner = coroutineRunner;
     }
     public void Enter()
     {
-        _player = _transitionDataService.Player;
-
-        if (_player == null)
-            _transitionDataService.PlayerCreated += OnPlayerCreated;
-        else
-            SetPlayer();
+        _playerDiedService.PlayerDied += OnPlayerDied;
 
         _isGameLoopRunning = true;
 
@@ -41,10 +38,11 @@ IReviewHandler reviewHandler, ICoroutineRunner coroutineRunner)
 
     public void Exit()
     {
-        _levelController.Dispose();
-        _player.PlayerDied -= OnPlayerDied;
-
         _transitionDataService?.Dispose();
+        _levelController.Dispose();
+
+        _playerDiedService.PlayerDied -= OnPlayerDied;
+        _playerDiedService.Dispose();
 
         _isGameLoopRunning = false;
 
@@ -53,25 +51,6 @@ IReviewHandler reviewHandler, ICoroutineRunner coroutineRunner)
             _coroutineRunner.StopCoroutine(_gameLoopCoroutine);
             _gameLoopCoroutine = null;
         }
-    }
-
-    private void OnPlayerDied()
-    {
-        _levelController.WarpToLevel(LevelType.Lobby);
-        _transitionDataService.ResetEnteredLevels();
-    }
-
-    private void OnPlayerCreated()
-    {
-        _transitionDataService.PlayerCreated -= OnPlayerCreated;
-
-        SetPlayer();
-    }
-
-    private void SetPlayer()
-    {
-        _player = _transitionDataService.Player;
-        _player.PlayerDied += OnPlayerDied;
     }
 
     private IEnumerator GameLoopCoroutine()
@@ -88,5 +67,11 @@ IReviewHandler reviewHandler, ICoroutineRunner coroutineRunner)
 
             yield return null;
         }
+    }
+
+    private void OnPlayerDied(LevelType level)
+    {
+        _levelController.WarpToLevel(level);
+        _transitionDataService.ResetEnteredLevels();
     }
 }

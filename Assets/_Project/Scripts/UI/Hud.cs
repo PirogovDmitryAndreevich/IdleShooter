@@ -20,7 +20,8 @@ public class Hud : MonoBehaviour
     [SerializeField] private WeaponWarningPopup _weaponWarning;
     [SerializeField] private ReviewButton _reviewButton;
     [SerializeField] private ReviewPopup _reviewPopup;
-    [SerializeField] private SoundsHandler _soundsHandler; 
+    [SerializeField] private SoundsHandler _soundsHandler;
+    [SerializeField] private PlayerDiedPopup _playerDiedPopup;
 
     private PlayerPresenter _playerPresenter;
     private IUIPoolService _pool;
@@ -31,6 +32,8 @@ public class Hud : MonoBehaviour
         _aimSwitcher;
     public WindowBase[] Windows =>
         _windows;
+    public PlayerDiedPopup PlayerDiedPopup =>
+        _playerDiedPopup;
     public WindowButton[] WindowsButton =>
         _windowsButtons;
     public SettingsView AudioSettings =>

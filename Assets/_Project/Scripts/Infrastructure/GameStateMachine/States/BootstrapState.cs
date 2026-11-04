@@ -55,6 +55,11 @@ public class BootstrapState : IState
         _allServices.RegisterSingle<IPauseService>(new PauseService());
         _allServices.RegisterSingle(RegisterInputService());
 
+        _allServices.RegisterSingle<IPlayerDiedService>(new PlayerDiedService(
+            _allServices.Single<ITransitionDataService>(),
+            _allServices.Single<IWindowsService>(),
+            _allServices.Single<IRewardAdvService>()));
+
         _allServices.RegisterSingle<ILevelManager>(new LevelManager(
             _allServices.Single<IProgressService>(),
             _allServices.Single<IStaticDataService>(),
@@ -96,7 +101,8 @@ public class BootstrapState : IState
             _allServices.Single<ITutorialService>(),
             _allServices.Single<ISliderZoomController>(),
             _allServices.Single<IPauseService>(),
-            _allServices.Single<IReviewHandler>()));
+            _allServices.Single<IReviewHandler>(),
+            _allServices.Single<IPlayerDiedService>()));
 
         _allServices.RegisterSingle<ILevelLoader>(new LevelLoader(
             _allServices.Single<IGameFactory>(),

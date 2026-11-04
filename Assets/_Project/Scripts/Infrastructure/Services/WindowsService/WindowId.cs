@@ -4,4 +4,5 @@ public enum WindowId
     Settings = 1,
     Gifts = 2,
     Review = 3,
+    PlayerDied = 4,
 }

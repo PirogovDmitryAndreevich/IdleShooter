@@ -72,6 +72,8 @@ public class TutorialState : IState
 
         if(_isLevelUpStudiedStarted)
             _levelManager.LevelChanged -= OnLevelUp;
+
+        _player.PlayerDied -= OnPlayerDied;
     }
 
     public IEnumerator TutorialCoroutine()
