@@ -453,3 +453,7 @@ MonoBehaviour:
     SelectWeapon: {fileID: 8300000, guid: 013337f3221751146b26d0e6eac8065e, type: 3}
     Aim: {fileID: 8300000, guid: fe45d113a87842b44822f2008ea8765a, type: 3}
     Jump: {fileID: 8300000, guid: 4b6c46d32479e3f4c91141235822e322, type: 3}
+  ButtonsKeyCodes:
+    SwitchAim: 101
+    Gifts: 103
+    Jump: 32

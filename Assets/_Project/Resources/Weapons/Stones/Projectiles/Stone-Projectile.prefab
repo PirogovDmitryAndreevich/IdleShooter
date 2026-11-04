@@ -301,12 +301,12 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: -0.019396864
-      outSlope: -0.019396864
+      inSlope: 2.2264962
+      outSlope: 2.2264962
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.083224975
+      outWeight: 0.08192458
     - serializedVersion: 3
       time: 0.5
       value: 1
@@ -319,17 +319,17 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -0.053968463
-      outSlope: -0.053968463
+      inSlope: -2.9037995
+      outSlope: -2.9037995
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.089726806
+      inWeight: 0.072821975
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   FlyHeight: 0.8
-  _flySpeed: 5
+  _flySpeed: 8
 --- !u!1 &6467483755475090980
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ public interface IGameFactory : IService
     T CreateLevel<T>(Transform spawnPoint, LevelType type) where T : LevelView;
     Lobby CreateLobby();
     WeaponPresenter CreateWeapon(WeaponType type);
-    SwitchWeaponButton CreateWeaponSwitcher(WeaponType type, Vector3 position, Transform parent);
+    SwitchWeaponButtonView CreateWeaponSwitcher(WeaponType type, Vector3 position, Transform parent);
     ObstaclePresenter CreateObstacle(Transform point, Transform parent, LevelPresenter level, ObstacleType type);
     FlyPlatform CreateFlyPlatform(Vector3 startPosition, Vector3 endPosition, Transform parent, LevelPresenter level);
     SoldierPresenter CreateSoldierEnemy(Transform at, Transform attackPoint, PlayerTriggerObserver playerTriggerObserver,

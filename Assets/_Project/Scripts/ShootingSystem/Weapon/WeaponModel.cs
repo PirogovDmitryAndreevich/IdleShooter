@@ -12,6 +12,7 @@ public class WeaponModel
     public string AnimationName => _staticData.AnimationName;
     public ProjectileType ProjectileType => _staticData.ProjectileType;
     public float Score => _staticData.Score;
+    public Sprite Icon => _staticData.Icon; 
     public AudioClip ShootSound => _staticData.ShootSound;
 
     public WeaponModel(WeaponStaticData staticData)

@@ -33,4 +33,5 @@ MonoBehaviour:
   AnimationName: IsAk
   Score: 50
   Price: 24
+  Icon: {fileID: 21300000, guid: fd38c02bb6236894e824de347caf6084, type: 3}
   ShootSound: {fileID: 8300000, guid: 5a58f2477da41da42bffb82edabad66a, type: 3}

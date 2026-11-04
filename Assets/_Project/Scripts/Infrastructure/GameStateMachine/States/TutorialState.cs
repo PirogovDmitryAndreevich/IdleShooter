@@ -83,7 +83,7 @@ public class TutorialState : IState
 
         if (!_progressService.Data.Tutorial.IsWeaponSwitcherStudied)
         {
-            _tutorialService.Player.StartDrawLine(_tutorialService.StonesSwitcher.transform);
+            _tutorialService.Player.StartDrawLine(_tutorialService.StonesSwitcher.Transform);
 
             while (!_tutorialService.StonesSwitcher.IsSelected)
                 yield return null;
@@ -171,7 +171,7 @@ public class TutorialState : IState
 
             _tutorialService.Player.StopDrawLine();
 
-           yield return new WaitForSeconds(0.3f);
+           yield return new WaitForSeconds(1f);
 
             _tutorialService.Hud.TutorialUI.ShowGiveWinsMessage();
 
@@ -196,8 +196,15 @@ public class TutorialState : IState
 
     }
 
-    private void OnLevelUp(int obj) => 
+    private void OnLevelUp(int obj)
+    {
+        _levelManager.LevelChanged -= OnLevelUp;
+        _isLevelUpStudiedStarted = false;
+
         _tutorialService.Hud.TutorialUI.ShowLevelUpMessage();
+        _progressService.Data.Tutorial.IsLevelUpStudied = true;
+        //_save.SaveProgress();
+    }
 
     private void OnPlayerCreated()
     {

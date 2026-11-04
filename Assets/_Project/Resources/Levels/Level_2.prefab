@@ -79,7 +79,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _exitPoint: {fileID: 3800297190673781502}
-  _desiredWeapon: 0
   ObstacleSpawnPoints:
   - {fileID: 6176282142743184650}
   - {fileID: 2166714165101180638}
@@ -10830,6 +10829,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 86876714637755025}
     m_Modifications:
+    - target: {fileID: 3542173476613950768, guid: d149815b93e0a794eb9d3205607cff85,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3542173476613950768, guid: d149815b93e0a794eb9d3205607cff85,
         type: 3}
       propertyPath: m_LocalPosition.x

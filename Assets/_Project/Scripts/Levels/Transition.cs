@@ -7,11 +7,13 @@ public class Transition : MonoBehaviour
     [SerializeField] private Transform _playerSpawnPoint;
     [SerializeField] private ExitGate _exitGate;
     [SerializeField] private EnterGate _enterGate;
-    [SerializeField] private PlayerTriggerObserver _playerTriggerObserver;
     [SerializeField] private WinsPoint _winsPoint;
 
     public event Action TransitionEntered;
+    public event Action PlayerReturnedBack;
     public event Action PlayerGiveWins;
+
+    private bool _isPlayerEntered;
 
     public LevelType Type { get; private set; }
 
@@ -23,7 +25,11 @@ public class Transition : MonoBehaviour
 
     private void OnDestroy()
     {
-        _playerTriggerObserver.TriggerEnter -= OnPlayerEntered;
+        if (_enterGate != null)
+            _enterGate.PlayerEntered -= OnPlayerReturnedBack;
+
+        if (_exitGate != null)
+            _exitGate.PlayerEntered -= OnPlayerExitNext;
 
         if (_winsPoint != null)
             _winsPoint.PlayerGiveWins -= OnPlayerGiveWins;
@@ -37,10 +43,15 @@ public class Transition : MonoBehaviour
 
         _metrics = metrics;
 
-        _playerTriggerObserver.TriggerEnter += OnPlayerEntered;
-
         if (_exitGate != null)
+        {
             _exitGate.Construct(data);
+            _exitGate.PlayerEntered += OnPlayerExitNext;
+        }
+
+        if (_enterGate != null)
+            _enterGate.PlayerEntered += OnPlayerReturnedBack;
+
 
         if (type == LevelType.Level_1
             || type == LevelType.Lobby)
@@ -50,6 +61,9 @@ public class Transition : MonoBehaviour
 
         _winsPoint.PlayerGiveWins += OnPlayerGiveWins;
     }
+
+    public void OnReset() =>        
+        _isPlayerEntered = false;
 
     public void SetState(bool isOpen)
     {
@@ -66,12 +80,41 @@ public class Transition : MonoBehaviour
             _enterGate.Lock();
     }
 
-    private void OnPlayerEntered()
+    private void OnPlayerExitNext()
     {
-        TransitionEntered?.Invoke();
-        _metrics.ReachedGameLevel(Type);
+        if (!_isPlayerEntered)
+        {
+            OnPlayerEntered();
+            return;
+        }
+
+        _isPlayerEntered = false;
     }
 
-    private void OnPlayerGiveWins() =>
+    private void OnPlayerReturnedBack()
+    {
+        if (!_isPlayerEntered)
+        {
+            OnPlayerEntered();
+            return;
+        }
+
+        _isPlayerEntered = false;
+        PlayerReturnedBack?.Invoke();
+    }
+
+    private void OnPlayerEntered()
+    {
+        UnityEngine.Debug.Log("Player Entered in Transition " + Type);
+
+        _isPlayerEntered = true;
+        _metrics.ReachedGameLevel(Type);
+        TransitionEntered?.Invoke();
+    }
+
+    private void OnPlayerGiveWins()
+    {
+        _isPlayerEntered = false;
         PlayerGiveWins?.Invoke();
+    }
 }

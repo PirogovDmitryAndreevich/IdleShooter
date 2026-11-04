@@ -14,5 +14,7 @@ public interface ITransitionDataService : IService, IDisposable
 
     void RegisterLevel(LevelPresenter level);
 
+    void RegisterWeaponSwitcher(SwitchWeaponButtonPresenter switcher);
+
     void OpenNextLevel();
 }

@@ -1,23 +1,37 @@
-using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings;
 
 public class AimSwitcher : MonoBehaviour
 {
     [SerializeField] private Button _button;
     [SerializeField] private Image _image;
     [SerializeField] private Sprite _viewSprite;
-    [SerializeField] private Sprite _aimSprite;
+    [SerializeField] private TMP_Text _keyCodeText;
 
-    public event Action AimClicked;
+    private Sprite _aimSprite;
+    private IInputService _inputService;
+    private ButtonsKeyCodes _buttonsKeyCodes;
 
     public bool IsAim { get; private set; }
+
+    private void OnEnable() => 
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+
+    private void OnDisable() => 
+        LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
 
     private void OnDestroy() => 
         _button.onClick.RemoveListener(OnClick);
 
-    private void Start()
+    public void Construct(IInputService inputService, ButtonsKeyCodes buttonsKeyCodes)
     {
+        _inputService = inputService;
+        _buttonsKeyCodes = buttonsKeyCodes;
+
+        UpdateKeyCodeText();
+
         IsAim = false;
 
         _button.onClick.AddListener(OnClick);
@@ -32,8 +46,21 @@ public class AimSwitcher : MonoBehaviour
             : _viewSprite;
     }
 
-    private void OnClick()
+    public void SetIcon(Sprite icon) =>
+        _aimSprite = icon;
+
+    private void OnClick() => 
+        _inputService.SwitchButtonPressed();
+
+    private void OnLocaleChanged(UnityEngine.Localization.Locale locale) => 
+        UpdateKeyCodeText();
+
+    private void UpdateKeyCodeText()
     {
-        AimClicked?.Invoke();
+        if (_keyCodeText == null || _buttonsKeyCodes == null)
+            return;
+
+        _keyCodeText.text = LocalizedKeyCode.GetLocalizedKeyCode(
+            _buttonsKeyCodes.SwitchAim);
     }
 }

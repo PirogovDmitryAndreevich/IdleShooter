@@ -181,21 +181,27 @@ public class GameFactory : IGameFactory
         return level;
     }
 
-    public SwitchWeaponButton CreateWeaponSwitcher(WeaponType type, Vector3 position, Transform parent)
+    public SwitchWeaponButtonView CreateWeaponSwitcher(WeaponType type, Vector3 position, Transform parent)
     {
-        SwitchWeaponButton switcher = _assets.Instantiate(AssetsPath.WeaponSwitcherPath, at: position)
-            .GetComponent<SwitchWeaponButton>();
-
         WeaponStaticData weaponData = _staticDataService.GetWeaponData(type);
+        SwitchWeaponButtonModel model = new SwitchWeaponButtonModel(weaponData, _progressService);
 
-        switcher.Construct(_weaponSwitcher, _weaponDataService, type, weaponData);
+        SwitchWeaponButtonView view = _assets.Instantiate(AssetsPath.WeaponSwitcherPath, at: position)
+            .GetComponent<SwitchWeaponButtonView>();
 
-        switcher.transform.SetParent(parent);
+        view.Construct(model);
+
+        SwitchWeaponButtonPresenter presenter = new SwitchWeaponButtonPresenter(view, model, _weaponSwitcher,
+            _weaponDataService, _levelManager);
+
+        view.transform.SetParent(parent);
 
         if (type == WeaponType.Stones)
-            _tutorialService.SetStonesWeaponSwitcher(switcher);
+            _tutorialService.SetStonesWeaponSwitcher(presenter);
 
-        return switcher;
+        _transitionDataService.RegisterWeaponSwitcher(presenter);
+
+        return view;
     }
 
     public ObstaclePresenter CreateObstacle(Transform point, Transform parent, LevelPresenter level, ObstacleType type)
@@ -466,6 +472,8 @@ public class GameFactory : IGameFactory
             _levelManager, _uIPoolService,
             _interstitialAdvService,
             soundsData);
+
+        hud.AimButton.Construct(_inputService, _staticDataService.GetGameData().ButtonsKeyCodes);
 
         foreach (var window in hud.Windows)
             window.Construct(_windowsService, _pauseService,

@@ -6,7 +6,7 @@ public class TutorialService : ITutorialService
         && LevelView_1 != null;
 
     public PlayerPresenter Player { get; private set; }
-    public SwitchWeaponButton StonesSwitcher { get; private set; }
+    public SwitchWeaponButtonPresenter StonesSwitcher { get; private set; }
     public PassiveShooting PassiveShooting { get; private set; }
     public Hud Hud { get; private set; }
     public LevelView_1 LevelView_1 { get; private set; }
@@ -15,7 +15,7 @@ public class TutorialService : ITutorialService
     public void SetPlayerPresenter(PlayerPresenter playerPresenter) =>
         Player = playerPresenter;
 
-    public void SetStonesWeaponSwitcher(SwitchWeaponButton weaponSwitcher) =>
+    public void SetStonesWeaponSwitcher(SwitchWeaponButtonPresenter weaponSwitcher) =>
         StonesSwitcher = weaponSwitcher;
 
     public void SetPassiveShooter(PassiveShooting passiveShooting) =>

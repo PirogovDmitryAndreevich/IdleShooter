@@ -47,18 +47,23 @@ public class Health
         HealthChanged?.Invoke();
     }
 
-    private void Death()
-    {
-        Died?.Invoke();
-    }
-
     protected void IncreaseMaxHealth(int value)
     {
         if (value <= 0f)
             return;
 
+        int healthIncrease = value - _maxHealth;
+
         _maxHealth = value;
+
+        _currentHealth = Mathf.Clamp(
+            _currentHealth + healthIncrease,
+            0f,
+            _maxHealth);
 
         HealthChanged?.Invoke();
     }
+
+    private void Death() => 
+        Died?.Invoke();
 }

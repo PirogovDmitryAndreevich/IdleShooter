@@ -17,5 +17,7 @@ public interface IInputService : IService
 
     public bool JumpPressed { get; }
 
-    public bool GetInteractButtonDown();
+    public bool IsSwitchAimPressed { get; }
+
+    public bool SwitchButtonPressed();
 }

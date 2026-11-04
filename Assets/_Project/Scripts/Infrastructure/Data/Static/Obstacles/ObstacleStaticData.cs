@@ -8,6 +8,7 @@ public class ObstacleStaticData : ScriptableObject
     public float Damage = 0f;
     public int Crowns;
     public AudioClip TakeDamageSound;
+    public AudioClip DestroySound;
 
     [Space]
     public string AssetPath;

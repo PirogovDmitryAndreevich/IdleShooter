@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class TransitionDataService : ITransitionDataService
 {
     private Dictionary<LevelType, LevelPresenter> _levels;
+    private Dictionary<WeaponType, SwitchWeaponButtonPresenter> _weaponSwitchers;
 
     private List<LevelType> _enteredLevels;
     private readonly IInterstitialAdvService _interstitialAdvService;
@@ -13,6 +14,7 @@ public class TransitionDataService : ITransitionDataService
     public TransitionDataService(IInterstitialAdvService interstitialAdvService)
     {
         _levels = new Dictionary<LevelType, LevelPresenter>();
+        _weaponSwitchers = new Dictionary<WeaponType, SwitchWeaponButtonPresenter>();
         _enteredLevels = new List<LevelType>();
 
         _interstitialAdvService = interstitialAdvService;
@@ -46,6 +48,14 @@ public class TransitionDataService : ITransitionDataService
 
         level.TransitionEntered += OnLevelEntered;
         level.PlayerGiveWins += OnPlayerTookWins;
+    }
+
+    public void RegisterWeaponSwitcher(SwitchWeaponButtonPresenter switcher)
+    {
+        if(_weaponSwitchers.ContainsKey(switcher.Type))
+            return;
+
+        _weaponSwitchers[switcher.Type] = switcher;
     }
 
     public void Dispose()

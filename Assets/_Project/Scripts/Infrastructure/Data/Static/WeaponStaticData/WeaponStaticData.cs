@@ -13,5 +13,6 @@ public class WeaponStaticData : ScriptableObject
     public string AnimationName;
     public float Score = 1f;
     public int Price = 1;
+    public Sprite Icon;
     public AudioClip ShootSound;
 }

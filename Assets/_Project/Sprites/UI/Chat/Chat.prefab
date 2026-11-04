@@ -580,10 +580,10 @@ RectTransform:
   - {fileID: 6137434572009091115}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.05758016}
-  m_AnchorMax: {x: 0.96748555, y: 0.29519087}
-  m_AnchoredPosition: {x: 344.80078, y: 0.8691406}
-  m_SizeDelta: {x: -680.23047, y: 6.8776855}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 313.80078, y: -348.63086}
+  m_SizeDelta: {x: -742.23047, y: -816.1223}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7034067116522478245
 CanvasRenderer:
@@ -639,3 +639,6 @@ MonoBehaviour:
   _button: {fileID: 3277489124213753600}
   _message: {fileID: 7666000002525784989}
   _bonus: {fileID: 7475477627332477356}
+  _localizedTable:
+    m_TableReference:
+      m_TableCollectionName: 

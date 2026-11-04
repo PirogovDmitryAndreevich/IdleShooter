@@ -23,4 +23,7 @@ public class ObstacleModel
 
     public AudioClip TakeDamageSound =>
         _data.TakeDamageSound;
+
+    public AudioClip DestroySound =>
+        _data.DestroySound;
 }

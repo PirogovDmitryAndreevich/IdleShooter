@@ -6,6 +6,8 @@ public class LevelPresenter : IDisposable
 {
     private readonly LevelView _levelView;
     private readonly Transition _transition;
+    private readonly LevelType _previousLevel;
+
     public List<IResetObject> ResetObjects;
     public List<System.IDisposable> Disposables;
 
@@ -23,17 +25,19 @@ public class LevelPresenter : IDisposable
     public Transition Transition =>
         _transition;
 
-    public LevelPresenter(LevelView levelView, Transition transition)
+    public LevelPresenter(LevelView levelView, Transition transition, LevelType previousLevel)
     {
         ResetObjects = new List<IResetObject>();
         Disposables = new List<System.IDisposable>();
 
         _levelView = levelView;
         _transition = transition;
+        _previousLevel = previousLevel;
 
         if (transition != null)
         {
             _transition.TransitionEntered += OnTransitionEntered;
+            _transition.PlayerReturnedBack += OnPlayerReturnedBack;
             _transition.PlayerGiveWins += OnPlayerGiveWins;
         }
     }
@@ -44,6 +48,7 @@ public class LevelPresenter : IDisposable
             obj.ResetObject();
 
         _transition.SetState(false);
+        _transition.OnReset();
     }
 
     public void SetActive(bool shouldBeActive)
@@ -59,6 +64,7 @@ public class LevelPresenter : IDisposable
         if (_transition != null)
         {
             _transition.TransitionEntered -= OnTransitionEntered;
+            _transition.PlayerReturnedBack -= OnPlayerReturnedBack;
             _transition.PlayerGiveWins -= OnPlayerGiveWins;
         }
     }
@@ -83,6 +89,9 @@ public class LevelPresenter : IDisposable
 
     private void OnTransitionEntered() =>
         TransitionEntered?.Invoke(LevelType);
+
+    private void OnPlayerReturnedBack() =>
+        TransitionEntered?.Invoke(_previousLevel);
 
     private void OnPlayerGiveWins() =>
         PlayerGiveWins?.Invoke();

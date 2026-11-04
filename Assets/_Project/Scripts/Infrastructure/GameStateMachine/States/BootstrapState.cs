@@ -55,23 +55,20 @@ public class BootstrapState : IState
         _allServices.RegisterSingle<IPauseService>(new PauseService());
         _allServices.RegisterSingle(RegisterInputService());
 
-        _allServices.RegisterSingle<IWeaponDataService>(new WeaponDataService(
-            _allServices.Single<IProgressService>(),
-            _allServices.Single<IMetricsService>()));
-
         _allServices.RegisterSingle<ILevelManager>(new LevelManager(
             _allServices.Single<IProgressService>(),
             _allServices.Single<IStaticDataService>(),
             _allServices.Single<IMetricsService>()));
 
-        _allServices.RegisterSingle<IReviewHandler>(new ReviewHandler(
+        _allServices.RegisterSingle<IWeaponDataService>(new WeaponDataService(
+            _allServices.Single<IProgressService>(),
+            _allServices.Single<IMetricsService>(),
             _allServices.Single<ILevelManager>(),
             _allServices.Single<IStaticDataService>()));
 
-        _allServices.RegisterSingle<IWeaponBuyController>(new WeaponBuyController(
+        _allServices.RegisterSingle<IReviewHandler>(new ReviewHandler(
             _allServices.Single<ILevelManager>(),
-            _allServices.Single<IStaticDataService>(),
-            _allServices.Single<IWeaponDataService>()));
+            _allServices.Single<IStaticDataService>()));
 
         _allServices.RegisterSingle<IGiftService>(new GiftService(_allServices.Single<ILevelManager>()));
 
@@ -119,7 +116,8 @@ public class BootstrapState : IState
     private IInputService RegisterInputService()
     {
         if (_isDesktop)
-            return new StandaloneInputService();
+            return new StandaloneInputService
+                (_allServices.Single<IStaticDataService>().GetGameData().ButtonsKeyCodes);
         else
             return new MobileInputService(_allServices.Single<ISliderZoomController>());
     }

@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class MobileInputService : InputService
 {
-    private const string InteractButton = "Interact";
     private const string JumpButton = "Jump";
     private const string ShootButton = "Shoot";
+
+    private bool _isSwitchAimButtonPressed;
 
     private readonly ISliderZoomController _sliderZoom;
 
@@ -27,7 +28,22 @@ public class MobileInputService : InputService
         _sliderZoom.GetZoomInput();
 
     public override bool JumpPressed =>
-        SimpleInput.GetButtonDown(JumpButton); 
+        SimpleInput.GetButtonDown(JumpButton);
+
+    public override bool IsSwitchAimPressed
+    {
+        get
+        {
+            bool isPressed = _isSwitchAimButtonPressed;
+
+            _isSwitchAimButtonPressed = false;
+
+            return isPressed;
+        }
+    }
+
+    public override bool SwitchButtonPressed() =>
+        _isSwitchAimButtonPressed = true;
 
     private Vector2 SimpleInputAxis() =>
         new Vector2
@@ -42,7 +58,4 @@ public class MobileInputService : InputService
                 SimpleInput.GetAxis(ConstantsData.InputAxis.JoystickX),
                 SimpleInput.GetAxis(ConstantsData.InputAxis.JoystickY)
             );
-
-    public override bool GetInteractButtonDown() => 
-        SimpleInput.GetButtonDown(InteractButton);
 }

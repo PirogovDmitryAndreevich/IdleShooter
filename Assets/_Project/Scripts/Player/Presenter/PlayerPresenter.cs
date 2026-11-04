@@ -24,7 +24,8 @@ public class PlayerPresenter : IDisposable
     public bool IsAiming => _isAim;
     public DamageManager DamageManager => _damageManager;
     public PlayerHealth Health => _health;
-    public bool HasWeapon => _weapon != null;
+    public IWeapon CurrentWeapon => _weapon;
+    public bool HasWeapon => CurrentWeapon != null;
     private bool CanShoot => HasWeapon && _isAim;
 
     public event Action<bool> AimChanged;
@@ -128,6 +129,9 @@ public class PlayerPresenter : IDisposable
             return;
         }
 
+        if (_input.IsSwitchAimPressed)
+            SwitchAim();
+
         _animator.SetRun(_controller.IsRun);
         _animator.SetJump(_controller.IsJumping);
 
@@ -140,15 +144,31 @@ public class PlayerPresenter : IDisposable
         _camera.LateUpdate();
     }
 
-    public void SwitchAim(bool isAim)
+    public void Teleport(Transform target)
     {
-        if (isAim && !HasWeapon)
+        if (target == null)
             return;
 
-        if (_isAim == isAim)
+        SwitchAim();
+
+        _controller.Teleport(target);
+
+        _camera.SyncWithPlayer(target.rotation);
+    }
+
+    // For Tutorial
+    public void StartDrawLine(Transform target) => 
+        _view.LineDraw.StartDraw(target);
+
+    public void StopDrawLine() =>
+        _view.LineDraw.StopDraw();
+
+    private void SwitchAim()
+    {
+        if (!HasWeapon)
             return;
 
-        _isAim = isAim;
+        _isAim = !_isAim;
         _view.SoundsHandler.PlaySound(_soundsData.Aim);
 
         if (HasWeapon)
@@ -163,25 +183,6 @@ public class PlayerPresenter : IDisposable
         AimChanged?.Invoke(_isAim);
     }
 
-    public void Teleport(Transform target)
-    {
-        if (target == null)
-            return;
-
-        SwitchAim(false);
-
-        _controller.Teleport(target);
-
-        _camera.SyncWithPlayer(target.rotation);
-    }
-
-    // For Tutorial
-    public void StartDrawLine(Transform target) => 
-        _view.LineDraw.StartDraw(target);
-
-    public void StopDrawLine() =>
-        _view.LineDraw.StopDraw();
-
     private void StartPassiveShooting(IPassiveShooting passiveShooting)
     {
         if (passiveShooting == null || !HasWeapon || _isPassiveShooting)
@@ -193,7 +194,7 @@ public class PlayerPresenter : IDisposable
         _animator.SetRun(false);
         _animator.SetJump(false);
 
-        SwitchAim(false);
+        SwitchAim();
 
         _animator.SetWeaponAnimation(
                 _weapon.AnimationName,
@@ -252,7 +253,7 @@ public class PlayerPresenter : IDisposable
 
         if (_weapon == null)
         {
-            SwitchAim(false);
+            SwitchAim();
 
             WeaponAvailabilityChanged?.Invoke(false);
             return;

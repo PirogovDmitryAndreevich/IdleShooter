@@ -33,4 +33,5 @@ MonoBehaviour:
   AnimationName: IsMachine_gun
   Score: 100
   Price: 124
+  Icon: {fileID: 21300000, guid: 24c08fc95c06d5b4db4f201380ed3a38, type: 3}
   ShootSound: {fileID: 8300000, guid: 2fa2f06ea0780f047b7504e3cb62d605, type: 3}

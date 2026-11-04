@@ -17,4 +17,5 @@ MonoBehaviour:
   Damage: 100
   Crowns: 180
   TakeDamageSound: {fileID: 8300000, guid: c7bc9533e32f84247bff4f9e46b1b366, type: 3}
+  DestroySound: {fileID: 8300000, guid: 660b61f524c029449919c1be8203df8e, type: 3}
   AssetPath: Obstacles/Gear

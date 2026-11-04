@@ -16,10 +16,7 @@ public abstract class InputService : IInputService
 
     public abstract bool JumpPressed { get; }
 
-    public bool GetInteract()
-    {
-        return true;
-    }
+    public abstract bool IsSwitchAimPressed { get; }
 
-    public abstract bool GetInteractButtonDown();       
+    public abstract bool SwitchButtonPressed();
 }

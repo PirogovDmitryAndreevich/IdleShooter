@@ -53,7 +53,6 @@ public class Hud : MonoBehaviour
 
     private void OnDestroy()
     {
-        _aimSwitcher.AimClicked -= OnAimClicked;
         _playerPresenter.AimChanged -= OnAimChanged;
         _playerPresenter.WeaponAvailabilityChanged -= OnWeaponAvailabilityChanged;
         _playerPresenter.PlayerShot -= OnPlayerShoot;
@@ -79,7 +78,6 @@ public class Hud : MonoBehaviour
 
         _aim.gameObject.SetActive(false);
 
-        _aimSwitcher.AimClicked += OnAimClicked;
         _playerPresenter.AimChanged += OnAimChanged;
         _playerPresenter.WeaponAvailabilityChanged += OnWeaponAvailabilityChanged;
         _playerPresenter.PlayerShot += OnPlayerShoot;
@@ -93,7 +91,9 @@ public class Hud : MonoBehaviour
         _aimSwitcher.gameObject.SetActive(visible);
 
         if (!visible)        
-            _aim.gameObject.SetActive(false);        
+            _aim.gameObject.SetActive(false);
+        else
+            _aimSwitcher.SetIcon(_playerPresenter.CurrentWeapon.Icon);
     }
 
     public void StartTutorial()
@@ -104,12 +104,6 @@ public class Hud : MonoBehaviour
     public void TutorialEnded()
     {
         _giftsButton.gameObject.SetActive(true);
-    }
-
-    private void OnAimClicked()
-    {
-        _playerPresenter.SwitchAim(
-            !_playerPresenter.IsAiming);
     }
 
     private void OnAimChanged(bool isAim)

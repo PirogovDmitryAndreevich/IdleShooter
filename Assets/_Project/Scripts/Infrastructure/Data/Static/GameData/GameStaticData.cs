@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GameStaticData", menuName = "StaticData/GameData")]
@@ -55,21 +54,8 @@ public class GameStaticData : ScriptableObject
     [Space]
     [Header("Sounds")]
     public SoundsData Sounds;
-}
 
-[Serializable]
-public class SoundsData
-{
-    [Header("UI Sounds")]
-    public AudioClip LevelUp;
-    public AudioClip OpenWindow;
-    public AudioClip CloseWindow;
-    public AudioClip Slider;
-    public AudioClip GiftButtonCollect;
-
-    [Header("Player Sounds")]
-    public AudioClip PlayerStep;
-    public AudioClip SelectWeapon;
-    public AudioClip Aim;
-    public AudioClip Jump;
+    [Space]
+    [Header("Buttons Key Codes")]
+    public ButtonsKeyCodes ButtonsKeyCodes;
 }

@@ -4,7 +4,7 @@ public interface IWeaponDataService : IService
 {
     event Action<WeaponType> WeaponOpened;
 
-    void AddNewWeapon(WeaponType type);
+    void TryBuyWeapon(WeaponType type);
     void ForInitialize();
     bool GetWeapon(WeaponType type);
 }

@@ -18,6 +18,7 @@ public class WeaponPresenter : IWeapon
     public ShootShakeSettings ShakeData => _model.Shake;
     public string AnimationName => _model.AnimationName;
     public float Score => _model.Score;
+    public Sprite Icon => _model.Icon;
 
     public WeaponPresenter(WeaponModel weaponModel, WeaponView view, Camera camera,
         GameStaticData data, IProjectilePool poolService, IPoolService pool)

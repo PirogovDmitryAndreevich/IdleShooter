@@ -65,6 +65,7 @@ public class ObstaclePresenter : IDisposable, IResetObject, IPlayerTarget
 
     protected virtual void Died()
     {
+        _view.SoundsHandler.PlaySound(_model.DestroySound);
         _impactView.Reset();
         _view.OnDied();
         _crownsManger.AddCrown(_model.Crowns);
