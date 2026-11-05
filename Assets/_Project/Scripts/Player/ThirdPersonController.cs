@@ -36,7 +36,7 @@ public class ThirdPersonController : IDisposable
         _viewTransform = viewTransform;
         _characterController = characterController;
 
-        _movementCalculator = new CameraRelativeMovementCalculator(playerCamera, data);
+        _movementCalculator = new CameraRelativeMovementCalculator(playerCamera);
         _jumpHandler = new DefaultJumpHandler(data);
         _headHitDetector = new HeadHitDetector(data);
 
@@ -78,7 +78,12 @@ public class ThirdPersonController : IDisposable
 
         _jumpHandler.UpdateJumpDirection();
 
-        _movementCalculator.UpdateMoveDirection(_input.Axis);
+        float speed = _playerData.Velocity;
+
+        if (_input.IsRunPressed)
+            speed = _playerData.RunVelocity;
+
+        _movementCalculator.UpdateMoveDirection(_input.Axis, speed);
 
         Vector3 movement = _jumpHandler.VerticalDirection + _movementCalculator.HorizontalDirection;
 

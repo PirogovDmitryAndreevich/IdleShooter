@@ -50,6 +50,9 @@ public class StandaloneInputService : InputService
         }
     }
 
+    public override bool IsRunPressed => 
+        Input.GetKey(_buttonsKeyCodes.Run);
+
     private Vector2 UnityAxis() =>
             new Vector2
             (
@@ -66,4 +69,9 @@ public class StandaloneInputService : InputService
 
     public override bool SwitchButtonPressed() =>
         _isSwitchAimButtonPressed = true;
+
+    public override void SwitchMove()
+    {
+
+    }
 }

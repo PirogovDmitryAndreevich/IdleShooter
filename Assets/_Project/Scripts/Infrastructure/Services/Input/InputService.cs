@@ -18,5 +18,9 @@ public abstract class InputService : IInputService
 
     public abstract bool IsSwitchAimPressed { get; }
 
+    public abstract bool IsRunPressed { get; }
+
     public abstract bool SwitchButtonPressed();
+
+    public abstract void SwitchMove();
 }

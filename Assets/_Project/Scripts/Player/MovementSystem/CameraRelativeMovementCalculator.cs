@@ -3,22 +3,18 @@ using UnityEngine;
 public class CameraRelativeMovementCalculator : IMovementCalculator
 {
     private readonly Camera _camera;
-    private PlayerStaticData _data;
     private Vector3 _horizontalMovement;
 
     public Vector3 HorizontalDirection => _horizontalMovement;
 
-    public CameraRelativeMovementCalculator(Camera camera, PlayerStaticData data)
-    {
+    public CameraRelativeMovementCalculator(Camera camera) => 
         _camera = camera;
-        _data = data;
-    }
 
-    public Vector3 UpdateMoveDirection(Vector2 inputAxis)
+    public Vector3 UpdateMoveDirection(Vector2 inputAxis, float speed)
     {
         // Оригинальная логика
-        float directionX = inputAxis.x * _data.Velocity * Time.deltaTime;
-        float directionZ = inputAxis.y * _data.Velocity * Time.deltaTime;
+        float directionX = inputAxis.x * speed * Time.deltaTime;
+        float directionZ = inputAxis.y * speed * Time.deltaTime;
 
         Vector3 forward = _camera.transform.forward;
         Vector3 right = _camera.transform.right;

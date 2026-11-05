@@ -9,6 +9,10 @@ public class PlayerStaticData : ScriptableObject
     [Min(0.1f)]
     public float Velocity = 5f;
 
+    [Tooltip("Скорость бега персонажа. Не зависит от гравитации и прыжков.")]
+    [Min(0.1f)]
+    public float RunVelocity = 8f;
+
     [Tooltip("Чем выше значение, тем выше сможет прыгнуть персонаж.")]
     [Min(0.1f)]
     public float JumpForce = 18f;

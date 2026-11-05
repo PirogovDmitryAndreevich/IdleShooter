@@ -19,5 +19,9 @@ public interface IInputService : IService
 
     public bool IsSwitchAimPressed { get; }
 
+    public bool IsRunPressed { get; }
+
     public bool SwitchButtonPressed();
+
+    public void SwitchMove();
 }

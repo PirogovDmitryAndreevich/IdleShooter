@@ -6,6 +6,7 @@ public class MobileInputService : InputService
     private const string ShootButton = "Shoot";
 
     private bool _isSwitchAimButtonPressed;
+    private bool _isRunButtonPressed;
 
     private readonly ISliderZoomController _sliderZoom;
 
@@ -42,8 +43,14 @@ public class MobileInputService : InputService
         }
     }
 
+    public override bool IsRunPressed =>
+        _isRunButtonPressed;
+
     public override bool SwitchButtonPressed() =>
         _isSwitchAimButtonPressed = true;
+
+    public override void SwitchMove() =>
+        _isRunButtonPressed = !_isRunButtonPressed;
 
     private Vector2 SimpleInputAxis() =>
         new Vector2

@@ -457,3 +457,4 @@ MonoBehaviour:
     SwitchAim: 101
     Gifts: 103
     Jump: 32
+    Run: 304
