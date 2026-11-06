@@ -11,11 +11,16 @@ public class TutorialState : IState
     private readonly ILevelManager _levelManager;
     private readonly ITransitionDataService _transitionDataService;
     private readonly ILevelController _levelController;
+    private readonly IStaticDataService _staticData;
 
     private bool _isLevelUpStudiedStarted;
     private bool _isGiveWinsStudied;
     private Coroutine _coroutine;
+    private Coroutine _saveCoroutine;
     private PlayerPresenter _player;
+    private float _saveTime;
+    private float _saveTimer;
+    private bool _saveCoroutineStarted;
 
     public TutorialState(
         GameStateMachine gameStateMachine,
@@ -25,7 +30,8 @@ public class TutorialState : IState
         ISaveLoadService saveLoadService,
         ILevelManager levelManager,
         ITransitionDataService transitionDataService,
-        ILevelController levelController)
+        ILevelController levelController,
+        IStaticDataService staticData)
     {
         _gameStateMachine = gameStateMachine;
         _coroutineRunner = coroutineRunner;
@@ -35,6 +41,7 @@ public class TutorialState : IState
         _levelManager = levelManager;
         _transitionDataService = transitionDataService;
         _levelController = levelController;
+        _staticData = staticData;
     }
 
     public void Enter()
@@ -52,11 +59,24 @@ public class TutorialState : IState
             _isLevelUpStudiedStarted = true;
         }
 
+        _saveTime = _staticData.GetGameData().SaveTime;
+        _saveTimer = _saveTime;
+
+        if(_saveCoroutine != null)
+        {
+            _coroutineRunner.StopCoroutine(_saveCoroutine);
+            _saveCoroutineStarted = false;
+            _saveCoroutine = null;
+        }
+
+        _saveCoroutineStarted = true;
+        _coroutineRunner.StartCoroutine(SaveCoroutine());
+
         if (_coroutine != null)
-            {
-                _coroutineRunner.StopCoroutine(_coroutine);
-                _coroutine = null;
-            }
+        {
+            _coroutineRunner.StopCoroutine(_coroutine);
+            _coroutine = null;
+        }        
 
         _coroutine = _coroutineRunner
             .StartCoroutine(TutorialCoroutine());
@@ -70,7 +90,14 @@ public class TutorialState : IState
             _coroutine = null;
         }
 
-        if(_isLevelUpStudiedStarted)
+        if (_saveCoroutine != null)
+        {
+            _coroutineRunner.StopCoroutine(_saveCoroutine);
+            _saveCoroutineStarted = false;
+            _saveCoroutine = null;
+        }
+
+        if (_isLevelUpStudiedStarted)
             _levelManager.LevelChanged -= OnLevelUp;
 
         _player.PlayerDied -= OnPlayerDied;
@@ -78,22 +105,18 @@ public class TutorialState : IState
 
     public IEnumerator TutorialCoroutine()
     {
-        while (!_tutorialService.IsReady)        
+        while (!_tutorialService.IsReady)
             yield return null;
 
         _tutorialService.Hud.StartTutorial();
 
-        if (!_progressService.Data.Tutorial.IsWeaponSwitcherStudied)
-        {
-            _tutorialService.Player.StartDrawLine(_tutorialService.StonesSwitcher.Transform);
+        _tutorialService.Player.StartDrawLine(_tutorialService.StonesSwitcher.Transform);
 
-            while (!_tutorialService.StonesSwitcher.IsSelected)
-                yield return null;
+        while (!_tutorialService.StonesSwitcher.IsSelected)
+            yield return null;
 
-            _tutorialService.Player.StopDrawLine();
-            _progressService.Data.Tutorial.IsWeaponSwitcherStudied = true;
-            _save.SaveProgress();
-        }
+        _tutorialService.Player.StopDrawLine();
+        _save.SaveProgress();
 
         if (!_progressService.Data.Tutorial.IsAimButtonStudied)
         {
@@ -168,12 +191,12 @@ public class TutorialState : IState
             _tutorialService.Transition2.PlayerGiveWins += OnPlayerGiveWins;
             _tutorialService.Player.StartDrawLine(_tutorialService.Transition2.WinsPoint);
 
-            while(!_isGiveWinsStudied)
+            while (!_isGiveWinsStudied)
                 yield return null;
 
             _tutorialService.Player.StopDrawLine();
 
-           yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1f);
 
             _tutorialService.Hud.TutorialUI.ShowGiveWinsMessage();
 
@@ -189,6 +212,23 @@ public class TutorialState : IState
         _coroutine = null;
 
         _gameStateMachine.Enter<GameLoopState>();
+    }
+
+    public IEnumerator SaveCoroutine()
+    {
+        while (_saveCoroutineStarted)
+        {
+            _saveTimer -= Time.deltaTime;
+            if (_saveTimer <= 0)
+            {
+                _save.SaveProgress();
+                _saveTimer = _saveTime;
+            }
+            yield return null;
+        }
+
+        _saveCoroutine = null;
+        _saveCoroutineStarted = false;
     }
 
     private void OnPlayerGiveWins()

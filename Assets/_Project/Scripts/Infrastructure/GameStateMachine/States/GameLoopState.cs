@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class GameLoopState : IState
 {
-    private const float MinuteCoefficient = 60f;
-
     private readonly GameStateMachine _gameStateMachine;
     private readonly ILevelController _levelController;
     private readonly ITransitionDataService _transitionDataService;
@@ -14,6 +12,7 @@ public class GameLoopState : IState
     private readonly ICoroutineRunner _coroutineRunner;
     private readonly ISaveLoadService _saveLoadService;
     private readonly IStaticDataService _staticData;
+
     private Coroutine _gameLoopCoroutine;
     private bool _isGameLoopRunning;
     private float _saveTime;
@@ -42,7 +41,7 @@ public class GameLoopState : IState
 
         _isGameLoopRunning = true;
 
-        _saveTime = _staticData.GetGameData().SaveTime * MinuteCoefficient;
+        _saveTime = _staticData.GetGameData().SaveTime;
         _saveTimer = _saveTime;
 
         _gameLoopCoroutine = _coroutineRunner.StartCoroutine(GameLoopCoroutine());

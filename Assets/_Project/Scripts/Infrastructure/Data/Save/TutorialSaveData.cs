@@ -5,7 +5,6 @@ public class TutorialSaveData
 {
     public bool IsTutorialComplete;
 
-    public bool IsWeaponSwitcherStudied;
     public bool IsAimButtonStudied;
     public bool IsPassiveShootingStudied;
     public bool IsGameLevelStudied;
@@ -14,7 +13,6 @@ public class TutorialSaveData
     public TutorialSaveData()
     {
         IsTutorialComplete = false;
-        IsWeaponSwitcherStudied = false;
         IsAimButtonStudied = false;
         IsPassiveShootingStudied = false;
         IsGameLevelStudied = false;
