@@ -89,9 +89,9 @@ public class Chat : MonoBehaviour
         _bonusLocale.StringChanged += UpdateBonus;
     }
 
-    private void UpdateMessage(string value) => 
+    private void UpdateMessage(string value) =>
         _message.text = value ?? string.Empty;
 
-    private void UpdateBonus(string value) => 
+    private void UpdateBonus(string value) =>
         _bonus.text = value ?? string.Empty;
 }

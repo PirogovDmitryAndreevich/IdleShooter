@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GameLoopState : IState
 {
+    private const float MinuteCoefficient = 60f;
+
     private readonly GameStateMachine _gameStateMachine;
     private readonly ILevelController _levelController;
     private readonly ITransitionDataService _transitionDataService;
@@ -10,14 +12,18 @@ public class GameLoopState : IState
     private readonly IReviewHandler _reviewHandler;
     private readonly IPlayerDiedService _playerDiedService;
     private readonly ICoroutineRunner _coroutineRunner;
-    
+    private readonly ISaveLoadService _saveLoadService;
+    private readonly IStaticDataService _staticData;
     private Coroutine _gameLoopCoroutine;
     private bool _isGameLoopRunning;
+    private float _saveTime;
+    private float _saveTimer;
 
     public GameLoopState(GameStateMachine gameStateMachine,
         ILevelController levelController,
         ITransitionDataService transitionDataService, ITimeRewardManager timeRewardManager,
-        IReviewHandler reviewHandler, IPlayerDiedService playerDiedService, ICoroutineRunner coroutineRunner)
+        IReviewHandler reviewHandler, IPlayerDiedService playerDiedService,
+        ICoroutineRunner coroutineRunner, ISaveLoadService saveLoadService, IStaticDataService staticData)
     {
         _gameStateMachine = gameStateMachine;
         _levelController = levelController;
@@ -26,12 +32,18 @@ public class GameLoopState : IState
         _reviewHandler = reviewHandler;
         _playerDiedService = playerDiedService;
         _coroutineRunner = coroutineRunner;
+        _saveLoadService = saveLoadService;
+        _staticData = staticData;
     }
+
     public void Enter()
     {
         _playerDiedService.PlayerDied += OnPlayerDied;
 
         _isGameLoopRunning = true;
+
+        _saveTime = _staticData.GetGameData().SaveTime * MinuteCoefficient;
+        _saveTimer = _saveTime;
 
         _gameLoopCoroutine = _coroutineRunner.StartCoroutine(GameLoopCoroutine());
     }
@@ -63,7 +75,15 @@ public class GameLoopState : IState
 
             if (_transitionDataService.CurrentLevel != null && 
                 _transitionDataService.CurrentLevel.CheckCompleted())            
-                _transitionDataService.OpenNextLevel();            
+                _transitionDataService.OpenNextLevel();
+
+            _saveTimer -= Time.deltaTime;
+
+            if (_saveTimer <= 0)
+            {
+                _saveLoadService.SaveProgress();
+                _saveTimer = _saveTime;
+            }
 
             yield return null;
         }

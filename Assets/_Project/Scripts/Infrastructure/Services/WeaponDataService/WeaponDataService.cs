@@ -5,6 +5,7 @@ using System.Linq;
 public class WeaponDataService : IWeaponDataService
 {
     private readonly IProgressService _progress;
+    private readonly ISaveLoadService _save;
     private readonly IMetricsService _metrics;
     private readonly ILevelManager _levelManager;
 
@@ -12,10 +13,11 @@ public class WeaponDataService : IWeaponDataService
 
     public event Action<WeaponType> WeaponOpened;
 
-    public WeaponDataService(IProgressService progress, IMetricsService metrics,
+    public WeaponDataService(IProgressService progress,ISaveLoadService save, IMetricsService metrics,
         ILevelManager levelManager, IStaticDataService staticDataService)
     {
         _progress = progress;
+        _save = save;
         _metrics = metrics;
         _levelManager = levelManager;
 
@@ -50,6 +52,7 @@ public class WeaponDataService : IWeaponDataService
             return;
 
         _progress.Data.Weapons.OpenedWeapons.Add(type);
+        _save.SaveProgress();
 
         WeaponOpened?.Invoke(type);
 

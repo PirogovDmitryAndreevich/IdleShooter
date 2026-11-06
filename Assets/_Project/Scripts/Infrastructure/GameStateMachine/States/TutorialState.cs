@@ -92,7 +92,7 @@ public class TutorialState : IState
 
             _tutorialService.Player.StopDrawLine();
             _progressService.Data.Tutorial.IsWeaponSwitcherStudied = true;
-            //_save.SaveProgress();
+            _save.SaveProgress();
         }
 
         if (!_progressService.Data.Tutorial.IsAimButtonStudied)
@@ -107,7 +107,7 @@ public class TutorialState : IState
             hud.TutorialUI.HideAimTutorialMessage();
 
             _progressService.Data.Tutorial.IsAimButtonStudied = true;
-            //_save.SaveProgress();
+            _save.SaveProgress();
         }
 
         if (!_progressService.Data.Tutorial.IsPassiveShootingStudied)
@@ -123,7 +123,7 @@ public class TutorialState : IState
 
             hud.TutorialUI.ShowScoreMessage();
             _progressService.Data.Tutorial.IsPassiveShootingStudied = true;
-            //_save.SaveProgress();
+            _save.SaveProgress();
         }
 
         if (!_progressService.Data.Tutorial.IsGameLevelStudied)
@@ -179,12 +179,12 @@ public class TutorialState : IState
 
             _tutorialService.Hud.TutorialEnded();
             _progressService.Data.Tutorial.IsGameLevelStudied = true;
-            //_save.SaveProgress();
+            _save.SaveProgress();
         }
 
 
         _progressService.Data.Tutorial.IsTutorialComplete = true;
-        //_save.SaveProgress();
+        _save.SaveProgress();
 
         _coroutine = null;
 
@@ -205,7 +205,7 @@ public class TutorialState : IState
 
         _tutorialService.Hud.TutorialUI.ShowLevelUpMessage();
         _progressService.Data.Tutorial.IsLevelUpStudied = true;
-        //_save.SaveProgress();
+        _save.SaveProgress();
     }
 
     private void OnPlayerCreated()

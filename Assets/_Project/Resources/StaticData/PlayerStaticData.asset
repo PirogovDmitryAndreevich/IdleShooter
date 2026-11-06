@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerStaticData
   m_EditorClassIdentifier: 
   Velocity: 5
-  RunVelocity: 10
+  RunVelocity: 15
   JumpForce: 18
   JumpTime: 0.85
   RotationSmoothness: 0.15

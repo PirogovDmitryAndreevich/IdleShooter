@@ -7,6 +7,6 @@ public class GameSaveData
 
     public GameSaveData()
     {
-        Sensitivity = 5f;
+        Sensitivity = 7f;
     }
 }

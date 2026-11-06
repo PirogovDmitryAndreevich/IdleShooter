@@ -43,15 +43,20 @@ public class BootstrapState : IState
         _allServices.RegisterSingle<IPoolService>(new Pool());
         _allServices.RegisterSingle<IUIPoolService>(new UIPoolService());
         _allServices.RegisterSingle<IAssets>(new AssetProvider());
-        _allServices.RegisterSingle<IGameSaveDataService>(new GameSaveDataService(_allServices.Single<IProgressService>()));
+        _allServices.RegisterSingle<IGameSaveDataService>(new GameSaveDataService(
+            _allServices.Single<IProgressService>(),
+            _allServices.Single<ISaveLoadService>()));
         _allServices.RegisterSingle<IProjectilePool>(new ProjectilePool());
         _allServices.RegisterSingle<IWarpService>(new WarpService());
         _allServices.RegisterSingle<IInterstitialAdvService>(new InterstitialAdvService());
         _allServices.RegisterSingle<IWindowsService>(new WindowsService());
         _allServices.RegisterSingle<ITransitionDataService>(new TransitionDataService(_allServices.Single<IInterstitialAdvService>()));
-        _allServices.RegisterSingle<ISettingsManager>(new SettingsManager(_allServices.Single<IProgressService>()));
+        _allServices.RegisterSingle<ISettingsManager>(new SettingsManager(
+            _allServices.Single<IProgressService>(),
+            _allServices.Single<IGameSaveDataService>()));
         _allServices.RegisterSingle<ITutorialService>(new TutorialService());
-        _allServices.RegisterSingle<ISliderZoomController>(new SliderZoomController());
+        _allServices.RegisterSingle<ISliderZoomController>(new SliderZoomController(
+            _allServices.Single<IGameSaveDataService>()));
         _allServices.RegisterSingle<IPauseService>(new PauseService());
         _allServices.RegisterSingle(RegisterInputService());
 
@@ -67,6 +72,7 @@ public class BootstrapState : IState
 
         _allServices.RegisterSingle<IWeaponDataService>(new WeaponDataService(
             _allServices.Single<IProgressService>(),
+            _allServices.Single<ISaveLoadService>(),
             _allServices.Single<IMetricsService>(),
             _allServices.Single<ILevelManager>(),
             _allServices.Single<IStaticDataService>()));

@@ -6,6 +6,7 @@ public class GameStaticData : ScriptableObject
     public Vector3 LobbySpawnPosition;
     public AudioClip BackgroundMusic;
     public int ReviewScore = 100;
+    public float SaveTime = 1.5f;
 
     [Space]
     [Header("Camera Settings")]

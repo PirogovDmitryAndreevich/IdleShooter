@@ -521,6 +521,7 @@ public class GameFactory : IGameFactory
                 .GetComponent<HudMobile>();
 
             hud.SliderZoom.Construct(_sliderZoomController, _staticDataService);
+            hud.MoveRunSwitcher.Construct(_inputService);
 
             return hud;
         }

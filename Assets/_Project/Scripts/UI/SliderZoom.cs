@@ -3,29 +3,31 @@ using UnityEngine.UI;
 
 public class SliderZoom : MonoBehaviour
 {
+    private const float DefaultFov = 45f;
+
     [SerializeField] private Slider _slider;
 
-    private ISliderZoomController _sliderZoom;
+    private ISliderZoomController _zoomController;
 
     public void Construct(ISliderZoomController sliderZoom, IStaticDataService staticDataService)
     {
-        _sliderZoom = sliderZoom;
-        GameStaticData data = staticDataService.GetGameData();
+        _zoomController = sliderZoom;
 
-        _slider.onValueChanged.AddListener(
-            _sliderZoom.OnSliderValueChanged);
+        GameStaticData data = staticDataService.GetGameData();
 
         _slider.minValue = data.CameraSettingsData.MinFov;
         _slider.maxValue = data.CameraSettingsData.MaxFov;
 
-        _slider.value = Camera.main.fieldOfView;
+        _slider.SetValueWithoutNotify(DefaultFov);
 
-        _sliderZoom.SetPreviousValue(_slider.value);
+        _zoomController.SetPreviousValue(_slider.value);
+
+        _slider.onValueChanged.AddListener(_zoomController.OnSliderValueChanged);
     }
 
     private void OnDestroy()
     {
         _slider.onValueChanged.RemoveListener(
-            _sliderZoom.OnSliderValueChanged);
+            _zoomController.OnSliderValueChanged);
     }
 }

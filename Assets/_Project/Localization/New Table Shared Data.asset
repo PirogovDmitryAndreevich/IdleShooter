@@ -147,6 +147,14 @@ MonoBehaviour:
     m_Key: NoThanks
     m_Metadata:
       m_Items: []
+  - m_Id: 7720589602054144
+    m_Key: Respawn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7981601345495040
+    m_Key: Warning
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

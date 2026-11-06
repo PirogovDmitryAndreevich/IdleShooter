@@ -3,9 +3,13 @@ using System;
 public class SettingsManager : ISettingsManager
 {
     private readonly IProgressService _progress;
+    private readonly IGameSaveDataService _gameSaveDataService;
 
-    public SettingsManager(IProgressService progress) =>
+    public SettingsManager(IProgressService progress, IGameSaveDataService gameSaveDataService)
+    {
         _progress = progress;
+        _gameSaveDataService = gameSaveDataService;
+    }
 
     public event Action SoundVolumeChanged;
     public event Action SoundMuteChanged;
@@ -27,7 +31,7 @@ public class SettingsManager : ISettingsManager
         _progress.Data.Settings.IsMusicMute;
 
     public float Sensitivity =>
-        _progress.Data.Settings.Sensitivity;
+        _gameSaveDataService.Sensitivity;
 
     public void ChangeSoundVolume(float value)
     {
@@ -73,10 +77,10 @@ public class SettingsManager : ISettingsManager
 
     public void ChangeSensitivity(float value)
     {
-        if (_progress.Data.Settings.Sensitivity == value)
+        if (_gameSaveDataService.Sensitivity == value)
             return;
 
-        _progress.Data.Settings.Sensitivity = value;
+        _gameSaveDataService.ChangeSensitivity(value);
 
         SensitivityChanged?.Invoke();
     }

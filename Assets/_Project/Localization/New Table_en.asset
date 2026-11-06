@@ -186,6 +186,14 @@ MonoBehaviour:
     m_Localized: No, thanks
     m_Metadata:
       m_Items: []
+  - m_Id: 7720589602054144
+    m_Localized: "Respawn\n in this same room"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7981601345495040
+    m_Localized: YOU FORGOT TO TAKE A WEAPON!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

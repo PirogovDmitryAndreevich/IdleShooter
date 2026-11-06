@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SwitchWeaponButtonView : MonoBehaviour
 {
     [SerializeField] private LayerMask _playerLayer;
-    [SerializeField] private Image _icon; 
+    [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _name;
     [SerializeField] private TMP_Text _bonusText;
     [SerializeField] private TMP_Text _priceText;

@@ -38,7 +38,9 @@ public class GameStateMachine
             allServices.Single<ITimeRewardManager>(),
             allServices.Single<IReviewHandler>(),
             allServices.Single<IPlayerDiedService>(),
-            coroutineRunner),
+            coroutineRunner,
+            allServices.Single<ISaveLoadService>(),
+            allServices.Single<IStaticDataService>()),
         };
     }
 
